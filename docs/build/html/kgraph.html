@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>kgraph package &mdash; kgraph 1.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=1f29e9d3"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            kgraph
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">kgraph package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-kgraph.generator">kgraph.generator module</a><ul>
+<li><a class="reference internal" href="#kgraph.generator.extract_relations_from_model_output"><code class="docutils literal notranslate"><span class="pre">extract_relations_from_model_output()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.generator.from_dot_to_kb"><code class="docutils literal notranslate"><span class="pre">from_dot_to_kb()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.generator.from_text_to_kb"><code class="docutils literal notranslate"><span class="pre">from_text_to_kb()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-kgraph.main">kgraph.main module</a><ul>
+<li><a class="reference internal" href="#kgraph.main.KB"><code class="docutils literal notranslate"><span class="pre">KB</span></code></a><ul>
+<li><a class="reference internal" href="#kgraph.main.KB.add_relation"><code class="docutils literal notranslate"><span class="pre">KB.add_relation()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.main.KB.are_relations_equal"><code class="docutils literal notranslate"><span class="pre">KB.are_relations_equal()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.main.KB.exists_relation"><code class="docutils literal notranslate"><span class="pre">KB.exists_relation()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.main.KB.get_degree"><code class="docutils literal notranslate"><span class="pre">KB.get_degree()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.main.KB.get_max_degree"><code class="docutils literal notranslate"><span class="pre">KB.get_max_degree()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.main.KB.get_nodes"><code class="docutils literal notranslate"><span class="pre">KB.get_nodes()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.main.KB.get_relations_between"><code class="docutils literal notranslate"><span class="pre">KB.get_relations_between()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.main.KB.get_relations_from"><code class="docutils literal notranslate"><span class="pre">KB.get_relations_from()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.main.KB.get_relations_to"><code class="docutils literal notranslate"><span class="pre">KB.get_relations_to()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.main.KB.select_where"><code class="docutils literal notranslate"><span class="pre">KB.select_where()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.main.KB.write_dot"><code class="docutils literal notranslate"><span class="pre">KB.write_dot()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-kgraph.operators">kgraph.operators module</a><ul>
+<li><a class="reference internal" href="#kgraph.operators.join"><code class="docutils literal notranslate"><span class="pre">join()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-kgraph.rebel">kgraph.rebel module</a><ul>
+<li><a class="reference internal" href="#kgraph.rebel.extract_triples"><code class="docutils literal notranslate"><span class="pre">extract_triples()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.rebel.preds_to_triples"><code class="docutils literal notranslate"><span class="pre">preds_to_triples()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-kgraph.subnodes">kgraph.subnodes module</a><ul>
+<li><a class="reference internal" href="#kgraph.subnodes.calculate_score"><code class="docutils literal notranslate"><span class="pre">calculate_score()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.subnodes.find_best_matching"><code class="docutils literal notranslate"><span class="pre">find_best_matching()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.subnodes.get_identical_nodes"><code class="docutils literal notranslate"><span class="pre">get_identical_nodes()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.subnodes.get_subgraph_nodes"><code class="docutils literal notranslate"><span class="pre">get_subgraph_nodes()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-kgraph.utils">kgraph.utils module</a><ul>
+<li><a class="reference internal" href="#kgraph.utils.colorize"><code class="docutils literal notranslate"><span class="pre">colorize()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.utils.draw_graph"><code class="docutils literal notranslate"><span class="pre">draw_graph()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.utils.show_graph"><code class="docutils literal notranslate"><span class="pre">show_graph()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-kgraph.verification">kgraph.verification module</a><ul>
+<li><a class="reference internal" href="#kgraph.verification.eval_edge"><code class="docutils literal notranslate"><span class="pre">eval_edge()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.verification.verify_proposition"><code class="docutils literal notranslate"><span class="pre">verify_proposition()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-kgraph.wiki_KG">kgraph.wiki_KG module</a><ul>
+<li><a class="reference internal" href="#kgraph.wiki_KG.check_KG_cache"><code class="docutils literal notranslate"><span class="pre">check_KG_cache()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.wiki_KG.get_wikipedia_page_text"><code class="docutils literal notranslate"><span class="pre">get_wikipedia_page_text()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.wiki_KG.save_KG_cache"><code class="docutils literal notranslate"><span class="pre">save_KG_cache()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.wiki_KG.wiki_summary_to_kb"><code class="docutils literal notranslate"><span class="pre">wiki_summary_to_kb()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-kgraph">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">kgraph</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">kgraph package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/kgraph.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="kgraph-package">
+<h1>kgraph package<a class="headerlink" href="#kgraph-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-kgraph.generator">
+<span id="kgraph-generator-module"></span><h2>kgraph.generator module<a class="headerlink" href="#module-kgraph.generator" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.generator.extract_relations_from_model_output">
+<span class="sig-prename descclassname"><span class="pre">kgraph.generator.</span></span><span class="sig-name descname"><span class="pre">extract_relations_from_model_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.generator.extract_relations_from_model_output" title="Link to this definition"></a></dt>
+<dd><p>Function to process the output string of the REBEL model and extract RDF-style triplets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Output from the REBEL model.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>relations</strong> – List of RDF-style triplets.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.generator.from_dot_to_kb">
+<span class="sig-prename descclassname"><span class="pre">kgraph.generator.</span></span><span class="sig-name descname"><span class="pre">from_dot_to_kb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB"><span class="pre">KB</span></a></span></span><a class="headerlink" href="#kgraph.generator.from_dot_to_kb" title="Link to this definition"></a></dt>
+<dd><p>Function to create KB from a dot file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_file</strong> (<em>str</em>) – Path of input dot file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>kb</strong> – KB created from dot file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB">KB</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.generator.from_text_to_kb">
+<span class="sig-prename descclassname"><span class="pre">kgraph.generator.</span></span><span class="sig-name descname"><span class="pre">from_text_to_kb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">span_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB"><span class="pre">KB</span></a></span></span><a class="headerlink" href="#kgraph.generator.from_text_to_kb" title="Link to this definition"></a></dt>
+<dd><p>Convert text to a knowledge graph using REBEL model.
+If the length of <cite>text</cite> is greater than or equal to <cite>span_length</cite>,
+the text is divided into several parts for processing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – Input text, should be written in English.</p></li>
+<li><p><strong>span_length</strong> (<em>int</em><em> (</em><em>optional</em><em>)</em>) – The maximum length of each span. Default is 128.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em> (</em><em>optional</em><em>)</em>) – If True, print the process of REBEL. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>kb</strong> – A knowledge graph of extracted relations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB">KB</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>MPS execution seems not to be supported for REBEL.</p>
+</dd></dl>
+
+</section>
+<section id="module-kgraph.main">
+<span id="kgraph-main-module"></span><h2>kgraph.main module<a class="headerlink" href="#module-kgraph.main" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="kgraph.main.KB">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kgraph.main.</span></span><span class="sig-name descname"><span class="pre">KB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kgraph.main.KB" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="kgraph.main.KB.add_relation">
+<span class="sig-name descname"><span class="pre">add_relation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kgraph.main.KB.add_relation" title="Link to this definition"></a></dt>
+<dd><p>Add a single triplet relation <cite>r</cite> to KB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>r</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – Triplet relation for adding.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>If <cite>r</cite> already exists in KB, this method only update <cite>meta</cite> information of existing triplet.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kgraph.main.KB.are_relations_equal">
+<span class="sig-name descname"><span class="pre">are_relations_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kgraph.main.KB.are_relations_equal" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kgraph.main.KB.exists_relation">
+<span class="sig-name descname"><span class="pre">exists_relation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kgraph.main.KB.exists_relation" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kgraph.main.KB.get_degree">
+<span class="sig-name descname"><span class="pre">get_degree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'both'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'in'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'out'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'both'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.main.KB.get_degree" title="Link to this definition"></a></dt>
+<dd><p>Method to get degrees of all nodes in KB.
+In order to limit edge direction, set <cite>direction</cite> as <cite>in</cite> or <cite>out</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>direction</strong> (<em>Literal</em><em>[</em><em>&quot;both&quot;</em><em>,</em><em>&quot;in&quot;</em><em>,</em><em>&quot;out&quot;</em><em>]</em>) – Option for edge direction. (“both” | “in” | “out”)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>degrees</strong> – Dictionary of node degrees in KB.
+Nodes are reversely sorted by their degrees.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kgraph.main.KB.get_max_degree">
+<span class="sig-name descname"><span class="pre">get_max_degree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#kgraph.main.KB.get_max_degree" title="Link to this definition"></a></dt>
+<dd><p>Get max degree of KB</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kgraph.main.KB.get_nodes">
+<span class="sig-name descname"><span class="pre">get_nodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.main.KB.get_nodes" title="Link to this definition"></a></dt>
+<dd><p>Return a list of node labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node_list</strong> – List of node labels.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Even if a node appears in multiple relations, its label appears only once in output list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kgraph.main.KB.get_relations_between">
+<span class="sig-name descname"><span class="pre">get_relations_between</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.main.KB.get_relations_between" title="Link to this definition"></a></dt>
+<dd><p>Acquire realtions which has <cite>hd</cite> as head and <cite>tl</cite> as tail.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hd</strong> (<em>str</em>) – Node label of head.</p></li>
+<li><p><strong>tl</strong> (<em>str</em>) – Node label of tail.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>result</strong> – Relations between <cite>hd</cite> and <cite>tl</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict[str,str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kgraph.main.KB.get_relations_from">
+<span class="sig-name descname"><span class="pre">get_relations_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.main.KB.get_relations_from" title="Link to this definition"></a></dt>
+<dd><p>Return all relations whose HEAD is <cite>node_label</cite></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kgraph.main.KB.get_relations_to">
+<span class="sig-name descname"><span class="pre">get_relations_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.main.KB.get_relations_to" title="Link to this definition"></a></dt>
+<dd><p>Return all relations whose TAIL is <cite>node_label</cite></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kgraph.main.KB.select_where">
+<span class="sig-name descname"><span class="pre">select_where</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kgraph.main.KB.select_where" title="Link to this definition"></a></dt>
+<dd><p>Extract a subgraph of KB whose node labels are in <cite>nodes</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nodes</strong> (<em>list</em><em>[</em><em>dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em><em>]</em>) – List of nodes to remain.</p></li>
+<li><p><strong>strict</strong> (<em>bool</em>) – If <cite>strict</cite> were true, this method returns relationship whose “head” and “tail” are
+BOTH included in <cite>nodes</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method DELTES the remaining part of <cite>KB</cite> whose node labels are not in <cite>nodes</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kgraph.main.KB.write_dot">
+<span class="sig-name descname"><span class="pre">write_dot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kgraph.main.KB.write_dot" title="Link to this definition"></a></dt>
+<dd><p>Save KB as DOT file in the current directory with name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>output_file</strong> (<em>str</em>) – Path of output dot file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-kgraph.operators">
+<span id="kgraph-operators-module"></span><h2>kgraph.operators module<a class="headerlink" href="#module-kgraph.operators" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.operators.join">
+<span class="sig-prename descclassname"><span class="pre">kgraph.operators.</span></span><span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB"><span class="pre">KB</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">g2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB"><span class="pre">KB</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB"><span class="pre">KB</span></a></span></span><a class="headerlink" href="#kgraph.operators.join" title="Link to this definition"></a></dt>
+<dd><p>Join two knowledge graphs and return a new <cite>KB</cite> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>g1</strong> (<a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB"><em>KB</em></a>) – Two knowledge graphs to join.</p></li>
+<li><p><strong>g2</strong> (<a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB"><em>KB</em></a>) – Two knowledge graphs to join.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>joined_kb</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB">KB</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-kgraph.rebel">
+<span id="kgraph-rebel-module"></span><h2>kgraph.rebel module<a class="headerlink" href="#module-kgraph.rebel" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.rebel.extract_triples">
+<span class="sig-prename descclassname"><span class="pre">kgraph.rebel.</span></span><span class="sig-name descname"><span class="pre">extract_triples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.rebel.extract_triples" title="Link to this definition"></a></dt>
+<dd><p>Extracts triplets from a list of text strings.</p>
+<p>The function processes each text string in the input list and extracts triplets
+using the <cite>preds_to_triples</cite> function. The results are returned as a list
+of dictionaries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>texts</strong> (<em>list</em><em> of </em><em>str</em>) – A list of input text strings containing triplet information with specific markers.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of dictionaries where each dictionary represents a triplet with the keys:
+- ‘head’: The subject of the triplet.
+- ‘type’: The relation of the triplet.
+- ‘tail’: The object of the triplet.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict[str, str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.rebel.preds_to_triples">
+<span class="sig-prename descclassname"><span class="pre">kgraph.rebel.</span></span><span class="sig-name descname"><span class="pre">preds_to_triples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.rebel.preds_to_triples" title="Link to this definition"></a></dt>
+<dd><p>Extracts triplets from a given preds string.</p>
+<p>The function parses a specially formatted preds to extract triplets in the form of
+(subject, relation, object). The preds is expected to contain specific markers
+such as <cite>&lt;triplet&gt;</cite>, <cite>&lt;subj&gt;</cite>, and <cite>&lt;obj&gt;</cite> to denote the structure of the triplets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>preds</strong> (<em>str</em>) – The input preds containing triplet information with specific markers.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of dictionaries where each dictionary represents a triplet with the keys:
+- ‘head’: The subject of the triplet.
+- ‘type’: The relation of the triplet.
+- ‘tail’: The object of the triplet.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict[str, str]]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The function removes special tokens like <cite>&lt;s&gt;</cite>, <cite>&lt;pad&gt;</cite>, and <cite>&lt;/s&gt;</cite> from the input preds.</p></li>
+<li><p>If the input preds does not follow the expected format, the behavior of the function
+may be undefined.</p></li>
+<li><p>Leading and trailing whitespace is stripped from the subject, relation, and object
+in each triplet.</p></li>
+</ul>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">preds</span> <span class="o">=</span> <span class="s2">&quot;&lt;triplet&gt; &lt;subj&gt; Alice &lt;obj&gt; knows &lt;triplet&gt; &lt;subj&gt; Bob &lt;obj&gt; likes&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">extract_triplets</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span>
+<span class="go">[{&#39;head&#39;: &#39;Alice&#39;, &#39;type&#39;: &#39;knows&#39;, &#39;tail&#39;: &#39;&#39;},</span>
+<span class="go"> {&#39;head&#39;: &#39;Bob&#39;, &#39;type&#39;: &#39;likes&#39;, &#39;tail&#39;: &#39;&#39;}]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-kgraph.subnodes">
+<span id="kgraph-subnodes-module"></span><h2>kgraph.subnodes module<a class="headerlink" href="#module-kgraph.subnodes" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.subnodes.calculate_score">
+<span class="sig-prename descclassname"><span class="pre">kgraph.subnodes.</span></span><span class="sig-name descname"><span class="pre">calculate_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matching</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#kgraph.subnodes.calculate_score" title="Link to this definition"></a></dt>
+<dd><p>Function to calculate matching score for graph <cite>G</cite> by summing up edge weight in <cite>matching</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>G</strong> (<em>nx.Graph</em>) – Undirected weighted graph.</p></li>
+<li><p><strong>matching</strong> (<em>set</em><em>[</em><em>tuple</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em><em>]</em>) – Set of matching nodes. Each tuple has two node lables to represent a matching.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.subnodes.find_best_matching">
+<span class="sig-prename descclassname"><span class="pre">kgraph.subnodes.</span></span><span class="sig-name descname"><span class="pre">find_best_matching</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Vp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Vk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.subnodes.find_best_matching" title="Link to this definition"></a></dt>
+<dd><p>Find the best matching in bipartite graph B = (Vp, Vk), which maximize the label similarity between nodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Vp</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>)</p></li>
+<li><p><strong>Vk</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>)</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>matching</strong> (<em>set[tuple[str]]</em>)</p></li>
+<li><p><strong>score</strong> (<em>float</em>) – Sum of label similarities in <cite>matching</cite>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.subnodes.get_identical_nodes">
+<span class="sig-prename descclassname"><span class="pre">kgraph.subnodes.</span></span><span class="sig-name descname"><span class="pre">get_identical_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Vk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Vp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.subnodes.get_identical_nodes" title="Link to this definition"></a></dt>
+<dd><p>Acquire identical nodes between 2 node groups.
+This function considers following nodes as identical.
+- Nodes with the same labels
+- Nodes linked to the same Wikipedia page</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Vk</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>)</p></li>
+<li><p><strong>Vp</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – List of node labels.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>Vp_identical</strong> (<em>list[str]</em>)</p></li>
+<li><p><strong>Vk_identical</strong> (<em>list[str]</em>) – List of identical nodes in Vp|Vk.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.subnodes.get_subgraph_nodes">
+<span class="sig-prename descclassname"><span class="pre">kgraph.subnodes.</span></span><span class="sig-name descname"><span class="pre">get_subgraph_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Vk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Vp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.subnodes.get_subgraph_nodes" title="Link to this definition"></a></dt>
+<dd><p>A function to extract a subset of nodes from the knowledge graph
+that correspond to the nodes in the propositional graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Vk</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Node set of the knowledge graph.</p></li>
+<li><p><strong>Vp</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Node set of the propositional graph. The number of elements in <cite>Vp</cite> must be less than or equal to <cite>Vk</cite>.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>subnodes</strong> (<em>list[str]</em>) – Subset of nodes from the knowledge graph.</p></li>
+<li><p><strong>Vp</strong> (<em>list[str]</em>) – <cite>Vp</cite> reordered to correspond to the order of <cite>subnodes</cite>.</p></li>
+<li><p><strong>score</strong> (<em>float</em>) – Average node label similarity score.
+Takes a value between 0 and 1, where a higher value indicates better node name matching.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-kgraph.utils">
+<span id="kgraph-utils-module"></span><h2>kgraph.utils module<a class="headerlink" href="#module-kgraph.utils" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.utils.colorize">
+<span class="sig-prename descclassname"><span class="pre">kgraph.utils.</span></span><span class="sig-name descname"><span class="pre">colorize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#kgraph.utils.colorize" title="Link to this definition"></a></dt>
+<dd><p>Function for printing coloured text to standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – Output text.</p></li>
+<li><p><strong>color_code</strong> (<em>int</em>) – See following link for color samples:
+<a class="reference external" href="https://www.python.ambitious-engineer.com/wp-content/uploads/2021/11/print_color_samples.png">https://www.python.ambitious-engineer.com/wp-content/uploads/2021/11/print_color_samples.png</a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><cite>text</cite> with color information</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.utils.draw_graph">
+<span class="sig-prename descclassname"><span class="pre">kgraph.utils.</span></span><span class="sig-name descname"><span class="pre">draw_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB"><span class="pre">KB</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#kgraph.utils.draw_graph" title="Link to this definition"></a></dt>
+<dd><p>This functiion takes RDF relations and creates an HTML file for graph visualization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>realations</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>)</p></li>
+<li><p><strong>title</strong> (<em>str</em>)</p></li>
+<li><p><strong>outdir</strong> (<em>str</em><em> (</em><em>optional</em><em>)</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None. However, this function generates an HTML file during execution.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.utils.show_graph">
+<span class="sig-prename descclassname"><span class="pre">kgraph.utils.</span></span><span class="sig-name descname"><span class="pre">show_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB"><span class="pre">KB</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'network.html'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kgraph.utils.show_graph" title="Link to this definition"></a></dt>
+<dd><p>Function to visualize Knolege Graph in jupyter notebook.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>kb</strong> (<a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB"><em>KB</em></a>) – KB which stores knowledge graph.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-kgraph.verification">
+<span id="kgraph-verification-module"></span><h2>kgraph.verification module<a class="headerlink" href="#module-kgraph.verification" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.verification.eval_edge">
+<span class="sig-prename descclassname"><span class="pre">kgraph.verification.</span></span><span class="sig-name descname"><span class="pre">eval_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">e1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#kgraph.verification.eval_edge" title="Link to this definition"></a></dt>
+<dd><p>Function to evaluate similarity between two edge labels</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.verification.verify_proposition">
+<span class="sig-prename descclassname"><span class="pre">kgraph.verification.</span></span><span class="sig-name descname"><span class="pre">verify_proposition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">PG</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB"><span class="pre">KB</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">KG</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB"><span class="pre">KB</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.verification.verify_proposition" title="Link to this definition"></a></dt>
+<dd><p>Function to verify truthfullness of <cite>PG</cite> based on facts in <cite>KG</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>PG</strong> (<a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB"><em>KB</em></a>)</p></li>
+<li><p><strong>KG</strong> (<a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB"><em>KB</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>verify_score</strong> (<em>float</em>) – Number of verified relations divided by number of all relations in PG.</p></li>
+<li><p><strong>verified_rels</strong> (<em>list[dict[str,str]]</em>) – List of verified edges.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-kgraph.wiki_KG">
+<span id="kgraph-wiki-kg-module"></span><h2>kgraph.wiki_KG module<a class="headerlink" href="#module-kgraph.wiki_KG" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.wiki_KG.check_KG_cache">
+<span class="sig-prename descclassname"><span class="pre">kgraph.wiki_KG.</span></span><span class="sig-name descname"><span class="pre">check_KG_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB"><span class="pre">KB</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.wiki_KG.check_KG_cache" title="Link to this definition"></a></dt>
+<dd><p>Check cache directory for KG with given title.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>kb</strong> (<em>KB</em>) – KB constructed from KG cache.</p></li>
+<li><p><strong>url</strong> (<em>str</em>) – URL of Wikipedia page which was used to create KG cache.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.wiki_KG.get_wikipedia_page_text">
+<span class="sig-prename descclassname"><span class="pre">kgraph.wiki_KG.</span></span><span class="sig-name descname"><span class="pre">get_wikipedia_page_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'en'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.wiki_KG.get_wikipedia_page_text" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the summary of a Wikipedia page with the specified title and returns the text and page URL.
+If the page does not exist, returns a tuple of <cite>None</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<em>str</em>) – Title of the Wikipedia page.</p></li>
+<li><p><strong>language</strong> (<em>str</em>) – Language code for Wikipedia (default is English: ‘en’).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>summary</strong> (<em>str</em>) – The text of the Wikipedia page summary.</p></li>
+<li><p><strong>fullurl</strong> (<em>str</em>) – The URL of the Wikipedia page.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.wiki_KG.save_KG_cache">
+<span class="sig-prename descclassname"><span class="pre">kgraph.wiki_KG.</span></span><span class="sig-name descname"><span class="pre">save_KG_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'head'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'type'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'tail'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'meta'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kgraph.wiki_KG.save_KG_cache" title="Link to this definition"></a></dt>
+<dd><p>Create KG cache as json files in specified directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<em>str</em>) – Title of Wikipedia page</p></li>
+<li><p><strong>url</strong> (<em>str</em>) – URL of Wikipedia page</p></li>
+<li><p><strong>relations</strong> (<em>list</em><em>[</em><em>dict</em><em>[</em><em>Literal</em><em>[</em><em>&quot;head&quot;</em><em>, </em><em>&quot;type&quot;</em><em>, </em><em>&quot;tail&quot;</em><em>]</em><em>, </em><em>str</em><em>]</em><em>]</em>) – KG relations to save.</p></li>
+<li><p><strong>cache_directory</strong> (<em>str</em>) – Specify cache directory.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.wiki_KG.wiki_summary_to_kb">
+<span class="sig-prename descclassname"><span class="pre">kgraph.wiki_KG.</span></span><span class="sig-name descname"><span class="pre">wiki_summary_to_kb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">page_title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/github/mcq-generator/KG_cache'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB"><span class="pre">KB</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.wiki_KG.wiki_summary_to_kb" title="Link to this definition"></a></dt>
+<dd><p>Construct a KG from Wikipedia page of given title.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>page_title</strong> (<em>str</em>) – Title of Wikipedia page.</p></li>
+<li><p><strong>save_cache</strong> (<em>bool</em>) – If <cite>True</cite>, this function generates KG cache in specified directory.</p></li>
+<li><p><strong>cache_directory</strong> (<em>str</em>) – Path of KG cache directory.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>kb</strong> (<em>KB</em>) – Knowledge graph constructed from given Wikipedia page.</p></li>
+<li><p><strong>page_text</strong> (<em>str</em>) – English text of summary part in Wikipedia.</p></li>
+<li><p><strong>page_url</strong> (<em>str</em>) – URL of Wikipedia page.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-kgraph">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-kgraph" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Naoki Shimoda.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

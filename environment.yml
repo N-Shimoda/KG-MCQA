@@ -1,0 +1,24 @@
+name: kg-mcqa
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  # General
+  - python==3.11  # for PyTorch stability
+  - matplotlib
+  - pandas
+  - pyvis
+  - prettytable
+  - pip
+  # Machine Learning
+  - pytorch
+  - transformers==4.44
+  - sentence-transformers
+  # API
+  - wikipedia-api
+  # Development
+  - ipykernel
+  - cython # for building kgraph library
+  - pytest
+  - sphinx
+  - myst-parser
