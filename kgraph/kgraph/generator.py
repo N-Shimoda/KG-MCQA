@@ -27,17 +27,14 @@ def from_dot_to_kb(input_file: str) -> KB:
     with open(input_file, "r") as file:
         dot_content = file.read()
 
-    # 正規表現を使用してDOTファイルからノードとエッジの情報を抽出
-    # node_pattern = re.compile(r'"([^"]+)"')
+    # Use regular expressions to extract node and edge information from the DOT file
+    # Pattern to match edges with labels
     edge_pattern = re.compile(r'"([^"]+)" -> "([^"]+)" \[label="([^"]+)"\]')
 
-    # ノード情報を抽出
-    # nodes = node_pattern.findall(dot_content)
-
-    # エッジ情報を抽出
+    # Extract edge information
     edges = edge_pattern.findall(dot_content)
 
-    # エッジ情報からRDF形式の関係を生成
+    # Generate RDF-style relations from edge information
     for subject, obj, predicate in edges:
         relations.append({"head": subject, "type": predicate, "tail": obj, "span": None})
 

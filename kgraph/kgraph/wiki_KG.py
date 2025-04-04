@@ -144,22 +144,22 @@ def check_KG_cache(title: str, cache_directory: str) -> tuple[KB, str] | tuple[N
 
 def get_wikipedia_page_text(title, language="en") -> tuple[str, str]:
     """
-    Wikipediaから指定したタイトルのページの概要 (summary) を取得し、テキストとページ URL を返す関数。
-    ページが存在しなかった場合、`None`の組を返す。
+    Retrieves the summary of a Wikipedia page with the specified title and returns the text and page URL.
+    If the page does not exist, returns a tuple of `None`.
 
     Parameters
     ----------
     title: str
-        Wikipediaページのタイトル
+        Title of the Wikipedia page.
     language: str
-        Wikipediaの言語コード（デフォルトは英語: 'en'）
+        Language code for Wikipedia (default is English: 'en').
 
     Returns
     -------
     summary: str
-        Wikipediaページの本文テキスト
+        The text of the Wikipedia page summary.
     fullurl: str
-        WikipediaページのURL
+        The URL of the Wikipedia page.
     """
     wiki_wiki = wikipediaapi.Wikipedia(
         language=language,

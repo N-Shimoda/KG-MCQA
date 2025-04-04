@@ -9,24 +9,26 @@ def get_subgraph_nodes(
     Vk: list[str], Vp: list[str], verbose=False
 ) -> tuple[list[str], list[str], float]:
     """
-    知識グラフのノードから、命題グラフのノードに対応する部分集合を取り出す関数。
+    A function to extract a subset of nodes from the knowledge graph
+    that correspond to the nodes in the propositional graph.
 
     Parameters
     ----------
     Vk: list[str]
-        知識グラフのノード集合
+        Node set of the knowledge graph.
     Vp: list[str]
-        命題グラフのノード集合。`Vp` の要素数は `Vk` 以下である必要がある。
+        Node set of the propositional graph. The number of elements in `Vp` must be less than or equal to `Vk`.
     verbose: bool
 
     Returns
     -------
     subnodes: list[str]
-        部分グラフのノード集合
+        Subset of nodes from the knowledge graph.
     Vp: list[str]
-        順序が `subnodes` と対応するように `Vp` を並び替えたもの。
+        `Vp` reordered to correspond to the order of `subnodes`.
     score: float
-        ノードラベル類似度のノード数平均値。0~1 の値をとり、高いほどノード名が一致することを表す。
+        Average node label similarity score.
+        Takes a value between 0 and 1, where a higher value indicates better node name matching.
     """
     if not len(Vk) > 0 and len(Vp) > 0:
         raise ValueError("The number of nodes must be greater than 0.")
@@ -191,17 +193,17 @@ def calculate_score(G: nx.Graph, matching: set[tuple[str, str]]) -> float:
 
 if __name__ == "__main__":
 
-    # 完全一致
+    # Perfect matching
     Vk = ["A", "B", "C", "D", "E"]
     Vp = ["A", "B", "C", "D", "E"]
     get_subgraph_nodes(Vk, Vp, verbose=True)
 
-    # 「神の見えざる手」の例
+    # Example of "The Invisible Hand"
     Vk = ["The Wealth of Nations", "Adam Smith", "1776", "classical economics"]  # KG
     Vp = ["The Wealth of Nations", "Adam Smith", "market economy"]  # PG
     get_subgraph_nodes(Vk, Vp, verbose=True)
 
-    # "Woodwinds" の例
+    # Example of "Woodwinds"
     Vk = [
         "ocarina",
         "woodwind",
@@ -218,7 +220,7 @@ if __name__ == "__main__":
     Vp = ["flute", "oboe", "clarinet", "bassoon", "woodwinds", "woodwind"]
     get_subgraph_nodes(Vk, Vp, verbose=True)
 
-    # "Bill Gates" の例
+    # Example of "Bill Gates"
     Vk = ["Bill & Melinda Gates Foundation", "William Henry Gates III", "Microsoft Corporation"]
     Vp = ["Bill Gates", "Microsoft"]
     get_subgraph_nodes(Vk, Vp, verbose=True)
