@@ -142,17 +142,17 @@ def from_text_to_kb(text: str, span_length=128, verbose=False) -> KB:
 
 def extract_relations_from_model_output(text: str) -> list[dict]:
     """
-    REBELモデルの出力文字列を成形し、RDF形式の3つ組として出力する関数（多分）。
+    Function to process the output string of the REBEL model and extract RDF-style triplets.
 
     Parameter
     ---------
     text: str
-        REBELモデルの出力
+        Output from the REBEL model.
 
     Return
     ------
     relations: list[dict]
-        RDF形式の3つ組のリスト
+        List of RDF-style triplets.
     """
 
     relations = []
