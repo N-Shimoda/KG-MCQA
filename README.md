@@ -11,3 +11,11 @@
    pip install ./kgraph
    ```
    Be sure that the 3rd argument `./kgraph` specifies `kg-mcqa/kgraph` directory, not the `kgraph` library from PyPI.
+
+## Test
+
+You can run a simple test with PyTest.
+
+```shell
+pytest ./kgraph
+```
