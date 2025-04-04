@@ -28,6 +28,14 @@ kgraph.operators module
    :undoc-members:
    :show-inheritance:
 
+kgraph.rebel module
+-------------------
+
+.. automodule:: kgraph.rebel
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 kgraph.subnodes module
 ----------------------
 

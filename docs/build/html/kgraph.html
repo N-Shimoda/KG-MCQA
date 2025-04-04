@@ -73,6 +73,11 @@
 <li><a class="reference internal" href="#kgraph.operators.join"><code class="docutils literal notranslate"><span class="pre">join()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#module-kgraph.rebel">kgraph.rebel module</a><ul>
+<li><a class="reference internal" href="#kgraph.rebel.extract_triples"><code class="docutils literal notranslate"><span class="pre">extract_triples()</span></code></a></li>
+<li><a class="reference internal" href="#kgraph.rebel.preds_to_triples"><code class="docutils literal notranslate"><span class="pre">preds_to_triples()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-kgraph.subnodes">kgraph.subnodes module</a><ul>
 <li><a class="reference internal" href="#kgraph.subnodes.calculate_score"><code class="docutils literal notranslate"><span class="pre">calculate_score()</span></code></a></li>
 <li><a class="reference internal" href="#kgraph.subnodes.find_best_matching"><code class="docutils literal notranslate"><span class="pre">find_best_matching()</span></code></a></li>
@@ -347,6 +352,70 @@ BOTH included in <cite>nodes</cite>.</p></li>
 <dd class="field-odd"><p><a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB">KB</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+</section>
+<section id="module-kgraph.rebel">
+<span id="kgraph-rebel-module"></span><h2>kgraph.rebel module<a class="headerlink" href="#module-kgraph.rebel" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.rebel.extract_triples">
+<span class="sig-prename descclassname"><span class="pre">kgraph.rebel.</span></span><span class="sig-name descname"><span class="pre">extract_triples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.rebel.extract_triples" title="Link to this definition"></a></dt>
+<dd><p>Extracts triplets from a list of text strings.</p>
+<p>The function processes each text string in the input list and extracts triplets
+using the <cite>preds_to_triples</cite> function. The results are returned as a list
+of dictionaries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>texts</strong> (<em>list</em><em> of </em><em>str</em>) – A list of input text strings containing triplet information with specific markers.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of dictionaries where each dictionary represents a triplet with the keys:
+- ‘head’: The subject of the triplet.
+- ‘type’: The relation of the triplet.
+- ‘tail’: The object of the triplet.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict[str, str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kgraph.rebel.preds_to_triples">
+<span class="sig-prename descclassname"><span class="pre">kgraph.rebel.</span></span><span class="sig-name descname"><span class="pre">preds_to_triples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.rebel.preds_to_triples" title="Link to this definition"></a></dt>
+<dd><p>Extracts triplets from a given preds string.</p>
+<p>The function parses a specially formatted preds to extract triplets in the form of
+(subject, relation, object). The preds is expected to contain specific markers
+such as <cite>&lt;triplet&gt;</cite>, <cite>&lt;subj&gt;</cite>, and <cite>&lt;obj&gt;</cite> to denote the structure of the triplets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>preds</strong> (<em>str</em>) – The input preds containing triplet information with specific markers.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of dictionaries where each dictionary represents a triplet with the keys:
+- ‘head’: The subject of the triplet.
+- ‘type’: The relation of the triplet.
+- ‘tail’: The object of the triplet.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict[str, str]]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The function removes special tokens like <cite>&lt;s&gt;</cite>, <cite>&lt;pad&gt;</cite>, and <cite>&lt;/s&gt;</cite> from the input preds.</p></li>
+<li><p>If the input preds does not follow the expected format, the behavior of the function
+may be undefined.</p></li>
+<li><p>Leading and trailing whitespace is stripped from the subject, relation, and object
+in each triplet.</p></li>
+</ul>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">preds</span> <span class="o">=</span> <span class="s2">&quot;&lt;triplet&gt; &lt;subj&gt; Alice &lt;obj&gt; knows &lt;triplet&gt; &lt;subj&gt; Bob &lt;obj&gt; likes&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">extract_triplets</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span>
+<span class="go">[{&#39;head&#39;: &#39;Alice&#39;, &#39;type&#39;: &#39;knows&#39;, &#39;tail&#39;: &#39;&#39;},</span>
+<span class="go"> {&#39;head&#39;: &#39;Bob&#39;, &#39;type&#39;: &#39;likes&#39;, &#39;tail&#39;: &#39;&#39;}]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
