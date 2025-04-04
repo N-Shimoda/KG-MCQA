@@ -23,4 +23,4 @@ def analyze_questions(filename: str):
 
 
 if __name__ == "__main__":
-    analyze_questions(filename="dataset/mcqs.json")
+    analyze_questions(filename="dataset/MCQs.json")

@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 90%;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "orange", "id": "Gaius Julius Caesar", "label": "Gaius Julius Caesar", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "First Triumvirate", "label": "First Triumvirate", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Gallic Wars", "label": "Gallic Wars", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "dictator", "label": "dictator", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Pompey", "label": "Pompey", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Crassus", "label": "Crassus", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Roman Republic", "label": "Roman Republic", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "built a bridge", "label": "built a bridge", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Rhine", "label": "Rhine", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "invaded Britain", "label": "invaded Britain", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "crossing the Rubicon", "label": "crossing the Rubicon", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Caesar\u0027s civil war", "label": "Caesar\u0027s civil war", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "crossed the Rubicon", "label": "crossed the Rubicon", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Julian calendar", "label": "Julian calendar", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "lunisolar calendar", "label": "lunisolar calendar", "shape": "dot", "size": 10}, {"color": "orange", "id": "assassinated Caesar", "label": "assassinated Caesar", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Brutus", "label": "Brutus", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Cassius", "label": "Cassius", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Ides of March", "label": "Ides of March", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "emperor", "label": "emperor", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "cognomen", "label": "cognomen", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Kaiser", "label": "Kaiser", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Tsar", "label": "Tsar", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Augustus", "label": "Augustus", "shape": "dot", "size": 10}, {"color": "orange", "id": "Rome", "label": "Rome", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "capital city", "label": "capital city", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Lazio", "label": "Lazio", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Metropolitan City of Rome Capital", "label": "Metropolitan City of Rome Capital", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Comune di Roma Capitale", "label": "Comune di Roma Capitale", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Vatican City", "label": "Vatican City", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Holy See", "label": "Holy See", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Catholic Church", "label": "Catholic Church", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Roman Empire", "label": "Roman Empire", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Papacy", "label": "Papacy", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Papal States", "label": "Papal States", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Renaissance", "label": "Renaissance", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Baroque", "label": "Baroque", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Baroque style", "label": "Baroque style", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Neoclassicism", "label": "Neoclassicism", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "1960 Summer Olympics", "label": "1960 Summer Olympics", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "1960", "label": "1960", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "World Heritage Site", "label": "World Heritage Site", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "UNESCO", "label": "UNESCO", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Fendi", "label": "Fendi", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Palazzo della Civilt\u00e0 Italiana", "label": "Palazzo della Civilt\u00e0 Italiana", "shape": "dot", "size": 10}, {"color": "orange", "id": "Assassination", "label": "Assassination", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "killing", "label": "killing", "shape": "dot", "size": 10}, {"color": "orange", "id": "assassination", "label": "assassination", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"arrows": "to", "color": "gray", "from": "Gaius Julius Caesar", "title": "member of", "to": "First Triumvirate"}, {"arrows": "to", "color": "gray", "from": "Gaius Julius Caesar", "title": "conflict", "to": "Gallic Wars"}, {"arrows": "to", "color": "gray", "from": "Gaius Julius Caesar", "title": "position held", "to": "dictator"}, {"arrows": "to", "color": "gray", "from": "First Triumvirate", "title": "has part", "to": "Gaius Julius Caesar"}, {"arrows": "to", "color": "gray", "from": "First Triumvirate", "title": "has part", "to": "Pompey"}, {"arrows": "to", "color": "gray", "from": "First Triumvirate", "title": "has part", "to": "Crassus"}, {"arrows": "to", "color": "gray", "from": "Gallic Wars", "title": "participant", "to": "Gaius Julius Caesar"}, {"arrows": "to", "color": "gray", "from": "Pompey", "title": "member of", "to": "First Triumvirate"}, {"arrows": "to", "color": "gray", "from": "Pompey", "title": "member", "to": "First Triumvirate"}, {"arrows": "to", "color": "gray", "from": "Gallic Wars", "title": "participant", "to": "Roman Republic"}, {"arrows": "to", "color": "gray", "from": "built a bridge", "title": "crosses", "to": "Rhine"}, {"arrows": "to", "color": "gray", "from": "invaded Britain", "title": "part of", "to": "Gallic Wars"}, {"arrows": "to", "color": "gray", "from": "crossing the Rubicon", "title": "part of", "to": "Caesar\u0027s civil war"}, {"arrows": "to", "color": "gray", "from": "crossed the Rubicon", "title": "part of", "to": "Caesar\u0027s civil war"}, {"arrows": "to", "color": "gray", "from": "Caesar\u0027s civil war", "title": "has part", "to": "crossing the Rubicon"}, {"arrows": "to", "color": "gray", "from": "Julian calendar", "title": "replaces", "to": "lunisolar calendar"}, {"arrows": "to", "color": "gray", "from": "lunisolar calendar", "title": "replaced by", "to": "Julian calendar"}, {"arrows": "to", "color": "gray", "from": "Julian calendar", "title": "based on", "to": "lunisolar calendar"}, {"arrows": "to", "color": "gray", "from": "assassinated Caesar", "title": "participant", "to": "Brutus"}, {"arrows": "to", "color": "gray", "from": "assassinated Caesar", "title": "participant", "to": "Cassius"}, {"arrows": "to", "color": "gray", "from": "assassinated Caesar", "title": "location", "to": "Ides of March"}, {"arrows": "to", "color": "gray", "from": "Brutus", "title": "participant in", "to": "assassinated Caesar"}, {"arrows": "to", "color": "gray", "from": "Cassius", "title": "participant in", "to": "assassinated Caesar"}, {"arrows": "to", "color": "gray", "from": "emperor", "title": "instance of", "to": "cognomen"}, {"arrows": "to", "color": "gray", "from": "Kaiser", "title": "sibling", "to": "Tsar"}, {"arrows": "to", "color": "gray", "from": "Tsar", "title": "sibling", "to": "Kaiser"}, {"arrows": "to", "color": "gray", "from": "Augustus", "title": "position held", "to": "emperor"}, {"arrows": "to", "color": "gray", "from": "Rome", "title": "instance of", "to": "capital city"}, {"arrows": "to", "color": "gray", "from": "Rome", "title": "capital of", "to": "Lazio"}, {"arrows": "to", "color": "gray", "from": "Rome", "title": "located in the administrative territorial entity", "to": "Metropolitan City of Rome Capital"}, {"arrows": "to", "color": "gray", "from": "Lazio", "title": "capital", "to": "Rome"}, {"arrows": "to", "color": "gray", "from": "Lazio", "title": "contains administrative territorial entity", "to": "Metropolitan City of Rome Capital"}, {"arrows": "to", "color": "gray", "from": "Metropolitan City of Rome Capital", "title": "capital", "to": "Rome"}, {"arrows": "to", "color": "gray", "from": "Metropolitan City of Rome Capital", "title": "located in the administrative territorial entity", "to": "Lazio"}, {"arrows": "to", "color": "gray", "from": "Rome", "title": "located in the administrative territorial", "to": "Metropolitan City of Rome Capital"}, {"arrows": "to", "color": "gray", "from": "Rome", "title": "capital of", "to": "Metropolitan City of Rome Capital"}, {"arrows": "to", "color": "gray", "from": "Rome", "title": "contains administrative territorial entity", "to": "Comune di Roma Capitale"}, {"arrows": "to", "color": "gray", "from": "Vatican City", "title": "owned by", "to": "Holy See"}, {"arrows": "to", "color": "gray", "from": "Catholic Church", "title": "headquarters location", "to": "Vatican City"}, {"arrows": "to", "color": "gray", "from": "Catholic Church", "title": "authority", "to": "Holy See"}, {"arrows": "to", "color": "gray", "from": "Holy See", "title": "owner of", "to": "Vatican City"}, {"arrows": "to", "color": "gray", "from": "Holy See", "title": "headquarters location", "to": "Vatican City"}, {"arrows": "to", "color": "gray", "from": "Catholic Church", "title": "headquarters location", "to": "Rome"}, {"arrows": "to", "color": "gray", "from": "Catholic Church", "title": "location of formation", "to": "Rome"}, {"arrows": "to", "color": "gray", "from": "Roman Empire", "title": "capital", "to": "Rome"}, {"arrows": "to", "color": "gray", "from": "Rome", "title": "capital of", "to": "Roman Empire"}, {"arrows": "to", "color": "gray", "from": "Roman Republic", "title": "capital", "to": "Rome"}, {"arrows": "to", "color": "gray", "from": "Papacy", "title": "applies to jurisdiction", "to": "Papal States"}, {"arrows": "to", "color": "gray", "from": "Papal States", "title": "capital", "to": "Rome"}, {"arrows": "to", "color": "gray", "from": "Papal States", "title": "office held by head of the organization", "to": "Papacy"}, {"arrows": "to", "color": "gray", "from": "Renaissance", "title": "followed by", "to": "Baroque"}, {"arrows": "to", "color": "gray", "from": "Baroque", "title": "follows", "to": "Renaissance"}, {"arrows": "to", "color": "gray", "from": "Renaissance", "title": "followed by", "to": "Baroque style"}, {"arrows": "to", "color": "gray", "from": "Baroque style", "title": "follows", "to": "Renaissance"}, {"arrows": "to", "color": "gray", "from": "Baroque style", "title": "followed by", "to": "Neoclassicism"}, {"arrows": "to", "color": "gray", "from": "Neoclassicism", "title": "follows", "to": "Baroque style"}, {"arrows": "to", "color": "gray", "from": "1960 Summer Olympics", "title": "point in time", "to": "1960"}, {"arrows": "to", "color": "gray", "from": "World Heritage Site", "title": "maintained by", "to": "UNESCO"}, {"arrows": "to", "color": "gray", "from": "1960 Summer Olympics", "title": "location", "to": "Rome"}, {"arrows": "to", "color": "gray", "from": "Rome", "title": "significant event", "to": "1960 Summer Olympics"}, {"arrows": "to", "color": "gray", "from": "Fendi", "title": "headquarters location", "to": "Palazzo della Civilt\u00e0 Italiana"}, {"arrows": "to", "color": "gray", "from": "Palazzo della Civilt\u00e0 Italiana", "title": "occupant", "to": "Fendi"}, {"arrows": "to", "color": "gray", "from": "Fendi", "title": "headquarters location", "to": "Rome"}, {"arrows": "to", "color": "gray", "from": "Palazzo della Civilt\u00e0 Italiana", "title": "located in the administrative territorial entity", "to": "Rome"}, {"arrows": "to", "color": "gray", "from": "Assassination", "title": "subclass of", "to": "killing"}, {"arrows": "to", "color": "gray", "dashes": true, "from": "Assassination", "label": "subclass of", "to": "assassination"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

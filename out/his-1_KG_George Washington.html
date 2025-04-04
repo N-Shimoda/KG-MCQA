@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 90%;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "orange", "id": "George Washington", "label": "George Washington", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "February 22, 1732", "label": "February 22, 1732", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "December 14, 1799", "label": "December 14, 1799", "shape": "dot", "size": 10}, {"color": "orange", "id": "president of the United States", "label": "president of the United States", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "American Revolutionary War", "label": "American Revolutionary War", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Founding Father", "label": "Founding Father", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Continental Army", "label": "Continental Army", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "British Empire", "label": "British Empire", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "French and Indian War", "label": "French and Indian War", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Colony of Virginia", "label": "Colony of Virginia", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Siege of Boston", "label": "Siege of Boston", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Trenton", "label": "Trenton", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Princeton", "label": "Princeton", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Brandy", "label": "Brandy", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Treaty of Paris", "label": "Treaty of Paris", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "1783", "label": "1783", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Constitution of the United States", "label": "Constitution of the United States", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Constitutional Convention", "label": "Constitutional Convention", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "1788", "label": "1788", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Electoral College", "label": "Electoral College", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "1792", "label": "1792", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "1796 farewell address", "label": "1796 farewell address", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "1796", "label": "1796", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Mount Vernon", "label": "Mount Vernon", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "national capital", "label": "national capital", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "his namesakes", "label": "his namesakes", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Washington", "label": "Washington", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "executive branch", "label": "executive branch", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "federal government", "label": "federal government", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "head of state", "label": "head of state", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "head of government", "label": "head of government", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "United States", "label": "United States", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "United States Armed Forces", "label": "United States Armed Forces", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "second presidency", "label": "second presidency", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Donald Trump", "label": "Donald Trump", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Article II of the Constitution", "label": "Article II of the Constitution", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "executive branch of the federal government", "label": "executive branch of the federal government", "shape": "dot", "size": 10}, {"color": "orange", "id": "president", "label": "president", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Article I, Section 7 of the Constitution", "label": "Article I, Section 7 of the Constitution", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "separation of powers", "label": "separation of powers", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Article I", "label": "Article I", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Constitution", "label": "Constitution", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Twenty-second Amendment", "label": "Twenty-second Amendment", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "1951", "label": "1951", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"arrows": "to", "color": "gray", "from": "George Washington", "title": "date of birth", "to": "February 22, 1732"}, {"arrows": "to", "color": "gray", "from": "George Washington", "title": "date of death", "to": "December 14, 1799"}, {"arrows": "to", "color": "orange", "from": "George Washington", "label": "position held", "to": "president of the United States"}, {"arrows": "to", "color": "gray", "from": "George Washington", "title": "conflict", "to": "American Revolutionary War"}, {"arrows": "to", "color": "gray", "from": "Founding Father", "title": "has part", "to": "George Washington"}, {"arrows": "to", "color": "gray", "from": "Continental Army", "title": "conflict", "to": "American Revolutionary War"}, {"arrows": "to", "color": "gray", "from": "American Revolutionary War", "title": "participant", "to": "British Empire"}, {"arrows": "to", "color": "gray", "from": "French and Indian War", "title": "participant", "to": "George Washington"}, {"arrows": "to", "color": "gray", "from": "French and Indian War", "title": "location", "to": "Colony of Virginia"}, {"arrows": "to", "color": "gray", "from": "Siege of Boston", "title": "part of", "to": "American Revolutionary War"}, {"arrows": "to", "color": "gray", "from": "Trenton", "title": "part of", "to": "American Revolutionary War"}, {"arrows": "to", "color": "gray", "from": "Princeton", "title": "part of", "to": "American Revolutionary War"}, {"arrows": "to", "color": "gray", "from": "Brandy", "title": "part of", "to": "American Revolutionary War"}, {"arrows": "to", "color": "gray", "from": "Treaty of Paris", "title": "point in time", "to": "1783"}, {"arrows": "to", "color": "gray", "from": "Constitution of the United States", "title": "has cause", "to": "Constitutional Convention"}, {"arrows": "to", "color": "gray", "from": "1788", "title": "appointed by", "to": "Electoral College"}, {"arrows": "to", "color": "gray", "from": "1792", "title": "appointed by", "to": "Electoral College"}, {"arrows": "to", "color": "gray", "from": "1796 farewell address", "title": "publication date", "to": "1796"}, {"arrows": "to", "color": "gray", "from": "1788", "title": "point in time", "to": "1788"}, {"arrows": "to", "color": "gray", "from": "1792", "title": "point in time", "to": "1792"}, {"arrows": "to", "color": "gray", "from": "Mount Vernon", "title": "said to be the same as", "to": "national capital"}, {"arrows": "to", "color": "gray", "from": "national capital", "title": "said to be the same as", "to": "Mount Vernon"}, {"arrows": "to", "color": "gray", "from": "his namesakes", "title": "named after", "to": "Mount Vernon"}, {"arrows": "to", "color": "gray", "from": "Mount Vernon", "title": "occupant", "to": "Washington"}, {"arrows": "to", "color": "gray", "from": "executive branch", "title": "part of", "to": "federal government"}, {"arrows": "to", "color": "gray", "from": "federal government", "title": "has part", "to": "executive branch"}, {"arrows": "to", "color": "gray", "from": "president of the United States", "title": "subclass of", "to": "head of state"}, {"arrows": "to", "color": "gray", "from": "president of the United States", "title": "subclass of", "to": "head of government"}, {"arrows": "to", "color": "gray", "from": "president of the United States", "title": "country", "to": "United States"}, {"arrows": "to", "color": "gray", "from": "head of government", "title": "different from", "to": "head of state"}, {"arrows": "to", "color": "gray", "from": "United States Armed Forces", "title": "country", "to": "United States"}, {"arrows": "to", "color": "gray", "from": "executive branch", "title": "country", "to": "United States"}, {"arrows": "to", "color": "gray", "from": "federal government", "title": "country", "to": "United States"}, {"arrows": "to", "color": "gray", "from": "second presidency", "title": "facet of", "to": "Donald Trump"}, {"arrows": "to", "color": "gray", "from": "Article II of the Constitution", "title": "main subject", "to": "executive branch"}, {"arrows": "to", "color": "gray", "from": "Article II of the Constitution", "title": "main subject", "to": "executive branch of the federal government"}, {"arrows": "to", "color": "gray", "from": "executive branch of the federal government", "title": "has part", "to": "president"}, {"arrows": "to", "color": "gray", "from": "president", "title": "part of", "to": "executive branch of the federal government"}, {"arrows": "to", "color": "gray", "from": "Article I, Section 7 of the Constitution", "title": "main subject", "to": "separation of powers"}, {"arrows": "to", "color": "gray", "from": "Article I", "title": "main subject", "to": "separation of powers"}, {"arrows": "to", "color": "gray", "from": "Article I", "title": "part of", "to": "Constitution"}, {"arrows": "to", "color": "gray", "from": "Constitution", "title": "has part", "to": "Article I"}, {"arrows": "to", "color": "gray", "from": "Donald Trump", "title": "position held", "to": "president"}, {"arrows": "to", "color": "gray", "from": "president", "title": "appointed by", "to": "Electoral College"}, {"arrows": "to", "color": "gray", "from": "Twenty-second Amendment", "title": "inception", "to": "1951"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
