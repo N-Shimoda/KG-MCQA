@@ -1,6 +1,7 @@
 import json
 from collections import defaultdict
 
+
 def analyze_questions(filename: str):
     # Load the JSON file
     with open(filename, "r", encoding="utf-8") as f:
@@ -19,6 +20,7 @@ def analyze_questions(filename: str):
     for category, count in sorted(category_counts.items()):
         print(f"{category}: {count}")
     print("(Total: {})".format(len(data)))
+
 
 if __name__ == "__main__":
     analyze_questions(filename="dataset/mcqs.json")
