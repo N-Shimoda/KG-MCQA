@@ -57,13 +57,13 @@ def from_text_to_kb(text: str, span_length=128, verbose=False) -> KB:
     verbose : bool (optional)
         If True, print the process of REBEL. Default is False.
 
-    Return
-    ------
+    Returns
+    -------
     kb : KB
         A knowledge graph of extracted relations.
 
-    Note
-    ----
+    Notes
+    -----
     MPS execution seems not to be supported for REBEL.
     """
 
@@ -144,13 +144,13 @@ def extract_relations_from_model_output(text: str) -> list[dict]:
     """
     Function to process the output string of the REBEL model and extract RDF-style triplets.
 
-    Parameter
+    Parameters
     ---------
     text: str
         Output from the REBEL model.
 
-    Return
-    ------
+    Returns
+    -------
     relations: list[dict]
         List of RDF-style triplets.
     """

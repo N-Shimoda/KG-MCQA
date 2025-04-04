@@ -138,21 +138,17 @@
 <dt class="sig sig-object py" id="kgraph.generator.extract_relations_from_model_output">
 <span class="sig-prename descclassname"><span class="pre">kgraph.generator.</span></span><span class="sig-name descname"><span class="pre">extract_relations_from_model_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#kgraph.generator.extract_relations_from_model_output" title="Link to this definition"></a></dt>
 <dd><p>Function to process the output string of the REBEL model and extract RDF-style triplets.</p>
-<section id="parameter">
-<h3>Parameter<a class="headerlink" href="#parameter" title="Link to this heading"></a></h3>
-<dl class="simple">
-<dt>text: str</dt><dd><p>Output from the REBEL model.</p>
-</dd>
-</dl>
 <dl class="field-list simple">
-<dt class="field-odd">returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>relations</strong> – List of RDF-style triplets.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Output from the REBEL model.</p>
 </dd>
-<dt class="field-even">rtype<span class="colon">:</span></dt>
-<dd class="field-even"><p>list[dict]</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>relations</strong> – List of RDF-style triplets.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
 </dd>
 </dl>
-</section>
 </dd></dl>
 
 <dl class="py function">
@@ -193,10 +189,8 @@ the text is divided into several parts for processing.</p>
 <dd class="field-odd"><p><a class="reference internal" href="#kgraph.main.KB" title="kgraph.main.KB">KB</a></p>
 </dd>
 </dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<p class="rubric">Notes</p>
 <p>MPS execution seems not to be supported for REBEL.</p>
-</div>
 </dd></dl>
 
 </section>
