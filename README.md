@@ -19,3 +19,12 @@ You can run a simple test with PyTest.
 ```shell
 pytest ./kgraph
 ```
+
+## Documentation
+
+In order to generate docs for the `kgraph` package, please run the following command in `./docs`.
+
+```shell
+sphinx-apidoc -f -o source/ ../kgraph/kgraph/
+make html
+```
