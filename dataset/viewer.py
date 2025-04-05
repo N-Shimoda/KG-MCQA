@@ -1,6 +1,4 @@
 import json
-import re
-from collections import defaultdict
 
 import streamlit as st
 
@@ -13,50 +11,22 @@ def load_data(filename="dataset/MCQs.json"):
     return data
 
 
-# カテゴリの抽出（IDのprefixから推定）
-def extract_categories(data):
-    categories = defaultdict(list)
-    pattern = re.compile(r"^([a-z]+)-\d+$")
-    for item in data:
-        match = pattern.match(item["id"])
-        if match:
-            prefix = match.group(1)
-            categories[prefix].append(item)
-    return dict(categories)
-
-
-# カテゴリ名のマッピング（表示用）
-CATEGORY_NAME_MAP = {
-    "geo": "Geography",
-    "sci": "Science",
-    "his": "History",
-    "mat": "Mathematics",
-    "lit": "Literature & Language",
-    "tech": "Technology & Computing",
-    "art": "Art & Music",
-    "gen": "General Knowledge",
-    "pop": "Pop Culture",
-    "phi": "Philosophy & Logic",
-}
-
-
-# メイン表示
+# メイン表示関数
 def main():
     st.title("Multiple Choice Question Viewer")
 
     data = load_data()
-    categories = extract_categories(data)
 
-    # 選択用カテゴリリスト
-    available_keys = sorted(categories.keys())
-    readable_keys = [CATEGORY_NAME_MAP.get(k, k.upper()) for k in available_keys]
-    key_map = dict(zip(readable_keys, available_keys))
+    # カテゴリ選択ボックスの作成
+    category_keys = list(data.keys())
+    category_labels = [data[k]["category"] for k in category_keys]
+    label_to_key = dict(zip(category_labels, category_keys))
 
-    selected_readable_category = st.selectbox("カテゴリを選択してください", readable_keys)
-    selected_key = key_map[selected_readable_category]
+    selected_label = st.selectbox("カテゴリを選択してください", category_labels)
+    selected_key = label_to_key[selected_label]
 
-    st.subheader(f"カテゴリ: {selected_readable_category}")
-    questions = categories[selected_key]
+    st.subheader(f"カテゴリ: {selected_label}")
+    questions = data[selected_key]["questions"]
 
     for i, q in enumerate(questions, 1):
         st.markdown(f"**Q{i}:** {q['sentence'].replace('{}', '_____')}")
