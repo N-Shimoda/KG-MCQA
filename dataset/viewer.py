@@ -29,13 +29,12 @@ def main():
     questions = data[selected_key]["questions"]
 
     for i, q in enumerate(questions, 1):
-        st.markdown(f"**Q{i}:** {q['sentence'].replace('{}', '_____')}")
-        for idx, choice in enumerate(q["choice"]):
-            label = chr(ord("A") + idx)
-            st.markdown(f"- {label}. {choice}")
-        correct_answer = q["choice"][q["answer"]]
-        st.markdown(f"✅ **正解:** {correct_answer}")
-        st.markdown("---")
+        with st.expander(f"Q{i}: {q['sentence'].replace('{}', '_____')}"):
+            for idx, choice in enumerate(q["choice"]):
+                label = chr(ord("A") + idx)
+                st.markdown(f"- {label}. {choice}")
+            correct_answer = q["choice"][q["answer"]]
+            st.markdown(f"✅ **正解:** {correct_answer}")
 
 
 if __name__ == "__main__":
