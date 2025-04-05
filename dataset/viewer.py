@@ -30,11 +30,19 @@ def main():
 
     for i, q in enumerate(questions, 1):
         with st.expander(f"Q{i}: {q['sentence'].replace('{}', '_____')}"):
-            for idx, choice in enumerate(q["choice"]):
-                label = chr(ord("A") + idx)
-                st.markdown(f"- {label}. {choice}")
-            correct_answer = q["choice"][q["answer"]]
-            st.markdown(f"✅ **正解:** {correct_answer}")
+            selected = st.radio(
+                "選択肢を選んでください:",
+                options=list(enumerate(q["choice"])),
+                format_func=lambda x: f"{chr(ord('A') + x[0])}. {x[1]}",
+                key=f"q_{q['id']}",
+                index=None,
+            )
+            if selected is not None:
+                if selected[0] == q["answer"]:
+                    st.success("正解です！")
+                else:
+                    correct = q["choice"][q["answer"]]
+                    st.error(f"不正解です。正解は: {correct}")
 
 
 if __name__ == "__main__":
