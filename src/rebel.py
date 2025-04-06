@@ -75,7 +75,7 @@ def preds_to_triples(preds: str) -> list[dict[str, str]]:
     return triplets
 
 
-def extract_triples(texts: list[str]) -> list[dict[str, str]]:
+def extract_triples_rebel(texts: list[str]) -> list[dict[str, str]]:
     """
     Extracts triplets from a list of text strings.
 
@@ -126,8 +126,8 @@ def extract_triples(texts: list[str]) -> list[dict[str, str]]:
 
     # Extract triplets from predictions
     triples_batch = []
-    for idx, sentence in enumerate(decoded_preds):
-        triples = preds_to_triples(sentence)
+    for preds in decoded_preds:
+        triples = preds_to_triples(preds)
         triples_batch.append(triples)
 
     return triples_batch
@@ -143,5 +143,5 @@ if __name__ == "__main__":
         "Charlie is a friend of Alice.",
         "Bob and Alice are colleagues.",
     ]
-    for triples in extract_triples(texts):
+    for triples in extract_triples_rebel(texts):
         print(triples)
