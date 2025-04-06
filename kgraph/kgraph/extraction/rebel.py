@@ -122,7 +122,9 @@ def extract_triples_rebel(texts: list[str]) -> list[dict[str, str]]:
     )
 
     # Decode
-    decoded_preds = tokenizer.batch_decode(generated_tokens, skip_special_tokens=False)
+    decoded_preds = tokenizer.batch_decode(
+        generated_tokens, skip_special_tokens=False, clean_up_tokenization_spaces=True
+    )
 
     # Extract triplets from predictions
     triples_batch = []
