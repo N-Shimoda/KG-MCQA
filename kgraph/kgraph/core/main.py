@@ -3,15 +3,24 @@ from typing import Literal
 
 class KB:
 
-    def __init__(self, relations=None):
+    def __init__(self, relations: list[dict[str, str]] = None):
         if relations is None:
             self.relations: list[dict[Literal["head", "type", "tail"], str]] = []
         else:
             self.relations = relations
 
     def __str__(self) -> str:
+        """
+        String representation of KB.
+        """
         str_list = [str(r) for r in self.relations]
         return ",\n".join(str_list)
+
+    def __repr__(self) -> str:
+        """
+        Representation of KB for lists or debugging.
+        """
+        return "kgraph.KB([{}])".format(self.__str__())
 
     def are_relations_equal(self, r1, r2):
         return all(r1[attr] == r2[attr] for attr in ["head", "type", "tail"])
@@ -167,7 +176,7 @@ class KB:
 
 if __name__ == "__main__":
 
-    from kgraph.utils import colorize
+    from utils import colorize
 
     color_code = 32  # green
 
