@@ -1,4 +1,4 @@
-from core import KB
+from .main import KB
 
 
 def join(g1: KB, g2: KB) -> KB:

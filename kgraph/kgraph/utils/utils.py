@@ -1,4 +1,4 @@
-from kgraph.kgraph import KB
+from ..core import KB
 
 
 def swap_label_with_symbol(PG: KB, org_l: str, new_l: str) -> KB:

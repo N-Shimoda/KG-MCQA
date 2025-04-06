@@ -1,6 +1,6 @@
 import os
 
-from core.main import KB
+from ..core import KB
 from pyvis.network import Network
 
 
