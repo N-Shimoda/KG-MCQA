@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kgraph"
+version = "0.1.0"
+description = "A Python library for knowledge graph construction and relation extraction from text."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Your Name", email = "your.email@example.com" }
+]
+dependencies = [
+    "transformers",
+    "pytest>=8.3",
+]
+
+[project.optional-dependencies]
+dev = ["black", "isort", "flake8", "mypy"]
+
+[tool.setuptools.packages.find]
+where = ["kgraph"]
