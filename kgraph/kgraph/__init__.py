@@ -1,6 +1,4 @@
-from kgraph.main import *  # isort: skip
-from kgraph.generator import *
-from kgraph.operators import *
-from kgraph.subnodes import *
-from kgraph.verification import *
-from kgraph.wiki_KG import *
+from .core import KB, join
+from .extraction.extractor import extract_triples
+
+__all__ = ["KB", "extract_triples", "join"]

@@ -1,17 +1,23 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "kgraph"
-version = "1.3.0"
-authors = [{name="Naoki Shimoda", email="shimoda.naoki.77s@st.kyoto-u.ac.jp"}]
-description = "Package for knowledge graph experiment"
+version = "0.1.0"
+description = "A Python library for knowledge graph construction and relation extraction from text."
 readme = "README.md"
-classifiers = [
-	'Programming Language :: Python :: 3'
+license = { text = "MIT" }
+authors = [
+    { name = "Your Name", email = "your.email@example.com" }
+]
+dependencies = [
+    "transformers",
+    "pytest>=8.3",
 ]
 
-[project.urls]
-source = 'https://github.com/N-Shimoda/mcq-generator'
-tracker = 'https://github.com/N-Shimoda/mcq-generator/issues'
+[project.optional-dependencies]
+dev = ["black", "isort", "flake8", "mypy"]
+
+[tool.setuptools.packages.find]
+where = ["kgraph"]
