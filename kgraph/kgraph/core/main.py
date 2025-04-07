@@ -1,3 +1,4 @@
+import re
 from typing import Literal
 
 
@@ -8,6 +9,34 @@ class KB:
             self.relations: list[dict[Literal["head", "type", "tail"], str]] = []
         else:
             self.relations = relations
+
+    @classmethod
+    def from_dot_file(cls, dot_file_path: str) -> "KB":
+        """
+        Construct a KB object from a DOT file.
+
+        Parameters
+        ----------
+        dot_file_path: str
+            Path to the DOT file.
+
+        Returns
+        -------
+        KB
+            An instance of the KB class.
+        """
+        relations = []
+        with open(dot_file_path, "r") as file:
+            lines = file.readlines()
+
+        for line in lines:
+            # Match lines with the pattern: "head" -> "tail" [label="type"];
+            match = re.match(r'\s*"(.+)" -> "(.+)" \[label="(.+)"\];', line)
+            if match:
+                head, tail, relation_type = match.groups()
+                relations.append({"head": head, "type": relation_type, "tail": tail})
+
+        return cls(relations)
 
     def __str__(self) -> str:
         """

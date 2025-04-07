@@ -55,5 +55,26 @@ def create_PGs(filename: str = "dataset/MCQs.json"):
                 PG.write_dot(pg_dot_path)
 
 
+def download_wiki_articles(pg_dirs: list[str]):
+    """
+    Download Wikipedia articles for the PGs stored in specified directories.
+
+    Parameters
+    ----------
+    pg_dirs : list[str]
+        List of directories containing PGs.
+    """
+    for dir in pg_dirs:
+        for file in tqdm(os.listdir(dir), desc=f"Processing {dir}"):
+            if file.endswith(".dot"):
+                # Read the PG from the dot file
+                pg = KB.from_dot_file(os.path.join(dir, file))
+                node_labels = pg.get_node_labels()
+
+                # Download the Wikipedia article
+                pass
+
+
 if __name__ == "__main__":
-    create_PGs()
+    # create_PGs()
+    pass
