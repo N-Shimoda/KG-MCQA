@@ -45,7 +45,7 @@ def assign_sub_dir(title: str) -> str:
     return first_char if first_char.isalpha() else "others"
 
 
-def download_wiki_page(targets: list[str], out_dir: str):
+def download_wiki_pages(targets: list[str], out_dir: str, tqdm_disable: bool = False) -> None:
     """
     Download Wikipedia articles for the specified targets and save them in the specified directory.
 
@@ -66,7 +66,7 @@ def download_wiki_page(targets: list[str], out_dir: str):
     # date
     today_date = datetime.now()
 
-    for target in tqdm(targets, desc="Downloading Wikipedia pages"):
+    for target in tqdm(targets, desc="Downloading Wikipedia pages", disable=tqdm_disable):
         page = wiki_wiki.page(target)
         if page.exists():
             # print("Title: {} ({})".format(page.title, page.fullurl))
@@ -102,4 +102,4 @@ if __name__ == "__main__":
         "クラシック音楽",
         "123 Start",
     ]
-    download_wiki_page(targets, out_dir="wikipedia")
+    download_wiki_pages(targets, out_dir="wikipedia")
