@@ -170,21 +170,25 @@ def create_KGs_for_mcq(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
                 # Save combined KG to dot file
                 kg_file_name = os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename)
                 os.makedirs(os.path.dirname(kg_file_name), exist_ok=True)
-                KG_combined.write_dot(kg_file_name + ".dot")
+                KG_combined.write_dot(kg_file_name)
 
 
 if __name__ == "__main__":
 
-    # # Step 1-1. Create PGs
-    # create_PGs("dataset/miniMCQs.json")
+    # Step 1-1. Create PGs
+    print("\nStep 1-1. Creating PGs")
+    create_PGs("dataset/miniMCQs.json")
 
-    # # Step 1-2. Download Wikipedia articles for each PG
-    # download_wiki_articles_all("exp1/PGs")
+    # Step 1-2. Download Wikipedia articles for each PG
+    print("\nStep 1-2. Downloading Wikipedia articles")
+    download_wiki_articles_all("exp1/PGs")
 
-    # # Step 1-3. Create KGs for each Wikipedia article
-    # create_KGs(wiki_dir="wikipedia", KG_dir="KG_cache")
+    # Step 1-3. Create KGs for each Wikipedia article
+    print("\nStep 1-3. Creating KGs for each Wikipedia article")
+    create_KGs(wiki_dir="wikipedia", KG_dir="KG_cache")
 
     # Step 1-4. Create KGs for each PG
+    print("\nStep 1-4. Creating tailored KG for each PG")
     create_KGs_for_mcq(
         pg_top_dir="exp1/PGs",
         kg_top_dir="exp1/KGs",
