@@ -55,6 +55,8 @@ def download_wiki_pages(targets: list[str], out_dir: str, tqdm_disable: bool = F
         List of target Wikipedia pages to download.
     out_dir : str
         Directory to save the downloaded pages.
+    tqdm_disable : bool
+        Disable tqdm progress bar if set to True.
     """
     # Wikipedia API
     project_name, mail_address = load_wiki_agent_params()
@@ -76,6 +78,7 @@ def download_wiki_pages(targets: list[str], out_dir: str, tqdm_disable: bool = F
                 "title": page.title,
                 "fullurl": page.fullurl,
                 "retrieved-date": today_date.strftime("%Y/%m/%d %H:%M:%S"),
+                "converted": False,
                 "summary": page.summary,
             }
 
