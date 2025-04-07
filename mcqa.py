@@ -153,25 +153,24 @@ def create_KGs_for_mcq(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
             os.path.join(pg_top_dir, cat, subdir)
             for subdir in os.listdir(os.path.join(pg_top_dir, cat))
         ]
-        for pg_dir in tqdm(pg_dirs, desc=f"Processing {cat}"):
-            # Note: pg_dir contains four PGs for a single MCQ
-            PGs = [
-                KB.from_dot_file(os.path.join(pg_dir, file))
-                for file in os.listdir(pg_dir)
-                if file.endswith(".dot")
-            ]
-            for PG in PGs:
+        for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
+            # Note: pg_dir contains four PG dot files for a single MCQ
+            for pg_filename in os.listdir(pg_dir):
+                PG = KB.from_dot_file(os.path.join(pg_dir, pg_filename))
                 titles = [title for title in get_wiki_titles(PG.get_nodes()) if title is not None]
+
+                # combine KGs for the found Wikipedia articles
+                KG_combined = KB()
                 for title in titles:
-                    # Create KG for the Wikipedia article
                     KG = KB.from_dot_file(
                         os.path.join(KG_cache_dir, assign_sub_dir(title), title + ".dot")
                     )
+                    KG_combined = join(KG_combined, KG)
 
-                    # Save KG to dot file
-                    os.makedirs(f"{kg_top_dir}/{cat}/{pg_dir.split('/')[-1]}", exist_ok=True)
-                    kg_dot_path = f"{kg_top_dir}/{cat}/{pg_dir.split('/')[-1]}/{title}.dot"
-                    KG.write_dot(kg_dot_path)
+                # Save combined KG to dot file
+                kg_file_name = os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename)
+                os.makedirs(os.path.dirname(kg_file_name), exist_ok=True)
+                KG_combined.write_dot(kg_file_name + ".dot")
 
 
 if __name__ == "__main__":
