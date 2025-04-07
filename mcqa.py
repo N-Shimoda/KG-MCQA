@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 from kgraph.kgraph import KB, extract_triples, join
 from kgraph.kgraph.utils import swap_label_with_symbol
-from kgraph.kgraph.wiki import download_wiki_pages
+from kgraph.kgraph.wiki import assign_sub_dir, download_wiki_pages, get_wiki_titles
 
 
 def create_PG_temp(question: str, choice: list[str]) -> KB:
@@ -23,7 +23,7 @@ def create_PG_temp(question: str, choice: list[str]) -> KB:
     return PG_temp
 
 
-def create_PGs(filename: str = "dataset/MCQs.json"):
+def create_PGs(filename: str):
     """
     Create PGs from given MCQ dataset.
 
@@ -85,6 +85,7 @@ def download_wiki_articles_all(pg_top_dir: str):
     pg_top_dir : str
         Top-level directory containing subdirectories of PGs.
     """
+    # iterate over each category
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
         pg_dirs = [
@@ -132,13 +133,61 @@ def create_KGs(wiki_dir: str, KG_dir: str, force: bool = False):
                         json.dump(data, f, indent=4)
 
 
+def create_KGs_for_mcq(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
+    """
+    Create KGs for each PG in the given directory.
+
+    Parameters
+    ----------
+    pg_top_dir : str
+        Top-level directory containing subdirectories of PGs.
+    kg_top_dir : str
+        Top-level directory to save the generated KGs.
+    KG_cache_dir : str
+        Directory containing cached KGs for Wikipedia articles.
+    """
+    # iterate over each category
+    cat_dirs = os.listdir(pg_top_dir)
+    for cat in sorted(cat_dirs):
+        pg_dirs = [
+            os.path.join(pg_top_dir, cat, subdir)
+            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
+        ]
+        for pg_dir in tqdm(pg_dirs, desc=f"Processing {cat}"):
+            # Note: pg_dir contains four PGs for a single MCQ
+            PGs = [
+                KB.from_dot_file(os.path.join(pg_dir, file))
+                for file in os.listdir(pg_dir)
+                if file.endswith(".dot")
+            ]
+            for PG in PGs:
+                titles = [title for title in get_wiki_titles(PG.get_nodes()) if title is not None]
+                for title in titles:
+                    # Create KG for the Wikipedia article
+                    KG = KB.from_dot_file(
+                        os.path.join(KG_cache_dir, assign_sub_dir(title), title + ".dot")
+                    )
+
+                    # Save KG to dot file
+                    os.makedirs(f"{kg_top_dir}/{cat}/{pg_dir.split('/')[-1]}", exist_ok=True)
+                    kg_dot_path = f"{kg_top_dir}/{cat}/{pg_dir.split('/')[-1]}/{title}.dot"
+                    KG.write_dot(kg_dot_path)
+
+
 if __name__ == "__main__":
 
-    # Step 1-1. Create PGs
-    # create_PGs()
+    # # Step 1-1. Create PGs
+    # create_PGs("dataset/miniMCQs.json")
 
-    # Step 1-2. Download Wikipedia articles for each PG
+    # # Step 1-2. Download Wikipedia articles for each PG
     # download_wiki_articles_all("exp1/PGs")
 
-    # Step 1-3. Create KGs for each Wikipedia article
-    create_KGs(wiki_dir="wikipedia", KG_dir="KG_cache")
+    # # Step 1-3. Create KGs for each Wikipedia article
+    # create_KGs(wiki_dir="wikipedia", KG_dir="KG_cache")
+
+    # Step 1-4. Create KGs for each PG
+    create_KGs_for_mcq(
+        pg_top_dir="exp1/PGs",
+        kg_top_dir="exp1/KGs",
+        KG_cache_dir="KG_cache",
+    )

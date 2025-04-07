@@ -27,6 +27,32 @@ def load_wiki_agent_params() -> tuple[str, str]:
     return project_name, mail_address
 
 
+def get_wiki_titles(targets: list[str]) -> list[str]:
+    """
+    Find Wikipedia page titles for the specified targets.
+
+    Parameters
+    ----------
+    targets : list[str]
+        List of target Wikipedia pages.
+
+    Returns
+    -------
+    list[str]
+        List of Wikipedia page titles.
+    """
+    project_name, mail_address = load_wiki_agent_params()
+    wiki_wiki = wikipediaapi.Wikipedia(
+        user_agent=f"{project_name} ({mail_address})",
+        language="en",
+    )
+    titles = []
+    for target in targets:
+        page = wiki_wiki.page(target)
+        titles.append(page.title if page.exists() else None)
+    return titles
+
+
 def assign_sub_dir(title: str) -> str:
     """
     Assign sub-directory based on the first character of the title.

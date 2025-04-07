@@ -1,3 +1,3 @@
-from .base import download_wiki_pages
+from .base import assign_sub_dir, download_wiki_pages, get_wiki_titles
 
-__all__ = ["download_wiki_pages"]
+__all__ = ["assign_sub_dir", "download_wiki_pages", "get_wiki_titles"]
