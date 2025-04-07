@@ -2,25 +2,25 @@
 
 BASE_DIR="exp1/PGs"
 
-# PGs 以下のすべてのサブディレクトリをループ
+# Loop through all subdirectories under PGs
 for dir in "$BASE_DIR"/*/; do
-    # サブディレクトリ名を取得（例: gen, geo, ...）
+    # Get the subdirectory name (e.g., gen, geo, ...)
     subdir_name=$(basename "$dir")
     
-    # サブディレクトリ内の .dot ファイルを検索
+    # Search for .dot files in the subdirectory
     dot_files=$(find "$dir" -maxdepth 1 -type f -name "*.dot")
     
     if [ -n "$dot_files" ]; then
-        echo "ディレクトリ '$subdir_name' に .dot ファイルが見つかりました。削除しますか？ [y/N]"
+        echo "Found .dot files in directory '$subdir_name'. Do you want to delete them? [y/N]"
         read -r answer
         if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
-            # スペースを含むファイル名を正しく処理するために -0 オプションを使用
+            # Use -0 option to handle filenames with spaces correctly
             echo "$dot_files" | tr '\n' '\0' | xargs -0 rm
-            echo "→ '$subdir_name' の .dot ファイルを削除しました。"
+            echo "→ Deleted .dot files in '$subdir_name'."
         else
-            echo "→ '$subdir_name' の .dot ファイルは削除されませんでした。"
+            echo "→ .dot files in '$subdir_name' were not deleted."
         fi
     else
-        echo "ディレクトリ '$subdir_name' に .dot ファイルは見つかりませんでした。"
+        echo "No .dot files found in directory '$subdir_name'."
     fi
 done
