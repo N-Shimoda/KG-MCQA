@@ -10,6 +10,7 @@ Subpackages
    kgraph.core
    kgraph.extraction
    kgraph.utils
+   kgraph.wiki
 
 Module contents
 ---------------

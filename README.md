@@ -25,6 +25,6 @@ pytest ./kgraph
 In order to generate docs for the `kgraph` package, please run the following command in `./docs`.
 
 ```shell
-sphinx-apidoc -f -o source/ ../kgraph/kgraph/
+sphinx-apidoc -f -o source/ ../kgraph/
 make html
 ```
