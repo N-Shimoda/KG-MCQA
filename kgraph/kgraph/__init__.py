@@ -1,4 +1,4 @@
 from .core import KB, join
 from .extraction.extractor import extract_triples
 
-__all__ = ["KB", "extract_triples", "join"]
+__all__ = ["KB", "join", "extract_triples"]

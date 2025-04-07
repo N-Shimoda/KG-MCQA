@@ -45,11 +45,14 @@ def create_PGs(filename: str = "dataset/MCQs.json"):
             tqdm(mcqs[cat]["questions"], desc=f"Processing {mcqs[cat]['category']}")
         ):
             choice = mcq["choice"]
-
             PG_temp = create_PG_temp(mcq["sentence"], choice)
+
             for c in choice:
                 PG = swap_label_with_symbol(PG_temp, "#BLANK", c)
-                PG.write_dot(f"exp1/PGs/{cat}/{cat}-{i}_{choice.index(c)}_{c}.dot")
+
+                # save PG to dot file
+                pg_dot_path = f"exp1/PGs/{cat}/{cat}-{i}_{choice.index(c)}_{c}.dot"
+                PG.write_dot(pg_dot_path)
 
 
 if __name__ == "__main__":

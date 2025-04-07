@@ -14,7 +14,8 @@ for dir in "$BASE_DIR"/*/; do
         echo "ディレクトリ '$subdir_name' に .dot ファイルが見つかりました。削除しますか？ [y/N]"
         read -r answer
         if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
-            echo "$dot_files" | xargs rm
+            # スペースを含むファイル名を正しく処理するために -0 オプションを使用
+            echo "$dot_files" | tr '\n' '\0' | xargs -0 rm
             echo "→ '$subdir_name' の .dot ファイルを削除しました。"
         else
             echo "→ '$subdir_name' の .dot ファイルは削除されませんでした。"

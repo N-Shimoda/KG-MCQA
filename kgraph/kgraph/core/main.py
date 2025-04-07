@@ -149,7 +149,7 @@ class KB:
 
         Returns
         -------
-        result: list[dict[str,str]]
+        list[dict[str,str]]
             Relations between `hd` and `tl`.
         """
         return [r for r in self.relations if (r["head"] == hd and r["tail"] == tl)]
