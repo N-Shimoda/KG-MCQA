@@ -71,7 +71,7 @@ def assign_sub_dir(title: str) -> str:
         Sub-directory name.
     """
     first_char = title[0].lower()
-    return first_char if first_char.isalpha() else "others"
+    return first_char if first_char.isalpha() else "_others"
 
 
 def download_wiki_pages(targets: list[str], out_dir: str, tqdm_disable: bool = False) -> None:

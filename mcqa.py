@@ -37,6 +37,7 @@ def create_PGs(filename: str):
     with open(filename, "r") as f:
         mcqs = json.load(f)
 
+    print("MCQ dataset: {}".format(filename))
     print("Categories: {}".format(list(mcqs.keys())))
 
     for cat in mcqs.keys():
@@ -169,12 +170,12 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str):
 
         # list of PG directories for the given category
         pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
-        result[cat] = dict()
+        result[cat] = {"questions": dict()}
 
         for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
             # Note: pg_dir contains four PG dot files for a single MCQ
             mcq_id = os.path.basename(pg_dir)
-            result[cat][mcq_id] = dict()
+            result[cat]["questions"][mcq_id] = dict()
 
             scores = []
 
@@ -220,20 +221,21 @@ def collect_results(result_file: str, mcq_file: str):
 
     for cat in result.keys():
         count = 0
-        mcq_ids = list(result[cat].keys())
-        for mcq_id in result[cat].keys():
-            answer = result[cat][mcq_id]["answer"]
+        ans_data = result[cat]["questions"]
+        mcq_ids = list(ans_data.keys())
+        for mcq_id in ans_data.keys():
+            answer = ans_data[mcq_id]["answer"]
             correct_answer = mcqs[cat]["questions"][mcq_ids.index(mcq_id)]["answer"]
 
             if answer == correct_answer:
-                result[cat][mcq_id]["correct"] = True
+                ans_data[mcq_id]["correct"] = True
                 count += 1
             else:
-                result[cat][mcq_id]["correct"] = False
+                ans_data[mcq_id]["correct"] = False
 
         # save the count of correct answers for each category
         result[cat]["corrected"] = count
-        result[cat]["total"] = len(result[cat].keys())
+        result[cat]["total"] = len(ans_data.keys())
 
     with open(result_file, "w") as f:
         json.dump(result, f, indent=4)
@@ -241,13 +243,14 @@ def collect_results(result_file: str, mcq_file: str):
 
 if __name__ == "__main__":
 
+    MCQ_FILE = "dataset/miniMCQs.json"
     PG_TOP_DIR = "exp1/PGs"
     KG_TOP_DIR = "exp1/KGs"
     KG_CHACHE_DIR = "KG_cache"
 
     # # Step 1-1. Create PGs
     # print("\nStep 1-1. Creating PGs")
-    # create_PGs("dataset/MCQs.json")
+    # create_PGs(MCQ_FILE)
 
     # # Step 1-2. Download Wikipedia articles for each PG
     # print("\nStep 1-2. Downloading Wikipedia articles")
@@ -275,4 +278,4 @@ if __name__ == "__main__":
 
     # Step 4. Count correct answers
     print("\nStep 4. Counting correct answers")
-    collect_results(result_file="exp1/results.json", mcq_file="dataset/MCQs.json")
+    collect_results(result_file="exp1/results.json", mcq_file=MCQ_FILE)
