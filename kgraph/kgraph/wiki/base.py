@@ -73,7 +73,7 @@ def assign_sub_dir(title: str) -> str:
 
 def download_wiki_pages(targets: list[str], out_dir: str, tqdm_disable: bool = False) -> None:
     """
-    Download Wikipedia articles for the specified targets and save them in the specified directory.
+    Download Wikipedia articles for target titles and save them in the specified directory.
 
     Parameters
     ----------

@@ -3,8 +3,10 @@ import os
 
 from tqdm import tqdm
 
-from kgraph.kgraph import KB, extract_triples, join
+from kgraph.kgraph import KB, join
+from kgraph.kgraph.extraction import extract_triples
 from kgraph.kgraph.utils import swap_label_with_symbol
+from kgraph.kgraph.verifier import verify_proposition
 from kgraph.kgraph.wiki import assign_sub_dir, download_wiki_pages, get_wiki_titles
 
 
@@ -53,30 +55,7 @@ def create_PGs(filename: str):
                 PG.write_dot(pg_dot_path)
 
 
-def download_wiki_articles(pg_dir: str):
-    """
-    Download Wikipedia articles for the PGs stored in specified directories.
-
-    Parameters
-    ----------
-    pg_dir : str
-        List of directories containing PGs.
-        Each directory should contain [number of choice] dot files, which are the PGs for a given MCQ.
-    """
-    PGs = [
-        KB.from_dot_file(os.path.join(pg_dir, file))
-        for file in os.listdir(pg_dir)
-        if file.endswith(".dot")
-    ]
-    PG_joined = KB()
-    for PG in PGs:
-        PG_joined = join(PG_joined, PG)
-
-    # Download the Wikipedia article
-    download_wiki_pages(PG_joined.get_nodes(), out_dir="wikipedia", tqdm_disable=True)
-
-
-def download_wiki_articles_all(pg_top_dir: str):
+def download_wiki_articles(pg_top_dir: str):
     """
     Download Wikipedia articles for all PGs stored in the specified top-level directory.
 
@@ -93,7 +72,17 @@ def download_wiki_articles_all(pg_top_dir: str):
             for subdir in os.listdir(os.path.join(pg_top_dir, cat))
         ]
         for pg_dir in tqdm(pg_dirs, desc=f"Processing {cat}"):
-            download_wiki_articles(pg_dir)
+            PGs = [
+                KB.from_dot_file(os.path.join(pg_dir, file))
+                for file in os.listdir(pg_dir)
+                if file.endswith(".dot")
+            ]
+            PG_joined = KB()
+            for PG in PGs:
+                PG_joined = join(PG_joined, PG)
+
+            # Download the Wikipedia article
+            download_wiki_pages(PG_joined.get_nodes(), out_dir="wikipedia", tqdm_disable=True)
 
 
 def create_KGs(wiki_dir: str, KG_dir: str, force: bool = False):
@@ -173,24 +162,65 @@ def create_KGs_for_mcq(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
                 KG_combined.write_dot(kg_file_name)
 
 
+def verify_PGs(pg_top_dir: str, kg_top_dir: str):
+    """
+    Verify PGs against KGs.
+
+    Parameters
+    ----------
+    pg_top_dir : str
+        Top-level directory containing subdirectories of PGs.
+    kg_top_dir : str
+        Top-level directory containing subdirectories of KGs.
+    """
+    result = dict()
+
+    # iterate over each category
+    cat_dirs = os.listdir(pg_top_dir)
+    for cat in sorted(cat_dirs):
+
+        # list of PG directories for the given category
+        pg_dirs = [
+            os.path.join(pg_top_dir, cat, subdir)
+            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
+        ]
+        result[cat] = dict()
+
+        for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
+            # Note: pg_dir contains four PG dot files for a single MCQ
+            for pg_filename in os.listdir(pg_dir):
+                PG = KB.from_dot_file(os.path.join(pg_dir, pg_filename))
+                KG = KB.from_dot_file(
+                    os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename)
+                )
+
+                # Verify the PG against the KG
+                score, verified_edges, _ = verify_proposition(PG, KG)
+                print(score, verified_edges)
+
+
 if __name__ == "__main__":
 
-    # Step 1-1. Create PGs
-    print("\nStep 1-1. Creating PGs")
-    create_PGs("dataset/miniMCQs.json")
+    PG_TOP_DIR = "exp1/PGs"
+    KG_TOP_DIR = "exp1/KGs"
+    KG_CHACHE_DIR = "KG_cache"
 
-    # Step 1-2. Download Wikipedia articles for each PG
-    print("\nStep 1-2. Downloading Wikipedia articles")
-    download_wiki_articles_all("exp1/PGs")
+    # # Step 1-1. Create PGs
+    # print("\nStep 1-1. Creating PGs")
+    # create_PGs("dataset/miniMCQs.json")
 
-    # Step 1-3. Create KGs for each Wikipedia article
-    print("\nStep 1-3. Creating KGs for each Wikipedia article")
-    create_KGs(wiki_dir="wikipedia", KG_dir="KG_cache")
+    # # Step 1-2. Download Wikipedia articles for each PG
+    # print("\nStep 1-2. Downloading Wikipedia articles")
+    # download_wiki_articles(PG_TOP_DIR)
 
-    # Step 1-4. Create KGs for each PG
-    print("\nStep 1-4. Creating tailored KG for each PG")
-    create_KGs_for_mcq(
-        pg_top_dir="exp1/PGs",
-        kg_top_dir="exp1/KGs",
-        KG_cache_dir="KG_cache",
-    )
+    # # Step 1-3. Create KGs for each Wikipedia article
+    # print("\nStep 1-3. Creating KGs for each Wikipedia article")
+    # create_KGs(wiki_dir="wikipedia", KG_dir=KG_CHACHE_DIR)
+
+    # # Step 1-4. Create KGs for each PG
+    # print("\nStep 1-4. Creating tailored KG for each PG")
+    # create_KGs_for_mcq(pg_top_dir=PG_TOP_DIR, kg_top_dir=KG_TOP_DIR, KG_cache_dir=KG_CHACHE_DIR)
+
+    # Step 2 & 3. Node matching + Verification
+    print("\nStep 2 & 3. Node matching + Verification")
+    verify_PGs(pg_top_dir=PG_TOP_DIR, kg_top_dir=KG_TOP_DIR)
