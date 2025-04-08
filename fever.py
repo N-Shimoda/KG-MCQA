@@ -41,7 +41,7 @@ def create_fever_PGs(
         for j in range(len(batch["claim"])):
             # Create the output directory if it doesn't exist
             id = batch["id"][j]
-            subdir = int(id) // 1000
+            subdir = (int(id) // 1000) * 1000
             os.makedirs(f"exp-fever/PGs/{subdir}", exist_ok=True)
 
             # save PG in dot file
