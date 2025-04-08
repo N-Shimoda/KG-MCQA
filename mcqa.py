@@ -85,7 +85,7 @@ def download_wiki_articles(pg_top_dir: str):
             download_wiki_pages(PG_joined.get_nodes(), out_dir="wikipedia", tqdm_disable=True)
 
 
-def create_KGs(wiki_dir: str, KG_dir: str, force: bool = False):
+def create_KG_cache(wiki_dir: str, KG_dir: str, force: bool = False):
     """
     Create KGs for every Wikipedia article in the specified directory.
 
@@ -122,7 +122,7 @@ def create_KGs(wiki_dir: str, KG_dir: str, force: bool = False):
                         json.dump(data, f, indent=4)
 
 
-def create_KGs_for_mcq(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
+def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
     """
     Create KGs for each PG in the given directory.
 
@@ -221,25 +221,25 @@ if __name__ == "__main__":
     KG_TOP_DIR = "exp1/KGs"
     KG_CHACHE_DIR = "KG_cache"
 
-    # # Step 1-1. Create PGs
-    # print("\nStep 1-1. Creating PGs")
-    # create_PGs("dataset/miniMCQs.json")
+    # Step 1-1. Create PGs
+    print("\nStep 1-1. Creating PGs")
+    create_PGs("dataset/MCQs.json")
 
-    # # Step 1-2. Download Wikipedia articles for each PG
-    # print("\nStep 1-2. Downloading Wikipedia articles")
-    # download_wiki_articles(PG_TOP_DIR)
+    # Step 1-2. Download Wikipedia articles for each PG
+    print("\nStep 1-2. Downloading Wikipedia articles")
+    download_wiki_articles(PG_TOP_DIR)
 
-    # # Step 1-3. Create KGs for each Wikipedia article
-    # print("\nStep 1-3. Creating KGs for each Wikipedia article")
-    # create_KGs(wiki_dir="wikipedia", KG_dir=KG_CHACHE_DIR)
+    # Step 1-3. Create KGs for each Wikipedia article
+    print("\nStep 1-3. Creating KGs for each Wikipedia article")
+    create_KG_cache(wiki_dir="wikipedia", KG_dir=KG_CHACHE_DIR)
 
-    # # Step 1-4. Create KGs for each PG
-    # print("\nStep 1-4. Creating tailored KG for each PG")
-    # create_KGs_for_mcq(
-    #     pg_top_dir=PG_TOP_DIR,
-    #     kg_top_dir=KG_TOP_DIR,
-    #     KG_cache_dir=KG_CHACHE_DIR,
-    # )
+    # Step 1-4. Create KGs for each PG
+    print("\nStep 1-4. Creating tailored KG for each PG")
+    create_tailored_KGs(
+        pg_top_dir=PG_TOP_DIR,
+        kg_top_dir=KG_TOP_DIR,
+        KG_cache_dir=KG_CHACHE_DIR,
+    )
 
     # Step 2 & 3. Node matching + Verification
     print("\nStep 2 & 3. Node matching + Verification")
