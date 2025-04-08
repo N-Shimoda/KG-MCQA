@@ -28,3 +28,19 @@ In order to generate docs for the `kgraph` package, please run the following com
 sphinx-apidoc -f -o source/ ../kgraph/
 make html
 ```
+
+## Contents
+
+### Directories
+
+- `kgraph`: Original package for handling proposed method.
+- `scripts`
+- `dataset`: Original MCQ dataset.
+- `KG_cache`: Cache files of KG constructed from Wikipedia articles.
+- `wikipedia`: Dowonloaded Wikipedia articles.
+
+### Files
+
+- `mcqa.py`
+- `fever.py`
+- `environment.yml`
