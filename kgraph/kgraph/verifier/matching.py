@@ -4,10 +4,11 @@ import networkx as nx
 import numpy as np
 import pandas as pd
 import torch
-from networkx.algorithms.bipartite.matching import (
-    eppstein_matching,
-    hopcroft_karp_matching,
-)
+
+# from networkx.algorithms.bipartite.matching import (
+#     eppstein_matching,
+#     hopcroft_karp_matching,
+# )
 from sentence_transformers import SentenceTransformer
 
 
@@ -38,10 +39,7 @@ def get_identical_nodes(Vk: list[str], Vp: list[str]) -> tuple[list[str], list[s
 
 
 def find_best_matching(
-    Vp: list[str],
-    Vk: list[str],
-    method: Literal["eppstein", "hopcroft"],
-    verbose=False,
+    Vp: list[str], Vk: list[str], method: Literal["normal"] = "normal"
 ) -> tuple[set[tuple[str]], float]:
     """
     Find the best matching in bipartite graph B = (Vp, Vk), which maximize the label similarity between nodes.
@@ -49,8 +47,11 @@ def find_best_matching(
     Parameters
     ----------
     Vp: list[str]
+        List of PG node labels.
     Vk: list[str]
-    verbose: bool
+        List of KG node labels.
+    method: Literal["normal"]
+        Method to find the best matching.
 
     Returns
     -------
@@ -58,8 +59,10 @@ def find_best_matching(
     score: float
         Sum of label similarities in `matching`.
     """
-    if not len(Vp) > 0 and len(Vk) > 0:
-        raise ValueError("The number of nodes must be greater than 0.")
+    if len(Vp) == 0:
+        raise ValueError("The number of PG nodes must be greater than 0.")
+    elif len(Vk) == 0:
+        raise ValueError("The number of KG nodes must be greater than 0.")
 
     # define bipartite graph `B`
     B = nx.Graph()
@@ -95,17 +98,15 @@ def find_best_matching(
     df.columns = Vk
 
     # Solve maximum bipartite matching by Networkx.
-    # matching = nx.max_weight_matching(B)  # deprecated
     match method:
-        case "eppstein":
-            matching = eppstein_matching(B)
-        case "hopcroft":
-            matching = hopcroft_karp_matching(B)
+        case "normal":
+            matching = nx.max_weight_matching(B)
         case _:
             raise ValueError(f"Unknown method: {method}")
 
+    # TODO: Is this computation correct...?
     # compute score of the matching
-    for u, v in matching.items():
+    for u, v in matching:
         if u in Vp and v in Vk:
             score = df.loc[u][v]
         elif v in Vp and u in Vk:
@@ -116,9 +117,7 @@ def find_best_matching(
     return matching, score
 
 
-def get_subgraph_nodes(
-    Vk: list[str], Vp: list[str], verbose=False
-) -> tuple[list[str], list[str], float]:
+def get_subgraph_nodes(Vk: list[str], Vp: list[str], verbose=False) -> tuple[list[str], list[str], float]:
     """
     Extract a subset of nodes from the knowledge graph
     that correspond to the nodes in the propositional graph.
@@ -141,9 +140,6 @@ def get_subgraph_nodes(
         Average node label similarity score.
         Takes a value between 0 and 1, where a higher value indicates better node name matching.
     """
-    if not len(Vk) > 0 and len(Vp) > 0:
-        raise ValueError("The number of nodes must be greater than 0.")
-
     # ---- Find identical nodes ----
     Vp_identical, Vk_identical = get_identical_nodes(Vk, Vp)
 
@@ -152,12 +148,15 @@ def get_subgraph_nodes(
     Vk = [v for v in Vk if (v not in Vk_identical)]
 
     # Find the most similar matching for other nodes
-    if len(Vp) > 0:
-        matching, score = find_best_matching(Vp, Vk, method="eppstein", verbose=verbose)
+    if len(Vp) > 0 and len(Vk) > 0:
+        matching, score = find_best_matching(Vp, Vk, method="normal")
         score = (score + len(Vp_identical)) / (len(Vp) + len(Vk_identical))
     else:
+        # case when there are no nodes in Vp or Vk
         matching = set()
         score = 1.0
+
+    print("Matching: {}".format(matching))
 
     # initialize output
     Vp = Vp_identical + []

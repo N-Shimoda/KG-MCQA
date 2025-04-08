@@ -33,9 +33,7 @@ def verify_proposition(PG: KB, KG: KB) -> tuple[float, list[dict[str, str]], lis
     evidence_rels: list[dict[str, str]]
         List of corresponding relations from KG that serve as evidence for the verified edges.
     """
-    subnodes, PG_nodes, node_score = get_subgraph_nodes(
-        KG.get_nodes(), PG.get_nodes(), verbose=False
-    )
+    subnodes, PG_nodes, node_score = get_subgraph_nodes(KG.get_nodes(), PG.get_nodes(), verbose=False)
 
     count = 0
     verified_rels = []

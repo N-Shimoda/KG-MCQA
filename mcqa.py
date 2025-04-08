@@ -40,9 +40,7 @@ def create_PGs(filename: str):
     print("Categories: {}".format(list(mcqs.keys())))
 
     for cat in mcqs.keys():
-        for i, mcq in enumerate(
-            tqdm(mcqs[cat]["questions"], desc=f"Processing {mcqs[cat]['category']}")
-        ):
+        for i, mcq in enumerate(tqdm(mcqs[cat]["questions"], desc=f"Processing {mcqs[cat]['category']}")):
             choice = mcq["choice"]
             PG_temp = create_PG_temp(mcq["sentence"], choice)
 
@@ -67,15 +65,10 @@ def download_wiki_articles(pg_top_dir: str):
     # iterate over each category
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
-        pg_dirs = [
-            os.path.join(pg_top_dir, cat, subdir)
-            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
-        ]
+        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
         for pg_dir in tqdm(pg_dirs, desc=f"Processing {cat}"):
             PGs = [
-                KB.from_dot_file(os.path.join(pg_dir, file))
-                for file in os.listdir(pg_dir)
-                if file.endswith(".dot")
+                KB.from_dot_file(os.path.join(pg_dir, file)) for file in os.listdir(pg_dir) if file.endswith(".dot")
             ]
             PG_joined = KB()
             for PG in PGs:
@@ -97,9 +90,7 @@ def create_KG_cache(wiki_dir: str, KG_dir: str, force: bool = False):
     subdirs = os.listdir(wiki_dir)
 
     for subdir in sorted(subdirs):
-        files = [
-            file for file in os.listdir(os.path.join(wiki_dir, subdir)) if file.endswith(".json")
-        ]
+        files = [file for file in os.listdir(os.path.join(wiki_dir, subdir)) if file.endswith(".json")]
         for file in tqdm(files, desc=f"Processing {subdir}"):
             with open(os.path.join(wiki_dir, subdir, file), "r") as f:
                 data = json.load(f)
@@ -138,10 +129,7 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
     # iterate over each category
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
-        pg_dirs = [
-            os.path.join(pg_top_dir, cat, subdir)
-            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
-        ]
+        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
         for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
             # Note: pg_dir contains four PG dot files for a single MCQ
             for pg_filename in os.listdir(pg_dir):
@@ -151,9 +139,7 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
                 # combine KGs for the found Wikipedia articles
                 KG_combined = KB()
                 for title in titles:
-                    KG = KB.from_dot_file(
-                        os.path.join(KG_cache_dir, assign_sub_dir(title), title + ".dot")
-                    )
+                    KG = KB.from_dot_file(os.path.join(KG_cache_dir, assign_sub_dir(title), title + ".dot"))
                     KG_combined = join(KG_combined, KG)
 
                 # Save combined KG to dot file
@@ -182,10 +168,7 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str):
     for cat in sorted(cat_dirs):
 
         # list of PG directories for the given category
-        pg_dirs = [
-            os.path.join(pg_top_dir, cat, subdir)
-            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
-        ]
+        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
         result[cat] = dict()
 
         for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
@@ -193,15 +176,16 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str):
             mcq_id = os.path.basename(pg_dir)
             result[cat][mcq_id] = dict()
 
+            scores = []
+
             for pg_filename in os.listdir(pg_dir):
                 # Load PG and KG
                 PG = KB.from_dot_file(os.path.join(pg_dir, pg_filename))
-                KG = KB.from_dot_file(
-                    os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename)
-                )
+                KG = KB.from_dot_file(os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename))
 
                 # Verify the PG against the KG
                 score, verified_edges, _ = verify_proposition(PG, KG)
+                scores.append(score)
 
                 # Save the verification result
                 result[cat][mcq_id][pg_filename[0]] = {
@@ -209,6 +193,8 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str):
                     "score": score,
                     "verified_edges": verified_edges,
                 }
+
+            result[cat][mcq_id]["answer"] = scores.index(max(scores))
 
         # Save the result to a JSON file
         with open(output_file, "w") as f:
@@ -221,25 +207,25 @@ if __name__ == "__main__":
     KG_TOP_DIR = "exp1/KGs"
     KG_CHACHE_DIR = "KG_cache"
 
-    # Step 1-1. Create PGs
-    print("\nStep 1-1. Creating PGs")
-    create_PGs("dataset/MCQs.json")
+    # # Step 1-1. Create PGs
+    # print("\nStep 1-1. Creating PGs")
+    # create_PGs("dataset/MCQs.json")
 
-    # Step 1-2. Download Wikipedia articles for each PG
-    print("\nStep 1-2. Downloading Wikipedia articles")
-    download_wiki_articles(PG_TOP_DIR)
+    # # Step 1-2. Download Wikipedia articles for each PG
+    # print("\nStep 1-2. Downloading Wikipedia articles")
+    # download_wiki_articles(PG_TOP_DIR)
 
-    # Step 1-3. Create KGs for each Wikipedia article
-    print("\nStep 1-3. Creating KGs for each Wikipedia article")
-    create_KG_cache(wiki_dir="wikipedia", KG_dir=KG_CHACHE_DIR)
+    # # Step 1-3. Create KGs for each Wikipedia article
+    # print("\nStep 1-3. Creating KGs for each Wikipedia article")
+    # create_KG_cache(wiki_dir="wikipedia", KG_dir=KG_CHACHE_DIR)
 
-    # Step 1-4. Create KGs for each PG
-    print("\nStep 1-4. Creating tailored KG for each PG")
-    create_tailored_KGs(
-        pg_top_dir=PG_TOP_DIR,
-        kg_top_dir=KG_TOP_DIR,
-        KG_cache_dir=KG_CHACHE_DIR,
-    )
+    # # Step 1-4. Create KGs for each PG
+    # print("\nStep 1-4. Creating tailored KGs for each PG")
+    # create_tailored_KGs(
+    #     pg_top_dir=PG_TOP_DIR,
+    #     kg_top_dir=KG_TOP_DIR,
+    #     KG_cache_dir=KG_CHACHE_DIR,
+    # )
 
     # Step 2 & 3. Node matching + Verification
     print("\nStep 2 & 3. Node matching + Verification")

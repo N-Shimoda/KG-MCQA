@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 
 import wikipediaapi
+from dotenv import load_dotenv
 from tqdm import tqdm
 
 
@@ -12,10 +13,12 @@ def load_wiki_agent_params() -> tuple[str, str]:
 
     Returns
     -------
-    list[str]
-        List of Wikipedia agent information.
+    tuple[str, str]
+        Tuple containing the project name and mail address.
     """
     # Load environment variables from .env file
+    load_dotenv()
+
     project_name = os.getenv("WIKI_PRJ_NAME")
     if not project_name:
         project_name = input("Enter the project name (WIKI_PRJ_NAME): ")
