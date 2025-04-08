@@ -162,7 +162,7 @@ def create_KGs_for_mcq(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
                 KG_combined.write_dot(kg_file_name)
 
 
-def verify_PGs(pg_top_dir: str, kg_top_dir: str):
+def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str):
     """
     Verify PGs against KGs.
 
@@ -172,6 +172,8 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str):
         Top-level directory containing subdirectories of PGs.
     kg_top_dir : str
         Top-level directory containing subdirectories of KGs.
+    output_file : str
+        Path to the output JSON file for verification results.
     """
     result = dict()
 
@@ -188,7 +190,11 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str):
 
         for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
             # Note: pg_dir contains four PG dot files for a single MCQ
+            mcq_id = os.path.basename(pg_dir)
+            result[cat][mcq_id] = dict()
+
             for pg_filename in os.listdir(pg_dir):
+                # Load PG and KG
                 PG = KB.from_dot_file(os.path.join(pg_dir, pg_filename))
                 KG = KB.from_dot_file(
                     os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename)
@@ -196,7 +202,17 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str):
 
                 # Verify the PG against the KG
                 score, verified_edges, _ = verify_proposition(PG, KG)
-                print(score, verified_edges)
+
+                # Save the verification result
+                result[cat][mcq_id][pg_filename[0]] = {
+                    "choice": pg_filename[2:-4],
+                    "score": score,
+                    "verified_edges": verified_edges,
+                }
+
+        # Save the result to a JSON file
+        with open(output_file, "w") as f:
+            json.dump(result, f, indent=4)
 
 
 if __name__ == "__main__":
@@ -219,8 +235,16 @@ if __name__ == "__main__":
 
     # # Step 1-4. Create KGs for each PG
     # print("\nStep 1-4. Creating tailored KG for each PG")
-    # create_KGs_for_mcq(pg_top_dir=PG_TOP_DIR, kg_top_dir=KG_TOP_DIR, KG_cache_dir=KG_CHACHE_DIR)
+    # create_KGs_for_mcq(
+    #     pg_top_dir=PG_TOP_DIR,
+    #     kg_top_dir=KG_TOP_DIR,
+    #     KG_cache_dir=KG_CHACHE_DIR,
+    # )
 
     # Step 2 & 3. Node matching + Verification
     print("\nStep 2 & 3. Node matching + Verification")
-    verify_PGs(pg_top_dir=PG_TOP_DIR, kg_top_dir=KG_TOP_DIR)
+    verify_PGs(
+        pg_top_dir=PG_TOP_DIR,
+        kg_top_dir=KG_TOP_DIR,
+        output_file="exp1/results.json",
+    )

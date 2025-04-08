@@ -67,7 +67,8 @@ def verify_proposition(PG: KB, KG: KB) -> tuple[float, list[dict[str, str]], lis
                     evidence_rels.append(rels[scores.index(1)])
         # Exceptional case where PG size is larger than KG
         except ValueError:
-            print(colorize("No matching found for '{}'".format(PG_r), 33))
+            # print(colorize("No matching found for '{}'".format(PG_r), 33))
+            continue
 
     # Edge score = [num of verified relations] / [num of all relations]
     return count / len(PG.relations), verified_rels, evidence_rels
