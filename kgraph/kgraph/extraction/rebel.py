@@ -97,7 +97,9 @@ def extract_triples_rebel(texts: list[str]) -> list[dict[str, str]]:
         - 'tail': The object of the triplet.
     """
     # Load model and tokenizer
-    tokenizer = AutoTokenizer.from_pretrained("Babelscape/rebel-large")
+    tokenizer = AutoTokenizer.from_pretrained(
+        "Babelscape/rebel-large", clean_up_tokenization_spaces=False
+    )
     model = AutoModelForSeq2SeqLM.from_pretrained("Babelscape/rebel-large").to("cuda")
     gen_kwargs = {
         "max_length": 256,
