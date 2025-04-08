@@ -188,17 +188,55 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str):
                 scores.append(score)
 
                 # Save the verification result
-                result[cat][mcq_id][pg_filename[0]] = {
+                result[cat]["questions"][mcq_id][pg_filename[0]] = {
                     "choice": pg_filename[2:-4],
                     "score": score,
                     "verified_edges": verified_edges,
                 }
 
-            result[cat][mcq_id]["answer"] = scores.index(max(scores))
+            result[cat]["questions"][mcq_id]["answer"] = scores.index(max(scores))
 
         # Save the result to a JSON file
         with open(output_file, "w") as f:
             json.dump(result, f, indent=4)
+
+
+def collect_results(result_file: str, mcq_file: str):
+    """
+    Collect results from the verification process.
+
+    Parameters
+    ----------
+    result_file : str
+        Path to the verification result file (JSON).
+    mcq_file : str
+        Path to the MCQ dataset file (JSON).
+    """
+    with open(result_file, "r") as f:
+        result = json.load(f)
+
+    with open(mcq_file, "r") as f:
+        mcqs = json.load(f)
+
+    for cat in result.keys():
+        count = 0
+        mcq_ids = list(result[cat].keys())
+        for mcq_id in result[cat].keys():
+            answer = result[cat][mcq_id]["answer"]
+            correct_answer = mcqs[cat]["questions"][mcq_ids.index(mcq_id)]["answer"]
+
+            if answer == correct_answer:
+                result[cat][mcq_id]["correct"] = True
+                count += 1
+            else:
+                result[cat][mcq_id]["correct"] = False
+
+        # save the count of correct answers for each category
+        result[cat]["corrected"] = count
+        result[cat]["total"] = len(result[cat].keys())
+
+    with open(result_file, "w") as f:
+        json.dump(result, f, indent=4)
 
 
 if __name__ == "__main__":
@@ -227,10 +265,14 @@ if __name__ == "__main__":
     #     KG_cache_dir=KG_CHACHE_DIR,
     # )
 
-    # Step 2 & 3. Node matching + Verification
-    print("\nStep 2 & 3. Node matching + Verification")
-    verify_PGs(
-        pg_top_dir=PG_TOP_DIR,
-        kg_top_dir=KG_TOP_DIR,
-        output_file="exp1/results.json",
-    )
+    # # Step 2 & 3. Node matching + Verification
+    # print("\nStep 2 & 3. Node matching + Verification")
+    # verify_PGs(
+    #     pg_top_dir=PG_TOP_DIR,
+    #     kg_top_dir=KG_TOP_DIR,
+    #     output_file="exp1/results.json",
+    # )
+
+    # Step 4. Count correct answers
+    print("\nStep 4. Counting correct answers")
+    collect_results(result_file="exp1/results.json", mcq_file="dataset/MCQs.json")
