@@ -33,16 +33,19 @@ def create_fever_PGs(
     dataset = load_dataset("fever", name="v1.0", split=split)
     print(f"Dataset size: {len(dataset)}")
 
-    # Create the output directory if it doesn't exist
-    os.makedirs("exp-fever/PGs", exist_ok=True)
-
     # Process the dataset in batches with a progress bar
     for i in tqdm(range(0, len(dataset), batch_size), desc="Processing batches"):
         batch = dataset[i : i + batch_size]
         PGs = extract_triples(batch["claim"], method="rebel")
 
-        for j in range(batch_size):
-            path = f"exp-fever/PGs/{batch['id'][j]}.dot"
+        for j in range(len(batch["claim"])):
+            # Create the output directory if it doesn't exist
+            id = batch["id"][j]
+            subdir = int(id) // 1000
+            os.makedirs(f"exp-fever/PGs/{subdir}", exist_ok=True)
+
+            # save PG in dot file
+            path = f"exp-fever/PGs/{subdir}/{id}.dot"
             PGs[j].write_dot(path)
 
 
