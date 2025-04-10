@@ -8,6 +8,7 @@ from kgraph.kgraph.extraction import extract_triples
 from kgraph.kgraph.utils import swap_label_with_symbol
 from kgraph.kgraph.verifier import verify_proposition
 from kgraph.kgraph.wiki import assign_sub_dir, download_wiki_pages, get_wiki_titles
+from src.tools import select_best_answer
 
 
 def create_PG_temp(question: str, choice: list[str]) -> KB:
@@ -25,7 +26,7 @@ def create_PG_temp(question: str, choice: list[str]) -> KB:
     return PG_temp
 
 
-def create_PGs(filename: str):
+def create_PGs(filename: str, pg_top_dir: str):
     """
     Create PGs from given MCQ dataset.
 
@@ -33,6 +34,8 @@ def create_PGs(filename: str):
     ----------
     filename : str
         Path to the MCQ dataset file (JSON).
+    pg_top_dir : str
+        Top-level directory to save the generated PGs.
     """
     with open(filename, "r") as f:
         mcqs = json.load(f)
@@ -49,8 +52,8 @@ def create_PGs(filename: str):
                 PG = swap_label_with_symbol(PG_temp, "#BLANK", c)
 
                 # save PG to dot file
-                os.makedirs(f"exp1/PGs/{cat}/{cat}-{i}", exist_ok=True)
-                pg_dot_path = f"exp1/PGs/{cat}/{cat}-{i}/{choice.index(c)}_{c}.dot"
+                os.makedirs(f"{pg_top_dir}/{cat}/{cat}-{i}", exist_ok=True)
+                pg_dot_path = f"{pg_top_dir}/{cat}/{cat}-{i}/{choice.index(c)}_{c}.dot"
                 PG.write_dot(pg_dot_path)
 
 
@@ -71,17 +74,17 @@ def download_wiki_articles(pg_top_dir: str):
             PGs = [
                 KB.from_dot_file(os.path.join(pg_dir, file)) for file in os.listdir(pg_dir) if file.endswith(".dot")
             ]
-            PG_joined = KB()
-            for PG in PGs:
-                PG_joined = join(PG_joined, PG)
+            PG_nodes = [PG.get_nodes() for PG in PGs]
+            titles = [word for node in PG_nodes for word in node]
 
             # Download the Wikipedia article
-            download_wiki_pages(PG_joined.get_nodes(), out_dir="wikipedia", tqdm_disable=True)
+            download_wiki_pages(titles, out_dir="wikipedia", tqdm_disable=True)
 
 
-def create_KG_cache(wiki_dir: str, KG_dir: str, force: bool = False):
+def create_KG_cache(wiki_dir: str, KG_dir: str, force: bool = False, batch_size: int = 32):
     """
     Create KGs for every Wikipedia article in the specified directory.
+    This function skips the articles which has `converted` flag with `True` in the JSON file.
 
     Parameters
     ----------
@@ -90,22 +93,34 @@ def create_KG_cache(wiki_dir: str, KG_dir: str, force: bool = False):
     """
     subdirs = os.listdir(wiki_dir)
 
+    # Create KGs for each subdir (prefix)
     for subdir in sorted(subdirs):
+        # JSON files which contain downloaded articles
         files = [file for file in os.listdir(os.path.join(wiki_dir, subdir)) if file.endswith(".json")]
-        for file in tqdm(files, desc=f"Processing {subdir}"):
-            with open(os.path.join(wiki_dir, subdir, file), "r") as f:
-                data = json.load(f)
-                if force or not data["converted"]:
-                    title = data["title"]
-                    summary = data["summary"]
 
-                    # Create KG
-                    KG = extract_triples([summary], method="rebel")[0]
+        for i in tqdm(range(0, len(files), batch_size), desc=f"Processing {subdir}"):
+            batch_files = files[i : i + batch_size]
+            summaries = []
+            titles = []
+            file_data = []
 
+            # Collect summaries and titles for the batch
+            for file in batch_files:
+                with open(os.path.join(wiki_dir, subdir, file), "r") as f:
+                    data = json.load(f)
+                    if force or not data["converted"]:
+                        summaries.append(data["summary"])
+                        titles.append(data["title"])
+                        file_data.append((file, data))
+
+            # Create KGs in batch
+            if summaries:
+                KGs = extract_triples(summaries, method="rebel")
+
+                for KG, title, (file, data) in zip(KGs, titles, file_data):
                     # Save KG to dot file
                     os.makedirs(f"{KG_dir}/{subdir}", exist_ok=True)
                     kg_dot_path = f"{KG_dir}/{subdir}/{title}.dot"
-
                     KG.write_dot(kg_dot_path)
 
                     # Update the JSON file
@@ -151,7 +166,9 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
 
 def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str):
     """
-    Verify PGs against KGs.
+    Verify PGs against KGs and select the best answer.
+    This function iterates over each category and each PG, verifies the PG against the KG,
+    and saves the verification results in a JSON file.
 
     Parameters
     ----------
@@ -185,17 +202,18 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str):
                 KG = KB.from_dot_file(os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename))
 
                 # Verify the PG against the KG
-                score, verified_edges, _ = verify_proposition(PG, KG)
-                scores.append(score)
+                edge_score, node_score, verified_edges, _ = verify_proposition(PG, KG)
+                scores.append((edge_score, node_score))
 
                 # Save the verification result
                 result[cat]["questions"][mcq_id][pg_filename[0]] = {
                     "choice": pg_filename[2:-4],
-                    "score": score,
+                    "edge_score": edge_score,
                     "verified_edges": verified_edges,
                 }
 
-            result[cat]["questions"][mcq_id]["answer"] = scores.index(max(scores))
+            # TODO: fix here
+            result[cat]["questions"][mcq_id]["answer"] = select_best_answer(scores)
 
         # Save the result to a JSON file
         with open(output_file, "w") as f:
@@ -243,14 +261,21 @@ def collect_results(result_file: str, mcq_file: str):
 
 if __name__ == "__main__":
 
-    MCQ_FILE = "dataset/MCQs.json"  # "dataset/miniMCQs.json"
-    PG_TOP_DIR = "exp1/PGs"
-    KG_TOP_DIR = "exp1/KGs"
+    # NOTE: Please remove all PG, KG files in OUT_DIR before running the code.
+
+    # Define paths
+    ds_list = ["dataset/MCQs.json", "dataset/miniMCQs.json", "dataset/FPAI-20.json", "dataset/FPAI-100.json"]
+    MCQ_FILE = ds_list[1]
     KG_CHACHE_DIR = "KG_cache"
+
+    ds_name = os.path.basename(MCQ_FILE).split(".")[0]
+    OUT_DIR = os.path.join("exp1", ds_name)
+    PG_TOP_DIR = os.path.join(OUT_DIR, "PGs")
+    KG_TOP_DIR = os.path.join(OUT_DIR, "KGs")
 
     # Step 1-1. Create PGs
     print("\nStep 1-1. Creating PGs")
-    create_PGs(MCQ_FILE)
+    create_PGs(MCQ_FILE, PG_TOP_DIR)
 
     # Step 1-2. Download Wikipedia articles for each PG
     print("\nStep 1-2. Downloading Wikipedia articles")
@@ -273,9 +298,9 @@ if __name__ == "__main__":
     verify_PGs(
         pg_top_dir=PG_TOP_DIR,
         kg_top_dir=KG_TOP_DIR,
-        output_file="exp1/results.json",
+        output_file=f"{OUT_DIR}/results.json",
     )
 
     # Step 4. Count correct answers
     print("\nStep 4. Counting correct answers")
-    collect_results(result_file="exp1/results.json", mcq_file=MCQ_FILE)
+    collect_results(result_file=f"{OUT_DIR}/results.json", mcq_file=MCQ_FILE)
