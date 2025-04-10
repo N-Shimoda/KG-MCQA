@@ -1,3 +1,5 @@
+from typing import Literal
+
 from ..core import KB
 from ..utils.utils import colorize
 from .matching import get_subgraph_nodes
@@ -13,9 +15,12 @@ def eval_edge(e1: str, e2: str) -> int:
     return score
 
 
-def verify_proposition(PG: KB, KG: KB) -> tuple[float, list[dict[str, str]], list[dict]]:
+def verify_proposition(
+    PG: KB, KG: KB
+) -> tuple[float, float, list[dict[Literal["head", "type", "tail"], str]], dict[Literal["head", "type", "tail"], str]]:
     """
-    Function to verify truthfulness of `PG` based on facts in `KG`
+    Function to verify truthfulness of `PG` based on facts in `KG`.
+    If there is no relation in `PG`, it returns 0.0 for `verify_score` and 1.0 for `node_score`.
 
     Parameters
     ----------
@@ -28,14 +33,14 @@ def verify_proposition(PG: KB, KG: KB) -> tuple[float, list[dict[str, str]], lis
     -------
     verify_score: float
         Number of verified relations divided by the total number of relations in PG.
-    verified_rels: list[dict[str, str]]
+    node_score: float
+        Number of verified nodes divided by the total number of nodes in PG.
+    verified_rels: list[dict[Literal['head', 'type', 'tail'], str]]
         List of verified edges from PG that match relations in KG.
-    evidence_rels: list[dict[str, str]]
+    evidence_rels: list[dict[Literal['head', 'type', 'tail'], str]]
         List of corresponding relations from KG that serve as evidence for the verified edges.
     """
-    subnodes, PG_nodes, node_score = get_subgraph_nodes(
-        KG.get_nodes(), PG.get_nodes(), verbose=False
-    )
+    subnodes, PG_nodes, node_score = get_subgraph_nodes(KG.get_nodes(), PG.get_nodes())
 
     count = 0
     verified_rels = []
@@ -71,4 +76,6 @@ def verify_proposition(PG: KB, KG: KB) -> tuple[float, list[dict[str, str]], lis
             continue
 
     # Edge score = [num of verified relations] / [num of all relations]
-    return count / len(PG.relations), verified_rels, evidence_rels
+    verify_score = count / len(PG.relations) if PG.relations else 0
+    return verify_score, node_score, verified_rels, evidence_rels
+    return verify_score, node_score, verified_rels, evidence_rels
