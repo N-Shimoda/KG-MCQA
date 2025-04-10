@@ -27,11 +27,6 @@ def main():
         selected_dataset_name = st.selectbox("使用するMCQデータセットを選んでください", json_files)
         selected_dataset_path = dataset_paths[selected_dataset_name]
 
-        st.header("表示設定")
-        display_mode = st.radio(
-            "表示モードを選択してください:", ["インタラクティブモード", "正解をすぐに表示"]
-        )
-
     data = load_data(selected_dataset_path)
 
     with st.sidebar:
@@ -41,6 +36,9 @@ def main():
         label_to_key = dict(zip(category_labels, category_keys))
         selected_label = st.selectbox("カテゴリを選択してください", category_labels)
         selected_key = label_to_key[selected_label]
+
+        st.header("表示設定")
+        display_mode = st.radio("表示モードを選択してください:", ["インタラクティブモード", "正解をすぐに表示"])
 
     st.subheader(f"カテゴリ: {selected_label}")
     questions = data[selected_key]["questions"]
