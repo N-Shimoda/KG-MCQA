@@ -4,11 +4,7 @@ import networkx as nx
 import numpy as np
 import pandas as pd
 import torch
-
-# from networkx.algorithms.bipartite.matching import (
-#     eppstein_matching,
-#     hopcroft_karp_matching,
-# )
+from networkx.drawing.nx_pydot import write_dot
 from sentence_transformers import SentenceTransformer
 
 
@@ -40,34 +36,36 @@ def get_identical_nodes(Vk: list[str], Vp: list[str]) -> tuple[list[str], list[s
 
 def find_best_matching(
     Vp: list[str], Vk: list[str], method: Literal["normal"] = "normal"
-) -> tuple[set[tuple[str]], float]:
+) -> tuple[set[tuple[str, str]], float]:
     """
     Find the best matching in bipartite graph B = (Vp, Vk), which maximize the label similarity between nodes.
 
     Parameters
     ----------
-    Vp: list[str]
+    Vp : list[str]
         List of PG node labels.
-    Vk: list[str]
+    Vk : list[str]
         List of KG node labels.
     method: Literal["normal"]
         Method to find the best matching.
 
     Returns
     -------
-    matching: set[tuple[str]]
-    score: float
+    matching : set[tuple[str, str]]
+        Set of tuples representing the best matching.
+    score : float
         Sum of label similarities in `matching`.
     """
     if len(Vp) == 0:
         raise ValueError("The number of PG nodes must be greater than 0.")
     elif len(Vk) == 0:
         raise ValueError("The number of KG nodes must be greater than 0.")
+    assert set(Vp) & set(Vk) == set(), "The node sets Vp and Vk must be disjoint."
 
     # define bipartite graph `B`
     B = nx.Graph()
-    B.add_nodes_from(Vk, bipartite=0)
-    B.add_nodes_from(Vp, bipartite=1)
+    B.add_nodes_from(Vp, bipartite=0)
+    B.add_nodes_from(Vk, bipartite=1)
     assert nx.is_bipartite(B), "Oops! The graph is not bipartite."
 
     # check device
@@ -97,6 +95,9 @@ def find_best_matching(
     df.index = Vp
     df.columns = Vk
 
+    print(df)
+    write_dot(B, "bipartite_graph.dot")
+
     # Solve maximum bipartite matching by Networkx.
     match method:
         case "normal":
@@ -117,7 +118,7 @@ def find_best_matching(
     return matching, score
 
 
-def get_subgraph_nodes(Vk: list[str], Vp: list[str], verbose=False) -> tuple[list[str], list[str], float]:
+def get_subgraph_nodes(Vk: list[str], Vp: list[str]) -> tuple[list[str], list[str], float]:
     """
     Extract a subset of nodes from the knowledge graph
     that correspond to the nodes in the propositional graph.
@@ -128,7 +129,6 @@ def get_subgraph_nodes(Vk: list[str], Vp: list[str], verbose=False) -> tuple[lis
         Node set of the knowledge graph.
     Vp: list[str]
         Node set of the propositional graph. The number of elements in `Vp` must be less than or equal to `Vk`.
-    verbose: bool
 
     Returns
     -------
@@ -140,40 +140,53 @@ def get_subgraph_nodes(Vk: list[str], Vp: list[str], verbose=False) -> tuple[lis
         Average node label similarity score.
         Takes a value between 0 and 1, where a higher value indicates better node name matching.
     """
-    # ---- Find identical nodes ----
-    Vp_identical, Vk_identical = get_identical_nodes(Vk, Vp)
-
-    # remove identical nodes
-    Vp = [vp for vp in Vp if (vp not in Vp_identical)]
-    Vk = [v for v in Vk if (v not in Vk_identical)]
-
-    # Find the most similar matching for other nodes
-    if len(Vp) > 0 and len(Vk) > 0:
-        matching, score = find_best_matching(Vp, Vk, method="normal")
-        score = (score + len(Vp_identical)) / (len(Vp) + len(Vk_identical))
+    if len(Vp) == 0 or len(Vk) == 0:
+        return [], [], 0.0
     else:
-        # case when there are no nodes in Vp or Vk
-        matching = set()
-        score = 1.0
+        # ---- Find identical nodes ----
+        Vp_identical, Vk_identical = get_identical_nodes(Vk, Vp)
 
-    print("Matching: {}".format(matching))
+        # remove identical nodes
+        Vp = [v for v in Vp if (v not in Vp_identical)]
+        Vk = [v for v in Vk if (v not in Vk_identical)]
 
-    # initialize output
-    Vp = Vp_identical + []
-    subnodes = Vk_identical + []
-
-    # TODO: Fix ambiguous node outputs
-    for item in matching:
-        if item[0] in Vk:
-            subnodes.append(item[0])
-            Vp.append(item[1])
+        # Find the most similar matching for other nodes
+        if len(Vp) > 0 and len(Vk) > 0:
+            matching, score = find_best_matching(Vp, Vk, method="normal")
         else:
-            Vp.append(item[0])
-            subnodes.append(item[1])
+            # case when there are no nodes in Vp or Vk
+            matching = set()
+            score = 0.0
 
-    # Show result
-    if verbose:
-        print("Total score = {}".format(score))
-        print("Matching: {}".format(list(zip(Vp, subnodes))))
+        # NOTE: total score devided by the original length of Vp
+        score = (score + len(Vp_identical)) / (len(Vp + Vk_identical))
 
-    return subnodes, Vp, score  # return the best subgraph nodes (with score)
+        # initialize output
+        Vp = Vp_identical + []
+        subnodes = Vk_identical + []
+
+        # TODO: Fix ambiguous node outputs
+        for item in matching:
+            if item[0] in Vk:
+                subnodes.append(item[0])
+                Vp.append(item[1])
+            else:
+                Vp.append(item[0])
+                subnodes.append(item[1])
+
+        return subnodes, Vp, score  # return the best subgraph nodes (with score)
+
+
+if __name__ == "__main__":
+    # Example usage
+    Vk = ["Kyoto University", "Barack Obama", "Python"]
+    Vp = ["Kyoto Univ", "Barack Hussein Obama", "Python 3.12"]
+
+    # subnodes, Vp, score = get_subgraph_nodes(Vk, Vp)
+    # print(f"Subnodes: {subnodes}")
+    # print(f"Vp: {Vp}")
+    # print(f"Score: {score}")
+
+    matching, score = find_best_matching(Vp, Vk)
+    print(f"Matching: {matching}")
+    print(f"Score: {score}")
