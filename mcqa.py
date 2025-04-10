@@ -1,5 +1,7 @@
 import json
 import os
+import sys
+from multiprocessing import Pool
 
 from tqdm import tqdm
 
@@ -8,7 +10,7 @@ from kgraph.kgraph.extraction import extract_triples
 from kgraph.kgraph.utils import swap_label_with_symbol
 from kgraph.kgraph.verifier import verify_proposition
 from kgraph.kgraph.wiki import assign_sub_dir, download_wiki_pages, get_wiki_titles
-from src.tools import select_best_answer
+from src.select_ans import select_best_answer
 
 
 def create_PG_temp(question: str, choice: list[str]) -> KB:
@@ -39,11 +41,10 @@ def create_PGs(filename: str, pg_top_dir: str):
     """
     with open(filename, "r") as f:
         mcqs = json.load(f)
-
-    print("MCQ dataset: {}".format(filename))
     print("Categories: {}".format(list(mcqs.keys())))
 
     for cat in mcqs.keys():
+        # TODO: Implement batch inference here.
         for i, mcq in enumerate(tqdm(mcqs[cat]["questions"], desc=f"Processing {mcqs[cat]['category']}")):
             choice = mcq["choice"]
             PG_temp = create_PG_temp(mcq["sentence"], choice)
@@ -75,7 +76,7 @@ def download_wiki_articles(pg_top_dir: str):
                 KB.from_dot_file(os.path.join(pg_dir, file)) for file in os.listdir(pg_dir) if file.endswith(".dot")
             ]
             PG_nodes = [PG.get_nodes() for PG in PGs]
-            titles = [word for node in PG_nodes for word in node]
+            titles = set([word for node in PG_nodes for word in node])
 
             # Download the Wikipedia article
             download_wiki_pages(titles, out_dir="wikipedia", tqdm_disable=True)
@@ -164,7 +165,19 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
                 KG_combined.write_dot(kg_file_name)
 
 
-def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str):
+def process_pg(args):
+    """
+    Helper function to process a single PG and KG pair.
+    This function is used for parallel processing.
+    """
+    pg_path, kg_path = args
+    PG = KB.from_dot_file(pg_path)
+    KG = KB.from_dot_file(kg_path)
+    edge_score, node_score, verified_edges, _ = verify_proposition(PG, KG)
+    return pg_path, edge_score, node_score, verified_edges
+
+
+def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: int = 16):
     """
     Verify PGs against KGs and select the best answer.
     This function iterates over each category and each PG, verifies the PG against the KG,
@@ -178,14 +191,15 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str):
         Top-level directory containing subdirectories of KGs.
     output_file : str
         Path to the output JSON file for verification results.
+    num_workers : int
+        Number of parallel workers to use.
     """
     result = dict()
 
-    # iterate over each category
+    # Iterate over each category
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
-
-        # list of PG directories for the given category
+        # List of PG directories for the given category
         pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
         result[cat] = {"questions": dict()}
 
@@ -194,25 +208,33 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str):
             mcq_id = os.path.basename(pg_dir)
             result[cat]["questions"][mcq_id] = dict()
 
+            # Prepare arguments for parallel processing
+            pg_files = os.listdir(pg_dir)
+            args = [
+                (
+                    os.path.join(pg_dir, pg_filename),
+                    os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename),
+                )
+                for pg_filename in pg_files
+            ]
+
+            # Use multiprocessing to process PGs in parallel
+            with Pool(processes=num_workers) as pool:
+                results = pool.map(process_pg, args)
+
             scores = []
-
-            for pg_filename in os.listdir(pg_dir):
-                # Load PG and KG
-                PG = KB.from_dot_file(os.path.join(pg_dir, pg_filename))
-                KG = KB.from_dot_file(os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename))
-
-                # Verify the PG against the KG
-                edge_score, node_score, verified_edges, _ = verify_proposition(PG, KG)
+            for pg_path, edge_score, node_score, verified_edges in results:
+                pg_filename = os.path.basename(pg_path)
                 scores.append((edge_score, node_score))
 
                 # Save the verification result
                 result[cat]["questions"][mcq_id][pg_filename[0]] = {
                     "choice": pg_filename[2:-4],
                     "edge_score": edge_score,
+                    "node_score": node_score,
                     "verified_edges": verified_edges,
                 }
 
-            # TODO: fix here
             result[cat]["questions"][mcq_id]["answer"] = select_best_answer(scores)
 
         # Save the result to a JSON file
@@ -238,7 +260,7 @@ def collect_results(result_file: str, mcq_file: str):
         mcqs = json.load(f)
 
     for cat in result.keys():
-        count = 0
+        counts = [0, 0, 0]  # [correct, incorrect, not_answered]
         ans_data = result[cat]["questions"]
         mcq_ids = list(ans_data.keys())
         for mcq_id in ans_data.keys():
@@ -247,12 +269,16 @@ def collect_results(result_file: str, mcq_file: str):
 
             if answer == correct_answer:
                 ans_data[mcq_id]["correct"] = True
-                count += 1
+                counts[0] += 1
+            elif answer == -1:
+                ans_data[mcq_id]["correct"] = False
+                counts[2] += 1
             else:
                 ans_data[mcq_id]["correct"] = False
+                counts[1] += 1
 
         # save the count of correct answers for each category
-        result[cat]["corrected"] = count
+        result[cat]["correct"], result[cat]["fail"], result[cat]["unselectable"] = counts
         result[cat]["total"] = len(ans_data.keys())
 
     with open(result_file, "w") as f:
@@ -264,14 +290,18 @@ if __name__ == "__main__":
     # NOTE: Please remove all PG, KG files in OUT_DIR before running the code.
 
     # Define paths
-    ds_list = ["dataset/MCQs.json", "dataset/miniMCQs.json", "dataset/FPAI-20.json", "dataset/FPAI-100.json"]
-    MCQ_FILE = ds_list[1]
+    if len(sys.argv) < 2:
+        raise ValueError("Please provide the path to the MCQ file as a command-line argument.")
+
+    MCQ_FILE = sys.argv[1]
     KG_CHACHE_DIR = "KG_cache"
 
+    print("MCQ dataset: {}".format(MCQ_FILE))
+
     ds_name = os.path.basename(MCQ_FILE).split(".")[0]
-    OUT_DIR = os.path.join("exp1", ds_name)
-    PG_TOP_DIR = os.path.join(OUT_DIR, "PGs")
-    KG_TOP_DIR = os.path.join(OUT_DIR, "KGs")
+    OUT_DIR = f"exp1/{ds_name}"
+    PG_TOP_DIR = f"{OUT_DIR}/PGs"
+    KG_TOP_DIR = f"{OUT_DIR}/KGs"
 
     # Step 1-1. Create PGs
     print("\nStep 1-1. Creating PGs")
@@ -299,6 +329,7 @@ if __name__ == "__main__":
         pg_top_dir=PG_TOP_DIR,
         kg_top_dir=KG_TOP_DIR,
         output_file=f"{OUT_DIR}/results.json",
+        num_workers=os.cpu_count() - 1,
     )
 
     # Step 4. Count correct answers

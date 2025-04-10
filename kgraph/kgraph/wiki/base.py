@@ -114,13 +114,17 @@ def assign_sub_dir(title: str) -> str:
 
 
 async def download_wiki_pages_async(
-    targets: list[str], out_dir: str, tqdm_disable: bool = False
+    targets: list[str] | set[str], out_dir: str, tqdm_disable: bool = False
 ) -> list[tuple[str, str]]:
     """
     Download Wikipedia articles for the specified target titles asynchronously and save them as JSON files
     in the specified output directory.
 
+    Parameters
+    ----------
+    targets: list[str] | set[str]
         A list of Wikipedia page titles to download.
+    out_dir: str
         The directory where the downloaded pages will be saved. Subdirectories may be created based on the titles.
     tqdm_disable : bool, optional
         If True, disables the tqdm progress bar. Defaults to False.
@@ -148,7 +152,22 @@ async def download_wiki_pages_async(
     # date
     today_date = datetime.now()
 
-    async def fetch_and_save(target: str):
+    async def fetch_and_save(target: str) -> tuple[str, str]:
+        """
+        Fetch and save a Wikipedia page asynchronously.
+
+        Parameters
+        ----------
+        target : str
+            Target Wikipedia page.
+
+        Returns
+        -------
+        page.title : str
+            Title of the Wikipedia page if it exists, otherwise original query text.
+        page.fullurl : str | None
+            Full URL of the Wikipedia page if it exists, otherwise None.
+        """
         page = wiki_wiki.page(target)
         if page.exists():
             # article data
@@ -177,14 +196,16 @@ async def download_wiki_pages_async(
     return res
 
 
-def download_wiki_pages(targets: list[str], out_dir: str, tqdm_disable: bool = False) -> list[tuple[str, str]]:
+def download_wiki_pages(
+    targets: list[str] | set[str], out_dir: str, tqdm_disable: bool = False
+) -> list[tuple[str, str]]:
     """
     Wrapper for the asynchronous download_wiki_pages_async function.
 
     Parameters
     ----------
-    targets : list[str]
-        List of target Wikipedia pages to download.
+    targets : list[str] | set[str]
+        List or set of target Wikipedia pages to download.
     out_dir : str
         Directory to save the downloaded pages.
     tqdm_disable : bool, optional
@@ -200,12 +221,6 @@ def download_wiki_pages(targets: list[str], out_dir: str, tqdm_disable: bool = F
 
 if __name__ == "__main__":
     # Example usage
-    targets = [
-        "Kyoto University",
-        "Machine Learning",
-        "AI",
-        "éclair",
-        "classical music",
-        "123 Start",
-    ]
-    download_wiki_pages(targets, out_dir="wikipedia")
+    targets = ["Kyoto University", "Machine Learning", "AI", "éclair", "classical music", "123 Start", "Naoki Shimoda"]
+    res = download_wiki_pages(targets, out_dir="wikipedia")
+    print(res)

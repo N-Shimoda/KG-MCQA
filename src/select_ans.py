@@ -22,10 +22,11 @@ def select_best_answer(scores: list[tuple[float, float]]) -> int:
         result = edge_scores.index(es_max)
     else:
         # If there is a tie, select the answer with the highest node score
-        # ns_max = max([ns for ns in node_scores if edge_scores[node_scores.index(ns)] == es_max])
-        ns_max = max([node_scores[i] for i in range(len(node_scores)) if edge_scores[i] == es_max])
-        if node_scores.count(ns_max) == 1:
-            result = node_scores.index(ns_max)
+        es_max_ids = [i for i, score in enumerate(edge_scores) if score == es_max]
+        ns_candidates = [(ns if i in es_max_ids else 0) for i, ns in enumerate(node_scores)]
+        ns_max = max(ns_candidates)
+        if ns_candidates.count(ns_max) == 1:
+            result = ns_candidates.index(ns_max)
         else:
             # If there is still a tie, return -1 as "unselectable" flag
             result = -1
