@@ -1,4 +1,5 @@
 import json
+import sys
 
 
 def analyze_questions(data: dict[str, dict]):
@@ -14,7 +15,12 @@ def analyze_questions(data: dict[str, dict]):
 if __name__ == "__main__":
 
     # Load the JSON file
-    filename = "dataset/MCQs.json"
+    try:
+        filename = sys.argv[1]
+    except IndexError:
+        print("Usage: python analyzer.py <filename>")
+        sys.exit(1)
+
     with open(filename, "r", encoding="utf-8") as f:
         data = json.load(f)
 

@@ -5,8 +5,9 @@
 1. Use following `conda` command for setting up basic environment.
    ```shell
    conda env create -f environment.yml
+   conda activate kg-mcqa
    ```
-1. In order to install original package `kgraph`, run following `pip` command.
+1. Please setup original package `kgraph` via local `pip` installation.
    ```shell
    pip install ./kgraph
    ```
@@ -28,3 +29,19 @@ In order to generate docs for the `kgraph` package, please run the following com
 sphinx-apidoc -f -o source/ ../kgraph/
 make html
 ```
+
+## Contents
+
+### Directories
+
+- `kgraph`: Original package for handling proposed method.
+- `scripts`
+- `dataset`: Original MCQ dataset.
+- `KG_cache`: Cache files of KG constructed from Wikipedia articles.
+- `wikipedia`: Dowonloaded Wikipedia articles.
+
+### Files
+
+- `mcqa.py`
+- `fever.py`
+- `environment.yml`
