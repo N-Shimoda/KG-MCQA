@@ -100,8 +100,6 @@ def download_wiki_pages(targets: list[str], out_dir: str, tqdm_disable: bool = F
     for target in tqdm(targets, desc="Downloading Wikipedia pages", disable=tqdm_disable):
         page = wiki_wiki.page(target)
         if page.exists():
-            # print("Title: {} ({})".format(page.title, page.fullurl))
-            # print("Summary: {}".format(page.summary))
             # article data
             data = {
                 "title": page.title,
@@ -120,7 +118,6 @@ def download_wiki_pages(targets: list[str], out_dir: str, tqdm_disable: bool = F
             with open(output_path, "w", encoding="utf-8") as output_file:
                 json.dump(data, output_file, indent=4)
         else:
-            # print("Page not found for {}".format(target))
             continue
 
 
