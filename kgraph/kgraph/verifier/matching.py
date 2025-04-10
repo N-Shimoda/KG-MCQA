@@ -4,7 +4,6 @@ import networkx as nx
 import numpy as np
 import pandas as pd
 import torch
-from networkx.drawing.nx_pydot import write_dot
 from sentence_transformers import SentenceTransformer
 
 
@@ -95,9 +94,6 @@ def find_best_matching(
     df.index = Vp
     df.columns = Vk
 
-    print(df)
-    write_dot(B, "bipartite_graph.dot")
-
     # Solve maximum bipartite matching by Networkx.
     match method:
         case "normal":
@@ -158,7 +154,7 @@ def get_subgraph_nodes(Vk: list[str], Vp: list[str]) -> tuple[list[str], list[st
             matching = set()
             score = 0.0
 
-        # NOTE: total score devided by the original length of Vp
+        # NOTE: score is total score devided by the original length of Vp
         score = (score + len(Vp_identical)) / (len(Vp + Vk_identical))
 
         # initialize output
