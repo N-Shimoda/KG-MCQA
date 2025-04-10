@@ -5,8 +5,9 @@
 1. Use following `conda` command for setting up basic environment.
    ```shell
    conda env create -f environment.yml
+   conda activate kg-mcqa
    ```
-1. In order to install original package `kgraph`, run following `pip` command.
+1. Please setup original package `kgraph` via local `pip` installation.
    ```shell
    pip install ./kgraph
    ```

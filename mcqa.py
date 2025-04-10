@@ -1,7 +1,7 @@
 import json
 import os
 import sys
-from multiprocessing import Pool
+from multiprocessing import Pool  # set_start_method
 
 from tqdm import tqdm
 
@@ -45,7 +45,9 @@ def create_PGs(filename: str, pg_top_dir: str):
 
     for cat in mcqs.keys():
         # TODO: Implement batch inference here.
-        for i, mcq in enumerate(tqdm(mcqs[cat]["questions"], desc=f"Processing {mcqs[cat]['category']}")):
+        for i, mcq in enumerate(
+            tqdm(mcqs[cat]["questions"], desc=f"Processing {mcqs[cat]['category']}")
+        ):
             choice = mcq["choice"]
             PG_temp = create_PG_temp(mcq["sentence"], choice)
 
@@ -70,10 +72,15 @@ def download_wiki_articles(pg_top_dir: str):
     # iterate over each category
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
-        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
+        pg_dirs = [
+            os.path.join(pg_top_dir, cat, subdir)
+            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
+        ]
         for pg_dir in tqdm(pg_dirs, desc=f"Processing {cat}"):
             PGs = [
-                KB.from_dot_file(os.path.join(pg_dir, file)) for file in os.listdir(pg_dir) if file.endswith(".dot")
+                KB.from_dot_file(os.path.join(pg_dir, file))
+                for file in os.listdir(pg_dir)
+                if file.endswith(".dot")
             ]
             PG_nodes = [PG.get_nodes() for PG in PGs]
             titles = set([word for node in PG_nodes for word in node])
@@ -97,7 +104,9 @@ def create_KG_cache(wiki_dir: str, KG_dir: str, force: bool = False, batch_size:
     # Create KGs for each subdir (prefix)
     for subdir in sorted(subdirs):
         # JSON files which contain downloaded articles
-        files = [file for file in os.listdir(os.path.join(wiki_dir, subdir)) if file.endswith(".json")]
+        files = [
+            file for file in os.listdir(os.path.join(wiki_dir, subdir)) if file.endswith(".json")
+        ]
 
         for i in tqdm(range(0, len(files), batch_size), desc=f"Processing {subdir}"):
             batch_files = files[i : i + batch_size]
@@ -146,7 +155,10 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
     # iterate over each category
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
-        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
+        pg_dirs = [
+            os.path.join(pg_top_dir, cat, subdir)
+            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
+        ]
         for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
             # Note: pg_dir contains four PG dot files for a single MCQ
             for pg_filename in os.listdir(pg_dir):
@@ -156,7 +168,9 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
                 # combine KGs for the found Wikipedia articles
                 KG_combined = KB()
                 for title in titles:
-                    KG = KB.from_dot_file(os.path.join(KG_cache_dir, assign_sub_dir(title), title + ".dot"))
+                    KG = KB.from_dot_file(
+                        os.path.join(KG_cache_dir, assign_sub_dir(title), title + ".dot")
+                    )
                     KG_combined = join(KG_combined, KG)
 
                 # Save combined KG to dot file
@@ -165,10 +179,24 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
                 KG_combined.write_dot(kg_file_name)
 
 
-def process_pg(args):
+def process_pg(args: tuple[str, str]) -> tuple[str, float, float, list[tuple[str, str]]]:
     """
     Helper function to process a single PG and KG pair.
     This function is used for parallel processing.
+
+    Parameters
+    ----------
+    args : tuple[str, str]
+        A tuple containing the paths to the PG file and the KG file.
+
+    Returns
+    -------
+    tuple[str, float, float, list[tuple[str, str]]]
+        A tuple containing:
+        - The path to the PG file (str).
+        - The edge score (float).
+        - The node score (float).
+        - A list of verified edges, where each edge is represented as a tuple of two strings.
     """
     pg_path, kg_path = args
     PG = KB.from_dot_file(pg_path)
@@ -200,7 +228,10 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
         # List of PG directories for the given category
-        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
+        pg_dirs = [
+            os.path.join(pg_top_dir, cat, subdir)
+            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
+        ]
         result[cat] = {"questions": dict()}
 
         for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
@@ -220,6 +251,7 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
 
             # Use multiprocessing to process PGs in parallel
             with Pool(processes=num_workers) as pool:
+                # set_start_method("spawn", force=True)
                 results = pool.map(process_pg, args)
 
             scores = []
