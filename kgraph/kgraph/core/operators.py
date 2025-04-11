@@ -1,4 +1,4 @@
-from .main import KB
+from .base import KB
 
 
 def join(g1: KB, g2: KB) -> KB:
