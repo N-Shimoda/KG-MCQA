@@ -141,8 +141,10 @@ async def download_wiki_pages_async(
 
     Returns
     -------
-    list[tuple[str, str]]
-        A list of tuples, where each tuple contains the title and full URL of a successfully downloaded Wikipedia page.
+    titles: list[str]
+        List of Wikipedia page titles if exists, otherwise original target texts.
+    urls: list[str]
+        List of full URLs for the Wikipedia pages if exists, otherwise None.
 
     Notes
     -----
@@ -215,12 +217,13 @@ async def download_wiki_pages_async(
         fetch_and_save(target) for target in tqdm(targets, desc="Downloading Wikipedia pages", disable=tqdm_disable)
     ]
     res = await asyncio.gather(*tasks)
-    return res
+    titles, urls = zip(*res)
+    return list(titles), list(urls)
 
 
 def download_wiki_pages(
     targets: list[str] | set[str], out_dir: str, tqdm_disable: bool = False
-) -> list[tuple[str, str]]:
+) -> tuple[list[str], list[str]]:
     """
     Wrapper for the asynchronous download_wiki_pages_async function.
 
@@ -235,8 +238,10 @@ def download_wiki_pages(
 
     Returns
     -------
-    list[tuple[str, str]]
-        A list of tuples, where each tuple contains the title and full URL of a successfully downloaded Wikipedia page.
+    titles: list[str]
+        List of Wikipedia page titles if exists, otherwise original target texts.
+    urls: list[str]
+        List of full URLs for the Wikipedia pages if exists, otherwise None.
     """
     return asyncio.run(download_wiki_pages_async(targets, out_dir, tqdm_disable))
 
@@ -244,5 +249,6 @@ def download_wiki_pages(
 if __name__ == "__main__":
     # Example usage
     targets = ["Kyoto University", "Machine Learning", "AI", "éclair", "classical music", "123 Start", "Naoki Shimoda"]
-    res = download_wiki_pages(targets, out_dir="wikipedia")
-    print(res)
+    titles, urls = download_wiki_pages(targets, out_dir="wikipedia")
+    print("Titles: ", titles)
+    print("URLs: ", urls)

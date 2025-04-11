@@ -10,33 +10,9 @@ class KB:
         else:
             self.relations = relations
 
-    @classmethod
-    def from_dot_file(cls, dot_file_path: str) -> "KB":
-        """
-        Construct a KB object from a DOT file.
-
-        Parameters
-        ----------
-        dot_file_path: str
-            Path to the DOT file.
-
-        Returns
-        -------
-        KB
-            An instance of the KB class.
-        """
-        relations = []
-        with open(dot_file_path, "r") as file:
-            lines = file.readlines()
-
-        for line in lines:
-            # Match lines with the pattern: "head" -> "tail" [label="type"];
-            match = re.match(r'\s*"(.+)" -> "(.+)" \[label="(.+)"\];', line)
-            if match:
-                head, tail, relation_type = match.groups()
-                relations.append({"head": head, "type": relation_type, "tail": tail})
-
-        return cls(relations)
+        # instance variables
+        self.nodes = self.get_nodes()
+        self.node_attr = {self.nodes[i]: dict() for i in range(len(self.nodes))}
 
     def __str__(self) -> str:
         """
@@ -73,6 +49,68 @@ class KB:
         if not self.exists_relation(r):
             self.relations.append(r)
 
+    def add_node_attr(self, node_label: str, attr: str, value: str):
+        """
+        Add attribute `attr` to node `node_label` with value `value`.
+
+        Parameters
+        ----------
+        node_label: str
+            Label of node to add attribute.
+        attr: str
+            Name of attribute.
+        value: str
+            Value of attribute.
+        """
+        if node_label not in self.nodes:
+            raise ValueError(f"Node {node_label} does not exist in KB.")
+        self.node_attr[node_label][attr] = value
+
+    def get_nodes(self) -> list[str]:
+        """
+        Return a list of node labels.
+
+        Returns
+        -------
+        node_list: list[str]
+            List of node labels.
+
+        Notes
+        -----
+        Even if a node appears in multiple relations, its label appears only once in output list.
+        """
+        head_list = list(set([relation["head"] for relation in self.relations]))
+        tail_list = list(set([relation["tail"] for relation in self.relations]))
+        self.nodes = head_list + [tail for tail in tail_list if tail not in head_list]
+
+        return self.nodes
+
+    def get_relations_from(self, node_label: str) -> list[dict[str, str]]:
+        """Return all relations whose HEAD is `node_label`"""
+        return [r for r in self.relations if r["head"] == node_label]
+
+    def get_relations_to(self, node_label: str) -> list[dict[str, str]]:
+        """Return all relations whose TAIL is `node_label`"""
+        return [r for r in self.relations if r["tail"] == node_label]
+
+    def get_relations_between(self, hd: str, tl: str) -> list[dict[str, str]]:
+        """
+        Acquire realtions which has `hd` as head and `tl` as tail.
+
+        Parameters
+        ----------
+        hd: str
+            Node label of head.
+        tl: str
+            Node label of tail.
+
+        Returns
+        -------
+        list[dict[str,str]]
+            Relations between `hd` and `tl`.
+        """
+        return [r for r in self.relations if (r["head"] == hd and r["tail"] == tl)]
+
     def select_where(self, nodes: list[str], strict=False):
         """
         Extract a subgraph of KB whose node labels are in `nodes`.
@@ -93,25 +131,6 @@ class KB:
             self.relations = [r for r in self.relations if (r["head"] in nodes and r["tail"] in nodes)]
         else:
             self.relations = [r for r in self.relations if (r["head"] in nodes or r["tail"] in nodes)]
-
-    def get_nodes(self) -> list[str]:
-        """
-        Return a list of node labels.
-
-        Returns
-        -------
-        node_list: list[str]
-            List of node labels.
-
-        Notes
-        -----
-        Even if a node appears in multiple relations, its label appears only once in output list.
-        """
-        head_list = list(set([relation["head"] for relation in self.relations]))
-        tail_list = list(set([relation["tail"] for relation in self.relations]))
-        node_list = head_list + [tail for tail in tail_list if tail not in head_list]
-
-        return node_list
 
     def get_degree(self, direction: Literal["both", "in", "out"] = "both") -> dict[str, int]:
         """
@@ -151,31 +170,33 @@ class KB:
         """Get max degree of KB"""
         return max(self.get_degree().values())
 
-    def get_relations_from(self, node_label: str) -> list[dict[str, str]]:
-        """Return all relations whose HEAD is `node_label`"""
-        return [r for r in self.relations if r["head"] == node_label]
-
-    def get_relations_to(self, node_label: str) -> list[dict[str, str]]:
-        """Return all relations whose TAIL is `node_label`"""
-        return [r for r in self.relations if r["tail"] == node_label]
-
-    def get_relations_between(self, hd: str, tl: str) -> list[dict[str, str]]:
+    @classmethod
+    def from_dot_file(cls, dot_file_path: str) -> "KB":
         """
-        Acquire realtions which has `hd` as head and `tl` as tail.
+        Construct a KB object from a DOT file.
 
         Parameters
         ----------
-        hd: str
-            Node label of head.
-        tl: str
-            Node label of tail.
+        dot_file_path: str
+            Path to the DOT file.
 
         Returns
         -------
-        list[dict[str,str]]
-            Relations between `hd` and `tl`.
+        KB
+            An instance of the KB class.
         """
-        return [r for r in self.relations if (r["head"] == hd and r["tail"] == tl)]
+        relations = []
+        with open(dot_file_path, "r") as file:
+            lines = file.readlines()
+
+        for line in lines:
+            # Match lines with the pattern: "head" -> "tail" [label="type"];
+            match = re.match(r'\s*"(.+)" -> "(.+)" \[label="(.+)"\];', line)
+            if match:
+                head, tail, relation_type = match.groups()
+                relations.append({"head": head, "type": relation_type, "tail": tail})
+
+        return cls(relations)
 
     def write_dot(self, output_file: str):
         """
