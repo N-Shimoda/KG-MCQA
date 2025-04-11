@@ -95,22 +95,32 @@ def get_wiki_titles(targets: list[str]) -> list[str]:
     return asyncio.run(get_wiki_titles_async(targets))
 
 
-def assign_sub_dir(title: str) -> str:
+def assign_file_path(title: str) -> tuple[str, str]:
     """
-    Assign sub-directory based on the first character of the title.
+    Assign a sub-directory path based on the first character of the title.
+    Non-alphabetic characters are grouped under '_others'.
 
     Parameters
     ----------
     title : str
-        Title of the Wikipedia page.
+        The title of the Wikipedia page.
 
     Returns
     -------
-    str
-        Sub-directory name.
+    subdir : str
+        Sub-directory name based on the first character of the title.
+    basename : str
+        File name for the JSON file, replacing spaces with underscores.
+
+    Example
+    -------
+    >>> assign_file_path("Machine Learning")
+    ('m', 'Machine_Learning.json')
     """
     first_char = title[0].lower()
-    return first_char if first_char.isalpha() else "_others"
+    subdir = first_char if first_char.isalpha() else "_others"
+    basename = title.replace(" ", "_") + ".json"
+    return subdir, basename
 
 
 async def download_wiki_pages_async(
@@ -152,7 +162,7 @@ async def download_wiki_pages_async(
     # date
     today_date = datetime.now()
 
-    async def fetch_and_save(target: str) -> tuple[str, str]:
+    async def fetch_and_save(target: str, cache_ttl_days: int = 3) -> tuple[str, str]:
         """
         Fetch and save a Wikipedia page asynchronously.
 
@@ -160,6 +170,8 @@ async def download_wiki_pages_async(
         ----------
         target : str
             Target Wikipedia page.
+        cache_ttl_days : int, optional
+            Number of days to consider the cached page valid. Defaults to 3 days.
 
         Returns
         -------
@@ -179,14 +191,24 @@ async def download_wiki_pages_async(
                 "summary": page.summary,
             }
 
-            # Create the directory if not exists
-            sub_dir = assign_sub_dir(page.title)
-            os.makedirs(f"{out_dir}/{sub_dir}", exist_ok=True)
+            # Create output directory if it doesn't exist
+            subdir, basename = assign_file_path(page.title)
+            os.makedirs(f"{out_dir}/{subdir}", exist_ok=True)
+            output_path = f"{out_dir}/{subdir}/{basename}"
 
             # Save article to JSON file
-            output_path = f"{out_dir}/{sub_dir}/{page.title}.json"
-            with open(output_path, "w", encoding="utf-8") as output_file:
-                json.dump(data, output_file, indent=4)
+            save_file = True
+            if os.path.exists(output_path):
+                with open(output_path, "r", encoding="utf-8") as output_file:
+                    date_str = json.load(output_file).get("retrieved-date")
+                    retriedved_date = datetime.strptime(date_str, "%Y/%m/%d %H:%M:%S")
+                    if (today_date - retriedved_date).days < cache_ttl_days:
+                        save_file = False
+
+            if save_file:
+                with open(output_path, "w", encoding="utf-8") as output_file:
+                    json.dump(data, output_file, indent=4)
+
         return page.title, page.fullurl
 
     tasks = [

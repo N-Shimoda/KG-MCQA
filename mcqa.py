@@ -9,7 +9,7 @@ from kgraph.kgraph import KB, join
 from kgraph.kgraph.extraction import extract_triples
 from kgraph.kgraph.utils import swap_label_with_symbol
 from kgraph.kgraph.verifier import verify_proposition
-from kgraph.kgraph.wiki import assign_sub_dir, download_wiki_pages, get_wiki_titles
+from kgraph.kgraph.wiki import assign_file_path, download_wiki_pages, get_wiki_titles
 from src.select_ans import select_best_answer
 
 
@@ -45,9 +45,7 @@ def create_PGs(filename: str, pg_top_dir: str):
 
     for cat in mcqs.keys():
         # TODO: Implement batch inference here.
-        for i, mcq in enumerate(
-            tqdm(mcqs[cat]["questions"], desc=f"Processing {mcqs[cat]['category']}")
-        ):
+        for i, mcq in enumerate(tqdm(mcqs[cat]["questions"], desc=f"Processing {mcqs[cat]['category']}")):
             choice = mcq["choice"]
             PG_temp = create_PG_temp(mcq["sentence"], choice)
 
@@ -72,15 +70,10 @@ def download_wiki_articles(pg_top_dir: str):
     # iterate over each category
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
-        pg_dirs = [
-            os.path.join(pg_top_dir, cat, subdir)
-            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
-        ]
+        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
         for pg_dir in tqdm(pg_dirs, desc=f"Processing {cat}"):
             PGs = [
-                KB.from_dot_file(os.path.join(pg_dir, file))
-                for file in os.listdir(pg_dir)
-                if file.endswith(".dot")
+                KB.from_dot_file(os.path.join(pg_dir, file)) for file in os.listdir(pg_dir) if file.endswith(".dot")
             ]
             PG_nodes = [PG.get_nodes() for PG in PGs]
             titles = set([word for node in PG_nodes for word in node])
@@ -104,9 +97,7 @@ def create_KG_cache(wiki_dir: str, KG_dir: str, force: bool = False, batch_size:
     # Create KGs for each subdir (prefix)
     for subdir in sorted(subdirs):
         # JSON files which contain downloaded articles
-        files = [
-            file for file in os.listdir(os.path.join(wiki_dir, subdir)) if file.endswith(".json")
-        ]
+        files = [file for file in os.listdir(os.path.join(wiki_dir, subdir)) if file.endswith(".json")]
 
         for i in tqdm(range(0, len(files), batch_size), desc=f"Processing {subdir}"):
             batch_files = files[i : i + batch_size]
@@ -130,7 +121,7 @@ def create_KG_cache(wiki_dir: str, KG_dir: str, force: bool = False, batch_size:
                 for KG, title, (file, data) in zip(KGs, titles, file_data):
                     # Save KG to dot file
                     os.makedirs(f"{KG_dir}/{subdir}", exist_ok=True)
-                    kg_dot_path = f"{KG_dir}/{subdir}/{title}.dot"
+                    kg_dot_path = f"{KG_dir}/{subdir}/{title.replace(' ', '_')}.dot"
                     KG.write_dot(kg_dot_path)
 
                     # Update the JSON file
@@ -155,22 +146,22 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
     # iterate over each category
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
-        pg_dirs = [
-            os.path.join(pg_top_dir, cat, subdir)
-            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
-        ]
+
+        # List of PG directories for the given category
+        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
         for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
             # Note: pg_dir contains four PG dot files for a single MCQ
             for pg_filename in os.listdir(pg_dir):
+
+                # reconstruct PG from dot file
                 PG = KB.from_dot_file(os.path.join(pg_dir, pg_filename))
                 titles = [title for title in get_wiki_titles(PG.get_nodes()) if title is not None]
 
                 # combine KGs for the found Wikipedia articles
                 KG_combined = KB()
                 for title in titles:
-                    KG = KB.from_dot_file(
-                        os.path.join(KG_cache_dir, assign_sub_dir(title), title + ".dot")
-                    )
+                    subdir, basename = assign_file_path(title)
+                    KG = KB.from_dot_file(f"{KG_cache_dir}/{subdir}/{basename[:-5]}.dot")
                     KG_combined = join(KG_combined, KG)
 
                 # Save combined KG to dot file
@@ -228,10 +219,7 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
         # List of PG directories for the given category
-        pg_dirs = [
-            os.path.join(pg_top_dir, cat, subdir)
-            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
-        ]
+        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
         result[cat] = {"questions": dict()}
 
         for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
