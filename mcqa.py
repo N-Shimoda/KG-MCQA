@@ -1,7 +1,7 @@
 import json
+import multiprocessing as mp
 import os
 import sys
-from multiprocessing import Pool  # set_start_method
 
 from tqdm import tqdm
 
@@ -238,8 +238,7 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
             ]
 
             # Use multiprocessing to process PGs in parallel
-            with Pool(processes=num_workers) as pool:
-                # set_start_method("spawn", force=True)
+            with mp.Pool(processes=num_workers) as pool:
                 results = pool.map(process_pg, args)
 
             scores = []
@@ -323,25 +322,28 @@ if __name__ == "__main__":
     PG_TOP_DIR = f"{OUT_DIR}/PGs"
     KG_TOP_DIR = f"{OUT_DIR}/KGs"
 
-    # Step 1-1. Create PGs
-    print("\nStep 1-1. Creating PGs")
-    create_PGs(MCQ_FILE, PG_TOP_DIR)
+    # Set multiprocessing start method to 'spawn'
+    mp.set_start_method("spawn", force=True)
 
-    # Step 1-2. Download Wikipedia articles for each PG
-    print("\nStep 1-2. Downloading Wikipedia articles")
-    download_wiki_articles(PG_TOP_DIR)
+    # # Step 1-1. Create PGs
+    # print("\nStep 1-1. Creating PGs")
+    # create_PGs(MCQ_FILE, PG_TOP_DIR)
 
-    # Step 1-3. Create KGs for each Wikipedia article
-    print("\nStep 1-3. Creating KGs for each Wikipedia article")
-    create_KG_cache(wiki_dir="wikipedia", KG_dir=KG_CHACHE_DIR)
+    # # Step 1-2. Download Wikipedia articles for each PG
+    # print("\nStep 1-2. Downloading Wikipedia articles")
+    # download_wiki_articles(PG_TOP_DIR)
 
-    # Step 1-4. Create KGs for each PG
-    print("\nStep 1-4. Creating tailored KGs for each PG")
-    create_tailored_KGs(
-        pg_top_dir=PG_TOP_DIR,
-        kg_top_dir=KG_TOP_DIR,
-        KG_cache_dir=KG_CHACHE_DIR,
-    )
+    # # Step 1-3. Create KGs for each Wikipedia article
+    # print("\nStep 1-3. Creating KGs for each Wikipedia article")
+    # create_KG_cache(wiki_dir="wikipedia", KG_dir=KG_CHACHE_DIR)
+
+    # # Step 1-4. Create KGs for each PG
+    # print("\nStep 1-4. Creating tailored KGs for each PG")
+    # create_tailored_KGs(
+    #     pg_top_dir=PG_TOP_DIR,
+    #     kg_top_dir=KG_TOP_DIR,
+    #     KG_cache_dir=KG_CHACHE_DIR,
+    # )
 
     # Step 2 & 3. Node matching + Verification
     print("\nStep 2 & 3. Node matching + Verification")
@@ -349,7 +351,7 @@ if __name__ == "__main__":
         pg_top_dir=PG_TOP_DIR,
         kg_top_dir=KG_TOP_DIR,
         output_file=f"{OUT_DIR}/results.json",
-        num_workers=os.cpu_count() - 1,
+        num_workers=os.cpu_count() - 2,
     )
 
     # Step 4. Count correct answers
