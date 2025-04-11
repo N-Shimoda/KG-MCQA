@@ -1,7 +1,7 @@
 import json
+import multiprocessing as mp
 import os
 import sys
-from multiprocessing import Pool
 
 from tqdm import tqdm
 
@@ -9,7 +9,7 @@ from kgraph.kgraph import KB, join
 from kgraph.kgraph.extraction import extract_triples
 from kgraph.kgraph.utils import swap_label_with_symbol
 from kgraph.kgraph.verifier import verify_proposition
-from kgraph.kgraph.wiki import assign_sub_dir, download_wiki_pages, get_wiki_titles
+from kgraph.kgraph.wiki import assign_file_path, download_wiki_pages, get_wiki_titles
 from src.select_ans import select_best_answer
 
 
@@ -121,7 +121,7 @@ def create_KG_cache(wiki_dir: str, KG_dir: str, force: bool = False, batch_size:
                 for KG, title, (file, data) in zip(KGs, titles, file_data):
                     # Save KG to dot file
                     os.makedirs(f"{KG_dir}/{subdir}", exist_ok=True)
-                    kg_dot_path = f"{KG_dir}/{subdir}/{title}.dot"
+                    kg_dot_path = f"{KG_dir}/{subdir}/{title.replace(' ', '_')}.dot"
                     KG.write_dot(kg_dot_path)
 
                     # Update the JSON file
@@ -146,17 +146,22 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
     # iterate over each category
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
+
+        # List of PG directories for the given category
         pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
         for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
             # Note: pg_dir contains four PG dot files for a single MCQ
             for pg_filename in os.listdir(pg_dir):
+
+                # reconstruct PG from dot file
                 PG = KB.from_dot_file(os.path.join(pg_dir, pg_filename))
                 titles = [title for title in get_wiki_titles(PG.get_nodes()) if title is not None]
 
                 # combine KGs for the found Wikipedia articles
                 KG_combined = KB()
                 for title in titles:
-                    KG = KB.from_dot_file(os.path.join(KG_cache_dir, assign_sub_dir(title), title + ".dot"))
+                    subdir, basename = assign_file_path(title)
+                    KG = KB.from_dot_file(f"{KG_cache_dir}/{subdir}/{basename[:-5]}.dot")
                     KG_combined = join(KG_combined, KG)
 
                 # Save combined KG to dot file
@@ -165,10 +170,24 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
                 KG_combined.write_dot(kg_file_name)
 
 
-def process_pg(args):
+def process_pg(args: tuple[str, str]) -> tuple[str, float, float, list[tuple[str, str]]]:
     """
     Helper function to process a single PG and KG pair.
     This function is used for parallel processing.
+
+    Parameters
+    ----------
+    args : tuple[str, str]
+        A tuple containing the paths to the PG file and the KG file.
+
+    Returns
+    -------
+    tuple[str, float, float, list[tuple[str, str]]]
+        A tuple containing:
+        - The path to the PG file (str).
+        - The edge score (float).
+        - The node score (float).
+        - A list of verified edges, where each edge is represented as a tuple of two strings.
     """
     pg_path, kg_path = args
     PG = KB.from_dot_file(pg_path)
@@ -219,7 +238,7 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
             ]
 
             # Use multiprocessing to process PGs in parallel
-            with Pool(processes=num_workers) as pool:
+            with mp.Pool(processes=num_workers) as pool:
                 results = pool.map(process_pg, args)
 
             scores = []
@@ -303,25 +322,28 @@ if __name__ == "__main__":
     PG_TOP_DIR = f"{OUT_DIR}/PGs"
     KG_TOP_DIR = f"{OUT_DIR}/KGs"
 
-    # Step 1-1. Create PGs
-    print("\nStep 1-1. Creating PGs")
-    create_PGs(MCQ_FILE, PG_TOP_DIR)
+    # Set multiprocessing start method to 'spawn'
+    mp.set_start_method("spawn", force=True)
 
-    # Step 1-2. Download Wikipedia articles for each PG
-    print("\nStep 1-2. Downloading Wikipedia articles")
-    download_wiki_articles(PG_TOP_DIR)
+    # # Step 1-1. Create PGs
+    # print("\nStep 1-1. Creating PGs")
+    # create_PGs(MCQ_FILE, PG_TOP_DIR)
 
-    # Step 1-3. Create KGs for each Wikipedia article
-    print("\nStep 1-3. Creating KGs for each Wikipedia article")
-    create_KG_cache(wiki_dir="wikipedia", KG_dir=KG_CHACHE_DIR)
+    # # Step 1-2. Download Wikipedia articles for each PG
+    # print("\nStep 1-2. Downloading Wikipedia articles")
+    # download_wiki_articles(PG_TOP_DIR)
 
-    # Step 1-4. Create KGs for each PG
-    print("\nStep 1-4. Creating tailored KGs for each PG")
-    create_tailored_KGs(
-        pg_top_dir=PG_TOP_DIR,
-        kg_top_dir=KG_TOP_DIR,
-        KG_cache_dir=KG_CHACHE_DIR,
-    )
+    # # Step 1-3. Create KGs for each Wikipedia article
+    # print("\nStep 1-3. Creating KGs for each Wikipedia article")
+    # create_KG_cache(wiki_dir="wikipedia", KG_dir=KG_CHACHE_DIR)
+
+    # # Step 1-4. Create KGs for each PG
+    # print("\nStep 1-4. Creating tailored KGs for each PG")
+    # create_tailored_KGs(
+    #     pg_top_dir=PG_TOP_DIR,
+    #     kg_top_dir=KG_TOP_DIR,
+    #     KG_cache_dir=KG_CHACHE_DIR,
+    # )
 
     # Step 2 & 3. Node matching + Verification
     print("\nStep 2 & 3. Node matching + Verification")
@@ -329,7 +351,7 @@ if __name__ == "__main__":
         pg_top_dir=PG_TOP_DIR,
         kg_top_dir=KG_TOP_DIR,
         output_file=f"{OUT_DIR}/results.json",
-        num_workers=os.cpu_count() - 1,
+        num_workers=os.cpu_count() - 2,
     )
 
     # Step 4. Count correct answers
