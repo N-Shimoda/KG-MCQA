@@ -1,17 +1,24 @@
+import json
+import multiprocessing as mp
 import os
 from typing import Literal
 
 from datasets import load_dataset
 from tqdm import tqdm
 
+from kgraph.kgraph import KB
 from kgraph.kgraph.extraction import extract_triples
+from kgraph.kgraph.wiki import download_wiki_pages
+from src.kg_creator import create_KG_cache
+from src.verification import process_pg
 
 
 def create_fever_PGs(
     split: Literal[
         "labelled_dev", "paper_dev", "paper_test", "train", "unlabelled_dev", "unlabelled_test"
-    ] = "unlabelled_dev",
+    ],
     batch_size: int = 64,
+    wiki_dir: str = "wikipedia-fever",
 ):
     """
     Create Propositional Graphs (PGs) for the FEVER v1.0 dataset.
@@ -31,6 +38,7 @@ def create_fever_PGs(
     """
     # Download the FEVER dataset from HuggingFace
     dataset = load_dataset("fever", name="v1.0", split=split)
+    dataset = dataset.select(range(100))  # for development
     print(f"Dataset size: {len(dataset)}")
 
     # Process the dataset in batches with a progress bar
@@ -40,14 +48,155 @@ def create_fever_PGs(
 
         for j in range(len(batch["claim"])):
             # Create the output directory if it doesn't exist
+            DIR_SIZE = 5000  # 5k per directory
             id = batch["id"][j]
-            subdir = (int(id) // 1000) * 1000
+            subdir = (int(id) // DIR_SIZE) * DIR_SIZE
             os.makedirs(f"exp-fever/PGs/{subdir}", exist_ok=True)
 
             # save PG in dot file
             path = f"exp-fever/PGs/{subdir}/{id}.dot"
             PGs[j].write_dot(path)
 
+        # download Wikipedia articles for each node in PGs
+        nodes_li = [PG.get_nodes() for PG in PGs]
+        nodes = [node for pg_nodes in nodes_li for node in pg_nodes]
+        download_wiki_pages(set(nodes), wiki_dir)
+
+
+def create_fever_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
+    """
+    Create KGs for each PG in the given directory.
+
+    Parameters
+    ----------
+    pg_top_dir : str
+        Top-level directory containing subdirectories of PGs.
+    kg_top_dir : str
+        Top-level directory to save the generated KGs.
+    KG_cache_dir : str
+        Directory containing cached KGs for Wikipedia articles.
+    """
+    # iterate over each category
+    subdir_li = os.listdir(pg_top_dir)
+    for subdir in sorted(subdir_li):
+        files = os.listdir(os.path.join(pg_top_dir, subdir))
+
+        for file in tqdm(sorted(files), desc=f"Processing {subdir}"):
+            # reconstruct PG from dot file
+            PG = KB.from_dot_file(os.path.join(pg_top_dir, subdir, file))
+            titles = [title for title in get_wiki_titles(PG.get_nodes()) if title is not None]
+
+            # combine KGs for the found Wikipedia articles
+            KG_combined = KB()
+            for title in titles:
+                subdir, basename = assign_file_path(title)
+                KG = KB.from_dot_file(f"{KG_cache_dir}/{subdir}/{basename[:-5]}.dot")
+                KG_combined = join(KG_combined, KG)
+
+            # Save combined KG to dot file
+            kg_file_name = os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename)
+            os.makedirs(os.path.dirname(kg_file_name), exist_ok=True)
+            KG_combined.write_dot(kg_file_name)
+
+        # # List of PG directories for the given category
+        # pg_dirs = [
+        #     os.path.join(pg_top_dir, cat, subdir)
+        #     for subdir in os.listdir(os.path.join(pg_top_dir, cat))
+        # ]
+        # for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
+        #     # Note: pg_dir contains four PG dot files for a single MCQ
+        #     for pg_filename in os.listdir(pg_dir):
+
+        #         # reconstruct PG from dot file
+        #         PG = KB.from_dot_file(os.path.join(pg_dir, pg_filename))
+        #         titles = [title for title in get_wiki_titles(PG.get_nodes()) if title is not None]
+
+        #         # combine KGs for the found Wikipedia articles
+        #         KG_combined = KB()
+        #         for title in titles:
+        #             subdir, basename = assign_file_path(title)
+        #             KG = KB.from_dot_file(f"{KG_cache_dir}/{subdir}/{basename[:-5]}.dot")
+        #             KG_combined = join(KG_combined, KG)
+
+        #         # Save combined KG to dot file
+        #         kg_file_name = os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename)
+        #         os.makedirs(os.path.dirname(kg_file_name), exist_ok=True)
+        #         KG_combined.write_dot(kg_file_name)
+
+
+def verify_fever_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: int = 16):
+    """
+    Verify PGs against KGs and select the best answer.
+    This function iterates over each category and each PG, verifies the PG against the KG,
+    and saves the verification results in a JSON file.
+
+    Parameters
+    ----------
+    pg_top_dir : str
+        Top-level directory containing subdirectories of PGs.
+    kg_top_dir : str
+        Top-level directory containing subdirectories of KGs.
+    output_file : str
+        Path to the output JSON file for verification results.
+    num_workers : int
+        Number of parallel workers to use.
+    """
+    result = dict()
+
+    # Iterate over each category
+    cat_dirs = os.listdir(pg_top_dir)
+    for cat in sorted(cat_dirs):
+        # List of PG directories for the given category
+        pg_dirs = [
+            os.path.join(pg_top_dir, cat, subdir)
+            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
+        ]
+        result[cat] = {"questions": dict()}
+
+        for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
+            # Note: pg_dir contains four PG dot files for a single MCQ
+            mcq_id = os.path.basename(pg_dir)
+            result[cat]["questions"][mcq_id] = dict()
+
+            # Prepare arguments for parallel processing
+            pg_files = os.listdir(pg_dir)
+            args = [
+                (
+                    os.path.join(pg_dir, pg_filename),
+                    os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename),
+                )
+                for pg_filename in pg_files
+            ]
+
+            # Use multiprocessing to process PGs in parallel
+            with mp.Pool(processes=num_workers) as pool:
+                results = pool.map(process_pg, args)
+
+            scores = []
+            for pg_path, edge_score, node_score, verified_edges in results:
+                pg_filename = os.path.basename(pg_path)
+                scores.append((edge_score, node_score))
+
+                # Save the verification result
+                result[cat]["questions"][mcq_id][pg_filename[0]] = {
+                    "choice": pg_filename[2:-4],
+                    "edge_score": edge_score,
+                    "node_score": node_score,
+                    "verified_edges": verified_edges,
+                }
+
+            # result[cat]["questions"][mcq_id]["answer"] = select_best_answer(scores)
+
+        # Save the result to a JSON file
+        with open(output_file, "w") as f:
+            json.dump(result, f, indent=4)
+
 
 if __name__ == "__main__":
-    create_fever_PGs(split="unlabelled_dev", batch_size=128)
+
+    # variables
+    WIKI_DIR = "wikipedia-fever"
+    KG_CACHE_DIR = "KG_cache_fever"
+
+    create_fever_PGs(split="unlabelled_dev", batch_size=64, wiki_dir=WIKI_DIR)
+    create_KG_cache(wiki_dir=WIKI_DIR, KG_dir=KG_CACHE_DIR)

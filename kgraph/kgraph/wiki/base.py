@@ -47,7 +47,9 @@ def get_wiki_titles(targets: list[str]) -> list[str]:
         List of Wikipedia page titles.
     """
 
-    async def fetch_page_title(session: ClientSession, wiki_wiki: wikipediaapi.Wikipedia, target: str) -> str:
+    async def fetch_page_title(
+        session: ClientSession, wiki_wiki: wikipediaapi.Wikipedia, target: str
+    ) -> str:
         """
         Fetch the title of a Wikipedia page asynchronously.
 
@@ -212,14 +214,15 @@ async def download_wiki_pages_async(
         return page.title, page.fullurl
 
     tasks = [
-        fetch_and_save(target) for target in tqdm(targets, desc="Downloading Wikipedia pages", disable=tqdm_disable)
+        fetch_and_save(target)
+        for target in tqdm(targets, desc="Downloading Wikipedia pages", disable=tqdm_disable)
     ]
     res = await asyncio.gather(*tasks)
     return res
 
 
 def download_wiki_pages(
-    targets: list[str] | set[str], out_dir: str, tqdm_disable: bool = False
+    targets: list[str] | set[str], out_dir: str, tqdm_disable: bool = True
 ) -> list[tuple[str, str]]:
     """
     Wrapper for the asynchronous download_wiki_pages_async function.
@@ -243,6 +246,14 @@ def download_wiki_pages(
 
 if __name__ == "__main__":
     # Example usage
-    targets = ["Kyoto University", "Machine Learning", "AI", "éclair", "classical music", "123 Start", "Naoki Shimoda"]
+    targets = [
+        "Kyoto University",
+        "Machine Learning",
+        "AI",
+        "éclair",
+        "classical music",
+        "123 Start",
+        "Naoki Shimoda",
+    ]
     res = download_wiki_pages(targets, out_dir="wikipedia")
     print(res)
