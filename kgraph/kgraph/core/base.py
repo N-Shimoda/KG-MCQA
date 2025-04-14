@@ -1,5 +1,7 @@
-import re
+# import re
 from typing import Literal
+
+import pydot
 
 
 class KB:
@@ -11,8 +13,7 @@ class KB:
             self.relations = relations
 
         # instance variables
-        self.nodes = self.get_nodes()
-        self.node_attr = {self.nodes[i]: dict() for i in range(len(self.nodes))}
+        self.nodes = {node: dict() for node in self.get_nodes()}
 
     def __str__(self) -> str:
         """
@@ -64,7 +65,7 @@ class KB:
         """
         if node_label not in self.nodes:
             raise ValueError(f"Node {node_label} does not exist in KB.")
-        self.node_attr[node_label][attr] = value
+        self.nodes[node_label][attr] = value
 
     def get_nodes(self) -> list[str]:
         """
@@ -81,9 +82,9 @@ class KB:
         """
         head_list = list(set([relation["head"] for relation in self.relations]))
         tail_list = list(set([relation["tail"] for relation in self.relations]))
-        self.nodes = head_list + [tail for tail in tail_list if tail not in head_list]
+        node_list = head_list + [tail for tail in tail_list if tail not in head_list]
 
-        return self.nodes
+        return node_list
 
     def get_relations_from(self, node_label: str) -> list[dict[str, str]]:
         """Return all relations whose HEAD is `node_label`"""
@@ -173,7 +174,7 @@ class KB:
     @classmethod
     def from_dot_file(cls, dot_file_path: str) -> "KB":
         """
-        Construct a KB object from a DOT file.
+        Construct a KB object from a DOT file using pydot.
 
         Parameters
         ----------
@@ -185,50 +186,61 @@ class KB:
         KB
             An instance of the KB class.
         """
+        # Parse the DOT file using pydot
+        graph = pydot.graph_from_dot_file(dot_file_path)[0]
+
+        # Extract relations
         relations = []
-        with open(dot_file_path, "r") as file:
-            lines = file.readlines()
+        for edge in graph.get_edges():
+            head = edge.get_source().strip('"')
+            tail = edge.get_destination().strip('"')
+            relation_type = edge.get_label().strip('"') if edge.get_label() else ""
+            relations.append({"head": head, "type": relation_type, "tail": tail})
 
-        for line in lines:
-            # Match lines with the pattern: "head" -> "tail" [label="type"];
-            match = re.match(r'\s*"(.+)" -> "(.+)" \[label="(.+)"\];', line)
-            if match:
-                head, tail, relation_type = match.groups()
-                relations.append({"head": head, "type": relation_type, "tail": tail})
+        # Extract nodes and their attributes
+        nodes = {}
+        for node in graph.get_nodes():
+            node_name = node.get_name().strip('"')
+            attributes = node.get_attributes()
+            nodes[node_name] = attributes
 
-        return cls(relations)
+        # Create KB instance
+        kb = cls(relations)
+        kb.nodes = nodes
+        return kb
 
     def write_dot(self, output_file: str):
         """
-        Save KB as DOT file in the current directory with name.
+        Save KB as DOT file using pydot.
 
         Parameters
         ----------
         output_file: str
             Path of output dot file.
         """
-        dot_content = "digraph RDFGraph {\n"
+        graph = pydot.Dot("RDFGraph", graph_type="digraph")
 
+        for node_label, attributes in self.nodes.items():
+            if node_label:
+                pynode = pydot.Node(name=node_label, label=node_label, wiki_title=attributes.get("wiki_title", ""))
+                graph.add_node(pynode)
+
+        # Add edges
         for r in self.relations:
-            dot_content += f'\t"{r["head"]}" -> "{r["tail"]}" [label="{r["type"]}"];\n'
+            if r["head"] and r["tail"]:
+                edge = pydot.Edge(r["head"], r["tail"], label=r["type"])
+                graph.add_edge(edge)
 
-        dot_content += "}\n"
-
-        with open(output_file, "w") as dot_file:
-            dot_file.write(dot_content)
+        graph.write_dot(output_file)
 
 
 if __name__ == "__main__":
 
-    from utils import colorize
-
-    color_code = 32  # green
-
     # Constructor and print
-    print(colorize("Constructor and printing", color_code))
+    print("Constructor and printing")
     kb = KB(
         [
-            {"head": "Napoleon Bonaparte", "type": "date of birth", "tail": "15 August 1769"},
+            {"head": "Napoleon Bonaparte", "type": "date of birth", "tail": '15 "August 1769'},
             {"head": "Napoleon Bonaparte", "type": "date of death", "tail": "5 May 1821"},
             {"head": "Napoleon Bonaparte", "type": "participant in", "tail": "French Revolution"},
             {"head": "Napoleon Bonaparte", "type": "conflict", "tail": "Revolutionary Wars"},
@@ -240,8 +252,12 @@ if __name__ == "__main__":
     print("Relations:\n{}".format(kb))
     print("Nodes:\n{}".format(kb.get_nodes()))
 
+    kb.add_node_attr("Napoleon Bonaparte", "wiki_title", "Napoleon_Bonaparte")
+    kb.write_dot("output.dot")
+    kb = KB.from_dot_file("output.dot")
+
     # Relations between
-    print(colorize("\nRelation search", color_code))
+    print("\nRelation search")
     hd = "Napoleon Bonaparte"
     tl = "15 August 1769"
     print("Relations from '{}': {}".format(hd, kb.get_relations_from(hd)))

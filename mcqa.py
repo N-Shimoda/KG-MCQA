@@ -72,20 +72,23 @@ def download_wiki_articles(pg_top_dir: str):
     for cat in sorted(cat_dirs):
         pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
         for pg_dir in tqdm(pg_dirs, desc=f"Processing {cat}"):
-            PGs = [
-                KB.from_dot_file(os.path.join(pg_dir, file)) for file in os.listdir(pg_dir) if file.endswith(".dot")
-            ]
+            # reconstruct PGs from dot files
+            pg_files = [f for f in os.listdir(pg_dir) if f.endswith(".dot")]
+            PGs = [KB.from_dot_file(os.path.join(pg_dir, file)) for file in pg_files]
+
+            # get target titles from all PGs
             PG_nodes_li = [PG.get_nodes() for PG in PGs]
-            targets = set([word for node in PG_nodes_li for word in node])
+            targets = list(set([word for node in PG_nodes_li for word in node]))
 
             # Download the Wikipedia article
-            titles, urls = download_wiki_pages(targets, out_dir="wikipedia", tqdm_disable=True)
+            titles, _ = download_wiki_pages(targets, out_dir="wikipedia", tqdm_disable=True)
             mapping = dict(zip(targets, titles))
 
             # Add page titles as node attributes
             for PG in PGs:
                 for node in PG.get_nodes():
                     PG.add_node_attr(node, "wiki_title", mapping[node])
+                    PG.write_dot(os.path.join(pg_dir, pg_files[PGs.index(PG)]))
 
 
 def create_KG_cache(wiki_dir: str, KG_dir: str, force: bool = False, batch_size: int = 32):

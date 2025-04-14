@@ -217,8 +217,11 @@ async def download_wiki_pages_async(
         fetch_and_save(target) for target in tqdm(targets, desc="Downloading Wikipedia pages", disable=tqdm_disable)
     ]
     res = await asyncio.gather(*tasks)
-    titles, urls = zip(*res)
-    return list(titles), list(urls)
+    if res:
+        titles, urls = map(list, zip(*res))
+    else:
+        titles, urls = [], []
+    return titles, urls
 
 
 def download_wiki_pages(
@@ -248,7 +251,16 @@ def download_wiki_pages(
 
 if __name__ == "__main__":
     # Example usage
-    targets = ["Kyoto University", "Machine Learning", "AI", "éclair", "classical music", "123 Start", "Naoki Shimoda"]
+    targets = [
+        "Kyoto University",
+        "Machine Learning",
+        "AI",
+        "éclair",
+        "classical music",
+        "123 Start",
+        "Naoki Shimoda",
+    ]
+    # targets = []
     titles, urls = download_wiki_pages(targets, out_dir="wikipedia")
     print("Titles: ", titles)
     print("URLs: ", urls)
