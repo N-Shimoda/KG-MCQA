@@ -128,9 +128,13 @@ class KB:
         This method DELTES the remaining part of `KB` whose node labels are not in `nodes`.
         """
         if strict:
-            self.relations = [r for r in self.relations if (r["head"] in nodes and r["tail"] in nodes)]
+            self.relations = [
+                r for r in self.relations if (r["head"] in nodes and r["tail"] in nodes)
+            ]
         else:
-            self.relations = [r for r in self.relations if (r["head"] in nodes or r["tail"] in nodes)]
+            self.relations = [
+                r for r in self.relations if (r["head"] in nodes or r["tail"] in nodes)
+            ]
 
     def get_degree(self, direction: Literal["both", "in", "out"] = "both") -> dict[str, int]:
         """
@@ -163,7 +167,9 @@ class KB:
                     raise ValueError('direction should be specified from "both", "in" or "out".')
 
         # sort results by degree
-        degrees = {n: d for n, d in sorted(degrees.items(), key=lambda item: item[1], reverse=True)}
+        degrees = {
+            n: d for n, d in sorted(degrees.items(), key=lambda item: item[1], reverse=True)
+        }
         return degrees
 
     def get_max_degree(self) -> int:
@@ -217,6 +223,8 @@ class KB:
     def write_dot(self, output_file: str):
         """
         Save KB as DOT file without using pydot.
+        If each node has the `wiki_title` attribute, it will be included in the output.
+        For nodes without a `wiki_title`, the attribute will not be given.
 
         Parameters
         ----------
@@ -286,7 +294,11 @@ if __name__ == "__main__":
     tl = "15 'August 1769"
     print("Relations from '{}': {}".format(hd, kb.get_relations_from(hd)))
     print("Relations to '{}': {}".format(tl, kb.get_relations_to(tl)))
-    print("Relations between: {}".format(kb.get_relations_between("Napoleon Bonaparte", "15 'August 1769")))
+    print(
+        "Relations between: {}".format(
+            kb.get_relations_between("Napoleon Bonaparte", "15 'August 1769")
+        )
+    )
     # print(kb.get_relations_between('15 'August 1769', 'Napoleon Bonaparte'))
 
     # Extract subgraph with node limitation

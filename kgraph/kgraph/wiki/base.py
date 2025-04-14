@@ -126,7 +126,7 @@ def assign_file_path(title: str) -> tuple[str, str]:
 
 
 async def download_wiki_pages_async(
-    targets: list[str] | set[str], out_dir: str, tqdm_disable: bool = False
+    targets: list[str], out_dir: str, tqdm_disable: bool = False
 ) -> list[tuple[str, str]]:
     """
     Download Wikipedia articles for the specified target titles asynchronously and save them as JSON files
@@ -134,7 +134,7 @@ async def download_wiki_pages_async(
 
     Parameters
     ----------
-    targets: list[str] | set[str]
+    targets: list[str]
         A list of Wikipedia page titles to download.
     out_dir: str
         The directory where the downloaded pages will be saved. Subdirectories may be created based on the titles.
@@ -144,7 +144,7 @@ async def download_wiki_pages_async(
     Returns
     -------
     titles: list[str]
-        List of Wikipedia page titles if exists, otherwise original target texts.
+        List of Wikipedia page titles if exists, otherwise original None.
     urls: list[str]
         List of full URLs for the Wikipedia pages if exists, otherwise None.
 
@@ -213,7 +213,10 @@ async def download_wiki_pages_async(
                 with open(output_path, "w", encoding="utf-8") as output_file:
                     json.dump(data, output_file, indent=4)
 
-        return page.title, page.fullurl
+        title = page.title if page.exists() else None
+        url = page.fullurl if page.exists() else None
+
+        return title, url
 
     tasks = [
         fetch_and_save(target)
@@ -228,14 +231,14 @@ async def download_wiki_pages_async(
 
 
 def download_wiki_pages(
-    targets: list[str] | set[str], out_dir: str, tqdm_disable: bool = False
+    targets: list[str], out_dir: str, tqdm_disable: bool = True
 ) -> tuple[list[str], list[str]]:
     """
     Wrapper for the asynchronous download_wiki_pages_async function.
 
     Parameters
     ----------
-    targets : list[str] | set[str]
+    targets : list[str]
         List or set of target Wikipedia pages to download.
     out_dir : str
         Directory to save the downloaded pages.
@@ -245,10 +248,11 @@ def download_wiki_pages(
     Returns
     -------
     titles: list[str]
-        List of Wikipedia page titles if exists, otherwise original target texts.
+        List of Wikipedia page titles if exists, otherwise None.
     urls: list[str]
         List of full URLs for the Wikipedia pages if exists, otherwise None.
     """
+    assert type(targets) is list, "targets should be a list"
     return asyncio.run(download_wiki_pages_async(targets, out_dir, tqdm_disable))
 
 
@@ -265,5 +269,5 @@ if __name__ == "__main__":
     ]
     # targets = []
     titles, urls = download_wiki_pages(targets, out_dir="wikipedia")
-    print("Titles: ", titles)
+    print("Wiki titles: ", titles)
     print("URLs: ", urls)
