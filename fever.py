@@ -6,10 +6,10 @@ from typing import Literal
 from datasets import load_dataset
 from tqdm import tqdm
 
-from kgraph.kgraph import KB
+from kgraph.kgraph import KB, join
 from kgraph.kgraph.extraction import extract_triples
-from kgraph.kgraph.wiki import download_wiki_pages
-from src.kg_creator import create_KG_cache
+from kgraph.kgraph.wiki import assign_file_path, download_wiki_pages
+from src.kg_creator import create_KG_cache  # noqa: F401
 from src.verification import process_pg
 
 
@@ -17,8 +17,8 @@ def create_fever_PGs(
     split: Literal[
         "labelled_dev", "paper_dev", "paper_test", "train", "unlabelled_dev", "unlabelled_test"
     ],
+    wiki_dir: str,
     batch_size: int = 64,
-    wiki_dir: str = "wikipedia-fever",
 ):
     """
     Create Propositional Graphs (PGs) for the FEVER v1.0 dataset.
@@ -38,7 +38,7 @@ def create_fever_PGs(
     """
     # Download the FEVER dataset from HuggingFace
     dataset = load_dataset("fever", name="v1.0", split=split)
-    dataset = dataset.select(range(100))  # for development
+    dataset = dataset.select(range(1024))  # for development
     print(f"Dataset size: {len(dataset)}")
 
     # Process the dataset in batches with a progress bar
@@ -46,6 +46,14 @@ def create_fever_PGs(
         batch = dataset[i : i + batch_size]
         PGs = extract_triples(batch["claim"], method="rebel")
 
+        # download Wikipedia articles for each node in PGs
+        nodes_li = [PG.get_nodes() for PG in PGs]
+        targets = list({node for pg_nodes in nodes_li for node in pg_nodes})
+        titles, _ = download_wiki_pages(targets, wiki_dir)
+
+        mapping = dict(zip(targets, titles))
+
+        # Create PG dot files
         for j in range(len(batch["claim"])):
             # Create the output directory if it doesn't exist
             DIR_SIZE = 5000  # 5k per directory
@@ -53,14 +61,14 @@ def create_fever_PGs(
             subdir = (int(id) // DIR_SIZE) * DIR_SIZE
             os.makedirs(f"exp-fever/PGs/{subdir}", exist_ok=True)
 
+            # Add page titles as node attributes
+            for node in PGs[j].get_nodes():
+                if mapping[node]:
+                    PGs[j].add_node_attr(node, "wiki_title", mapping[node])
+
             # save PG in dot file
             path = f"exp-fever/PGs/{subdir}/{id}.dot"
             PGs[j].write_dot(path)
-
-        # download Wikipedia articles for each node in PGs
-        nodes_li = [PG.get_nodes() for PG in PGs]
-        nodes = [node for pg_nodes in nodes_li for node in pg_nodes]
-        download_wiki_pages(set(nodes), wiki_dir)
 
 
 def create_fever_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
@@ -78,50 +86,31 @@ def create_fever_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: st
     """
     # iterate over each category
     subdir_li = os.listdir(pg_top_dir)
-    for subdir in sorted(subdir_li):
-        files = os.listdir(os.path.join(pg_top_dir, subdir))
+    for subdir in subdir_li:
 
-        for file in tqdm(sorted(files), desc=f"Processing {subdir}"):
+        files = os.listdir(f"{pg_top_dir}/{subdir}")
+
+        for pg_file in tqdm(sorted(files), desc=f"Processing {subdir}"):
+
             # reconstruct PG from dot file
-            PG = KB.from_dot_file(os.path.join(pg_top_dir, subdir, file))
-            titles = [title for title in get_wiki_titles(PG.get_nodes()) if title is not None]
+            PG = KB.from_dot_file(f"{pg_top_dir}/{subdir}/{pg_file}")
+            titles = [
+                PG.nodes[node_label]["wiki_title"]
+                for node_label in PG.get_nodes()
+                if PG.nodes[node_label]["wiki_title"] is not None
+            ]
 
             # combine KGs for the found Wikipedia articles
             KG_combined = KB()
             for title in titles:
-                subdir, basename = assign_file_path(title)
-                KG = KB.from_dot_file(f"{KG_cache_dir}/{subdir}/{basename[:-5]}.dot")
+                prefix, basename = assign_file_path(title)
+                KG = KB.from_dot_file(f"{KG_cache_dir}/{prefix}/{basename[:-5]}.dot")
                 KG_combined = join(KG_combined, KG)
 
             # Save combined KG to dot file
-            kg_file_name = os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename)
+            kg_file_name = os.path.join(kg_top_dir, subdir, pg_file)
             os.makedirs(os.path.dirname(kg_file_name), exist_ok=True)
             KG_combined.write_dot(kg_file_name)
-
-        # # List of PG directories for the given category
-        # pg_dirs = [
-        #     os.path.join(pg_top_dir, cat, subdir)
-        #     for subdir in os.listdir(os.path.join(pg_top_dir, cat))
-        # ]
-        # for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
-        #     # Note: pg_dir contains four PG dot files for a single MCQ
-        #     for pg_filename in os.listdir(pg_dir):
-
-        #         # reconstruct PG from dot file
-        #         PG = KB.from_dot_file(os.path.join(pg_dir, pg_filename))
-        #         titles = [title for title in get_wiki_titles(PG.get_nodes()) if title is not None]
-
-        #         # combine KGs for the found Wikipedia articles
-        #         KG_combined = KB()
-        #         for title in titles:
-        #             subdir, basename = assign_file_path(title)
-        #             KG = KB.from_dot_file(f"{KG_cache_dir}/{subdir}/{basename[:-5]}.dot")
-        #             KG_combined = join(KG_combined, KG)
-
-        #         # Save combined KG to dot file
-        #         kg_file_name = os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename)
-        #         os.makedirs(os.path.dirname(kg_file_name), exist_ok=True)
-        #         KG_combined.write_dot(kg_file_name)
 
 
 def verify_fever_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: int = 16):
@@ -195,8 +184,20 @@ def verify_fever_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_wor
 if __name__ == "__main__":
 
     # variables
+    PG_DIR = "exp-fever/PGs"
+    KG_DIR = "exp-fever/KGs"
     WIKI_DIR = "wikipedia-fever"
     KG_CACHE_DIR = "KG_cache_fever"
 
-    create_fever_PGs(split="unlabelled_dev", batch_size=64, wiki_dir=WIKI_DIR)
+    print("Creating FEVER PGs & Downloading Wikipedia pages...")
+    create_fever_PGs(split="unlabelled_dev", wiki_dir=WIKI_DIR, batch_size=8)
+
+    print("\nCreating KG cache...")
     create_KG_cache(wiki_dir=WIKI_DIR, KG_dir=KG_CACHE_DIR)
+
+    print("\nCreating FEVER-tailored KGs...")
+    create_fever_tailored_KGs(
+        pg_top_dir=PG_DIR,
+        kg_top_dir=KG_DIR,
+        KG_cache_dir=KG_CACHE_DIR,
+    )

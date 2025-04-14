@@ -21,7 +21,7 @@ read -r answer
 
 if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
     echo "Deleting .dot files..."
-    find "$TARGET_DIR" -type f -name "*.dot" -exec rm\;
+    find "$TARGET_DIR" -type f -name "*.dot" -exec rm {} \;
 
     echo "Deleting empty directories..."
     find "$TARGET_DIR" -type d -empty -delete -print
