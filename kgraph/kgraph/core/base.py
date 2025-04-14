@@ -1,7 +1,6 @@
 # import re
+import re
 from typing import Literal
-
-import pydot
 
 
 class KB:
@@ -174,7 +173,7 @@ class KB:
     @classmethod
     def from_dot_file(cls, dot_file_path: str) -> "KB":
         """
-        Construct a KB object from a DOT file using pydot.
+        Construct a KB object from a DOT file.
 
         Parameters
         ----------
@@ -186,23 +185,28 @@ class KB:
         KB
             An instance of the KB class.
         """
-        # Parse the DOT file using pydot
-        graph = pydot.graph_from_dot_file(dot_file_path)[0]
-
-        # Extract relations
         relations = []
-        for edge in graph.get_edges():
-            head = edge.get_source().strip('"')
-            tail = edge.get_destination().strip('"')
-            relation_type = edge.get_label().strip('"') if edge.get_label() else ""
-            relations.append({"head": head, "type": relation_type, "tail": tail})
-
-        # Extract nodes and their attributes
         nodes = {}
-        for node in graph.get_nodes():
-            node_name = node.get_name().strip('"')
-            attributes = node.get_attributes()
-            nodes[node_name] = attributes
+
+        with open(dot_file_path, "r") as file:
+            lines = file.readlines()
+
+        for line in lines:
+            # Match node lines: "node_label" [label="node_label", wiki_title="title"];
+            node_match = re.match(r'\s*"(.+)" \[label="(.+)"(?:, wiki_title="(.+)")?\];', line)
+            if node_match:
+                node_label, label, wiki_title = node_match.groups()
+                nodes[node_label] = {"label": label}
+                if wiki_title:
+                    nodes[node_label]["wiki_title"] = wiki_title
+                continue
+
+            # Match edge lines: "head" -> "tail" [label="type"];
+            edge_match = re.match(r'\s*"(.+)" -> "(.+)" \[label="(.+)"\];', line)
+            if edge_match:
+                print("edge found!")
+                head, tail, relation_type = edge_match.groups()
+                relations.append({"head": head, "type": relation_type, "tail": tail})
 
         # Create KB instance
         kb = cls(relations)
@@ -211,27 +215,40 @@ class KB:
 
     def write_dot(self, output_file: str):
         """
-        Save KB as DOT file using pydot.
+        Save KB as DOT file without using pydot.
 
         Parameters
         ----------
         output_file: str
             Path of output dot file.
         """
-        graph = pydot.Dot("RDFGraph", graph_type="digraph")
+        # Start building the DOT content
+        dot_content = ["digraph RDFGraph {"]
 
+        # Add nodes
         for node_label, attributes in self.nodes.items():
             if node_label:
-                pynode = pydot.Node(name=node_label, label=node_label, wiki_title=attributes.get("wiki_title", ""))
-                graph.add_node(pynode)
+                node_label = node_label.replace('"', "'")
+                wiki_title = attributes.get("wiki_title", "")
+                node_line = f'\t"{node_label}" [label="{node_label}"'
+                if wiki_title:
+                    node_line += f', wiki_title="{wiki_title}"'
+                node_line += "];"
+                dot_content.append(node_line)
 
         # Add edges
         for r in self.relations:
             if r["head"] and r["tail"]:
-                edge = pydot.Edge(r["head"], r["tail"], label=r["type"])
-                graph.add_edge(edge)
+                label = r["type"]
+                edge_line = f'\t"{r["head"]}" -> "{r["tail"]}" [label="{label}"];'
+                dot_content.append(edge_line)
 
-        graph.write_dot(output_file)
+        # Close the DOT content
+        dot_content.append("}")
+
+        # Write to the output file
+        with open(output_file, "w") as f:
+            f.write("\n".join(dot_content))
 
 
 if __name__ == "__main__":
@@ -240,7 +257,7 @@ if __name__ == "__main__":
     print("Constructor and printing")
     kb = KB(
         [
-            {"head": "Napoleon Bonaparte", "type": "date of birth", "tail": '15 "August 1769'},
+            {"head": "Napoleon Bonaparte", "type": "date of birth", "tail": "15 August 1769"},
             {"head": "Napoleon Bonaparte", "type": "date of death", "tail": "5 May 1821"},
             {"head": "Napoleon Bonaparte", "type": "participant in", "tail": "French Revolution"},
             {"head": "Napoleon Bonaparte", "type": "conflict", "tail": "Revolutionary Wars"},
@@ -253,19 +270,22 @@ if __name__ == "__main__":
     print("Nodes:\n{}".format(kb.get_nodes()))
 
     kb.add_node_attr("Napoleon Bonaparte", "wiki_title", "Napoleon_Bonaparte")
+
+    print("Before:\n{}".format(kb))
     kb.write_dot("output.dot")
     kb = KB.from_dot_file("output.dot")
+    print("After:\n{}".format(kb))
 
-    # Relations between
-    print("\nRelation search")
-    hd = "Napoleon Bonaparte"
-    tl = "15 August 1769"
-    print("Relations from '{}': {}".format(hd, kb.get_relations_from(hd)))
-    print("Relations to '{}': {}".format(tl, kb.get_relations_to(tl)))
-    print("Relations between: {}".format(kb.get_relations_between("Napoleon Bonaparte", "15 August 1769")))
-    # print(kb.get_relations_between('15 August 1769', 'Napoleon Bonaparte'))
+    # # Relations between
+    # print("\nRelation search")
+    # hd = "Napoleon Bonaparte"
+    # tl = "15 August 1769"
+    # print("Relations from '{}': {}".format(hd, kb.get_relations_from(hd)))
+    # print("Relations to '{}': {}".format(tl, kb.get_relations_to(tl)))
+    # print("Relations between: {}".format(kb.get_relations_between("Napoleon Bonaparte", "15 August 1769")))
+    # # print(kb.get_relations_between('15 August 1769', 'Napoleon Bonaparte'))
 
-    # Extract subgraph with node limitation
-    nodes = ["French Revolution", "5 May 1821"]
-    kb.select_where(nodes)
-    print("\nSubgraph with nodes: {}\n{}".format(nodes, kb))
+    # # Extract subgraph with node limitation
+    # nodes = ["French Revolution", "5 May 1821"]
+    # kb.select_where(nodes)
+    # print("\nSubgraph with nodes: {}\n{}".format(nodes, kb))
