@@ -12,7 +12,7 @@ class KB:
             self.relations = relations
 
         # instance variables
-        self.nodes = {node: dict() for node in self.get_nodes()}
+        self.nodes = {node: {"wiki_title": None} for node in self.get_nodes()}
 
     def __str__(self) -> str:
         """
@@ -62,7 +62,7 @@ class KB:
         value: str
             Value of attribute.
         """
-        if node_label not in self.nodes:
+        if node_label not in self.nodes.keys():
             raise ValueError(f"Node {node_label} does not exist in KB.")
         self.nodes[node_label][attr] = value
 
@@ -186,31 +186,32 @@ class KB:
             An instance of the KB class.
         """
         relations = []
-        nodes = {}
+        wiki_titles = dict()
 
         with open(dot_file_path, "r") as file:
             lines = file.readlines()
 
         for line in lines:
             # Match node lines: "node_label" [label="node_label", wiki_title="title"];
-            node_match = re.match(r'\s*"(.+)" \[label="(.+)"(?:, wiki_title="(.+)")?\];', line)
+            # node_match = re.match(r'\s*"(.+)" \[label="(.+)"(?:, wiki_title="(.+)")?\];', line)
+            node_match = re.match(r'\s*"(.+)" (?:\s*\[wiki_title="(.+)")?\];', line)
             if node_match:
-                node_label, label, wiki_title = node_match.groups()
-                nodes[node_label] = {"label": label}
+                node_label, wiki_title = node_match.groups()
                 if wiki_title:
-                    nodes[node_label]["wiki_title"] = wiki_title
-                continue
+                    wiki_titles[node_label] = wiki_title
+                else:
+                    wiki_titles[node_label] = None
 
             # Match edge lines: "head" -> "tail" [label="type"];
             edge_match = re.match(r'\s*"(.+)" -> "(.+)" \[label="(.+)"\];', line)
             if edge_match:
-                print("edge found!")
                 head, tail, relation_type = edge_match.groups()
                 relations.append({"head": head, "type": relation_type, "tail": tail})
 
         # Create KB instance
         kb = cls(relations)
-        kb.nodes = nodes
+        for node_label, wiki_title in wiki_titles.items():
+            kb.nodes[node_label] = {"wiki_title": wiki_title}
         return kb
 
     def write_dot(self, output_file: str):
@@ -226,17 +227,19 @@ class KB:
         dot_content = ["digraph RDFGraph {"]
 
         # Add nodes
+        dot_content.append("\t// Nodes")
         for node_label, attributes in self.nodes.items():
             if node_label:
-                node_label = node_label.replace('"', "'")
                 wiki_title = attributes.get("wiki_title", "")
-                node_line = f'\t"{node_label}" [label="{node_label}"'
+                # node_line = f'\t"{node_label}" [label="{node_label}"'
+                node_line = f'\t"{node_label}"'
                 if wiki_title:
-                    node_line += f', wiki_title="{wiki_title}"'
-                node_line += "];"
+                    node_line += f' [wiki_title="{wiki_title}"]'
+                node_line += ";"
                 dot_content.append(node_line)
 
         # Add edges
+        dot_content.append("\n\t// Edges")
         for r in self.relations:
             if r["head"] and r["tail"]:
                 label = r["type"]
@@ -257,7 +260,7 @@ if __name__ == "__main__":
     print("Constructor and printing")
     kb = KB(
         [
-            {"head": "Napoleon Bonaparte", "type": "date of birth", "tail": "15 August 1769"},
+            {"head": "Napoleon Bonaparte", "type": "date of birth", "tail": "15 'August 1769"},
             {"head": "Napoleon Bonaparte", "type": "date of death", "tail": "5 May 1821"},
             {"head": "Napoleon Bonaparte", "type": "participant in", "tail": "French Revolution"},
             {"head": "Napoleon Bonaparte", "type": "conflict", "tail": "Revolutionary Wars"},
@@ -275,17 +278,18 @@ if __name__ == "__main__":
     kb.write_dot("output.dot")
     kb = KB.from_dot_file("output.dot")
     print("After:\n{}".format(kb))
+    print(kb.nodes)
 
     # # Relations between
-    # print("\nRelation search")
-    # hd = "Napoleon Bonaparte"
-    # tl = "15 August 1769"
-    # print("Relations from '{}': {}".format(hd, kb.get_relations_from(hd)))
-    # print("Relations to '{}': {}".format(tl, kb.get_relations_to(tl)))
-    # print("Relations between: {}".format(kb.get_relations_between("Napoleon Bonaparte", "15 August 1769")))
-    # # print(kb.get_relations_between('15 August 1769', 'Napoleon Bonaparte'))
+    print("\nRelation search")
+    hd = "Napoleon Bonaparte"
+    tl = "15 'August 1769"
+    print("Relations from '{}': {}".format(hd, kb.get_relations_from(hd)))
+    print("Relations to '{}': {}".format(tl, kb.get_relations_to(tl)))
+    print("Relations between: {}".format(kb.get_relations_between("Napoleon Bonaparte", "15 'August 1769")))
+    # print(kb.get_relations_between('15 'August 1769', 'Napoleon Bonaparte'))
 
-    # # Extract subgraph with node limitation
-    # nodes = ["French Revolution", "5 May 1821"]
-    # kb.select_where(nodes)
-    # print("\nSubgraph with nodes: {}\n{}".format(nodes, kb))
+    # Extract subgraph with node limitation
+    nodes = ["French Revolution", "5 May 1821"]
+    kb.select_where(nodes)
+    print("\nSubgraph with nodes: {}\n{}".format(nodes, kb))
