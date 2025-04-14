@@ -78,7 +78,7 @@ def download_wiki_articles(pg_top_dir: str):
 
             # get target titles from all PGs
             PG_nodes_li = [PG.get_nodes() for PG in PGs]
-            targets = list(set([word for node in PG_nodes_li for word in node]))
+            targets = list({word for node in PG_nodes_li for word in node})
 
             # Download the Wikipedia article
             titles, urls = download_wiki_pages(targets, out_dir="wikipedia", tqdm_disable=True)
