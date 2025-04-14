@@ -8,7 +8,7 @@ from tqdm import tqdm
 from kgraph.kgraph import KB, join
 from kgraph.kgraph.extraction import extract_triples
 from kgraph.kgraph.utils import swap_label_with_symbol
-from kgraph.kgraph.wiki import assign_file_path, download_wiki_pages, get_wiki_titles
+from kgraph.kgraph.wiki import assign_file_path, download_wiki_pages
 from src.kg_creator import create_KG_cache
 from src.select_ans import select_best_answer
 from src.verification import process_pg
@@ -78,16 +78,26 @@ def download_wiki_articles(pg_top_dir: str):
             for subdir in os.listdir(os.path.join(pg_top_dir, cat))
         ]
         for pg_dir in tqdm(pg_dirs, desc=f"Processing {cat}"):
-            PGs = [
-                KB.from_dot_file(os.path.join(pg_dir, file))
-                for file in os.listdir(pg_dir)
-                if file.endswith(".dot")
-            ]
-            PG_nodes = [PG.get_nodes() for PG in PGs]
-            titles = set([word for node in PG_nodes for word in node])
+            # reconstruct PGs from dot files
+            pg_files = [f for f in os.listdir(pg_dir) if f.endswith(".dot")]
+            PGs = [KB.from_dot_file(os.path.join(pg_dir, file)) for file in pg_files]
+
+            # get target titles from all PGs
+            PG_nodes_li = [PG.get_nodes() for PG in PGs]
+            targets = list(set([word for node in PG_nodes_li for word in node]))
 
             # Download the Wikipedia article
-            download_wiki_pages(titles, out_dir="wikipedia", tqdm_disable=True)
+            titles, urls = download_wiki_pages(targets, out_dir="wikipedia", tqdm_disable=True)
+            titles = [titles[i] if urls[i] is not None else None for i in range(len(titles))]
+            mapping = dict(zip(targets, titles))
+
+            # Add page titles as node attributes
+            for PG in PGs:
+                # update PG dot files with Wiki titles if exists
+                for node in PG.get_nodes():
+                    if mapping[node] is not None:
+                        PG.add_node_attr(node, "wiki_title", mapping[node])
+                PG.write_dot(os.path.join(pg_dir, pg_files[PGs.index(PG)]))
 
 
 def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
@@ -118,7 +128,11 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
 
                 # reconstruct PG from dot file
                 PG = KB.from_dot_file(os.path.join(pg_dir, pg_filename))
-                titles = [title for title in get_wiki_titles(PG.get_nodes()) if title is not None]
+                titles = [
+                    PG.nodes[node_label]["wiki_title"]
+                    for node_label in PG.get_nodes()
+                    if PG.nodes[node_label]["wiki_title"] is not None
+                ]
 
                 # combine KGs for the found Wikipedia articles
                 KG_combined = KB()
