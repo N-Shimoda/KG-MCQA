@@ -3,7 +3,7 @@ import multiprocessing as mp
 import os
 from typing import Literal
 
-from datasets import load_dataset
+from datasets import Dataset, load_dataset
 from tqdm import tqdm
 
 from kgraph.kgraph import KB, join
@@ -19,9 +19,9 @@ def create_fever_PGs(
     ],
     wiki_dir: str,
     batch_size: int = 64,
-):
+) -> Dataset:
     """
-    Create Propositional Graphs (PGs) for the FEVER v1.0 dataset.
+    Create Propositional Graphs (PGs) and download related Wikipedia articles for the FEVER v1.0 dataset.
 
     Parameters
     ----------
@@ -33,13 +33,25 @@ def create_fever_PGs(
         - train
         - unlabelled_dev
         - unlabelled_test
+    wiki_dir : str
+        Directory to save the downloaded Wikipedia pages.
     batch_size : int
         The batch size to use for processing the dataset. Default is 64.
+
+    Returns
+    -------
+    ds_info : dict
+        A dictionary containing the claim IDs, claims, and labels from the dataset.
+        ```
+        ds_info[claim_id] = {"claim": claim, "label": label}
+        ```
     """
     # Download the FEVER dataset from HuggingFace
     dataset = load_dataset("fever", name="v1.0", split=split)
-    dataset = dataset.select(range(24))  # for development
+    dataset = dataset.select(range(256))  # for development
     print(f"Dataset size: {len(dataset)}")
+
+    ds_info = dict()
 
     # Process the dataset in batches with a progress bar
     for i in tqdm(range(0, len(dataset), batch_size), desc="Processing batches"):
@@ -57,8 +69,8 @@ def create_fever_PGs(
         for j in range(len(batch["claim"])):
             # Create the output directory if it doesn't exist
             DIR_SIZE = 5000  # 5k per directory
-            id = batch["id"][j]
-            subdir = (int(id) // DIR_SIZE) * DIR_SIZE
+            claim_id = batch["id"][j]
+            subdir = (int(claim_id) // DIR_SIZE) * DIR_SIZE
             os.makedirs(f"exp-fever/PGs/{subdir}", exist_ok=True)
 
             # Add page titles as node attributes
@@ -67,8 +79,13 @@ def create_fever_PGs(
                     PGs[j].add_node_attr(node, "wiki_title", mapping[node])
 
             # save PG in dot file
-            path = f"exp-fever/PGs/{subdir}/{id}.dot"
+            path = f"exp-fever/PGs/{subdir}/{claim_id}.dot"
             PGs[j].write_dot(path)
+
+            # save datsaset info
+            ds_info[claim_id] = {"claim": batch["claim"][j], "label": batch["label"][j]}
+
+    return ds_info
 
 
 def create_fever_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
@@ -114,7 +131,9 @@ def create_fever_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: st
             KG_combined.write_dot(kg_file_name)
 
 
-def verify_fever_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: int = 16):
+def verify_fever_PGs(
+    pg_top_dir: str, kg_top_dir: str, ds_info: dict, output_file: str, num_workers: int = 16
+):
     """
     Verify PGs against KGs and select the best answer.
     This function iterates over each category and each PG, verifies the PG against the KG,
@@ -151,11 +170,13 @@ def verify_fever_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_wor
                 scores.append((edge_score, node_score))
 
                 # Save the verification result
-                claim_id = pg_filename.split(".")[0]
+                claim_id = int(pg_filename.split(".")[0])
                 results.append(
                     {
-                        "group": subdir,
+                        # "group": subdir,
                         "claim_id": claim_id,
+                        "label": ds_info[claim_id]["label"],
+                        "claim": ds_info[claim_id]["claim"],
                         "edge_score": edge_score,
                         "node_score": node_score,
                         "verified_edges": verified_edges,
@@ -178,7 +199,8 @@ if __name__ == "__main__":
     KG_CACHE_DIR = "KG_cache_fever"
 
     print("Creating FEVER PGs & Downloading Wikipedia pages...")
-    create_fever_PGs(split="unlabelled_dev", wiki_dir=WIKI_DIR, batch_size=8)
+    ds_info = create_fever_PGs(split="labelled_dev", wiki_dir=WIKI_DIR, batch_size=64)
+    print(ds_info)
 
     print("\nCreating KG cache...")
     create_KG_cache(wiki_dir=WIKI_DIR, KG_dir=KG_CACHE_DIR)
@@ -196,6 +218,7 @@ if __name__ == "__main__":
     verify_fever_PGs(
         pg_top_dir=PG_DIR,
         kg_top_dir=KG_DIR,
+        ds_info=ds_info,
         output_file="exp-fever/results.csv",
-        num_workers=16,
+        num_workers=os.cpu_count() - 2,  # Leave 2 cores free for other tasks
     )
