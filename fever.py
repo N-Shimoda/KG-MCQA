@@ -1,4 +1,4 @@
-import json
+import csv
 import multiprocessing as mp
 import os
 from typing import Literal
@@ -38,7 +38,7 @@ def create_fever_PGs(
     """
     # Download the FEVER dataset from HuggingFace
     dataset = load_dataset("fever", name="v1.0", split=split)
-    dataset = dataset.select(range(1024))  # for development
+    dataset = dataset.select(range(24))  # for development
     print(f"Dataset size: {len(dataset)}")
 
     # Process the dataset in batches with a progress bar
@@ -85,7 +85,7 @@ def create_fever_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: st
         Directory containing cached KGs for Wikipedia articles.
     """
     # iterate over each category
-    subdir_li = os.listdir(pg_top_dir)
+    subdir_li = list(map(int, os.listdir(pg_top_dir)))
     for subdir in subdir_li:
 
         files = os.listdir(f"{pg_top_dir}/{subdir}")
@@ -108,7 +108,8 @@ def create_fever_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: st
                 KG_combined = join(KG_combined, KG)
 
             # Save combined KG to dot file
-            kg_file_name = os.path.join(kg_top_dir, subdir, pg_file)
+            # kg_file_name = os.path.join(kg_top_dir, subdir, pg_file)
+            kg_file_name = f"{kg_top_dir}/{subdir}/{pg_file}"
             os.makedirs(os.path.dirname(kg_file_name), exist_ok=True)
             KG_combined.write_dot(kg_file_name)
 
@@ -130,55 +131,42 @@ def verify_fever_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_wor
     num_workers : int
         Number of parallel workers to use.
     """
-    result = dict()
+    results = list()
 
     # Iterate over each category
-    cat_dirs = os.listdir(pg_top_dir)
-    for cat in sorted(cat_dirs):
-        # List of PG directories for the given category
-        pg_dirs = [
-            os.path.join(pg_top_dir, cat, subdir)
-            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
+    subdir_li = list(map(int, os.listdir(pg_top_dir)))
+    for subdir in sorted(subdir_li):
+        files = os.listdir(f"{pg_top_dir}/{subdir}")
+        args = [
+            (f"{pg_top_dir}/{subdir}/{dot_file}", f"{kg_top_dir}/{subdir}/{dot_file}")
+            for dot_file in files
         ]
-        result[cat] = {"questions": dict()}
 
-        for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
-            # Note: pg_dir contains four PG dot files for a single MCQ
-            mcq_id = os.path.basename(pg_dir)
-            result[cat]["questions"][mcq_id] = dict()
-
-            # Prepare arguments for parallel processing
-            pg_files = os.listdir(pg_dir)
-            args = [
-                (
-                    os.path.join(pg_dir, pg_filename),
-                    os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename),
-                )
-                for pg_filename in pg_files
-            ]
-
-            # Use multiprocessing to process PGs in parallel
-            with mp.Pool(processes=num_workers) as pool:
-                results = pool.map(process_pg, args)
+        with mp.Pool(processes=num_workers) as pool:
+            result_data = pool.map(process_pg, args)
 
             scores = []
-            for pg_path, edge_score, node_score, verified_edges in results:
+            for pg_path, edge_score, node_score, verified_edges in result_data:
                 pg_filename = os.path.basename(pg_path)
                 scores.append((edge_score, node_score))
 
                 # Save the verification result
-                result[cat]["questions"][mcq_id][pg_filename[0]] = {
-                    "choice": pg_filename[2:-4],
-                    "edge_score": edge_score,
-                    "node_score": node_score,
-                    "verified_edges": verified_edges,
-                }
+                claim_id = pg_filename.split(".")[0]
+                results.append(
+                    {
+                        "group": subdir,
+                        "claim_id": claim_id,
+                        "edge_score": edge_score,
+                        "node_score": node_score,
+                        "verified_edges": verified_edges,
+                    }
+                )
 
-            # result[cat]["questions"][mcq_id]["answer"] = select_best_answer(scores)
-
-        # Save the result to a JSON file
-        with open(output_file, "w") as f:
-            json.dump(result, f, indent=4)
+        # Save the result to a CSV file
+        with open(output_file, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=results[0].keys())
+            writer.writeheader()
+            writer.writerows(results)
 
 
 if __name__ == "__main__":
@@ -200,4 +188,14 @@ if __name__ == "__main__":
         pg_top_dir=PG_DIR,
         kg_top_dir=KG_DIR,
         KG_cache_dir=KG_CACHE_DIR,
+    )
+
+    print("\nVerifying PGs against KGs...")
+    # Set multiprocessing start method to 'spawn'
+    mp.set_start_method("spawn", force=True)
+    verify_fever_PGs(
+        pg_top_dir=PG_DIR,
+        kg_top_dir=KG_DIR,
+        output_file="exp-fever/results.csv",
+        num_workers=16,
     )
