@@ -4,10 +4,10 @@ kgraph.core package
 Submodules
 ----------
 
-kgraph.core.main module
+kgraph.core.base module
 -----------------------
 
-.. automodule:: kgraph.core.main
+.. automodule:: kgraph.core.base
    :members:
    :undoc-members:
    :show-inheritance:

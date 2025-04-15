@@ -4,13 +4,13 @@ from kgraph.kgraph.verifier import verify_proposition
 
 def process_pg(args: tuple[str, str]) -> tuple[str, float, float, list[tuple[str, str]]]:
     """
-    Helper function to process a single PG and KG pair.
+    Helper function to process a verification for single PG and KG pair.
     This function is used for parallel processing.
 
     Parameters
     ----------
     args : tuple[str, str]
-        A tuple containing the paths to the PG file and the KG file.
+        A tuple containing the paths to the PG dot file and the KG dot file.
 
     Returns
     -------

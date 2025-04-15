@@ -1,9 +1,9 @@
-import json
+import csv
 import multiprocessing as mp
 import os
 from typing import Literal
 
-from datasets import load_dataset
+from datasets import Dataset, load_dataset
 from tqdm import tqdm
 
 from kgraph.kgraph import KB, join
@@ -19,9 +19,9 @@ def create_fever_PGs(
     ],
     wiki_dir: str,
     batch_size: int = 64,
-):
+) -> Dataset:
     """
-    Create Propositional Graphs (PGs) for the FEVER v1.0 dataset.
+    Create Propositional Graphs (PGs) and download related Wikipedia articles for the FEVER v1.0 dataset.
 
     Parameters
     ----------
@@ -33,13 +33,25 @@ def create_fever_PGs(
         - train
         - unlabelled_dev
         - unlabelled_test
+    wiki_dir : str
+        Directory to save the downloaded Wikipedia pages.
     batch_size : int
         The batch size to use for processing the dataset. Default is 64.
+
+    Returns
+    -------
+    ds_info : dict
+        A dictionary containing the claim IDs, claims, and labels from the dataset.
+        ```
+        ds_info[claim_id] = {"claim": claim, "label": label}
+        ```
     """
     # Download the FEVER dataset from HuggingFace
     dataset = load_dataset("fever", name="v1.0", split=split)
-    dataset = dataset.select(range(1024))  # for development
+    dataset = dataset.select(range(256))  # for development
     print(f"Dataset size: {len(dataset)}")
+
+    ds_info = dict()
 
     # Process the dataset in batches with a progress bar
     for i in tqdm(range(0, len(dataset), batch_size), desc="Processing batches"):
@@ -57,8 +69,8 @@ def create_fever_PGs(
         for j in range(len(batch["claim"])):
             # Create the output directory if it doesn't exist
             DIR_SIZE = 5000  # 5k per directory
-            id = batch["id"][j]
-            subdir = (int(id) // DIR_SIZE) * DIR_SIZE
+            claim_id = batch["id"][j]
+            subdir = (int(claim_id) // DIR_SIZE) * DIR_SIZE
             os.makedirs(f"exp-fever/PGs/{subdir}", exist_ok=True)
 
             # Add page titles as node attributes
@@ -67,8 +79,13 @@ def create_fever_PGs(
                     PGs[j].add_node_attr(node, "wiki_title", mapping[node])
 
             # save PG in dot file
-            path = f"exp-fever/PGs/{subdir}/{id}.dot"
+            path = f"exp-fever/PGs/{subdir}/{claim_id}.dot"
             PGs[j].write_dot(path)
+
+            # save datsaset info
+            ds_info[claim_id] = {"claim": batch["claim"][j], "label": batch["label"][j]}
+
+    return ds_info
 
 
 def create_fever_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
@@ -85,7 +102,7 @@ def create_fever_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: st
         Directory containing cached KGs for Wikipedia articles.
     """
     # iterate over each category
-    subdir_li = os.listdir(pg_top_dir)
+    subdir_li = list(map(int, os.listdir(pg_top_dir)))
     for subdir in subdir_li:
 
         files = os.listdir(f"{pg_top_dir}/{subdir}")
@@ -108,12 +125,15 @@ def create_fever_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: st
                 KG_combined = join(KG_combined, KG)
 
             # Save combined KG to dot file
-            kg_file_name = os.path.join(kg_top_dir, subdir, pg_file)
+            # kg_file_name = os.path.join(kg_top_dir, subdir, pg_file)
+            kg_file_name = f"{kg_top_dir}/{subdir}/{pg_file}"
             os.makedirs(os.path.dirname(kg_file_name), exist_ok=True)
             KG_combined.write_dot(kg_file_name)
 
 
-def verify_fever_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: int = 16):
+def verify_fever_PGs(
+    pg_top_dir: str, kg_top_dir: str, ds_info: dict, output_file: str, num_workers: int = 16
+):
     """
     Verify PGs against KGs and select the best answer.
     This function iterates over each category and each PG, verifies the PG against the KG,
@@ -130,55 +150,44 @@ def verify_fever_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_wor
     num_workers : int
         Number of parallel workers to use.
     """
-    result = dict()
+    results = list()
 
     # Iterate over each category
-    cat_dirs = os.listdir(pg_top_dir)
-    for cat in sorted(cat_dirs):
-        # List of PG directories for the given category
-        pg_dirs = [
-            os.path.join(pg_top_dir, cat, subdir)
-            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
+    subdir_li = list(map(int, os.listdir(pg_top_dir)))
+    for subdir in sorted(subdir_li):
+        files = os.listdir(f"{pg_top_dir}/{subdir}")
+        args = [
+            (f"{pg_top_dir}/{subdir}/{dot_file}", f"{kg_top_dir}/{subdir}/{dot_file}")
+            for dot_file in files
         ]
-        result[cat] = {"questions": dict()}
 
-        for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
-            # Note: pg_dir contains four PG dot files for a single MCQ
-            mcq_id = os.path.basename(pg_dir)
-            result[cat]["questions"][mcq_id] = dict()
-
-            # Prepare arguments for parallel processing
-            pg_files = os.listdir(pg_dir)
-            args = [
-                (
-                    os.path.join(pg_dir, pg_filename),
-                    os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename),
-                )
-                for pg_filename in pg_files
-            ]
-
-            # Use multiprocessing to process PGs in parallel
-            with mp.Pool(processes=num_workers) as pool:
-                results = pool.map(process_pg, args)
+        with mp.Pool(processes=num_workers) as pool:
+            result_data = pool.map(process_pg, args)
 
             scores = []
-            for pg_path, edge_score, node_score, verified_edges in results:
+            for pg_path, edge_score, node_score, verified_edges in result_data:
                 pg_filename = os.path.basename(pg_path)
                 scores.append((edge_score, node_score))
 
                 # Save the verification result
-                result[cat]["questions"][mcq_id][pg_filename[0]] = {
-                    "choice": pg_filename[2:-4],
-                    "edge_score": edge_score,
-                    "node_score": node_score,
-                    "verified_edges": verified_edges,
-                }
+                claim_id = int(pg_filename.split(".")[0])
+                results.append(
+                    {
+                        # "group": subdir,
+                        "claim_id": claim_id,
+                        "label": ds_info[claim_id]["label"],
+                        "claim": ds_info[claim_id]["claim"],
+                        "edge_score": edge_score,
+                        "node_score": node_score,
+                        "verified_edges": verified_edges,
+                    }
+                )
 
-            # result[cat]["questions"][mcq_id]["answer"] = select_best_answer(scores)
-
-        # Save the result to a JSON file
-        with open(output_file, "w") as f:
-            json.dump(result, f, indent=4)
+        # Save the result to a CSV file
+        with open(output_file, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=results[0].keys())
+            writer.writeheader()
+            writer.writerows(results)
 
 
 if __name__ == "__main__":
@@ -190,7 +199,8 @@ if __name__ == "__main__":
     KG_CACHE_DIR = "KG_cache_fever"
 
     print("Creating FEVER PGs & Downloading Wikipedia pages...")
-    create_fever_PGs(split="unlabelled_dev", wiki_dir=WIKI_DIR, batch_size=8)
+    ds_info = create_fever_PGs(split="labelled_dev", wiki_dir=WIKI_DIR, batch_size=64)
+    print(ds_info)
 
     print("\nCreating KG cache...")
     create_KG_cache(wiki_dir=WIKI_DIR, KG_dir=KG_CACHE_DIR)
@@ -200,4 +210,15 @@ if __name__ == "__main__":
         pg_top_dir=PG_DIR,
         kg_top_dir=KG_DIR,
         KG_cache_dir=KG_CACHE_DIR,
+    )
+
+    print("\nVerifying PGs against KGs...")
+    # Set multiprocessing start method to 'spawn'
+    mp.set_start_method("spawn", force=True)
+    verify_fever_PGs(
+        pg_top_dir=PG_DIR,
+        kg_top_dir=KG_DIR,
+        ds_info=ds_info,
+        output_file="exp-fever/results.csv",
+        num_workers=os.cpu_count() - 2,  # Leave 2 cores free for other tasks
     )
