@@ -49,7 +49,7 @@ def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"]
         mcqs = json.load(f)
     print("Categories: {}".format(list(mcqs.keys())))
 
-    for cat in mcqs.keys():
+    for cat in sorted(mcqs.keys()):
         # TODO: Implement batch inference here.
         for i, mcq in enumerate(tqdm(mcqs[cat]["questions"], desc=f"Processing {mcqs[cat]['category']}")):
             choice = mcq["choice"]
