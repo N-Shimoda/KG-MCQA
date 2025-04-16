@@ -2,6 +2,7 @@ import json
 import multiprocessing as mp
 import os
 import sys
+from typing import Literal
 
 from tqdm import tqdm
 
@@ -14,12 +15,14 @@ from src.select_ans import select_best_answer
 from src.verification import process_pg
 
 
-def create_PG_temp(question: str, choice: list[str]) -> KB:
+def create_PG_temp(question: str, choice: list[str], model: Literal["unirel", "rebel"]) -> KB:
     """
     Create PG templates for MCQs.
     """
+    assert model in ["unirel", "rebel"], "model should be either 'unirel' or 'rebel'."
+
     sentences = [question.format(c) for c in choice]
-    PGs = extract_triples(sentences, method="rebel")
+    PGs = extract_triples(sentences, method=model)
 
     PG_temp = KB()
     for PG in PGs:
@@ -29,7 +32,7 @@ def create_PG_temp(question: str, choice: list[str]) -> KB:
     return PG_temp
 
 
-def create_PGs(filename: str, pg_top_dir: str):
+def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"]):
     """
     Create PGs from given MCQ dataset.
 
@@ -40,17 +43,17 @@ def create_PGs(filename: str, pg_top_dir: str):
     pg_top_dir : str
         Top-level directory to save the generated PGs.
     """
+    assert model in ["unirel", "rebel"], "model should be either 'unirel' or 'rebel'."
+
     with open(filename, "r") as f:
         mcqs = json.load(f)
     print("Categories: {}".format(list(mcqs.keys())))
 
     for cat in mcqs.keys():
         # TODO: Implement batch inference here.
-        for i, mcq in enumerate(
-            tqdm(mcqs[cat]["questions"], desc=f"Processing {mcqs[cat]['category']}")
-        ):
+        for i, mcq in enumerate(tqdm(mcqs[cat]["questions"], desc=f"Processing {mcqs[cat]['category']}")):
             choice = mcq["choice"]
-            PG_temp = create_PG_temp(mcq["sentence"], choice)
+            PG_temp = create_PG_temp(mcq["sentence"], choice, model)
 
             for c in choice:
                 PG = swap_label_with_symbol(PG_temp, "#BLANK", c)
@@ -61,7 +64,7 @@ def create_PGs(filename: str, pg_top_dir: str):
                 PG.write_dot(pg_dot_path)
 
 
-def download_wiki_articles(pg_top_dir: str):
+def download_wiki_articles(pg_top_dir: str, wiki_dir: str):
     """
     Download Wikipedia articles for all PGs stored in the specified top-level directory.
 
@@ -69,14 +72,13 @@ def download_wiki_articles(pg_top_dir: str):
     ----------
     pg_top_dir : str
         Top-level directory containing subdirectories of PGs.
+    wiki_dir : str
+        Directory to save the downloaded Wikipedia articles.
     """
     # iterate over each category
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
-        pg_dirs = [
-            os.path.join(pg_top_dir, cat, subdir)
-            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
-        ]
+        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
         for pg_dir in tqdm(pg_dirs, desc=f"Processing {cat}"):
             # reconstruct PGs from dot files
             pg_files = [f for f in os.listdir(pg_dir) if f.endswith(".dot")]
@@ -87,7 +89,7 @@ def download_wiki_articles(pg_top_dir: str):
             targets = list({word for node in PG_nodes_li for word in node})
 
             # Download the Wikipedia article
-            titles, urls = download_wiki_pages(targets, out_dir="wikipedia", tqdm_disable=True)
+            titles, urls = download_wiki_pages(targets, out_dir=wiki_dir, tqdm_disable=True)
             titles = [titles[i] if urls[i] is not None else None for i in range(len(titles))]
             mapping = dict(zip(targets, titles))
 
@@ -118,10 +120,7 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
     for cat in sorted(cat_dirs):
 
         # List of PG directories for the given category
-        pg_dirs = [
-            os.path.join(pg_top_dir, cat, subdir)
-            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
-        ]
+        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
         for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
             # Note: pg_dir contains four PG dot files for a single MCQ
             for pg_filename in os.listdir(pg_dir):
@@ -170,10 +169,7 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
         # List of PG directories for the given category
-        pg_dirs = [
-            os.path.join(pg_top_dir, cat, subdir)
-            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
-        ]
+        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
         result[cat] = {"questions": dict()}
 
         for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
@@ -196,7 +192,7 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
                 results = pool.map(process_pg, args)
 
             scores = []
-            for pg_path, edge_score, node_score, verified_edges in results:
+            for pg_path, edge_score, node_score, verified_edges, _ in results:
                 pg_filename = os.path.basename(pg_path)
                 scores.append((edge_score, node_score))
 
@@ -261,35 +257,36 @@ def collect_results(result_file: str, mcq_file: str):
 if __name__ == "__main__":
 
     # NOTE: Please remove all PG, KG files in OUT_DIR before running the code.
-
-    # Define paths
-    if len(sys.argv) < 2:
-        raise ValueError("Please provide the path to the MCQ file as a command-line argument.")
+    # ---- Define hyperparameters ----
+    if len(sys.argv) < 3:
+        raise ValueError("Usage: python mcqa.py <MCQ_FILE> <MODEL_NAME>")
 
     MCQ_FILE = sys.argv[1]
-    KG_CHACHE_DIR = "KG_cache"
+    MODEL = sys.argv[2]  # "unirel" or "rebel"
+    assert MODEL in ["unirel", "rebel"], "model should be either 'unirel' or 'rebel'."
 
-    print("MCQ dataset: {}".format(MCQ_FILE))
+    KG_CHACHE_DIR = f"KG_cache/{MODEL}"  # common for all experiments
 
-    ds_name = os.path.basename(MCQ_FILE).split(".")[0]
-    OUT_DIR = f"exp-mcqa/{ds_name}"
+    DS_NAME = os.path.basename(MCQ_FILE).split(".")[0]
+    WIKI_DIR = f"wikipedia/{MODEL}/{DS_NAME}"
+    OUT_DIR = f"exp-mcqa/{MODEL}/{DS_NAME}"
     PG_TOP_DIR = f"{OUT_DIR}/PGs"
     KG_TOP_DIR = f"{OUT_DIR}/KGs"
 
-    # Set multiprocessing start method to 'spawn'
-    mp.set_start_method("spawn", force=True)
+    # ---- Start experiment ----
+    print("MCQ dataset: {}".format(MCQ_FILE))
 
     # Step 1-1. Create PGs
     print("\nStep 1-1. Creating PGs")
-    create_PGs(MCQ_FILE, PG_TOP_DIR)
+    create_PGs(MCQ_FILE, PG_TOP_DIR, MODEL)
 
     # Step 1-2. Download Wikipedia articles for each PG
     print("\nStep 1-2. Downloading Wikipedia articles")
-    download_wiki_articles(PG_TOP_DIR)
+    download_wiki_articles(PG_TOP_DIR, WIKI_DIR)
 
     # Step 1-3. Create KGs for each Wikipedia article
     print("\nStep 1-3. Creating KGs for each Wikipedia article")
-    create_KG_cache(wiki_dir="wikipedia", KG_dir=KG_CHACHE_DIR)
+    create_KG_cache(wiki_dir=WIKI_DIR, KG_dir=KG_CHACHE_DIR, model=MODEL)
 
     # Step 1-4. Create KGs for each PG
     print("\nStep 1-4. Creating tailored KGs for each PG")
@@ -301,11 +298,12 @@ if __name__ == "__main__":
 
     # Step 2 & 3. Node matching + Verification
     print("\nStep 2 & 3. Node matching + Verification")
+    mp.set_start_method("spawn", force=True)  # Set multiprocessing start method to 'spawn'
     verify_PGs(
         pg_top_dir=PG_TOP_DIR,
         kg_top_dir=KG_TOP_DIR,
         output_file=f"{OUT_DIR}/results.json",
-        num_workers=os.cpu_count() - 2,
+        num_workers=os.cpu_count(),
     )
 
     # Step 4. Count correct answers

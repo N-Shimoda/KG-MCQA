@@ -1,8 +1,18 @@
+from typing import Literal
+
 from kgraph.kgraph import KB
 from kgraph.kgraph.verifier import verify_proposition
 
 
-def process_pg(args: tuple[str, str]) -> tuple[str, float, float, list[tuple[str, str]]]:
+def process_pg(
+    args: tuple[str, str],
+) -> tuple[
+    str,
+    float,
+    float,
+    list[dict[Literal["head", "type", "tail"], str]],
+    list[dict[Literal["head", "type", "tail"], str]],
+]:
     """
     Helper function to process a verification for single PG and KG pair.
     This function is used for parallel processing.
@@ -14,12 +24,16 @@ def process_pg(args: tuple[str, str]) -> tuple[str, float, float, list[tuple[str
 
     Returns
     -------
-    tuple[str, float, float, list[tuple[str, str]]]
-        A tuple containing:
-        - The path to the PG file (str).
-        - The edge score (float).
-        - The node score (float).
-        - A list of verified edges, where each edge is represented as a tuple of two strings.
+    pg_path : str
+        The path to the PG dot file.
+    edge_score : float
+        The edge score of the verification.
+    node_score : float
+        The node score of the verification.
+    verified_edges : list[dict[Literal['head', 'type', 'tail'], str]]
+        A list of verified edges, where each edge is represented as a tuple of two strings.
+    kg_edges : list[dict[Literal['head', 'type', 'tail'], str]]
+        A list of edges in the KG, where each edge is represented as a tuple of two strings.
     """
     pg_path, kg_path = args
     PG = KB.from_dot_file(pg_path)
