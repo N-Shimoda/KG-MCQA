@@ -48,7 +48,7 @@ def create_fever_PGs(
     """
     # Download the FEVER dataset from HuggingFace
     dataset = load_dataset("fever", name="v1.0", split=split)
-    dataset = dataset.select(range(256))  # for development
+    # dataset = dataset.select(range(256))  # for development
     print(f"Dataset size: {len(dataset)}")
 
     ds_info = dict()
@@ -165,7 +165,7 @@ def verify_fever_PGs(
             result_data = pool.map(process_pg, args)
 
             scores = []
-            for pg_path, edge_score, node_score, verified_edges in result_data:
+            for pg_path, edge_score, node_score, verified_edges, kg_edges in result_data:
                 pg_filename = os.path.basename(pg_path)
                 scores.append((edge_score, node_score))
 
@@ -180,6 +180,7 @@ def verify_fever_PGs(
                         "edge_score": edge_score,
                         "node_score": node_score,
                         "verified_edges": verified_edges,
+                        "kg_edges": kg_edges,
                     }
                 )
 

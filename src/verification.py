@@ -24,5 +24,5 @@ def process_pg(args: tuple[str, str]) -> tuple[str, float, float, list[tuple[str
     pg_path, kg_path = args
     PG = KB.from_dot_file(pg_path)
     KG = KB.from_dot_file(kg_path)
-    edge_score, node_score, verified_edges, _ = verify_proposition(PG, KG)
-    return pg_path, edge_score, node_score, verified_edges
+    edge_score, node_score, verified_edges, kg_edges = verify_proposition(PG, KG)
+    return pg_path, edge_score, node_score, verified_edges, kg_edges
