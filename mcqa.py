@@ -263,7 +263,12 @@ if __name__ == "__main__":
 
     MCQ_FILE = sys.argv[1]
     MODEL = sys.argv[2]  # "unirel" or "rebel"
-    assert MODEL in ["unirel", "rebel"], "model should be either 'unirel' or 'rebel'."
+    if not MCQ_FILE.endswith(".json"):
+        raise ValueError("MCQ file should be in JSON format.")
+    if not os.path.exists(MCQ_FILE):
+        raise FileNotFoundError(f"MCQ file {MCQ_FILE} does not exist.")
+    if MODEL not in ["unirel", "rebel"]:
+        raise ValueError("MODEL should be either 'unirel' or 'rebel'.")
 
     KG_CHACHE_DIR = f"KG_cache/{MODEL}"  # common for all experiments
 
