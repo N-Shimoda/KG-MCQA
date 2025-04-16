@@ -1,12 +1,15 @@
 import os
 
-import dataprocess.rel2text
 import numpy as np
 import torch
-from dataprocess.data_extractor import *
-from dataprocess.data_metric import *
-from model.model_transformers import UniRelModel
 from transformers import BertTokenizerFast
+
+from .dataprocess import rel2text
+from .model.model_transformers import UniRelModel
+
+# from dataprocess.data_extractor import *
+# from dataprocess.data_metric import *
+# import dataprocess.rel2text
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -16,7 +19,10 @@ class UniRel:
         self.model = UniRelModel.from_pretrained(model_path, attn_implementation="eager")  # MODIFIED
         added_token = [f"[unused{i}]" for i in range(1, 17)]
         self.tokenizer = BertTokenizerFast.from_pretrained(
-            "bert-base-cased", additional_special_tokens=added_token, do_basic_tokenize=False
+            "bert-base-cased",
+            additional_special_tokens=added_token,
+            do_basic_tokenize=False,
+            clean_up_tokenization_spaces=False,
         )
         self.max_length = max_length
         self.max_length = max_length
@@ -25,11 +31,14 @@ class UniRel:
     def _get_pred_str(self, dataset_name):
         self.pred2text = None
         if dataset_name == "nyt":
-            self.pred2text = dataprocess.rel2text.nyt_rel2text
+            # self.pred2text = dataprocess.rel2text.nyt_rel2text
+            self.pred2text = rel2text.nyt_rel2text
         elif dataset_name == "nyt_star":
-            self.pred2text = dataprocess.rel2text.nyt_rel2text
+            # self.pred2text = dataprocess.rel2text.nyt_rel2text
+            self.pred2text = rel2text.nyt_rel2text
         elif dataset_name == "webnlg":
-            self.pred2text = dataprocess.rel2text.webnlg_rel2text
+            # self.pred2text = dataprocess.rel2text.webnlg_rel2text
+            self.pred2text = rel2text.webnlg_rel2text
             cnt = 1
             exist_value = []
             # Some hard to convert relation directly use [unused]
@@ -47,7 +56,7 @@ class UniRel:
                 else:
                     exist_value.append(v)
         elif dataset_name == "webnlg_star":
-            self.pred2text = dataprocess.rel2text.webnlg_rel2text
+            self.pred2text = rel2text.webnlg_rel2text
             cnt = 1
             exist_value = []
             for k in self.pred2text:
@@ -162,7 +171,7 @@ class UniRel:
             e_h2r, e2e = self._get_e2r(tail_pred)
             e_t2r, _ = self._get_e2r(tail_pred.T)
             start2span, end2span = self._get_span_att(span_pred)
-            for l, r in e2e:
+            for l, r in e2e:  # noqa E741
                 if l not in e_h2r or r not in e_t2r:
                     continue
                 if l not in end2span or r not in end2span:
@@ -208,6 +217,33 @@ class UniRel:
         return results
 
 
+def extract_triples_unirel(texts: list[str]) -> list[dict[str, str]]:
+    """
+    Extracts triplets from a list of text strings by using UniRel.
+
+    The function processes each text string in the input list and extracts triplets
+    using the `preds_to_triples` function. The results are returned as a list
+    of dictionaries.
+
+    Parameters
+    ----------
+    texts : list of str
+        A list of input text strings containing triplet information with specific markers.
+
+    Returns
+    -------
+    list[dict[str, str]]
+        A list of dictionaries where each dictionary represents a triplet with the keys:
+        - 'head': The subject of the triplet.
+        - 'type': The relation of the triplet.
+        - 'tail': The object of the triplet.
+    """
+    model_path = "/home/naoki/github/KG-MCQA/kgraph/kgraph/extraction/nyt-checkpoint-final"
+    unirel = UniRel(model_path, dataset_name="nyt")
+    output_li = unirel.predict(texts)
+    return [[{"head": t[0], "type": t[1], "tail": t[2]} for t in output] for output in output_li]
+
+
 if __name__ == "__main__":
     # model_path = "./output/nyt/checkpoint-final"
     model_path = "/home/naoki/github/KG-MCQA/kgraph/kgraph/extraction/nyt-checkpoint-final"
@@ -215,20 +251,27 @@ if __name__ == "__main__":
 
     print(
         unirel.predict(
-            "In perhaps the most ambitious Mekong cruise attempt, Impulse Tourism, an operator based in Chiang Mai, Thailand, is organizing an expedition starting in November in Jinghong, a small city in the Yunnan province in China."
+            "In perhaps the most ambitious Mekong cruise attempt, Impulse Tourism,\
+                  an operator based in Chiang Mai, Thailand, is organizing an expedition starting\
+                      in November in Jinghong, a small city in the Yunnan province in China."
         )
     )
     print(
         unirel.predict(
-            "Adisham Hall in Sri Lanka was constructed between 1927 and 1931 at St Benedicts Monastery , Adisham , Haputhale , Sri Lanka in the Tudor and Jacobean style of architecture"
+            "Adisham Hall in Sri Lanka was constructed between 1927 and 1931 at\
+                  St Benedicts Monastery , Adisham , Haputhale , Sri Lanka in the Tudor\
+                      and Jacobean style of architecture"
         )
     )
     print(
         unirel.predict(
             [
                 "Anson was born in 1979 in Hong Kong.",
-                "In perhaps the most ambitious Mekong cruise attempt, Impulse Tourism, an operator based in Chiang Mai, Thailand, is organizing an expedition starting in November in Jinghong, a small city in the Yunnan province in China.",
-                "Adisham Hall in Sri Lanka was constructed between 1927 and 1931 at St Benedicts Monastery , Adisham , Haputhale , Sri Lanka in the Tudor and Jacobean style of architecture",
+                "In perhaps the most ambitious Mekong cruise attempt, Impulse Tourism,\
+                      an operator based in Chiang Mai, Thailand, is organizing an expedition starting\
+                          in November in Jinghong, a small city in the Yunnan province in China.",
+                "Adisham Hall in Sri Lanka was constructed between 1927 and 1931 at St Benedicts Monastery ,\
+                      Adisham , Haputhale , Sri Lanka in the Tudor and Jacobean style of architecture",
             ]
         )
     )

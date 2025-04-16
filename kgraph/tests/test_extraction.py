@@ -1,4 +1,5 @@
 import pytest
+
 from kgraph.core import KB
 from kgraph.extraction import extract_triples
 
@@ -28,13 +29,11 @@ from kgraph.extraction import extract_triples
         ],
     ],
 )
-def test_extract_triples_rebel(texts):
-    kb_list = extract_triples(texts, method="rebel")
+def test_extract_triples(texts):
+    kb_list = extract_triples(texts, method="unirel")
 
     # アサーション例：返り値の型や長さを確認
     assert isinstance(kb_list, list), "Return value should be a list"
     if len(kb_list) > 0:
-        assert all(
-            isinstance(kb, KB) for kb in kb_list
-        ), "Each element in the list should be a KB object"
+        assert all(isinstance(kb, KB) for kb in kb_list), "Each element in the list should be a KB object"
     assert len(kb_list) == len(texts), "Length of return value should match input texts"
