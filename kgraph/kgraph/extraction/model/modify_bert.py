@@ -14,13 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # Code has been modified for outputing un-normalized attention score in each Transformer layer.
-"""PyTorch BERT model. """
+"""PyTorch BERT model."""
 
-# This model is 
+# This model is
 
 import math
 import os
-import warnings
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
@@ -28,24 +27,13 @@ import torch
 import torch.utils.checkpoint
 from packaging import version
 from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
-
+from transformers import BertConfig
 from transformers.activations import ACT2FN
 from transformers.file_utils import (
     ModelOutput,
     add_code_sample_docstrings,
     add_start_docstrings,
     add_start_docstrings_to_model_forward,
-    replace_return_docstrings,
-)
-from transformers.modeling_outputs import (
-    CausalLMOutputWithCrossAttentions,
-    MaskedLMOutput,
-    MultipleChoiceModelOutput,
-    NextSentencePredictorOutput,
-    QuestionAnsweringModelOutput,
-    SequenceClassifierOutput,
-    TokenClassifierOutput,
 )
 from transformers.modeling_utils import (
     PreTrainedModel,
@@ -54,8 +42,6 @@ from transformers.modeling_utils import (
     prune_linear_layer,
 )
 from transformers.utils import logging
-from transformers import BertConfig
-
 
 logger = logging.get_logger(__name__)
 
@@ -89,6 +75,7 @@ BERT_PRETRAINED_MODEL_ARCHIVE_LIST = [
     # See all BERT models at https://huggingface.co/models?filter=bert
 ]
 
+
 @dataclass
 class BaseModelOutputWithPastAndCrossAttentions(ModelOutput):
     """
@@ -100,7 +87,8 @@ class BaseModelOutputWithPastAndCrossAttentions(ModelOutput):
 
             If :obj:`past_key_values` is used only the last hidden-state of the sequences of shape :obj:`(batch_size,
             1, hidden_size)` is output.
-        past_key_values (:obj:`tuple(tuple(torch.FloatTensor))`, `optional`, returned when ``use_cache=True`` is passed or when ``config.use_cache=True``):
+        past_key_values (:obj:`tuple(tuple(torch.FloatTensor))`, `optional`, returned when ``use_cache=True`` is\
+              passed or when ``config.use_cache=True``):
             Tuple of :obj:`tuple(torch.FloatTensor)` of length :obj:`config.n_layers`, with each tuple having 2 tensors
             of shape :obj:`(batch_size, num_heads, sequence_length, embed_size_per_head)`) and optionally if
             ``config.is_encoder_decoder=True`` 2 additional tensors of shape :obj:`(batch_size, num_heads,
@@ -109,18 +97,21 @@ class BaseModelOutputWithPastAndCrossAttentions(ModelOutput):
             Contains pre-computed hidden-states (key and values in the self-attention blocks and optionally if
             ``config.is_encoder_decoder=True`` in the cross-attention blocks) that can be used (see
             :obj:`past_key_values` input) to speed up sequential decoding.
-        hidden_states (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_hidden_states=True`` is passed or when ``config.output_hidden_states=True``):
+        hidden_states (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_hidden_states=True``\
+              is passed or when ``config.output_hidden_states=True``):
             Tuple of :obj:`torch.FloatTensor` (one for the output of the embeddings + one for the output of each layer)
             of shape :obj:`(batch_size, sequence_length, hidden_size)`.
 
             Hidden-states of the model at the output of each layer plus the initial embedding outputs.
-        attentions (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_attentions=True`` is passed or when ``config.output_attentions=True``):
+        attentions (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_attentions=True`` is passed\
+              or when ``config.output_attentions=True``):
             Tuple of :obj:`torch.FloatTensor` (one for each layer) of shape :obj:`(batch_size, num_heads,
             sequence_length, sequence_length)`.
 
             Attentions weights after the attention softmax, used to compute the weighted average in the self-attention
             heads.
-        cross_attentions (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_attentions=True`` and ``config.add_cross_attention=True`` is passed or when ``config.output_attentions=True``):
+        cross_attentions (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_attentions=True``\
+              and ``config.add_cross_attention=True`` is passed or when ``config.output_attentions=True``):
             Tuple of :obj:`torch.FloatTensor` (one for each layer) of shape :obj:`(batch_size, num_heads,
             sequence_length, sequence_length)`.
 
@@ -135,6 +126,7 @@ class BaseModelOutputWithPastAndCrossAttentions(ModelOutput):
     attentions_scores: Optional[Tuple[torch.FloatTensor]] = None
     cross_attentions: Optional[Tuple[torch.FloatTensor]] = None
 
+
 @dataclass
 class BaseModelOutputWithPoolingAndCrossAttentions(ModelOutput):
     """
@@ -148,24 +140,28 @@ class BaseModelOutputWithPoolingAndCrossAttentions(ModelOutput):
             through the layers used for the auxiliary pretraining task. E.g. for BERT-family of models, this returns
             the classification token after processing through a linear layer and a tanh activation function. The linear
             layer weights are trained from the next sentence prediction (classification) objective during pretraining.
-        hidden_states (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_hidden_states=True`` is passed or when ``config.output_hidden_states=True``):
+        hidden_states (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_hidden_states=True``\
+              is passed or when ``config.output_hidden_states=True``):
             Tuple of :obj:`torch.FloatTensor` (one for the output of the embeddings + one for the output of each layer)
             of shape :obj:`(batch_size, sequence_length, hidden_size)`.
 
             Hidden-states of the model at the output of each layer plus the initial embedding outputs.
-        attentions (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_attentions=True`` is passed or when ``config.output_attentions=True``):
+        attentions (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_attentions=True`` is passed\
+              or when ``config.output_attentions=True``):
             Tuple of :obj:`torch.FloatTensor` (one for each layer) of shape :obj:`(batch_size, num_heads,
             sequence_length, sequence_length)`.
 
             Attentions weights after the attention softmax, used to compute the weighted average in the self-attention
             heads.
-        cross_attentions (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_attentions=True`` and ``config.add_cross_attention=True`` is passed or when ``config.output_attentions=True``):
+        cross_attentions (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_attentions=True`` and\
+              ``config.add_cross_attention=True`` is passed or when ``config.output_attentions=True``):
             Tuple of :obj:`torch.FloatTensor` (one for each layer) of shape :obj:`(batch_size, num_heads,
             sequence_length, sequence_length)`.
 
             Attentions weights of the decoder's cross-attention layer, after the attention softmax, used to compute the
             weighted average in the cross-attention heads.
-        past_key_values (:obj:`tuple(tuple(torch.FloatTensor))`, `optional`, returned when ``use_cache=True`` is passed or when ``config.use_cache=True``):
+        past_key_values (:obj:`tuple(tuple(torch.FloatTensor))`, `optional`, returned when ``use_cache=True``\
+              is passed or when ``config.use_cache=True``):
             Tuple of :obj:`tuple(torch.FloatTensor)` of length :obj:`config.n_layers`, with each tuple having 2 tensors
             of shape :obj:`(batch_size, num_heads, sequence_length, embed_size_per_head)`) and optionally if
             ``config.is_encoder_decoder=True`` 2 additional tensors of shape :obj:`(batch_size, num_heads,
@@ -183,6 +179,7 @@ class BaseModelOutputWithPoolingAndCrossAttentions(ModelOutput):
     attentions: Optional[Tuple[torch.FloatTensor]] = None
     attentions_scores: Optional[Tuple[torch.FloatTensor]] = None
     cross_attentions: Optional[Tuple[torch.FloatTensor]] = None
+
 
 def load_tf_weights_in_bert(model, config, tf_checkpoint_path):
     """Load tf checkpoints in a pytorch model."""
@@ -293,8 +290,10 @@ class BertEmbeddings(nn.Module):
         if position_ids is None:
             position_ids = self.position_ids[:, past_key_values_length : seq_length + past_key_values_length]
 
-        # Setting the token_type_ids to the registered buffer in constructor where it is all zeros, which usually occurs
-        # when its auto-generated, registered buffer helps users when tracing the model without passing token_type_ids, solves
+        # Setting the token_type_ids to the registered buffer in constructor
+        # where it is all zeros, which usually occurs
+        # when its auto-generated, registered buffer helps users when tracing the model
+        # without passing token_type_ids, solves
         # issue #5664
         if token_type_ids is None:
             if hasattr(self, "token_type_ids"):
@@ -341,7 +340,7 @@ class BertSelfAttention(nn.Module):
             self.distance_embedding = nn.Embedding(2 * config.max_position_embeddings - 1, self.attention_head_size)
 
         self.is_decoder = config.is_decoder
-        self.is_prompt_rel = False 
+        self.is_prompt_rel = False
         self.num_rels = config.num_rels
         if self.is_prompt_rel:
             self.rel_embedding = nn.Embedding(config.num_rels, config.hidden_size)
@@ -366,15 +365,15 @@ class BertSelfAttention(nn.Module):
         batch_size, token_len, emb_size = hidden_states.size()
         if self.is_prompt_rel:
             re_embedding = self.rel_embedding(torch.tensor(range(0, self.num_rels)).to(hidden_states.device))
-            ex_re_embedding = re_embedding.unsqueeze(0).repeat(batch_size,1,1)
+            ex_re_embedding = re_embedding.unsqueeze(0).repeat(batch_size, 1, 1)
             key_layer = self.transpose_for_scores(self.key(torch.cat((hidden_states, ex_re_embedding), -2)))
-            value_layer = self.transpose_for_scores(self.value(torch.cat((hidden_states, ex_re_embedding),-2)))
+            value_layer = self.transpose_for_scores(self.value(torch.cat((hidden_states, ex_re_embedding), -2)))
             # query_layer = self.transpose_for_scores(mixed_query_layer)
         else:
 
-        # If this is instantiated as a cross-attention module, the keys
-        # and values come from an encoder; the attention mask needs to be
-        # such that the encoder's padding tokens are not attended to.
+            # If this is instantiated as a cross-attention module, the keys
+            # and values come from an encoder; the attention mask needs to be
+            # such that the encoder's padding tokens are not attended to.
             is_cross_attention = encoder_hidden_states is not None
 
             if is_cross_attention and past_key_value is not None:
@@ -403,8 +402,8 @@ class BertSelfAttention(nn.Module):
                 # key/value_states (first "if" case)
                 # if uni-directional self-attention (decoder) save Tuple(torch.Tensor, torch.Tensor) of
                 # all previous decoder key/value_states. Further calls to uni-directional self-attention
-                # can concat previous decoder key/value_states to current projected key/value_states (third "elif" case)
-                # if encoder bi-directional self-attention `past_key_value` is always `None`
+                # can concat previous decoder key/value_states to current projected key/value_states
+                # (third "elif" case) if encoder bi-directional self-attention `past_key_value` is always `None`
                 past_key_value = (key_layer, value_layer)
 
             # Take the dot product between "query" and "key" to get the raw attention scores.
@@ -430,7 +429,14 @@ class BertSelfAttention(nn.Module):
         if attention_mask is not None:
             # Apply the attention mask is (precomputed for all layers in BertModel forward() function)
             if self.is_prompt_rel:
-                rel_attention_mask = torch.zeros(self.num_rels).to(hidden_states.device).unsqueeze(0).unsqueeze(0).unsqueeze(0).repeat(batch_size, 1, 1, 1)
+                rel_attention_mask = (
+                    torch.zeros(self.num_rels)
+                    .to(hidden_states.device)
+                    .unsqueeze(0)
+                    .unsqueeze(0)
+                    .unsqueeze(0)
+                    .repeat(batch_size, 1, 1, 1)
+                )
                 attention_scores = attention_scores + torch.cat((attention_mask, rel_attention_mask), -1)
             else:
                 attention_scores = attention_scores + attention_mask
@@ -514,7 +520,7 @@ class BertAttention(nn.Module):
         encoder_attention_mask=None,
         past_key_value=None,
         output_attentions=False,
-        output_attentions_scores=False
+        output_attentions_scores=False,
     ):
         self_outputs = self.self(
             hidden_states,
@@ -524,7 +530,7 @@ class BertAttention(nn.Module):
             encoder_attention_mask,
             past_key_value,
             output_attentions,
-            output_attentions_scores
+            output_attentions_scores,
         )
         attention_output = self.output(self_outputs[0], hidden_states)
         outputs = (attention_output,) + self_outputs[1:]  # add attentions if we output them
@@ -584,7 +590,7 @@ class BertLayer(nn.Module):
         encoder_attention_mask=None,
         past_key_value=None,
         output_attentions=False,
-        output_attentions_scores=False
+        output_attentions_scores=False,
     ):
         # decoder uni-directional self-attention cached key/values tuple is at positions 1,2
         self_attn_past_key_value = past_key_value[:2] if past_key_value is not None else None
@@ -609,7 +615,8 @@ class BertLayer(nn.Module):
         if self.is_decoder and encoder_hidden_states is not None:
             if not hasattr(self, "crossattention"):
                 raise ValueError(
-                    f"If `encoder_hidden_states` are passed, {self} has to be instantiated with cross-attention layers by setting `config.add_cross_attention=True`"
+                    f"If `encoder_hidden_states` are passed, {self} has to be instantiated with cross-attention layers\
+                          by setting `config.add_cross_attention=True`"
                 )
 
             # cross_attn cached key/values tuple is at positions 3,4 of past_key_value tuple
@@ -889,12 +896,14 @@ class BertForPreTrainingOutput(ModelOutput):
         seq_relationship_logits (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, 2)`):
             Prediction scores of the next sequence prediction (classification) head (scores of True/False continuation
             before SoftMax).
-        hidden_states (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_hidden_states=True`` is passed or when ``config.output_hidden_states=True``):
+        hidden_states (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_hidden_states=True``\
+              is passed or when ``config.output_hidden_states=True``):
             Tuple of :obj:`torch.FloatTensor` (one for the output of the embeddings + one for the output of each layer)
             of shape :obj:`(batch_size, sequence_length, hidden_size)`.
 
             Hidden-states of the model at the output of each layer plus the initial embedding outputs.
-        attentions (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_attentions=True`` is passed or when ``config.output_attentions=True``):
+        attentions (:obj:`tuple(torch.FloatTensor)`, `optional`, returned when ``output_attentions=True`` is passed\
+              or when ``config.output_attentions=True``):
             Tuple of :obj:`torch.FloatTensor` (one for each layer) of shape :obj:`(batch_size, num_heads,
             sequence_length, sequence_length)`.
 
@@ -907,7 +916,6 @@ class BertForPreTrainingOutput(ModelOutput):
     seq_relationship_logits: torch.FloatTensor = None
     hidden_states: Optional[Tuple[torch.FloatTensor]] = None
     attentions: Optional[Tuple[torch.FloatTensor]] = None
-
 
 
 BERT_START_DOCSTRING = r"""
@@ -957,7 +965,7 @@ BERT_INPUTS_DOCSTRING = r"""
             config.max_position_embeddings - 1]``.
 
             `What are position IDs? <../glossary.html#position-ids>`_
-        head_mask (:obj:`torch.FloatTensor` of shape :obj:`(num_heads,)` or :obj:`(num_layers, num_heads)`, `optional`):
+        head_mask (:obj:`torch.FloatTensor` of shape :obj:`(num_heads,)` or :obj:`(num_layers, num_heads)`, `optional`):    # noqa E501
             Mask to nullify selected heads of the self-attention modules. Mask values selected in ``[0, 1]``:
 
             - 1 indicates the head is **not masked**,
@@ -1046,7 +1054,8 @@ class BertModel(BertPreTrainedModel):
         return_dict=None,
     ):
         r"""
-        encoder_hidden_states  (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, sequence_length, hidden_size)`, `optional`):
+        encoder_hidden_states\
+                (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, sequence_length, hidden_size)`, `optional`):
             Sequence of hidden-states at the output of the last layer of the encoder. Used in the cross-attention if
             the model is configured as a decoder.
         encoder_attention_mask (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, sequence_length)`, `optional`):
@@ -1055,7 +1064,9 @@ class BertModel(BertPreTrainedModel):
 
             - 1 for tokens that are **not masked**,
             - 0 for tokens that are **masked**.
-        past_key_values (:obj:`tuple(tuple(torch.FloatTensor))` of length :obj:`config.n_layers` with each tuple having 4 tensors of shape :obj:`(batch_size, num_heads, sequence_length - 1, embed_size_per_head)`):
+        past_key_values (:obj:`tuple(tuple(torch.FloatTensor))` of length :obj:`config.n_layers`
+        with each tuple having 4 tensors of shape :obj:
+            `(batch_size, num_heads, sequence_length - 1, embed_size_per_head)`):
             Contains precomputed key and value hidden states of the attention blocks. Can be used to speed up decoding.
 
             If :obj:`past_key_values` are used, the user can optionally input only the last :obj:`decoder_input_ids`
@@ -1066,7 +1077,9 @@ class BertModel(BertPreTrainedModel):
             decoding (see :obj:`past_key_values`).
         """
         output_attentions = output_attentions if output_attentions is not None else self.config.output_attentions
-        output_attentions_scores = output_attentions_scores if output_attentions_scores is not None else self.config.output_attentions
+        output_attentions_scores = (
+            output_attentions_scores if output_attentions_scores is not None else self.config.output_attentions
+        )
         output_hidden_states = (
             output_hidden_states if output_hidden_states is not None else self.config.output_hidden_states
         )
