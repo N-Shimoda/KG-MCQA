@@ -4,14 +4,8 @@ import numpy as np
 import torch
 from transformers import BertTokenizerFast
 
-from .dataprocess import rel2text
+from .dataprocess.rel2text import nyt_rel2text, webnlg_rel2text
 from .model.model_transformers import UniRelModel
-
-# from dataprocess.data_extractor import *
-# from dataprocess.data_metric import *
-# import dataprocess.rel2text
-
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 
 class UniRel:
@@ -32,13 +26,13 @@ class UniRel:
         self.pred2text = None
         if dataset_name == "nyt":
             # self.pred2text = dataprocess.rel2text.nyt_rel2text
-            self.pred2text = rel2text.nyt_rel2text
+            self.pred2text = nyt_rel2text
         elif dataset_name == "nyt_star":
             # self.pred2text = dataprocess.rel2text.nyt_rel2text
-            self.pred2text = rel2text.nyt_rel2text
+            self.pred2text = nyt_rel2text
         elif dataset_name == "webnlg":
             # self.pred2text = dataprocess.rel2text.webnlg_rel2text
-            self.pred2text = rel2text.webnlg_rel2text
+            self.pred2text = webnlg_rel2text
             cnt = 1
             exist_value = []
             # Some hard to convert relation directly use [unused]
@@ -56,7 +50,7 @@ class UniRel:
                 else:
                     exist_value.append(v)
         elif dataset_name == "webnlg_star":
-            self.pred2text = rel2text.webnlg_rel2text
+            self.pred2text = webnlg_rel2text
             cnt = 1
             exist_value = []
             for k in self.pred2text:
@@ -238,48 +232,35 @@ def extract_triples_unirel(texts: list[str]) -> list[dict[str, str]]:
         - 'type': The relation of the triplet.
         - 'tail': The object of the triplet.
     """
-    model_path = "/home/naoki/github/KG-MCQA/kgraph/kgraph/extraction/nyt-checkpoint-final"
+    model_path = "kgraph/kgraph/extraction/nyt-checkpoint-final"
     unirel = UniRel(model_path, dataset_name="nyt")
     output_li = unirel.predict(texts)
-    return [[{"head": t[0], "type": t[1], "tail": t[2]} for t in output] for output in output_li]
+    return [[{"head": t[0], "type": t[1], "tail": t[2]} for t in outputs] for outputs in output_li]
 
 
 if __name__ == "__main__":
-    # model_path = "./output/nyt/checkpoint-final"
-    model_path = "/home/naoki/github/KG-MCQA/kgraph/kgraph/extraction/nyt-checkpoint-final"
+
+    os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
+    model_path = "kgraph/kgraph/extraction/nyt-checkpoint-final"
     unirel = UniRel(model_path, dataset_name="nyt")
 
-    print(
-        unirel.predict(
-            "In perhaps the most ambitious Mekong cruise attempt, Impulse Tourism,\
+    sentences = [
+        "In perhaps the most ambitious Mekong cruise attempt, Impulse Tourism,\
                   an operator based in Chiang Mai, Thailand, is organizing an expedition starting\
-                      in November in Jinghong, a small city in the Yunnan province in China."
-        )
-    )
-    print(
-        unirel.predict(
-            "Adisham Hall in Sri Lanka was constructed between 1927 and 1931 at\
+                      in November in Jinghong, a small city in the Yunnan province in China.",
+        "Adisham Hall in Sri Lanka was constructed between 1927 and 1931 at\
                   St Benedicts Monastery , Adisham , Haputhale , Sri Lanka in the Tudor\
-                      and Jacobean style of architecture"
-        )
-    )
-    print(
-        unirel.predict(
-            [
-                "Anson was born in 1979 in Hong Kong.",
-                "In perhaps the most ambitious Mekong cruise attempt, Impulse Tourism,\
+                      and Jacobean style of architecture",
+        "Anson was born in 1979 in Hong Kong.",
+        "In perhaps the most ambitious Mekong cruise attempt, Impulse Tourism,\
                       an operator based in Chiang Mai, Thailand, is organizing an expedition starting\
                           in November in Jinghong, a small city in the Yunnan province in China.",
-                "Adisham Hall in Sri Lanka was constructed between 1927 and 1931 at St Benedicts Monastery ,\
+        "Adisham Hall in Sri Lanka was constructed between 1927 and 1931 at St Benedicts Monastery ,\
                       Adisham , Haputhale , Sri Lanka in the Tudor and Jacobean style of architecture",
-            ]
-        )
-    )
-    res = unirel.predict(
-        [
-            "Naoki Shimoda was born in 2001 in Japan. He is now studying at the University of Tokyo.",
-            "iPhone 16 was released in 2024 by Apple.",
-        ]
-    )
-    print(res, type(res[0][0]))
-    print("end")
+        "Naoki Shimoda was born in 2001 in Japan. He is now studying at the University of Tokyo.",
+        "iPhone16 was released in 2024 by Apple.",
+    ]
+
+    outputs = extract_triples_unirel(sentences)
+    print(outputs)
