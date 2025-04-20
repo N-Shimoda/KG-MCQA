@@ -16,7 +16,7 @@ class UniRel:
     def __init__(self, model_path, max_length=128, dataset_name="nyt") -> None:
         self.model = UniRelModel.from_pretrained(model_path, attn_implementation="eager")  # MODIFIED
         added_token = [f"[unused{i}]" for i in range(1, 17)]
-        self.tokenizer = BertTokenizerFast.from_pretrained(
+        self.tokenizer: BertTokenizerFast = BertTokenizerFast.from_pretrained(
             "bert-base-cased",
             additional_special_tokens=added_token,
             do_basic_tokenize=False,

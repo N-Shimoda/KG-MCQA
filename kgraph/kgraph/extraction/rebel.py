@@ -131,8 +131,6 @@ def extract_triples_rebel(texts: list[str]) -> list[list[dict[str, str]]]:
         **gen_kwargs,
     )  # shape is [batch_size * num_return_seqs, max_seq_len]
 
-    print(generated_tokens.shape)
-
     # Decode
     decoded_preds = tokenizer.batch_decode(
         generated_tokens, skip_special_tokens=False, clean_up_tokenization_spaces=True

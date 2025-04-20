@@ -13,15 +13,63 @@ except ImportError:
     from unirel import extract_triples_unirel
 
 
+def create_chunks(
+    texts: list[str], chunk_size: int = 200, overlap: int = 25
+) -> tuple[list[str], list[tuple[int, int]]]:
+    """
+    Splits the input text into chunks of specified size with a given overlap.
+
+    Parameters
+    ----------
+    text : list[str]
+        The input text to be split into chunks.
+    chunk_size : int, optional
+        The size of each chunk (default is 100).
+    overlap : int, optional
+        The number of overlapping tokens between consecutive chunks (default is 20).
+
+    Returns
+    -------
+    chunks_li : list[str]
+        A list of text chunks.
+    bounds : list[tuple[int, int]]
+        A list of tuples indicating the start and end indices of each chunk for the original text.
+    """
+    chunks_li = []
+    bounds = []
+
+    for text in texts:
+        tokens = text.split()
+        chunks = []
+        for i in range(0, len(tokens), chunk_size - overlap):
+            chunk = " ".join(tokens[i : i + chunk_size])
+            if chunk:
+                chunks.append(chunk)
+        if not bounds:
+            bounds.append((0, i))
+        else:
+            start = bounds[-1][1] + 1
+            bounds.append((start, start + i))
+        chunks_li.extend(chunks)
+
+    return chunks_li, bounds
+
+
 def extract_triples(texts: list[str], method: Literal["rebel", "unirel"]) -> list[KB]:
     """Apply relation extraction on the given batch of texts, using the specified method."""
+    chunks_li, bounds = create_chunks(texts)
     match method:
         case "rebel":
-            rels_li = extract_triples_rebel(texts)
+            rels_li_by_chunk = extract_triples_rebel(chunks_li)
         case "unirel":
-            rels_li = extract_triples_unirel(texts)
+            rels_li_by_chunk = extract_triples_unirel(chunks_li)
         case _:
             raise ValueError(f"Unknown extraction method: {method}")
+
+    rels_li = []
+    for start, end in bounds:
+        rels = rels_li_by_chunk[start : end + 1]
+        rels_li.extend(rels)
 
     return [KB(rels) for rels in rels_li]
 
@@ -30,7 +78,7 @@ if __name__ == "__main__":
     # Example usage
     sentences = [
         "Punta Cana is a resort town in the municipality of Higüey,\
-        in La Altagracia Province, the easternmost province of the Dominican Republic."
+        in La Altagracia Province, the easternmost province of the Dominican Republic.",
         "Alice knows Bob. Bob likes Charlie.",
         "Charlie is a friend of Alice.",
         "Bob and Alice are colleagues.",
