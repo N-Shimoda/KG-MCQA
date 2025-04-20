@@ -22,7 +22,7 @@ st.markdown(
 
 # ベースディレクトリ
 BASE_DIR = Path("exp-mcqa/rebel/MCQs")
-HTML_OUTPUT_DIR = Path("exp-mcqa/temp_html")
+HTML_OUTPUT_DIR = Path("exp-mcqa/_temp")
 HTML_OUTPUT_DIR.mkdir(exist_ok=True)
 
 
