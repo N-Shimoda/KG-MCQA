@@ -16,7 +16,7 @@
 You can reinstall the package as follow:
 
 ```shell
-pip install --upgrade --no-deps --force-reinstall
+pip install --upgrade --no-deps --force-reinstall kgraph/
 ```
 
 ## Test
