@@ -119,7 +119,7 @@ def extract_triples_rebel(texts: list[str]) -> list[list[dict[str, str]]]:
         "max_length": 256,
         "length_penalty": 0,
         "num_beams": 3,
-        "num_return_sequences": 2,
+        "num_return_sequences": 3,
         # "return_dict_in_generate": True,
         # "output_scores": True,
         # "output_hidden_states": False,
