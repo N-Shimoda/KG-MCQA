@@ -73,13 +73,14 @@ with col_qid:
 
 problem_pg_dir = BASE_DIR / "PGs" / selected_category / selected_problem_id
 option_files = get_option_files(problem_pg_dir)
-option_labels = [f.split("_")[0] for f in option_files]
+option_map = {f.split("_")[0]: f.split("_", 1)[1] for f in option_files}
+option_labels = [f.split("_", 1)[1].replace(".dot", "") for f in option_files]
+label_to_index = {label: str(i) for i, label in enumerate(option_labels)}
 
 with col_opt:
-    selected_option = st.selectbox("選択肢", option_labels, key="option")
-
-# ファイル名の共通部分
-file_suffix = option_files[int(selected_option)].split("_", 1)[1]
+    selected_label = st.selectbox("選択肢", option_labels, key="option")
+    selected_option = label_to_index[selected_label]
+    file_suffix = option_map[selected_option]
 
 # dotファイルパスを構築
 pg_dot_path = BASE_DIR / "PGs" / selected_category / selected_problem_id / f"{selected_option}_{file_suffix}"
