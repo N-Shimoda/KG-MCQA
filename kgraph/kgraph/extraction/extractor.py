@@ -2,6 +2,7 @@ from typing import Literal
 
 from ..core import KB
 from .rebel import extract_triples_rebel
+from .unirel import extract_triples_unirel
 
 
 def extract_triples(texts: list[str], method: Literal["rebel", "unirel"]) -> list[KB]:
@@ -10,7 +11,7 @@ def extract_triples(texts: list[str], method: Literal["rebel", "unirel"]) -> lis
         case "rebel":
             rels_li = extract_triples_rebel(texts)
         case "unirel":
-            raise NotImplementedError("UniRel extraction is not implemented yet.")
+            rels_li = extract_triples_unirel(texts)
         case _:
             raise ValueError(f"Unknown extraction method: {method}")
 
@@ -26,5 +27,5 @@ if __name__ == "__main__":
         "Charlie is a friend of Alice.",
         "Bob and Alice are colleagues.",
     ]
-    kb_list = extract_triples(texts, method="rebel")
+    kb_list = extract_triples(texts, method="unirel")
     print(kb_list)
