@@ -89,16 +89,16 @@ kg_dot_path = BASE_DIR / "KGs" / selected_category / selected_problem_id / f"{se
 pg_html = render_dot_to_html(pg_dot_path, graph_type="pg")
 kg_html = render_dot_to_html(kg_dot_path, graph_type="kg")
 
-# カラムに分割して表示
-col1, col2 = st.columns(2)
+# カラムに分割して表示（PG:KG = 2:3 の比率）
+col1, col2 = st.columns([2, 3])
 with col1:
     st.subheader("Propositional Graph (PG)")
     with open(pg_html, "r", encoding="utf-8") as f:
         html_content = f.read()
-    st.components.v1.html(html_content, height=720, scrolling=True)
+    st.components.v1.html(html_content, height=800, scrolling=True)
 
 with col2:
     st.subheader("Knowledge Graph (KG)")
     with open(kg_html, "r", encoding="utf-8") as f:
         html_content = f.read()
-    st.components.v1.html(html_content, height=720, scrolling=True)
+    st.components.v1.html(html_content, height=800, scrolling=True)
