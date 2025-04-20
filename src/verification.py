@@ -1,7 +1,7 @@
 from typing import Literal
 
-from kgraph.kgraph import KB
-from kgraph.kgraph.verifier import verify_proposition
+from kgraph import KB
+from kgraph.verifier import verify_proposition
 
 
 def process_pg(

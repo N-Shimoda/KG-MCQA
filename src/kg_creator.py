@@ -4,7 +4,7 @@ from typing import Literal
 
 from tqdm import tqdm
 
-from kgraph.kgraph.extraction import extract_triples
+from kgraph.extraction import extract_triples
 
 
 def create_KG_cache(
