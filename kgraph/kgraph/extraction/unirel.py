@@ -4,8 +4,12 @@ import numpy as np
 import torch
 from transformers import BertTokenizerFast
 
-from .dataprocess.rel2text import nyt_rel2text, webnlg_rel2text
-from .model.model_transformers import UniRelModel
+try:
+    from .dataprocess.rel2text import nyt_rel2text, webnlg_rel2text
+    from .model.model_transformers import UniRelModel
+except ImportError:
+    from dataprocess.rel2text import nyt_rel2text, webnlg_rel2text
+    from model.model_transformers import UniRelModel
 
 
 class UniRel:
@@ -242,10 +246,7 @@ if __name__ == "__main__":
 
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-    model_path = "kgraph/kgraph/extraction/nyt-checkpoint-final"
-    unirel = UniRel(model_path, dataset_name="nyt")
-
-    sentences = [
+    texts = [
         "In perhaps the most ambitious Mekong cruise attempt, Impulse Tourism,\
                   an operator based in Chiang Mai, Thailand, is organizing an expedition starting\
                       in November in Jinghong, a small city in the Yunnan province in China.",
@@ -260,7 +261,15 @@ if __name__ == "__main__":
                       Adisham , Haputhale , Sri Lanka in the Tudor and Jacobean style of architecture",
         "Naoki Shimoda was born in 2001 in Japan. He is now studying at the University of Tokyo.",
         "iPhone16 was released in 2024 by Apple.",
+        "Punta Cana is a resort town in the municipality of Higüey,\
+        in La Altagracia Province, the easternmost province of the Dominican Republic."
+        "Alice knows Bob. Bob likes Charlie.",
+        "Charlie is a friend of Alice.",
+        "Bob and Alice are colleagues.",
     ]
 
-    outputs = extract_triples_unirel(sentences)
-    print(outputs)
+    outputs = extract_triples_unirel(texts)
+    for output, text in zip(outputs, texts):
+        print("num_rels: {}, len_text: {}".format(len(output), len(text.split())))
+    for i, output in enumerate(outputs):
+        print("{}: {}".format(i, output))
