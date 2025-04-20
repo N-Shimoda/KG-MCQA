@@ -14,18 +14,12 @@ class KB:
         # instance variables
         self.nodes = {node: {"wiki_title": None} for node in self.get_nodes()}
 
-    def __str__(self) -> str:
-        """
-        String representation of KB.
-        """
-        str_list = [str(r) for r in self.relations]
-        return ",\n".join(str_list)
-
     def __repr__(self) -> str:
         """
         Representation of KB for lists or debugging.
         """
-        return "kgraph.KB([{}])".format(self.__str__())
+        str_list = [str(r) for r in self.relations]
+        return "kgraph.KB([{}])".format(",\n".join(str_list))
 
     def are_relations_equal(self, r1, r2):
         return all(r1[attr] == r2[attr] for attr in ["head", "type", "tail"])

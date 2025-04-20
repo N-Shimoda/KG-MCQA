@@ -13,6 +13,12 @@
    ```
    Be sure that the 3rd argument `./kgraph` specifies `kg-mcqa/kgraph` directory, not the `kgraph` library from PyPI.
 
+You can reinstall the package as follow:
+
+```shell
+pip install --upgrade --no-deps --force-reinstall kgraph/
+```
+
 ## Test
 
 You can run a simple test with PyTest.

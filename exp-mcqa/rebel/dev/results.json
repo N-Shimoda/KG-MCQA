@@ -5,36 +5,36 @@
                 "0": {
                     "choice": "Argentina",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.9508977383375168,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Brazil",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
+                    "edge_score": 0.3333333333333333,
+                    "node_score": 0.9508977830410004,
                     "verified_edges": [
-                        {
-                            "head": "Brazil",
-                            "type": "capital",
-                            "tail": "Bras\u00edlia"
-                        },
                         {
                             "head": "Bras\u00edlia",
                             "type": "country",
                             "tail": "Brazil"
+                        },
+                        {
+                            "head": "Brazil",
+                            "type": "capital",
+                            "tail": "Bras\u00edlia"
                         }
                     ]
                 },
                 "2": {
                     "choice": "Chile",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.9508977681398392,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Peru",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.9508977383375168,
                     "verified_edges": []
                 },
                 "answer": 1,
@@ -43,11 +43,11 @@
             "geo-1": {
                 "0": {
                     "choice": "Sahara Desert",
-                    "edge_score": 1.0,
-                    "node_score": 0.9554290771484375,
+                    "edge_score": 0.16666666666666666,
+                    "node_score": 0.5276851654052734,
                     "verified_edges": [
                         {
-                            "head": "Sahara Desert",
+                            "head": "Sahara",
                             "type": "instance of",
                             "tail": "desert"
                         }
@@ -55,11 +55,16 @@
                 },
                 "1": {
                     "choice": "Gobi Desert",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
+                    "edge_score": 0.3333333333333333,
+                    "node_score": 0.670542299747467,
                     "verified_edges": [
                         {
                             "head": "Gobi Desert",
+                            "type": "instance of",
+                            "tail": "desert"
+                        },
+                        {
+                            "head": "Sahara",
                             "type": "instance of",
                             "tail": "desert"
                         }
@@ -67,110 +72,180 @@
                 },
                 "2": {
                     "choice": "Antarctica",
-                    "edge_score": 0.0,
-                    "node_score": 0.72646564245224,
-                    "verified_edges": []
+                    "edge_score": 0.3333333333333333,
+                    "node_score": 0.644842403275626,
+                    "verified_edges": [
+                        {
+                            "head": "Sahara",
+                            "type": "instance of",
+                            "tail": "desert"
+                        },
+                        {
+                            "head": "Antarctica",
+                            "type": "instance of",
+                            "tail": "largest desert in the world"
+                        }
+                    ]
                 },
                 "3": {
                     "choice": "Atacama Desert",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
+                    "edge_score": 0.6666666666666666,
+                    "node_score": 0.6705423167773655,
                     "verified_edges": [
                         {
                             "head": "Atacama Desert",
                             "type": "instance of",
                             "tail": "desert"
+                        },
+                        {
+                            "head": "Sahara",
+                            "type": "instance of",
+                            "tail": "desert"
+                        },
+                        {
+                            "head": "Atacama Desert",
+                            "type": "instance of",
+                            "tail": "desert in the world"
+                        },
+                        {
+                            "head": "Atacama Desert",
+                            "type": "instance of",
+                            "tail": "largest desert in the world"
                         }
                     ]
                 },
-                "answer": -1,
+                "answer": 3,
                 "correct": false
             },
             "geo-2": {
                 "0": {
                     "choice": "China",
-                    "edge_score": 0.0,
+                    "edge_score": 0.3333333333333333,
                     "node_score": 1.0,
-                    "verified_edges": []
+                    "verified_edges": [
+                        {
+                            "head": "Nepal",
+                            "type": "shares border with",
+                            "tail": "China"
+                        },
+                        {
+                            "head": "Nepal",
+                            "type": "highest point",
+                            "tail": "Mount Everest"
+                        }
+                    ]
                 },
                 "1": {
                     "choice": "India",
-                    "edge_score": 0.0,
-                    "node_score": 0.7669634819030762,
-                    "verified_edges": []
+                    "edge_score": 0.5,
+                    "node_score": 1.0,
+                    "verified_edges": [
+                        {
+                            "head": "Nepal",
+                            "type": "shares border with",
+                            "tail": "India"
+                        },
+                        {
+                            "head": "India",
+                            "type": "shares border with",
+                            "tail": "Nepal"
+                        },
+                        {
+                            "head": "Nepal",
+                            "type": "highest point",
+                            "tail": "Mount Everest"
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Bhutan",
-                    "edge_score": 0.0,
+                    "edge_score": 0.3333333333333333,
                     "node_score": 1.0,
-                    "verified_edges": []
+                    "verified_edges": [
+                        {
+                            "head": "Nepal",
+                            "type": "shares border with",
+                            "tail": "Bhutan"
+                        },
+                        {
+                            "head": "Nepal",
+                            "type": "highest point",
+                            "tail": "Mount Everest"
+                        }
+                    ]
                 },
                 "3": {
                     "choice": "Pakistan",
-                    "edge_score": 0.0,
+                    "edge_score": 0.16666666666666666,
                     "node_score": 1.0,
-                    "verified_edges": []
+                    "verified_edges": [
+                        {
+                            "head": "Nepal",
+                            "type": "highest point",
+                            "tail": "Mount Everest"
+                        }
+                    ]
                 },
-                "answer": -1,
+                "answer": 1,
                 "correct": false
             },
             "geo-3": {
                 "0": {
                     "choice": "Amazon",
-                    "edge_score": 0.3333333333333333,
-                    "node_score": 0.1418202668428421,
-                    "verified_edges": [
-                        {
-                            "head": "Amazon",
-                            "type": "instance of",
-                            "tail": "longest in the world"
-                        }
-                    ]
+                    "edge_score": 0.0,
+                    "node_score": 0.5676926523447037,
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "Yangtze",
-                    "edge_score": 0.0,
-                    "node_score": 0.3842841684818268,
-                    "verified_edges": []
+                    "edge_score": 0.25,
+                    "node_score": 0.8297453224658966,
+                    "verified_edges": [
+                        {
+                            "head": "Yangtze",
+                            "type": "instance of",
+                            "tail": "river"
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Nile",
                     "edge_score": 0.0,
-                    "node_score": 0.38624557852745056,
+                    "node_score": 0.8176926597952843,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Mississippi",
                     "edge_score": 0.0,
-                    "node_score": 0.3918202817440033,
+                    "node_score": 0.8176926597952843,
                     "verified_edges": []
                 },
-                "answer": 0,
+                "answer": 1,
                 "correct": false
             },
             "geo-4": {
                 "0": {
                     "choice": "India",
                     "edge_score": 0.0,
-                    "node_score": 0.7669634222984314,
+                    "node_score": 0.9406811793645223,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Australia",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.9406811793645223,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Mexico",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.9406811793645223,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "South Africa",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.9406811793645223,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -178,8 +253,8 @@
             }
         },
         "correct": 1,
-        "fail": 1,
-        "unselectable": 3,
+        "fail": 3,
+        "unselectable": 1,
         "total": 5
     },
     "mat": {
@@ -188,25 +263,25 @@
                 "0": {
                     "choice": "2.14",
                     "edge_score": 0.0,
-                    "node_score": 0.999999980131785,
+                    "node_score": 0.799999988079071,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "3.14",
                     "edge_score": 0.0,
-                    "node_score": 0.999999980131785,
+                    "node_score": 0.6911341309547424,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "4.14",
                     "edge_score": 0.0,
-                    "node_score": 0.999999980131785,
+                    "node_score": 0.6911341309547424,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "5.14",
                     "edge_score": 0.0,
-                    "node_score": 0.999999980131785,
+                    "node_score": 0.6911341309547424,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -216,25 +291,25 @@
                 "0": {
                     "choice": "10",
                     "edge_score": 0.0,
-                    "node_score": 0.8773726224899292,
+                    "node_score": 0.5849150816599528,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "11",
                     "edge_score": 0.0,
-                    "node_score": 0.8773726224899292,
+                    "node_score": 0.5805824200312296,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "12",
                     "edge_score": 0.0,
-                    "node_score": 0.3773726224899292,
+                    "node_score": 0.3006349603335063,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "13",
                     "edge_score": 0.0,
-                    "node_score": 0.8773726224899292,
+                    "node_score": 0.5805824200312296,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -244,25 +319,25 @@
                 "0": {
                     "choice": "4",
                     "edge_score": 0.0,
-                    "node_score": 0.9312838315963745,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "6",
                     "edge_score": 0.0,
-                    "node_score": 0.9312838315963745,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "9",
                     "edge_score": 0.0,
-                    "node_score": 0.9312838315963745,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "11",
                     "edge_score": 0.0,
-                    "node_score": 0.9312838912010193,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -272,19 +347,19 @@
                 "0": {
                     "choice": "20",
                     "edge_score": 0.0,
-                    "node_score": 0.24837258458137512,
+                    "node_score": 0.6781638860702515,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "25",
                     "edge_score": 0.0,
-                    "node_score": 0.12146610021591187,
+                    "node_score": 0.4311865071455638,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "30",
                     "edge_score": 0.0,
-                    "node_score": 0.1445950468381246,
+                    "node_score": 0.4296044409275055,
                     "verified_edges": []
                 },
                 "3": {
@@ -300,25 +375,25 @@
                 "0": {
                     "choice": "90",
                     "edge_score": 0.0,
-                    "node_score": 0.7278901636600494,
+                    "node_score": 0.8398773372173309,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "180",
                     "edge_score": 0.0,
-                    "node_score": 0.7278901636600494,
+                    "node_score": 0.8398773372173309,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "270",
                     "edge_score": 0.0,
-                    "node_score": 0.7278901636600494,
+                    "node_score": 0.8398773372173309,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "360",
                     "edge_score": 0.0,
-                    "node_score": 0.7278901636600494,
+                    "node_score": 0.8398773372173309,
                     "verified_edges": []
                 },
                 "answer": -1,

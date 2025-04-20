@@ -6,10 +6,10 @@ from typing import Literal
 
 from tqdm import tqdm
 
-from kgraph.kgraph import KB, join
-from kgraph.kgraph.extraction import extract_triples
-from kgraph.kgraph.utils import swap_label_with_symbol
-from kgraph.kgraph.wiki import assign_file_path, download_wiki_pages
+from kgraph import KB, join
+from kgraph.extraction import extract_triples
+from kgraph.utils import swap_label_with_symbol
+from kgraph.wiki import assign_file_path, download_wiki_pages
 from src.kg_creator import create_KG_cache
 from src.select_ans import select_best_answer
 from src.verification import process_pg

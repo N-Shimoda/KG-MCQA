@@ -19,15 +19,19 @@ def load_wiki_agent_params() -> tuple[str, str]:
         Tuple containing the project name and mail address.
     """
     # Load environment variables from .env file
-    load_dotenv()
+    load_dotenv(".env")
 
     project_name = os.getenv("WIKI_PRJ_NAME")
     if not project_name:
         project_name = input("Enter the project name (WIKI_PRJ_NAME): ")
+        with open(".env", "a", encoding="utf-8") as env_file:
+            env_file.write(f"WIKI_PRJ_NAME={project_name}\n")
 
     mail_address = os.getenv("WIKI_MAIL")
     if not mail_address:
         mail_address = input("Enter the mail address (WIKI_MAIL): ")
+        with open(".env", "a", encoding="utf-8") as env_file:
+            env_file.write(f"WIKI_MAIL={mail_address}\n")
 
     return project_name, mail_address
 
@@ -47,9 +51,7 @@ def get_wiki_titles(targets: list[str]) -> list[str]:
         List of Wikipedia page titles.
     """
 
-    async def fetch_page_title(
-        session: ClientSession, wiki_wiki: wikipediaapi.Wikipedia, target: str
-    ) -> str:
+    async def fetch_page_title(session: ClientSession, wiki_wiki: wikipediaapi.Wikipedia, target: str) -> str:
         """
         Fetch the title of a Wikipedia page asynchronously.
 
@@ -219,8 +221,7 @@ async def download_wiki_pages_async(
         return title, url
 
     tasks = [
-        fetch_and_save(target)
-        for target in tqdm(targets, desc="Downloading Wikipedia pages", disable=tqdm_disable)
+        fetch_and_save(target) for target in tqdm(targets, desc="Downloading Wikipedia pages", disable=tqdm_disable)
     ]
     res = await asyncio.gather(*tasks)
     if res:
@@ -230,9 +231,7 @@ async def download_wiki_pages_async(
     return titles, urls
 
 
-def download_wiki_pages(
-    targets: list[str], out_dir: str, tqdm_disable: bool = True
-) -> tuple[list[str], list[str]]:
+def download_wiki_pages(targets: list[str], out_dir: str, tqdm_disable: bool = True) -> tuple[list[str], list[str]]:
     """
     Wrapper for the asynchronous download_wiki_pages_async function.
 
