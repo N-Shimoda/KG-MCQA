@@ -76,7 +76,6 @@ def extract_triples(
         A list of knowledge bases (KB) containing the extracted relations.
     """
     chunks_li, bounds = create_chunks(texts, chunk_size, overlap)
-    print(bounds)
 
     match method:
         case "rebel":
