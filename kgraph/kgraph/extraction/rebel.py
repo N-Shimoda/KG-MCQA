@@ -1,8 +1,11 @@
+from typing import Literal
+
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+from transformers.models.bart.modeling_bart import BartForConditionalGeneration
 from transformers.tokenization_utils_base import BatchEncoding
 
 
-def preds_to_triples(preds: str) -> list[dict[str, str]]:
+def parse_preds(preds: str) -> list[tuple[str, str, str]]:
     """
     Extracts triplets from a given preds string.
 
@@ -17,26 +20,9 @@ def preds_to_triples(preds: str) -> list[dict[str, str]]:
 
     Returns
     -------
-    list[dict[str, str]]
-        A list of dictionaries where each dictionary represents a triplet with the keys:
-        - 'head': The subject of the triplet.
-        - 'type': The relation of the triplet.
-        - 'tail': The object of the triplet.
-
-    Notes
-    -----
-    - The function removes special tokens like `<s>`, `<pad>`, and `</s>` from the input preds.
-    - If the input preds does not follow the expected format, the behavior of the function
-      may be undefined.
-    - Leading and trailing whitespace is stripped from the subject, relation, and object
-      in each triplet.
-
-    Examples
-    --------
-    >>> preds = "<triplet> <subj> Alice <obj> knows <triplet> <subj> Bob <obj> likes"
-    >>> extract_triplets(preds)
-    [{'head': 'Alice', 'type': 'knows', 'tail': ''},
-     {'head': 'Bob', 'type': 'likes', 'tail': ''}]
+    list[tuple[str, str, str]]
+        A list of tuples where each tuple represents a triplet with the following structure:
+        (subject, relation, object)
     """
     triplets = []
     relation, subject, relation, object_ = "", "", "", ""
@@ -46,13 +32,13 @@ def preds_to_triples(preds: str) -> list[dict[str, str]]:
         if token == "<triplet>":
             current = "t"
             if relation != "":
-                triplets.append({"head": subject.strip(), "type": relation.strip(), "tail": object_.strip()})
+                triplets.append((subject.strip(), relation.strip(), object_.strip()))
                 relation = ""
             subject = ""
         elif token == "<subj>":
             current = "s"
             if relation != "":
-                triplets.append({"head": subject.strip(), "type": relation.strip(), "tail": object_.strip()})
+                triplets.append((subject.strip(), relation.strip(), object_.strip()))
             object_ = ""
         elif token == "<obj>":
             current = "o"
@@ -65,8 +51,35 @@ def preds_to_triples(preds: str) -> list[dict[str, str]]:
             elif current == "o":
                 relation += " " + token
     if subject != "" and relation != "" and object_ != "":
-        triplets.append({"head": subject.strip(), "type": relation.strip(), "tail": object_.strip()})
+        triplets.append((subject.strip(), relation.strip(), object_.strip()))
+
     return triplets
+
+
+def tuples_to_dict(
+    triples: list[tuple[str, str, str]] | set[tuple[str, str, str]],
+) -> list[dict[Literal["head", "type", "tail"], str]]:
+    """
+    Converts a list of triplets in tuple format to a list of dictionaries.
+
+    The function takes a list of triplets, where each triplet is represented as a tuple
+    (subject, relation, object), and converts it into a list of dictionaries with keys:
+    'head', 'type', and 'tail'.
+
+    Parameters
+    ----------
+    triples : list[tuple[str, str, str]]
+        A list of triplets represented as tuples.
+
+    Returns
+    -------
+    list[dict[Literal["head", "type", "tail"], str]]
+        A list of dictionaries where each dictionary represents a triplet with the keys:
+        - 'head': The subject of the triplet.
+        - 'type': The relation of the triplet.
+        - 'tail': The object of the triplet.
+    """
+    return [{"head": t[0], "type": t[1], "tail": t[2]} for t in triples]
 
 
 def extract_triples_rebel(texts: list[str]) -> list[list[dict[str, str]]]:
@@ -74,7 +87,7 @@ def extract_triples_rebel(texts: list[str]) -> list[list[dict[str, str]]]:
     Extracts triplets from a list of text strings.
 
     The function processes each text string in the input list and extracts triplets
-    using the `preds_to_triples` function. The results are returned as a list
+    using the `parse_preds` function. The results are returned as a list
     of dictionaries.
 
     Parameters
@@ -92,7 +105,7 @@ def extract_triples_rebel(texts: list[str]) -> list[list[dict[str, str]]]:
     """
     # Load model and tokenizer
     tokenizer = AutoTokenizer.from_pretrained("Babelscape/rebel-large", clean_up_tokenization_spaces=False)
-    model = AutoModelForSeq2SeqLM.from_pretrained("Babelscape/rebel-large").to("cuda")
+    model: BartForConditionalGeneration = AutoModelForSeq2SeqLM.from_pretrained("Babelscape/rebel-large").to("cuda")
 
     # Tokenize
     model_inputs: BatchEncoding = tokenizer(texts, max_length=256, padding=True, truncation=True, return_tensors="pt")
@@ -106,7 +119,7 @@ def extract_triples_rebel(texts: list[str]) -> list[list[dict[str, str]]]:
         "max_length": 256,
         "length_penalty": 0,
         "num_beams": 3,
-        "num_return_sequences": 1,
+        "num_return_sequences": 2,
         # "return_dict_in_generate": True,
         # "output_scores": True,
         # "output_hidden_states": False,
@@ -116,10 +129,9 @@ def extract_triples_rebel(texts: list[str]) -> list[list[dict[str, str]]]:
         model_inputs["input_ids"].to(model.device),
         attention_mask=model_inputs["attention_mask"].to(model.device),
         **gen_kwargs,
-    )
-    # print(generated_tokens.sequences_scores)
+    )  # shape is [batch_size * num_return_seqs, max_seq_len]
 
-    generated_tokens = generated_tokens
+    print(generated_tokens.shape)
 
     # Decode
     decoded_preds = tokenizer.batch_decode(
@@ -128,11 +140,14 @@ def extract_triples_rebel(texts: list[str]) -> list[list[dict[str, str]]]:
 
     # Extract triplets from predictions
     triples_batch = []
-    for preds in decoded_preds:
-        triples = preds_to_triples(preds)
-        triples_batch.append(triples)
+    for i in range(len(texts)):
+        triples = set()
+        for j in range(gen_kwargs["num_return_sequences"]):
+            preds = decoded_preds[i * gen_kwargs["num_return_sequences"] + j]
+            triples |= set(parse_preds(preds))
+        triples_batch.append(tuples_to_dict(triples))
 
-    print(len(triples_batch))
+    assert len(triples_batch) == len(texts), "The number of texts and the number of outputs do not match."
 
     return triples_batch
 
@@ -149,5 +164,5 @@ if __name__ == "__main__":
     ]
 
     outputs = extract_triples_rebel(texts)
-    for triples in outputs:
-        print(triples)
+    for i, triples in enumerate(outputs):
+        print("{}: {}".format(i, triples))
