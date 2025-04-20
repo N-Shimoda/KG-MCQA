@@ -46,17 +46,13 @@ def preds_to_triples(preds: str) -> list[dict[str, str]]:
         if token == "<triplet>":
             current = "t"
             if relation != "":
-                triplets.append(
-                    {"head": subject.strip(), "type": relation.strip(), "tail": object_.strip()}
-                )
+                triplets.append({"head": subject.strip(), "type": relation.strip(), "tail": object_.strip()})
                 relation = ""
             subject = ""
         elif token == "<subj>":
             current = "s"
             if relation != "":
-                triplets.append(
-                    {"head": subject.strip(), "type": relation.strip(), "tail": object_.strip()}
-                )
+                triplets.append({"head": subject.strip(), "type": relation.strip(), "tail": object_.strip()})
             object_ = ""
         elif token == "<obj>":
             current = "o"
@@ -69,13 +65,11 @@ def preds_to_triples(preds: str) -> list[dict[str, str]]:
             elif current == "o":
                 relation += " " + token
     if subject != "" and relation != "" and object_ != "":
-        triplets.append(
-            {"head": subject.strip(), "type": relation.strip(), "tail": object_.strip()}
-        )
+        triplets.append({"head": subject.strip(), "type": relation.strip(), "tail": object_.strip()})
     return triplets
 
 
-def extract_triples_rebel(texts: list[str]) -> list[dict[str, str]]:
+def extract_triples_rebel(texts: list[str]) -> list[list[dict[str, str]]]:
     """
     Extracts triplets from a list of text strings.
 
@@ -90,38 +84,42 @@ def extract_triples_rebel(texts: list[str]) -> list[dict[str, str]]:
 
     Returns
     -------
-    list[dict[str, str]]
+    list[list[dict[str, str]]]
         A list of dictionaries where each dictionary represents a triplet with the keys:
         - 'head': The subject of the triplet.
         - 'type': The relation of the triplet.
         - 'tail': The object of the triplet.
     """
     # Load model and tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(
-        "Babelscape/rebel-large", clean_up_tokenization_spaces=False
-    )
+    tokenizer = AutoTokenizer.from_pretrained("Babelscape/rebel-large", clean_up_tokenization_spaces=False)
     model = AutoModelForSeq2SeqLM.from_pretrained("Babelscape/rebel-large").to("cuda")
-    gen_kwargs = {
-        "max_length": 256,
-        "length_penalty": 0,
-        "num_beams": 5,
-        "num_return_sequences": 1,
-    }
 
     # Tokenize
-    model_inputs: BatchEncoding = tokenizer(
-        texts, max_length=256, padding=True, truncation=True, return_tensors="pt"
-    )
+    model_inputs: BatchEncoding = tokenizer(texts, max_length=256, padding=True, truncation=True, return_tensors="pt")
     # Note:
     # - `model_inputs` is a kind of dictionary with two keys (`input_ids` and `attention_mask`)
     # - Its values have shape [batch_size, max_seq_len] for each key
 
     # Generate
+    # TODO: Find an adequate value for here
+    gen_kwargs = {
+        "max_length": 256,
+        "length_penalty": 0,
+        "num_beams": 3,
+        "num_return_sequences": 1,
+        # "return_dict_in_generate": True,
+        # "output_scores": True,
+        # "output_hidden_states": False,
+        # "output_attentions": False,
+    }
     generated_tokens = model.generate(
         model_inputs["input_ids"].to(model.device),
         attention_mask=model_inputs["attention_mask"].to(model.device),
         **gen_kwargs,
     )
+    # print(generated_tokens.sequences_scores)
+
+    generated_tokens = generated_tokens
 
     # Decode
     decoded_preds = tokenizer.batch_decode(
@@ -134,6 +132,8 @@ def extract_triples_rebel(texts: list[str]) -> list[dict[str, str]]:
         triples = preds_to_triples(preds)
         triples_batch.append(triples)
 
+    print(len(triples_batch))
+
     return triples_batch
 
 
@@ -142,10 +142,12 @@ if __name__ == "__main__":
     # Text to extract triplets from
     texts = [
         "Punta Cana is a resort town in the municipality of Higüey,\
-        in La Altagracia Province, the easternmost province of the Dominican Republic."
+        in La Altagracia Province, the easternmost province of the Dominican Republic.",
         "Alice knows Bob. Bob likes Charlie.",
         "Charlie is a friend of Alice.",
         "Bob and Alice are colleagues.",
     ]
-    for triples in extract_triples_rebel(texts):
+
+    outputs = extract_triples_rebel(texts)
+    for triples in outputs:
         print(triples)
