@@ -60,6 +60,12 @@ def render_dot_to_html(dot_path: Path, graph_type: str):
     net.from_nx(nx_graph)
     net.repulsion(node_distance=200)
 
+    # 色つきエッジの設定
+    for u, v, data in nx_graph.edges(data=True):
+        print("edge added!", u, v, data)
+        edge_color = data.get("color", None)
+        net.add_edge(u, v, label=data.get("label", ""), color=edge_color)
+
     html_path = HTML_OUTPUT_DIR / f"{graph_type}_{dot_path.stem}.html"
     net.save_graph(str(html_path))
     return html_path
