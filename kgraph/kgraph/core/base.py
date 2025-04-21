@@ -60,6 +60,29 @@ class KB:
             raise ValueError(f"Node {node_label} does not exist in KB.")
         self.nodes[node_label][attr] = value
 
+    def add_edge_attr(self, hd: str, r: str, tl: str, attr: str, value: str):
+        """
+        Add attribute `attr` to edge (hd, r, tl) with value `value`.
+
+        Parameters
+        ----------
+        hd: str
+            Head node label.
+        r: str
+            Relation type.
+        tl: str
+            Tail node label.
+        attr: str
+            Name of attribute.
+        value: str
+            Value of attribute.
+        """
+        for relation in self.relations:
+            if relation["head"] == hd and relation["type"] == r and relation["tail"] == tl:
+                relation[attr] = value
+                return
+        raise ValueError(f"Relation ({hd}, {r}, {tl}) does not exist in KB.")
+
     def get_nodes(self) -> list[str]:
         """
         Return a list of node labels.
@@ -235,10 +258,10 @@ class KB:
         # Add edges
         dot_content.append("\n\t// Edges")
         for r in self.relations:
-            if r["head"] and r["tail"]:
-                label = r["type"]
-                edge_line = f'\t"{r["head"]}" -> "{r["tail"]}" [label="{label}"];'
-                dot_content.append(edge_line)
+            label = r["type"]
+            ver_info = ', color="orange", verified=true' if "verified" in r and r["verified"] == "true" else ""
+            edge_line = f'\t"{r["head"]}" -> "{r["tail"]}" [label="{label}"{ver_info}];'
+            dot_content.append(edge_line)
 
         # Close the DOT content
         dot_content.append("}")
