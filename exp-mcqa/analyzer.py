@@ -21,14 +21,23 @@ st.markdown(
 )
 
 # ベースディレクトリ
-BASE_DIR = Path("exp-mcqa/rebel/MCQs")
-HTML_OUTPUT_DIR = Path("exp-mcqa/_temp")
+BASE_DIR = Path("exp-mcqa")
+HTML_OUTPUT_DIR = BASE_DIR / "temp_html"
 HTML_OUTPUT_DIR.mkdir(exist_ok=True)
 
 
+# モデル・データセットの取得
+def get_models_and_datasets(base_dir: Path):
+    models = sorted([d.name for d in base_dir.iterdir() if d.is_dir() and d.name != "temp_html"])
+    model_to_datasets = {
+        model: sorted([ds.name for ds in (base_dir / model).iterdir() if ds.is_dir()]) for model in models
+    }
+    return models, model_to_datasets
+
+
 # カテゴリの取得
-def get_categories(base_dir: Path):
-    return sorted([d.name for d in (base_dir / "PGs").iterdir() if d.is_dir()])
+def get_categories(base_path: Path):
+    return sorted([d.name for d in (base_path / "PGs").iterdir() if d.is_dir()])
 
 
 # 問題IDの取得
@@ -58,20 +67,33 @@ def render_dot_to_html(dot_path: Path, graph_type: str):
 
 st.title("MCQA Graph Viewer")
 
+# モデルとデータセットの選択
+models, model_to_datasets = get_models_and_datasets(BASE_DIR)
+col_model, col_dataset = st.columns([1, 2])
+
+with col_model:
+    selected_model = st.selectbox("関係抽出モデル", models)
+
+with col_dataset:
+    selected_dataset = st.selectbox("データセット", model_to_datasets[selected_model])
+
+# 問題構造のルートパス
+ROOT_PATH = BASE_DIR / selected_model / selected_dataset
+
 # カテゴリ・問題ID・選択肢を画面上部に配置
-categories = get_categories(BASE_DIR)
+categories = get_categories(ROOT_PATH)
 col_cat, col_qid, col_opt = st.columns([2, 2, 1])
 
 with col_cat:
     selected_category = st.selectbox("カテゴリ", categories, key="category")
 
-category_dir = BASE_DIR / "PGs" / selected_category
+category_dir = ROOT_PATH / "PGs" / selected_category
 problem_ids = get_problem_ids(category_dir)
 
 with col_qid:
     selected_problem_id = st.selectbox("問題ID", problem_ids, key="problem")
 
-problem_pg_dir = BASE_DIR / "PGs" / selected_category / selected_problem_id
+problem_pg_dir = ROOT_PATH / "PGs" / selected_category / selected_problem_id
 option_files = get_option_files(problem_pg_dir)
 option_map = {f.split("_")[0]: f.split("_", 1)[1] for f in option_files}
 option_labels = [f.split("_", 1)[1].replace(".dot", "") for f in option_files]
@@ -83,8 +105,8 @@ with col_opt:
     file_suffix = option_map[selected_option]
 
 # dotファイルパスを構築
-pg_dot_path = BASE_DIR / "PGs" / selected_category / selected_problem_id / f"{selected_option}_{file_suffix}"
-kg_dot_path = BASE_DIR / "KGs" / selected_category / selected_problem_id / f"{selected_option}_{file_suffix}"
+pg_dot_path = ROOT_PATH / "PGs" / selected_category / selected_problem_id / f"{selected_option}_{file_suffix}"
+kg_dot_path = ROOT_PATH / "KGs" / selected_category / selected_problem_id / f"{selected_option}_{file_suffix}"
 
 # HTML に変換（別ファイル名として保存）
 pg_html = render_dot_to_html(pg_dot_path, graph_type="pg")
