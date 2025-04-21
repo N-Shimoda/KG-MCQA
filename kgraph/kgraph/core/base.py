@@ -218,16 +218,23 @@ class KB:
                 else:
                     wiki_titles[node_label] = None
 
-            # Match edge lines: "head" -> "tail" [label="type"];
-            edge_match = re.match(r'\s*"(.+)" -> "(.+)" \[label="(.+)"\];', line)
+            # Match edge lines: "head" -> "tail" [label="type", verified=true, color="..."];
+            edge_match = re.match(
+                r'\s*"(.+)" -> "(.+)" \[label="([^"]+)"(?:, verified=(true|false))?(?:, color="[^"]*")?.*];', line
+            )
             if edge_match:
-                head, tail, relation_type = edge_match.groups()
-                relations.append({"head": head, "type": relation_type, "tail": tail})
+                head, tail, relation_type, verified = edge_match.groups()
+                relation = {"head": head, "type": relation_type, "tail": tail}
+                if verified is not None:
+                    relation["verified"] = verified
+                relations.append(relation)
 
         # Create KB instance
         kb = cls(relations)
         for node_label, wiki_title in wiki_titles.items():
             kb.nodes[node_label] = {"wiki_title": wiki_title}
+
+        print(kb)
         return kb
 
     def write_dot(self, output_file: str):
