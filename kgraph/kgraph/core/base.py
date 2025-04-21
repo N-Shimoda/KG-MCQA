@@ -217,10 +217,11 @@ class KB:
                     wiki_titles[node_label] = wiki_title
                 else:
                     wiki_titles[node_label] = None
+                continue
 
             # Match edge lines: "head" -> "tail" [label="type", verified=true, color="..."];
             edge_match = re.match(
-                r'\s*"(.+)" -> "(.+)" \[label="([^"]+)"(?:, verified=(true|false))?(?:, color="[^"]*")?.*];', line
+                r'\s*"(.+)" -> "(.+)" \[label="([^"]+)"(?:, color="[^"]*")?(?:, verified=(true|false))?.*];', line
             )
             if edge_match:
                 head, tail, relation_type, verified = edge_match.groups()
@@ -234,7 +235,6 @@ class KB:
         for node_label, wiki_title in wiki_titles.items():
             kb.nodes[node_label] = {"wiki_title": wiki_title}
 
-        print(kb)
         return kb
 
     def write_dot(self, output_file: str):
