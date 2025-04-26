@@ -127,14 +127,21 @@ class MCQAGraphViewer:
         net = Network(height="720px", width="100%", notebook=False, directed=True)
         kb = KB.from_dot_file(str(dot_path))
         for e in kb.get_nodes():
-            net.add_node(e, size=10)
+            if "color" in kb.nodes[e]:
+                net.add_node(e, size=10, color=kb.nodes[e]["color"])
+            else:
+                net.add_node(e, size=10)
         for r in kb.relations:
-            if "verified" in r and r["verified"] == "true":
+            if "verified" in r and r["verified"]:
                 net.add_edge(r["head"], r["tail"], title=r["type"], label=r["type"], color="orange")
             else:
-                net.add_edge(r["head"], r["tail"], title=r["type"], label=r["type"])
+                net.add_edge(r["head"], r["tail"], title=r["type"], label=r["type"], color="#97c2fc")
+
+        # setting
         net.repulsion(node_distance=100, central_gravity=0.2, spring_length=120, spring_strength=0.05)
         net.set_edge_smooth("dynamic")
+
+        # save to html
         html_path = self.html_output_dir / f"{graph_type}_{dot_path.stem}.html"
         net.save_graph(str(html_path))
         return html_path

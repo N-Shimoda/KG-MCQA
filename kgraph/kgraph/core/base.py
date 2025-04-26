@@ -264,10 +264,17 @@ class KB:
         for node_label, attributes in self.nodes.items():
             # TODO: This IF statement should be removed.
             if node_label:
-                wiki_title = attributes.get("wiki_title", "")
+                # node label
                 node_line = f'\t"{node_label}"'
-                if wiki_title:
+                # node attributes
+                wiki_title = attributes.get("wiki_title", "")
+                color = attributes.get("color", "")
+                if wiki_title and color:
+                    node_line += f' [wiki_title="{wiki_title}", color="{color}"]'
+                elif wiki_title:
                     node_line += f' [wiki_title="{wiki_title}"]'
+                elif color:
+                    node_line += f' [color="{color}"]'
                 node_line += ";"
                 dot_content.append(node_line)
 
@@ -275,7 +282,7 @@ class KB:
         dot_content.append("\n\t// Edges")
         for r in self.relations:
             label = r["type"]
-            ver_info = ', color="orange", verified=true' if "verified" in r and r["verified"] == "true" else ""
+            ver_info = ', color="orange", verified=true' if "verified" in r and r["verified"] else ""
             edge_line = f'\t"{r["head"]}" -> "{r["tail"]}" [label="{label}"{ver_info}];'
             dot_content.append(edge_line)
 
