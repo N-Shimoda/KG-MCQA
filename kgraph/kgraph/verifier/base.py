@@ -15,32 +15,39 @@ def eval_edge(e1: str, e2: str) -> int:
     return score
 
 
-def verify_proposition(
-    PG: KB, KG: KB
-) -> tuple[float, float, list[dict[Literal["head", "type", "tail"], str]], dict[Literal["head", "type", "tail"], str]]:
+def verify_proposition(PG: KB, KG: KB) -> tuple[
+    float,
+    float,
+    list[dict[Literal["head", "type", "tail"], str]],
+    dict[Literal["head", "type", "tail"], str],
+    dict[str, str],
+]:
     """
     Function to verify truthfulness of `PG` based on facts in `KG`.
     If there is no relation in `PG`, it returns 0.0 for `verify_score` and 1.0 for `node_score`.
 
     Parameters
     ----------
-    PG: KB
+    PG : KB
         The proposition graph to verify.
-    KG: KB
+    KG : KB
         The knowledge graph used as the source of truth.
 
     Returns
     -------
-    verify_score: float
+    verify_score : float
         Number of verified relations divided by the total number of relations in PG.
-    node_score: float
+    node_score : float
         Number of verified nodes divided by the total number of nodes in PG.
-    verified_rels: list[dict[Literal['head', 'type', 'tail'], str]]
+    verified_rels : list[dict[Literal['head', 'type', 'tail'], str]]
         List of verified edges from PG that match relations in KG.
-    evidence_rels: list[dict[Literal['head', 'type', 'tail'], str]]
+    evidence_rels : list[dict[Literal['head', 'type', 'tail'], str]]
         List of corresponding relations from KG that serve as evidence for the verified edges.
+    matching : dict[str, str]
+        Dictionary mapping PG nodes to their corresponding KG nodes.
     """
     subnodes, PG_nodes, node_score = get_subgraph_nodes(KG.get_nodes(), PG.get_nodes())
+    matching = dict(zip(PG_nodes, subnodes))
 
     count = 0
     verified_rels = []
@@ -53,16 +60,15 @@ def verify_proposition(
             KG_tl = subnodes[PG_nodes.index(PG_r["tail"])]
 
             rels = KG.get_relations_between(KG_hd, KG_tl)
-            if len(rels) > 1:
-                print(
-                    colorize(
-                        "Multiple relations were found between '{}' and '{}'.\nRelations are {}".format(
-                            KG_hd, KG_tl, rels
-                        ),
-                        33,
-                    )
-                )
-
+            # if len(rels) > 1:
+            #     print(
+            #         colorize(
+            #             "Multiple relations were found between '{}' and '{}'.\nRelations are {}".format(
+            #                 KG_hd, KG_tl, rels
+            #             ),
+            #             33,
+            #         )
+            #     )
             if rels:
                 KG_rels = [rel["type"] for rel in rels]
                 scores = [eval_edge(KG_rel, PG_r["type"]) for KG_rel in KG_rels]
@@ -72,10 +78,9 @@ def verify_proposition(
                     evidence_rels.append(rels[scores.index(1)])
         # Exceptional case where PG size is larger than KG
         except ValueError:
-            # print(colorize("No matching found for '{}'".format(PG_r), 33))
+            print(colorize("No matching found for '{}'".format(PG_r), 33))
             continue
 
     # Edge score = [num of verified relations] / [num of all relations]
     verify_score = count / len(PG.relations) if PG.relations else 0
-    return verify_score, node_score, verified_rels, evidence_rels
-    return verify_score, node_score, verified_rels, evidence_rels
+    return verify_score, node_score, verified_rels, evidence_rels, matching

@@ -203,37 +203,45 @@ class KB:
             An instance of the KB class.
         """
         relations = []
-        wiki_titles = dict()
+        node_atts = dict()
 
         with open(dot_file_path, "r") as file:
             lines = file.readlines()
 
         for line in lines:
-            # Match node lines: "node_label" [label="node_label", wiki_title="title"];
-            node_match = re.match(r'\s*"(.+)" (?:\s*\[wiki_title="(.+)")?\];', line)
+            # Match node lines: "node_label" [wiki_title="title"];
+            node_match = re.match(
+                r'\s*"([^"]+)"(?:\s*\[\s*(?:wiki_title="([^"]+)")?(?:,\s*)?(?:color="([^"]+)")?\s*\])?;', line
+            )
             if node_match:
-                node_label, wiki_title = node_match.groups()
-                if wiki_title:
-                    wiki_titles[node_label] = wiki_title
-                else:
-                    wiki_titles[node_label] = None
+                node_label, wiki_title, color = node_match.groups()
+                # node_atts[node_label] = (
+                #     {"wiki_title": wiki_title, "color": color}
+                #     if wiki_title and color
+                #     else {"wiki_title": wiki_title} if wiki_title else {"color": color} if color else {}
+                # )
+                node_atts[node_label] = (
+                    {"wiki_title": wiki_title, "color": color} if color else {"wiki_title": wiki_title}
+                )
                 continue
 
             # Match edge lines: "head" -> "tail" [label="type", verified=true, color="..."];
             edge_match = re.match(
-                r'\s*"(.+)" -> "(.+)" \[label="([^"]+)"(?:, color="[^"]*")?(?:, verified=(true|false))?.*];', line
+                r'\s*"(.+)" -> "(.+)" \[label="([^"]+)"(?:, color="([^"]+)")?(?:, verified=(true|false))?.*];', line
             )
             if edge_match:
-                head, tail, relation_type, verified = edge_match.groups()
+                head, tail, relation_type, color, verified = edge_match.groups()
                 relation = {"head": head, "type": relation_type, "tail": tail}
-                if verified is not None:
-                    relation["verified"] = verified
+                if color:
+                    relation["color"] = color
+                if verified:
+                    relation["verified"] = True if verified == "true" else False
                 relations.append(relation)
 
         # Create KB instance
         kb = cls(relations)
-        for node_label, wiki_title in wiki_titles.items():
-            kb.nodes[node_label] = {"wiki_title": wiki_title}
+        if node_atts:
+            kb.nodes = node_atts
 
         return kb
 
@@ -254,6 +262,7 @@ class KB:
         # Add nodes
         dot_content.append("\t// Nodes")
         for node_label, attributes in self.nodes.items():
+            # TODO: This IF statement should be removed.
             if node_label:
                 wiki_title = attributes.get("wiki_title", "")
                 node_line = f'\t"{node_label}"'
@@ -279,6 +288,7 @@ class KB:
 
 
 if __name__ == "__main__":
+    import os
 
     # Constructor and print
     print("Constructor and printing")
@@ -297,14 +307,18 @@ if __name__ == "__main__":
     print("Nodes:\n{}".format(kb.get_nodes()))
 
     kb.add_node_attr("Napoleon Bonaparte", "wiki_title", "Napoleon_Bonaparte")
+    kb.add_node_attr("Napoleon Bonaparte", "color", "orange")
+    kb.add_node_attr("French Revolution", "wiki_title", "French_Revolution")
+    kb.add_node_attr("Revolutionary Wars", "color", "orange")
 
     print("Before:\n{}".format(kb))
     kb.write_dot("output.dot")
     kb = KB.from_dot_file("output.dot")
     print("After:\n{}".format(kb))
     print(kb.nodes)
+    os.remove("output.dot")
 
-    # # Relations between
+    # Relations between
     print("\nRelation search")
     hd = "Napoleon Bonaparte"
     tl = "15 'August 1769"
