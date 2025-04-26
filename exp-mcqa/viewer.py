@@ -52,13 +52,8 @@ def get_option_files(problem_dir: Path):
 
 # Convert dot file -> NetworkX -> Pyvis HTML
 def render_dot_to_html(dot_path: Path, graph_type: str):
-    # graphs = pydot.graph_from_dot_file(str(dot_path))
-    # pydot_graph = graphs[0]
-    # nx_graph = nx.nx_pydot.from_pydot(pydot_graph)
-
     # create network
     net = Network(height="720px", width="100%", notebook=False, directed=True)
-    # net.from_nx(nx_graph)
 
     kb = KB.from_dot_file(str(dot_path))
     for e in kb.get_nodes():
@@ -69,7 +64,7 @@ def render_dot_to_html(dot_path: Path, graph_type: str):
         else:
             net.add_edge(r["head"], r["tail"], title=r["type"], label=r["type"])
 
-    net.repulsion(node_distance=100, central_gravity=0.2, spring_length=120, spring_strength=0.05, damping=0.09)
+    net.repulsion(node_distance=100, central_gravity=0.2, spring_length=120, spring_strength=0.05)
     net.set_edge_smooth("dynamic")
 
     html_path = HTML_OUTPUT_DIR / f"{graph_type}_{dot_path.stem}.html"
@@ -125,7 +120,7 @@ pg_html = render_dot_to_html(pg_dot_path, graph_type="pg")
 kg_html = render_dot_to_html(kg_dot_path, graph_type="kg")
 
 # Display in split columns (PG:KG = 2:3 ratio)
-col1, col2 = st.columns([2, 3])
+col1, col2 = st.columns([1, 3])
 with col1:
     st.subheader("Propositional Graph (PG)")
     with open(pg_html, "r", encoding="utf-8") as f:
