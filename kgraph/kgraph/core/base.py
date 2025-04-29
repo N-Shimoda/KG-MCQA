@@ -214,12 +214,8 @@ class KB:
                 r'\s*"([^"]+)"(?:\s*\[\s*(?:wiki_title="([^"]+)")?(?:,\s*)?(?:color="([^"]+)")?\s*\])?;', line
             )
             if node_match:
+                # NOTE: `wiki_title` is None if not found.
                 node_label, wiki_title, color = node_match.groups()
-                # node_atts[node_label] = (
-                #     {"wiki_title": wiki_title, "color": color}
-                #     if wiki_title and color
-                #     else {"wiki_title": wiki_title} if wiki_title else {"color": color} if color else {}
-                # )
                 node_atts[node_label] = (
                     {"wiki_title": wiki_title, "color": color} if color else {"wiki_title": wiki_title}
                 )

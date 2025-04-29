@@ -127,7 +127,9 @@ class MCQAGraphViewer:
         net = Network(height="720px", width="100%", notebook=False, directed=True)
         kb = KB.from_dot_file(str(dot_path))
         for e in kb.get_nodes():
-            if "color" in kb.nodes[e]:
+            if "color" in kb.nodes[e] and kb.nodes[e]["wiki_title"] is not None:
+                net.add_node(e, size=10, color=kb.nodes[e]["color"], title=kb.nodes[e]["wiki_title"])
+            elif "color" in kb.nodes[e]:
                 net.add_node(e, size=10, color=kb.nodes[e]["color"])
             else:
                 net.add_node(e, size=10)
