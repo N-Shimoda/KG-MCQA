@@ -160,8 +160,8 @@ def conduct_analysis(method, unit, min_units):
 
     # Iterate over the number of units (i.e. width of the window)
     for num_units in tqdm(min_units):
-        graph_dir = f"param-search/graphs/{method}/{unit}/{num_units}"
-        os.makedirs(graph_dir, exist_ok=True)
+        GRAPH_DIR = f"param-search/graphs/{method}/{unit}/{num_units}"
+        os.makedirs(GRAPH_DIR, exist_ok=True)
 
         data = dict()
 
@@ -171,7 +171,7 @@ def conduct_analysis(method, unit, min_units):
 
             title = doc_data["title"]
             kb = dev_extract_triples([doc_data["summary"]], method, unit, num_units)[0]
-            kb.write_dot(f"{graph_dir}/{title}.dot")
+            kb.write_dot(f"{GRAPH_DIR}/{title}.dot")
 
             # analyze the extracted graph
             num_nodes = len(kb.get_nodes())
@@ -191,7 +191,9 @@ def conduct_analysis(method, unit, min_units):
         overall_data[num_units] = averages
 
         # Write detailed stats
-        with open(f"param-search/details/{method}_{unit}_{num_units}.csv", "w", newline="", encoding="utf-8") as f:
+        DETAILS_DIR = "param-search/details"
+        os.makedirs(DETAILS_DIR, exist_ok=True)
+        with open(f"{DETAILS_DIR}/{method}_{unit}_{num_units}.csv", "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerow(["title", "nodes", "relations", "words", "nodes per word", "rels per word"])
             for title, stats in data.items():
