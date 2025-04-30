@@ -1,0 +1,62 @@
+digraph RDFGraph {
+	// Nodes
+	"Kyoto University Library Network";
+	"KyotoU";
+	"Japan";
+	"Kyoto University";
+	"Third Higher School";
+	"Imperial Universities";
+	"research institutes";
+	"Yoshida";
+	"university";
+	"Fields Medal";
+	"research institute";
+	"Kyoto";
+	"research";
+	"Gauss Prize";
+	"Kyoto University Library";
+	"prime ministers";
+	"Fields Medalists";
+	"Uji";
+	"Katsura";
+	"1897";
+	"university library";
+	"Nobel Prize";
+	"universities";
+	"1951";
+	"educational";
+
+	// Edges
+	"Kyoto" -> "Japan" [label="country"];
+	"Kyoto University" -> "Kyoto" [label="headquarters location"];
+	"Kyoto University" -> "Kyoto" [label="located in the administrative territorial entity"];
+	"Kyoto University" -> "Japan" [label="country"];
+	"Imperial Universities" -> "Japan" [label="country"];
+	"Imperial Universities" -> "1897" [label="start time"];
+	"Imperial Universities" -> "1897" [label="inception"];
+	"research institutes" -> "university" [label="part of"];
+	"research institutes" -> "universities" [label="part of"];
+	"research institute" -> "university" [label="part of"];
+	"Kyoto" -> "Katsura" [label="contains administrative territorial entity"];
+	"Yoshida" -> "Kyoto" [label="located in the administrative territorial entity"];
+	"Kyoto" -> "Yoshida" [label="contains administrative territorial entity"];
+	"Uji" -> "Kyoto" [label="located in the administrative territorial entity"];
+	"Katsura" -> "Kyoto" [label="located in the administrative territorial entity"];
+	"Kyoto" -> "Uji" [label="contains administrative territorial entity"];
+	"Kyoto University Library" -> "university library" [label="instance of"];
+	"Kyoto University Library Network" -> "Kyoto University" [label="part of"];
+	"Kyoto University Library Network" -> "university library" [label="instance of"];
+	"research" -> "educational" [label="subclass of"];
+	"university" -> "educational" [label="field of work"];
+	"research" -> "educational" [label="part of"];
+	"prime ministers" -> "Japan" [label="country"];
+	"Japan" -> "prime ministers" [label="office held by head of government"];
+	"Kyoto University" -> "Japan" [label="country"];
+	"KyotoU" -> "Third Higher School" [label="replaces"];
+	"KyotoU" -> "1951" [label="inception"];
+	"Third Higher School" -> "KyotoU" [label="replaced by"];
+	"Gauss Prize" -> "Nobel Prize" [label="award received"];
+	"Gauss Prize" -> "Nobel Prize" [label="instance of"];
+	"Fields Medalists" -> "Nobel Prize" [label="instance of"];
+	"Fields Medal" -> "Nobel Prize" [label="subclass of"];
+}

@@ -80,15 +80,23 @@ def extract_triples(
     assert isinstance(texts, list) and isinstance(texts[0], str), "Input texts should be a list of strings."
 
     rels_li = []
-    rels = []
     match method:
         case "rebel":
-            chunks_li, bounds = create_chunks(texts, chunk_size, overlap)
-            rels_li_by_chunk = extract_triples_rebel(chunks_li)
-            for start, end in bounds:
-                for i in range(start, end + 1):
-                    rels.extend(rels_li_by_chunk[i])
+            # chunks_li, bounds = create_chunks(texts, chunk_size, overlap)
+            # rels_li_by_chunk = extract_triples_rebel(chunks_li)
+            # for start, end in bounds:
+            #     rels = []
+            #     for i in range(start, end + 1):
+            #         rels.extend(rels_li_by_chunk[i])
+            #     rels_li.append(rels)
+            for text in texts:
+                rebel_inputs = sent_tokenize(text)
+                rels = extract_triples_rebel(rebel_inputs)
+                rels = [triple for triple_list in rels for triple in triple_list]
                 rels_li.append(rels)
+                print("\nRebel Inputs: {}".format(rebel_inputs))
+                print("Rebel Outputs: {}".format(rels))
+
         case "unirel":
             for text in texts:
                 unirel_inputs = sent_tokenize(text)
@@ -97,6 +105,7 @@ def extract_triples(
                 rels_li.append(rels)
                 # print("\nUniRel Inputs: {}".format(unirel_inputs))
                 # print("UniRel Outputs: {}".format(rels))
+
         case _:
             raise ValueError(f"Expected relation extraction methods are 'rebel' or 'unirel'. Got {method}.")
 

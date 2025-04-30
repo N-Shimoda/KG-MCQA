@@ -1,0 +1,33 @@
+digraph RDFGraph {
+	// Nodes
+	"Impressionist music";
+	"brush strokes";
+	"Impressionists";
+	"Impressionist literature";
+	"Claude Monet";
+	"Impressionism";
+	"Impression, soleil levant";
+	"Impression, Sunrise";
+	"Impressionist";
+	"France";
+	"Paris";
+	"art movement";
+	"1870";
+
+	// Edges
+	"brush strokes" -> "Impressionism" [label="facet of"];
+	"brush strokes" -> "Impressionism" [label="part of"];
+	"Impressionism" -> "art movement" [label="instance of"];
+	"Impressionism" -> "Paris" [label="location"];
+	"Impressionism" -> "Paris" [label="location of formation"];
+	"Impressionism" -> "1870" [label="inception"];
+	"Impressionists" -> "France" [label="country of origin"];
+	"Impressionists" -> "France" [label="country"];
+	"Impressionist" -> "France" [label="country"];
+	"Impression, Sunrise" -> "Claude Monet" [label="creator"];
+	"Impression, soleil levant" -> "Claude Monet" [label="creator"];
+	"Claude Monet" -> "Impression, soleil levant" [label="notable work"];
+	"Claude Monet" -> "Impression, Sunrise" [label="notable work"];
+	"Impressionist music" -> "Impressionism" [label="influenced by"];
+	"Impressionist literature" -> "Impressionism" [label="influenced by"];
+}
