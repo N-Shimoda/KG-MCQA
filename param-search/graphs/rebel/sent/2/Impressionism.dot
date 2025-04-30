@@ -1,0 +1,18 @@
+digraph RDFGraph {
+	// Nodes
+	"Impressionist literature";
+	"Claude Monet";
+	"Impression, Sunrise";
+	"Impressionist music";
+	"Impressionism";
+	"art movement";
+	"Paris";
+
+	// Edges
+	"Impressionism" -> "art movement" [label="instance of"];
+	"Impressionism" -> "Paris" [label="location of formation"];
+	"Impression, Sunrise" -> "Claude Monet" [label="creator"];
+	"Claude Monet" -> "Impression, Sunrise" [label="notable work"];
+	"Impressionist music" -> "Impressionism" [label="influenced by"];
+	"Impressionist literature" -> "Impressionism" [label="influenced by"];
+}

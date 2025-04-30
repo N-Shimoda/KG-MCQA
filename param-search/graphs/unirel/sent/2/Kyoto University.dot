@@ -1,0 +1,12 @@
+digraph RDFGraph {
+	// Nodes
+	"Kyoto";
+	"Japan";
+	"Katsura";
+	"Kyoto University";
+
+	// Edges
+	"Japan" -> "Kyoto" [label="/location/location/contains"];
+	"Kyoto" -> "Katsura" [label="/location/location/contains"];
+	"Japan" -> "Kyoto University" [label="/location/location/contains"];
+}

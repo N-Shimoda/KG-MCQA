@@ -1,0 +1,15 @@
+digraph RDFGraph {
+	// Nodes
+	"Impressionist literature";
+	"Impressionism";
+	"Impressionist music";
+	"Claude Monet";
+	"art movement";
+
+	// Edges
+	"Claude Monet" -> "Impressionism" [label="movement"];
+	"Impressionism" -> "art movement" [label="instance of"];
+	"Impressionism" -> "Claude Monet" [label="named after"];
+	"Impressionist music" -> "Impressionism" [label="influenced by"];
+	"Impressionist literature" -> "Impressionism" [label="influenced by"];
+}

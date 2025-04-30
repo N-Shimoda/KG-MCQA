@@ -1,0 +1,43 @@
+digraph RDFGraph {
+	// Nodes
+	"Fields Medal";
+	"Kyoto";
+	"Fields Medalists";
+	"Yoshida";
+	"Kyoto University Library Network";
+	"Gauss Prize";
+	"Uji";
+	"Katsura";
+	"Third Higher School";
+	"KyotoU";
+	"Kyoto University Library";
+	"Kyoto University";
+	"Nobel Prize";
+	"1897";
+	"1951";
+	"university library";
+	"library";
+	"Japan";
+
+	// Edges
+	"Kyoto University" -> "Japan" [label="country"];
+	"Kyoto" -> "Japan" [label="country"];
+	"Kyoto University" -> "1897" [label="inception"];
+	"Kyoto University" -> "Kyoto" [label="located in the administrative territorial entity"];
+	"Yoshida" -> "Kyoto" [label="located in the administrative territorial entity"];
+	"Kyoto" -> "Uji" [label="contains administrative territorial entity"];
+	"Kyoto" -> "Katsura" [label="contains administrative territorial entity"];
+	"Kyoto" -> "Yoshida" [label="contains administrative territorial entity"];
+	"Katsura" -> "Kyoto" [label="located in the administrative territorial entity"];
+	"Uji" -> "Kyoto" [label="located in the administrative territorial entity"];
+	"Kyoto University Library Network" -> "university library" [label="instance of"];
+	"Kyoto University Library" -> "university library" [label="instance of"];
+	"Kyoto University Library Network" -> "library" [label="instance of"];
+	"KyotoU" -> "1951" [label="inception"];
+	"Kyoto University" -> "1951" [label="inception"];
+	"Third Higher School" -> "1951" [label="inception"];
+	"Fields Medal" -> "Nobel Prize" [label="subclass of"];
+	"Fields Medalists" -> "Nobel Prize" [label="instance of"];
+	"Gauss Prize" -> "Nobel Prize" [label="award received"];
+	"Gauss Prize" -> "Nobel Prize" [label="instance of"];
+}

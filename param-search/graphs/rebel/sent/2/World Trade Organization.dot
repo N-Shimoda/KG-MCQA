@@ -1,0 +1,61 @@
+digraph RDFGraph {
+	// Nodes
+	"Director-General";
+	"Goal 10";
+	"United Nations System";
+	"WTO";
+	"166 members";
+	"trade-related disputes";
+	"Secretariat";
+	"trade barrier";
+	"free trade";
+	"General Agreement on Tariffs and Trade";
+	"trade barriers";
+	"Marrakesh Agreement";
+	"Sustainable Development Goals";
+	"Switzerland";
+	"Geneva";
+	"independent dispute resolution";
+	"General Council";
+	"World Trade Organization";
+	"dispute resolution";
+	"international trade";
+	"1994";
+	"1948";
+	"international economic organization";
+	"intergovernmental organization";
+	"United Nations";
+	"resolving trade-related disputes";
+	"trade";
+
+	// Edges
+	"World Trade Organization" -> "Geneva" [label="headquarters location"];
+	"Switzerland" -> "World Trade Organization" [label="member of"];
+	"Switzerland" -> "United Nations System" [label="member of"];
+	"United Nations System" -> "World Trade Organization" [label="subsidiary"];
+	"Geneva" -> "Switzerland" [label="country"];
+	"World Trade Organization" -> "intergovernmental organization" [label="instance of"];
+	"World Trade Organization" -> "Switzerland" [label="country"];
+	"WTO" -> "international economic organization" [label="instance of"];
+	"166 members" -> "WTO" [label="member of"];
+	"WTO" -> "166 members" [label="has part"];
+	"trade-related disputes" -> "dispute resolution" [label="subclass of"];
+	"independent dispute resolution" -> "resolving trade-related disputes" [label="facet of"];
+	"independent dispute resolution" -> "resolving trade-related disputes" [label="subclass of"];
+	"Marrakesh Agreement" -> "1994" [label="point in time"];
+	"General Agreement on Tariffs and Trade" -> "1948" [label="inception"];
+	"General Agreement on Tariffs and Trade" -> "1948" [label="start time"];
+	"General Council" -> "Secretariat" [label="subsidiary"];
+	"Director-General" -> "Secretariat" [label="part of"];
+	"Director-General" -> "General Council" [label="part of"];
+	"Secretariat" -> "General Council" [label="parent organization"];
+	"trade barriers" -> "international trade" [label="facet of"];
+	"trade barrier" -> "international trade" [label="facet of"];
+	"trade barriers" -> "trade" [label="facet of"];
+	"Sustainable Development Goals" -> "Goal 10" [label="has part"];
+	"Sustainable Development Goals" -> "United Nations" [label="creator"];
+	"Goal 10" -> "Sustainable Development Goals" [label="part of"];
+	"free trade" -> "WTO" [label="creator"];
+	"WTO" -> "free trade" [label="field of work"];
+	"WTO" -> "free trade" [label="industry"];
+}
