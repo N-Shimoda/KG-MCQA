@@ -1,14 +1,12 @@
 digraph RDFGraph {
 	// Nodes
 	"Japan";
-	"Kyoto";
 	"Kyoto University";
-	"Imperial Universities";
-	"Katsura";
+	"Kyoto : Yoshida, Uji and Katsura. The Kyoto";
+	"Kyoto";
 
 	// Edges
 	"Japan" -> "Kyoto" [label="/location/location/contains"];
-	"Japan" -> "Imperial Universities" [label="/location/location/contains"];
-	"Kyoto" -> "Katsura" [label="/location/location/contains"];
+	"Japan" -> "Kyoto : Yoshida, Uji and Katsura. The Kyoto" [label="/location/location/contains"];
 	"Japan" -> "Kyoto University" [label="/location/location/contains"];
 }

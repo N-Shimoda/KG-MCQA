@@ -48,8 +48,8 @@ def dev_extract_triples(
                         rels = extract_triples_rebel(rebel_inputs)
                         rels = [triple for triple_list in rels for triple in triple_list]
                         rels_li.append(rels)
-                        print("\nREBEL Inputs: {}".format(rebel_inputs))
-                        print("REBEL Outputs: {}".format(rels))
+                        # print("\nREBEL Inputs: {}".format(rebel_inputs))
+                        # print("REBEL Outputs: {}".format(rels))
                 case _:
                     raise NotImplementedError(f"Rebel method is not implemented for unit '{unit}'.")
 
@@ -62,8 +62,8 @@ def dev_extract_triples(
                         rels = extract_triples_unirel(unirel_inputs)
                         rels = [triple for triple_list in rels for triple in triple_list]
                         rels_li.append(rels)
-                        # print("\nUniRel Inputs: {}".format(unirel_inputs))
-                        # print("UniRel Outputs: {}".format(rels))
+                        print("\nUniRel Inputs: {}".format(unirel_inputs))
+                        print("UniRel Outputs: {}".format(rels))
                 case _:
                     raise NotImplementedError(f"UniRel method is not implemented for unit '{unit}'.")
 
@@ -160,7 +160,7 @@ if __name__ == "__main__":
 
     methods = ["rebel", "unirel"]
     units = ["sent"]
-    minimum = {"para": [1], "sent": [1, 2, 3, 4], "word": [30, 50, 60]}
+    minimum = {"para": [1], "sent": [1, 2, 3, 4, 5, 6, 7, 8], "word": [30, 50, 60]}
 
     corpus_dir = "param-search/corpus"
 

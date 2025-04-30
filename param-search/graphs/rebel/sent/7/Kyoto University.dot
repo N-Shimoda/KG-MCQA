@@ -1,0 +1,19 @@
+digraph RDFGraph {
+	// Nodes
+	"Kyoto University";
+	"Fields Medal";
+	"KyotoU";
+	"Kyoto";
+	"Japan";
+	"Nobel Prize";
+	"1897";
+	"1951";
+
+	// Edges
+	"Kyoto University" -> "Kyoto" [label="located in the administrative territorial entity"];
+	"Kyoto University" -> "1897" [label="inception"];
+	"Kyoto University" -> "Japan" [label="country"];
+	"Kyoto" -> "Japan" [label="country"];
+	"Fields Medal" -> "Nobel Prize" [label="subclass of"];
+	"KyotoU" -> "1951" [label="inception"];
+}
