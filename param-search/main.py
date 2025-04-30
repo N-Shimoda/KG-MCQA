@@ -3,6 +3,8 @@ import json
 import os
 from typing import Literal
 
+import matplotlib.pyplot as plt
+import pandas as pd
 from nltk.tokenize import sent_tokenize
 from tqdm import tqdm
 
@@ -13,6 +15,41 @@ from kgraph.extraction.unirel import extract_triples_unirel
 
 def group_and_concatenate_sentences(sentences: list[str], num_unit: int) -> list[str]:
     return [" ".join(sentences[i : i + num_unit]) for i in range(0, len(sentences), num_unit)]
+
+
+def get_averages(data: dict[str, dict[str, float]]) -> dict[str, dict[str, float]]:
+    """
+    Calculate the average for each metric (e.g., "nodes", "relations") across all entries
+    and add it under the "average" key in the data dictionary.
+
+    Parameters
+    ----------
+    data : dict[str, dict[str, float]]
+        A dictionary where each key represents a title, and the value is another dictionary
+        containing metrics like "nodes", "relations", etc.
+
+    Returns
+    -------
+    dict[str, dict[str, float]]
+        The updated dictionary with an "average" key containing the averages of each metric.
+    """
+    if not data:
+        raise ValueError("The input data dictionary is empty.")
+
+    # Initialize a dictionary to store sums for each metric
+    metric_sums = {}
+    count = len(data)
+
+    # Accumulate sums for each metric
+    for stats in data.values():
+        for key, value in stats.items():
+            if key not in metric_sums:
+                metric_sums[key] = 0.0
+            metric_sums[key] += value
+
+    # Calculate averages for each metric
+    averages = {key: total / count for key, total in metric_sums.items()}
+    return averages
 
 
 def dev_extract_triples(
@@ -75,43 +112,53 @@ def dev_extract_triples(
     return [KB(rels) for rels in rels_li]
 
 
-def get_averages(data: dict[str, dict[str, float]]) -> dict[str, dict[str, float]]:
+def plot_csv_data(file_path: str):
     """
-    Calculate the average for each metric (e.g., "nodes", "relations") across all entries
-    and add it under the "average" key in the data dictionary.
+    プロットする関数。CSVファイルを読み込み、num_unitsを横軸にして
+    "nodes", "relations" と "... per word" を別々のグラフにし、1つの画像ファイルに保存する。
 
     Parameters
     ----------
-    data : dict[str, dict[str, float]]
-        A dictionary where each key represents a title, and the value is another dictionary
-        containing metrics like "nodes", "relations", etc.
-
-    Returns
-    -------
-    dict[str, dict[str, float]]
-        The updated dictionary with an "average" key containing the averages of each metric.
+    file_path : str
+        プロットするCSVファイルのパス。
     """
-    if not data:
-        raise ValueError("The input data dictionary is empty.")
+    # CSVファイルを読み込む
+    data = pd.read_csv(file_path)
 
-    # Initialize a dictionary to store sums for each metric
-    metric_sums = {}
-    count = len(data)
+    # グラフ全体のレイアウトを設定
+    _, axes = plt.subplots(2, 1, figsize=(10, 12))  # 2行1列のグラフ
 
-    # Accumulate sums for each metric
-    for stats in data.values():
-        for key, value in stats.items():
-            if key not in metric_sums:
-                metric_sums[key] = 0.0
-            metric_sums[key] += value
+    # "nodes" と "relations" をプロット
+    axes[0].plot(data["num_units"], data["nodes"], label="nodes", marker="o")
+    axes[0].plot(data["num_units"], data["relations"], label="relations", marker="o")
+    axes[0].set_title("Graph of Nodes and Relations by num_units")
+    axes[0].set_xlabel("num_units")
+    axes[0].set_ylabel("Values")
+    axes[0].legend()
+    axes[0].grid(True)
+    axes[0].xaxis.set_major_locator(plt.MultipleLocator(1))  # x軸のグリッドを1ごとに設定
 
-    # Calculate averages for each metric
-    averages = {key: total / count for key, total in metric_sums.items()}
-    return averages
+    # "... per word" をプロット
+    axes[1].plot(data["num_units"], data["nodes per word"], label="nodes per word", marker="o")
+    axes[1].plot(data["num_units"], data["rels per word"], label="rels per word", marker="o")
+    axes[1].set_title("Graph of Metrics per Word by num_units")
+    axes[1].set_xlabel("num_units")
+    axes[1].set_ylabel("Values (0-1)")
+    axes[1].legend()
+    axes[1].grid(True)
+    axes[1].xaxis.set_major_locator(plt.MultipleLocator(1))  # x軸のグリッドを1ごとに設定
+
+    # グラフを1つの画像ファイルに保存
+    output_path = f"param-search/{file_path.split('/')[-1].split('.')[0]}.png"
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=300)
+    plt.close()
 
 
 def conduct_analysis(method, unit, min_units):
     overall_data = dict()
+
+    # Iterate over the number of units (i.e. width of the window)
     for num_units in tqdm(min_units):
         graph_dir = f"param-search/graphs/{method}/{unit}/{num_units}"
         os.makedirs(graph_dir, exist_ok=True)
@@ -160,7 +207,7 @@ def conduct_analysis(method, unit, min_units):
                 )
 
     # Write overall stats
-    with open(f"param-search/{method}_{unit}.csv", "w", newline="", encoding="utf-8") as f:
+    with open(f"param-search/details/{method}_{unit}.csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["num_units", "nodes", "relations", "words", "nodes per word", "rels per word"])
         for num_units, stats in overall_data.items():
@@ -180,7 +227,7 @@ if __name__ == "__main__":
 
     methods = ["rebel", "unirel"]
     units = ["sent"]
-    minimum = {"para": [1], "sent": [1, 2, 3, 4, 5, 6, 7, 8], "word": [30, 50, 60]}
+    minimum = {"para": [1], "sent": [i + 1 for i in range(20)], "word": [30, 50, 60]}
 
     CORPUS_DIR = "param-search/corpus"
 
@@ -189,3 +236,4 @@ if __name__ == "__main__":
             min_units = minimum[unit]
             print(f"{method} with {unit}")
             conduct_analysis(method, unit, min_units)
+            plot_csv_data(f"param-search/details/{method}_{unit}.csv")
