@@ -1,22 +1,22 @@
 digraph RDFGraph {
 	// Nodes
-	"Kyoto";
-	"KyotoU";
 	"Kyoto University Library";
+	"Kyoto";
 	"Kyoto University";
+	"KyotoU";
 	"Kyoto University Library Network";
-	"Japan";
 	"1897";
+	"Japan";
 	"1951";
 
 	// Edges
 	"Kyoto University" -> "Kyoto" [label="located in the administrative territorial entity"];
-	"Kyoto University" -> "1897" [label="inception"];
-	"Kyoto University" -> "Japan" [label="country"];
 	"Kyoto" -> "Japan" [label="country"];
+	"Kyoto University" -> "Japan" [label="country"];
+	"Kyoto University" -> "1897" [label="inception"];
+	"Kyoto University Library" -> "Kyoto" [label="located in the administrative territorial entity"];
 	"Kyoto University" -> "Kyoto" [label="located in the administrative territorial entity"];
 	"Kyoto University Library Network" -> "Kyoto" [label="located in the administrative territorial entity"];
-	"Kyoto University Library" -> "Kyoto" [label="located in the administrative territorial entity"];
 	"Kyoto University" -> "1951" [label="inception"];
 	"KyotoU" -> "Kyoto University" [label="replaced by"];
 	"Kyoto University" -> "KyotoU" [label="replaces"];

@@ -1,37 +1,37 @@
 digraph RDFGraph {
 	// Nodes
+	"Director-General";
+	"Goal 10";
+	"Marrakesh Agreement";
+	"WTO";
 	"Sustainable Development Goals";
 	"General Agreement on Tariffs and Trade";
-	"WTO";
-	"World Trade Organization";
-	"Goal 10";
-	"Geneva";
 	"Switzerland";
-	"Director-General";
-	"Marrakesh Agreement";
-	"General Council";
-	"trade agreement";
-	"United Nations";
-	"intergovernmental organization";
-	"Secretariat";
+	"World Trade Organization";
+	"Geneva";
 	"1948";
+	"General Council";
+	"intergovernmental organization";
 	"trade agreements";
+	"United Nations";
+	"Secretariat";
+	"trade agreement";
 
 	// Edges
-	"Geneva" -> "Switzerland" [label="country"];
-	"World Trade Organization" -> "intergovernmental organization" [label="instance of"];
 	"World Trade Organization" -> "Geneva" [label="headquarters location"];
-	"World Trade Organization" -> "Switzerland" [label="country"];
+	"World Trade Organization" -> "intergovernmental organization" [label="instance of"];
 	"Switzerland" -> "World Trade Organization" [label="member of"];
+	"Geneva" -> "Switzerland" [label="country"];
+	"World Trade Organization" -> "Switzerland" [label="country"];
 	"Marrakesh Agreement" -> "trade agreements" [label="instance of"];
-	"General Agreement on Tariffs and Trade" -> "trade agreements" [label="instance of"];
 	"Marrakesh Agreement" -> "trade agreement" [label="instance of"];
-	"General Agreement on Tariffs and Trade" -> "trade agreement" [label="instance of"];
+	"General Agreement on Tariffs and Trade" -> "trade agreements" [label="instance of"];
 	"General Agreement on Tariffs and Trade" -> "1948" [label="inception"];
-	"Director-General" -> "Secretariat" [label="part of"];
+	"General Agreement on Tariffs and Trade" -> "trade agreement" [label="instance of"];
 	"WTO" -> "General Council" [label="has part"];
 	"Director-General" -> "General Council" [label="part of"];
-	"Sustainable Development Goals" -> "Goal 10" [label="has part"];
+	"Director-General" -> "Secretariat" [label="part of"];
 	"Goal 10" -> "Sustainable Development Goals" [label="part of"];
 	"Sustainable Development Goals" -> "United Nations" [label="creator"];
+	"Sustainable Development Goals" -> "Goal 10" [label="has part"];
 }

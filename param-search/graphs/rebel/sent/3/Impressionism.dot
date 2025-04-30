@@ -1,17 +1,17 @@
 digraph RDFGraph {
 	// Nodes
-	"First Impressionist Exhibition";
+	"Claude Monet";
 	"Impression, Sunrise";
 	"Impressionism";
-	"Claude Monet";
-	"1874";
+	"First Impressionist Exhibition";
 	"art movement";
+	"1874";
 	"Paris";
 
 	// Edges
-	"Impressionism" -> "Paris" [label="location of formation"];
 	"Impressionism" -> "art movement" [label="instance of"];
-	"First Impressionist Exhibition" -> "1874" [label="point in time"];
+	"Impressionism" -> "Paris" [label="location of formation"];
 	"Impression, Sunrise" -> "Claude Monet" [label="creator"];
+	"First Impressionist Exhibition" -> "1874" [label="point in time"];
 	"Claude Monet" -> "Impression, Sunrise" [label="notable work"];
 }

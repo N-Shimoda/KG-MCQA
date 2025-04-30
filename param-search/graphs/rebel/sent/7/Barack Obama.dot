@@ -1,0 +1,54 @@
+digraph RDFGraph {
+	// Nodes
+	"13th district";
+	"Sarah Palin";
+	"2020 presidential election";
+	"Barack Hussein Obama II";
+	"2008 presidential election";
+	"Barack Hussein Obama";
+	"his presidential library";
+	"Biden's successful presidential bid";
+	"2012 presidential election";
+	"2011 military intervention in Libya";
+	"John McCain";
+	"Russian interference in the 2016 U.S. elections";
+	"invasion in Ukraine";
+	"Mitt Romney";
+	"Joe Biden";
+	"Hillary Clinton";
+	"presidential library";
+	"Harvard Law Review";
+	"Libyan crisis";
+	"Columbia University";
+	"Illinois";
+	"Chicago";
+	"Republican";
+	"Harvard Law School";
+	"Democratic Party";
+
+	// Edges
+	"Barack Hussein Obama II" -> "Columbia University" [label="educated at"];
+	"13th district" -> "Illinois" [label="located in the administrative territorial entity"];
+	"Harvard Law Review" -> "Harvard Law School" [label="publisher"];
+	"Barack Hussein Obama II" -> "Harvard Law School" [label="educated at"];
+	"Barack Hussein Obama" -> "Columbia University" [label="educated at"];
+	"Barack Hussein Obama" -> "Harvard Law School" [label="educated at"];
+	"2008 presidential election" -> "John McCain" [label="candidate"];
+	"John McCain" -> "2008 presidential election" [label="candidacy in election"];
+	"2008 presidential election" -> "Sarah Palin" [label="candidate"];
+	"Hillary Clinton" -> "Democratic Party" [label="member of political party"];
+	"Sarah Palin" -> "2008 presidential election" [label="candidacy in election"];
+	"John McCain" -> "Republican" [label="member of political party"];
+	"2008 presidential election" -> "Joe Biden" [label="candidate"];
+	"Joe Biden" -> "2008 presidential election" [label="candidacy in election"];
+	"Joe Biden" -> "Democratic Party" [label="member of political party"];
+	"Russian interference in the 2016 U.S. elections" -> "invasion in Ukraine" [label="has cause"];
+	"invasion in Ukraine" -> "Russian interference in the 2016 U.S. elections" [label="has effect"];
+	"2012 presidential election" -> "Mitt Romney" [label="candidate"];
+	"Mitt Romney" -> "2012 presidential election" [label="candidacy in election"];
+	"2011 military intervention in Libya" -> "Libyan crisis" [label="part of"];
+	"his presidential library" -> "Chicago" [label="located in the administrative territorial entity"];
+	"2020 presidential election" -> "Biden's successful presidential bid" [label="has part"];
+	"Biden's successful presidential bid" -> "2020 presidential election" [label="part of"];
+	"presidential library" -> "Chicago" [label="located in the administrative territorial entity"];
+}

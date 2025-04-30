@@ -1,42 +1,42 @@
 digraph RDFGraph {
 	// Nodes
-	"independent dispute resolution";
+	"Goal 10";
+	"Marrakesh Agreement";
+	"WTO";
 	"WTO's";
 	"Sustainable Development Goals";
+	"independent dispute resolution";
 	"General Agreement on Tariffs and Trade";
-	"WTO";
-	"World Trade Organization";
-	"Goal 10";
-	"Geneva";
 	"Switzerland";
+	"World Trade Organization";
 	"United Nations System";
-	"Marrakesh Agreement";
-	"trade agreement";
-	"1994";
-	"United Nations";
-	"intergovernmental organization";
-	"Secretariat";
+	"Geneva";
 	"1948";
-	"trade agreements";
 	"Director-General";
+	"intergovernmental organization";
+	"1994";
+	"trade agreements";
+	"United Nations";
+	"Secretariat";
+	"trade agreement";
 
 	// Edges
-	"World Trade Organization" -> "intergovernmental organization" [label="instance of"];
-	"United Nations System" -> "World Trade Organization" [label="subsidiary"];
-	"World Trade Organization" -> "Switzerland" [label="country"];
-	"Switzerland" -> "World Trade Organization" [label="member of"];
+	"World Trade Organization" -> "Geneva" [label="headquarters location"];
 	"Switzerland" -> "United Nations System" [label="member of"];
 	"Geneva" -> "Switzerland" [label="country"];
-	"World Trade Organization" -> "Geneva" [label="headquarters location"];
-	"WTO" -> "trade agreement" [label="industry"];
-	"independent dispute resolution" -> "trade agreements" [label="facet of"];
+	"World Trade Organization" -> "intergovernmental organization" [label="instance of"];
+	"United Nations System" -> "World Trade Organization" [label="subsidiary"];
+	"Switzerland" -> "World Trade Organization" [label="member of"];
+	"World Trade Organization" -> "Switzerland" [label="country"];
 	"WTO" -> "trade agreements" [label="industry"];
-	"General Agreement on Tariffs and Trade" -> "1948" [label="start time"];
-	"General Agreement on Tariffs and Trade" -> "1948" [label="inception"];
+	"independent dispute resolution" -> "trade agreements" [label="facet of"];
+	"WTO" -> "trade agreement" [label="industry"];
 	"Marrakesh Agreement" -> "1994" [label="point in time"];
+	"General Agreement on Tariffs and Trade" -> "1948" [label="inception"];
+	"General Agreement on Tariffs and Trade" -> "1948" [label="start time"];
 	"WTO" -> "Director-General" [label="office held by head of the organization"];
 	"WTO's" -> "Secretariat" [label="instance of"];
-	"Sustainable Development Goals" -> "Goal 10" [label="has part"];
 	"Goal 10" -> "Sustainable Development Goals" [label="part of"];
 	"Sustainable Development Goals" -> "United Nations" [label="creator"];
+	"Sustainable Development Goals" -> "Goal 10" [label="has part"];
 }

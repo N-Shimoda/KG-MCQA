@@ -3,14 +3,14 @@ digraph RDFGraph {
 	"Claude Monet";
 	"Impressionist music";
 	"Impressionism";
-	"Impressionist literature";
 	"Impression, Sunrise";
+	"Impressionist literature";
 	"art movement";
 	"Paris";
 
 	// Edges
-	"Impressionism" -> "Paris" [label="location of formation"];
 	"Impressionism" -> "art movement" [label="instance of"];
+	"Impressionism" -> "Paris" [label="location of formation"];
 	"Impression, Sunrise" -> "Claude Monet" [label="creator"];
 	"Claude Monet" -> "Impression, Sunrise" [label="notable work"];
 	"Impressionist music" -> "Impressionism" [label="influenced by"];

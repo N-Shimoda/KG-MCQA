@@ -1,27 +1,27 @@
 digraph RDFGraph {
 	// Nodes
-	"Sustainable Development Goals";
-	"free trade";
-	"General Agreement on Tariffs and Trade";
-	"WTO";
 	"Goal 10";
+	"WTO";
+	"Sustainable Development Goals";
+	"General Agreement on Tariffs and Trade";
+	"free trade";
 	"World Trade Organization";
-	"United Nations";
-	"intergovernmental organization";
-	"Geneva";
 	"1948";
+	"intergovernmental organization";
+	"United Nations";
+	"Geneva";
 
 	// Edges
-	"General Agreement on Tariffs and Trade" -> "World Trade Organization" [label="replaced by"];
-	"World Trade Organization" -> "intergovernmental organization" [label="instance of"];
-	"General Agreement on Tariffs and Trade" -> "intergovernmental organization" [label="instance of"];
-	"World Trade Organization" -> "General Agreement on Tariffs and Trade" [label="replaces"];
 	"World Trade Organization" -> "Geneva" [label="headquarters location"];
+	"General Agreement on Tariffs and Trade" -> "World Trade Organization" [label="replaced by"];
+	"General Agreement on Tariffs and Trade" -> "intergovernmental organization" [label="instance of"];
+	"World Trade Organization" -> "intergovernmental organization" [label="instance of"];
 	"General Agreement on Tariffs and Trade" -> "1948" [label="inception"];
-	"Sustainable Development Goals" -> "Goal 10" [label="has part"];
+	"World Trade Organization" -> "General Agreement on Tariffs and Trade" [label="replaces"];
 	"Goal 10" -> "Sustainable Development Goals" [label="part of"];
 	"Sustainable Development Goals" -> "United Nations" [label="creator"];
+	"Sustainable Development Goals" -> "Goal 10" [label="has part"];
 	"WTO" -> "free trade" [label="field of work"];
-	"free trade" -> "WTO" [label="creator"];
 	"WTO" -> "free trade" [label="industry"];
+	"free trade" -> "WTO" [label="creator"];
 }

@@ -1,0 +1,35 @@
+digraph RDFGraph {
+	// Nodes
+	"Sonia Sotomayor";
+	"U. S.";
+	"Illinois";
+	"Washington";
+	"Muammar Gaddafi";
+	"Obama";
+	"Hawaii";
+	"Paris";
+	"Russian";
+	"Harvard Law Review";
+	"United States";
+	"Honolulu";
+	"Libya";
+	"Biden";
+	"Russia";
+	"Sandy Hook Elementary School";
+	"Harvard Law School";
+	"Elena Kagan";
+
+	// Edges
+	"Obama" -> "Illinois" [label="/people/person/place_lived"];
+	"Hawaii" -> "Honolulu" [label="/location/location/contains"];
+	"Harvard Law Review" -> "Harvard Law School" [label="/location/location/contains"];
+	"Illinois" -> "Obama" [label="/location/location/contains"];
+	"Sonia Sotomayor" -> "Elena Kagan" [label="/people/person/children"];
+	"Muammar Gaddafi" -> "Libya" [label="/people/person/nationality"];
+	"Paris" -> "Sandy Hook Elementary School" [label="/location/location/contains"];
+	"Russian" -> "Russia" [label="/people/ethnicity/geographic_distribution"];
+	"U. S." -> "Obama" [label="/location/location/contains"];
+	"United States" -> "Obama" [label="/location/location/contains"];
+	"Washington" -> "Biden" [label="/location/location/contains"];
+	"U. S." -> "Obama" [label="/location/location/contains"];
+}

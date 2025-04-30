@@ -1,27 +1,27 @@
 digraph RDFGraph {
 	// Nodes
+	"Goal 10";
+	"Marrakesh Agreement";
 	"Sustainable Development Goals";
 	"General Agreement on Tariffs and Trade";
-	"Goal 10";
 	"World Trade Organization";
 	"Geneva";
-	"Marrakesh Agreement";
+	"1948";
+	"intergovernmental organization";
 	"1994";
 	"United Nations";
-	"intergovernmental organization";
-	"1948";
 	"Switzerland";
 	"1 January 1995";
 
 	// Edges
-	"Geneva" -> "Switzerland" [label="country"];
-	"World Trade Organization" -> "intergovernmental organization" [label="instance of"];
 	"World Trade Organization" -> "Geneva" [label="headquarters location"];
+	"World Trade Organization" -> "intergovernmental organization" [label="instance of"];
+	"Geneva" -> "Switzerland" [label="country"];
 	"World Trade Organization" -> "Switzerland" [label="country"];
-	"Marrakesh Agreement" -> "1 January 1995" [label="point in time"];
-	"General Agreement on Tariffs and Trade" -> "1948" [label="inception"];
 	"Marrakesh Agreement" -> "1994" [label="point in time"];
-	"Sustainable Development Goals" -> "Goal 10" [label="has part"];
+	"General Agreement on Tariffs and Trade" -> "1948" [label="inception"];
+	"Marrakesh Agreement" -> "1 January 1995" [label="point in time"];
 	"Goal 10" -> "Sustainable Development Goals" [label="part of"];
 	"Sustainable Development Goals" -> "United Nations" [label="creator"];
+	"Sustainable Development Goals" -> "Goal 10" [label="has part"];
 }

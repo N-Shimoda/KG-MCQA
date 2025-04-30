@@ -4,6 +4,7 @@ import os
 from typing import Literal
 
 from nltk.tokenize import sent_tokenize
+from tqdm import tqdm
 
 from kgraph import KB
 from kgraph.extraction.rebel import extract_triples_rebel
@@ -62,8 +63,8 @@ def dev_extract_triples(
                         rels = extract_triples_unirel(unirel_inputs)
                         rels = [triple for triple_list in rels for triple in triple_list]
                         rels_li.append(rels)
-                        print("\nUniRel Inputs: {}".format(unirel_inputs))
-                        print("UniRel Outputs: {}".format(rels))
+                        # print("\nUniRel Inputs: {}".format(unirel_inputs))
+                        # print("UniRel Outputs: {}".format(rels))
                 case _:
                     raise NotImplementedError(f"UniRel method is not implemented for unit '{unit}'.")
 
@@ -74,7 +75,7 @@ def dev_extract_triples(
     return [KB(rels) for rels in rels_li]
 
 
-def add_averages_to_data(data: dict[str, dict[str, float]]) -> dict[str, dict[str, float]]:
+def get_averages(data: dict[str, dict[str, float]]) -> dict[str, dict[str, float]]:
     """
     Calculate the average for each metric (e.g., "nodes", "relations") across all entries
     and add it under the "average" key in the data dictionary.
@@ -106,47 +107,66 @@ def add_averages_to_data(data: dict[str, dict[str, float]]) -> dict[str, dict[st
 
     # Calculate averages for each metric
     averages = {key: total / count for key, total in metric_sums.items()}
-
-    # Add the averages to the data dictionary under the "average" key
-    data["average"] = averages
-    return data
+    return averages
 
 
-def conduct_analysis(method, unit, num_units):
-    out_dir = f"param-search/graphs/{method}/{unit}/{num_units}"
-    os.makedirs(out_dir, exist_ok=True)
+def conduct_analysis(method, unit, min_units):
+    overall_data = dict()
+    for num_units in tqdm(min_units):
+        graph_dir = f"param-search/graphs/{method}/{unit}/{num_units}"
+        os.makedirs(graph_dir, exist_ok=True)
 
-    data = dict()
+        data = dict()
 
-    for doc_file in os.listdir(corpus_dir):
-        with open(f"{corpus_dir}/{doc_file}", "r", encoding="utf-8") as f:
-            doc_data = json.load(f)
+        for doc_file in os.listdir(CORPUS_DIR):
+            with open(f"{CORPUS_DIR}/{doc_file}", "r", encoding="utf-8") as f:
+                doc_data = json.load(f)
 
-        title = doc_data["title"]
-        kb = dev_extract_triples([doc_data["summary"]], method, unit, num_units)[0]
-        kb.write_dot(f"{out_dir}/{title}.dot")
+            title = doc_data["title"]
+            kb = dev_extract_triples([doc_data["summary"]], method, unit, num_units)[0]
+            kb.write_dot(f"{graph_dir}/{title}.dot")
 
-        # analyze the extracted graph
-        num_nodes = len(kb.get_nodes())
-        num_rels = len(kb.relations)
-        num_words = len(doc_data["summary"].split())
-        data[title] = {
-            "nodes": num_nodes,
-            "relations": num_rels,
-            "words": num_words,
-            "nodes per word": num_nodes / num_words,
-            "rels per word": num_rels / num_words,
-        }
+            # analyze the extracted graph
+            num_nodes = len(kb.get_nodes())
+            num_rels = len(kb.relations)
+            num_words = len(doc_data["summary"].split())
+            data[title] = {
+                "nodes": num_nodes,
+                "relations": num_rels,
+                "words": num_words,
+                "nodes per word": num_nodes / num_words,
+                "rels per word": num_rels / num_words,
+            }
 
-    data = add_averages_to_data(data)
+        # Add the averages to the data dictionary under the "average" key
+        averages = get_averages(data)
+        data["average"] = averages
+        overall_data[num_units] = averages
 
-    with open(f"param-search/{method}_{unit}_{num_units}.csv", "w", newline="", encoding="utf-8") as f:
+        # Write detailed stats
+        with open(f"param-search/details/{method}_{unit}_{num_units}.csv", "w", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            writer.writerow(["title", "nodes", "relations", "words", "nodes per word", "rels per word"])
+            for title, stats in data.items():
+                writer.writerow(
+                    [
+                        title,
+                        stats["nodes"],
+                        stats["relations"],
+                        stats["words"],
+                        stats["nodes per word"],
+                        stats["rels per word"],
+                    ]
+                )
+
+    # Write overall stats
+    with open(f"param-search/{method}_{unit}.csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(["title", "nodes", "relations", "words", "nodes per word", "rels per word"])
-        for title, stats in data.items():
+        writer.writerow(["num_units", "nodes", "relations", "words", "nodes per word", "rels per word"])
+        for num_units, stats in overall_data.items():
             writer.writerow(
                 [
-                    title,
+                    num_units,
                     stats["nodes"],
                     stats["relations"],
                     stats["words"],
@@ -162,10 +182,10 @@ if __name__ == "__main__":
     units = ["sent"]
     minimum = {"para": [1], "sent": [1, 2, 3, 4, 5, 6, 7, 8], "word": [30, 50, 60]}
 
-    corpus_dir = "param-search/corpus"
+    CORPUS_DIR = "param-search/corpus"
 
     for method in methods:
         for unit in units:
-            for num_units in minimum[unit]:
-                print(f"{method} with {unit} ({num_units} units)")
-                conduct_analysis(method, unit, num_units)
+            min_units = minimum[unit]
+            print(f"{method} with {unit}")
+            conduct_analysis(method, unit, min_units)

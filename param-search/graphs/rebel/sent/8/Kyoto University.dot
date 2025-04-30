@@ -5,17 +5,17 @@ digraph RDFGraph {
 	"Kyoto University";
 	"Fields Medalists";
 	"Gauss Prize";
+	"1897";
 	"Japan";
 	"Nobel Prize";
-	"1897";
 
 	// Edges
 	"Kyoto University" -> "Kyoto" [label="located in the administrative territorial entity"];
-	"Kyoto University" -> "1897" [label="inception"];
-	"Kyoto University" -> "Japan" [label="country"];
 	"Kyoto" -> "Japan" [label="country"];
-	"Fields Medal" -> "Nobel Prize" [label="subclass of"];
-	"Fields Medalists" -> "Nobel Prize" [label="instance of"];
+	"Kyoto University" -> "Japan" [label="country"];
+	"Kyoto University" -> "1897" [label="inception"];
 	"Gauss Prize" -> "Nobel Prize" [label="award received"];
 	"Gauss Prize" -> "Nobel Prize" [label="instance of"];
+	"Fields Medalists" -> "Nobel Prize" [label="instance of"];
+	"Fields Medal" -> "Nobel Prize" [label="subclass of"];
 }

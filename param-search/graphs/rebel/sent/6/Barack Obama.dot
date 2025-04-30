@@ -1,0 +1,55 @@
+digraph RDFGraph {
+	// Nodes
+	"Sarah Palin";
+	"Osama bin Laden";
+	"Barack Hussein Obama II";
+	"2008 presidential election";
+	"Paul Ryan";
+	"Barack Hussein Obama";
+	"South Side";
+	"2012 presidential election";
+	"John McCain";
+	"Mitt Romney";
+	"Russian interference in the 2016 U.S. elections";
+	"invasion in Ukraine";
+	"Joe Biden";
+	"his presidential library";
+	"presidential library";
+	"Harvard Law Review";
+	"August 4, 1961";
+	"Columbia University";
+	"September 11 attacks";
+	"Russia";
+	"Chicago";
+	"Republican";
+	"Harvard Law School";
+	"Democratic Party";
+
+	// Edges
+	"Barack Hussein Obama II" -> "Columbia University" [label="educated at"];
+	"Harvard Law Review" -> "Harvard Law School" [label="publisher"];
+	"Barack Hussein Obama II" -> "August 4, 1961" [label="date of birth"];
+	"Barack Hussein Obama II" -> "Harvard Law School" [label="educated at"];
+	"Barack Hussein Obama" -> "Columbia University" [label="educated at"];
+	"Barack Hussein Obama" -> "Harvard Law School" [label="educated at"];
+	"Barack Hussein Obama" -> "August 4, 1961" [label="date of birth"];
+	"2008 presidential election" -> "John McCain" [label="candidate"];
+	"John McCain" -> "2008 presidential election" [label="candidacy in election"];
+	"2008 presidential election" -> "Sarah Palin" [label="candidate"];
+	"Sarah Palin" -> "2008 presidential election" [label="candidacy in election"];
+	"John McCain" -> "Republican" [label="member of political party"];
+	"2008 presidential election" -> "Joe Biden" [label="candidate"];
+	"Joe Biden" -> "2008 presidential election" [label="candidacy in election"];
+	"Joe Biden" -> "Democratic Party" [label="member of political party"];
+	"Osama bin Laden" -> "September 11 attacks" [label="significant event"];
+	"Paul Ryan" -> "2012 presidential election" [label="candidacy in election"];
+	"2012 presidential election" -> "Paul Ryan" [label="candidate"];
+	"2012 presidential election" -> "Mitt Romney" [label="candidate"];
+	"Mitt Romney" -> "2012 presidential election" [label="candidacy in election"];
+	"Russian interference in the 2016 U.S. elections" -> "invasion in Ukraine" [label="has cause"];
+	"invasion in Ukraine" -> "Russian interference in the 2016 U.S. elections" [label="has effect"];
+	"Russian interference in the 2016 U.S. elections" -> "Russia" [label="participant"];
+	"his presidential library" -> "Chicago" [label="located in the administrative territorial entity"];
+	"South Side" -> "Chicago" [label="located in the administrative territorial entity"];
+	"presidential library" -> "Chicago" [label="located in the administrative territorial entity"];
+}
