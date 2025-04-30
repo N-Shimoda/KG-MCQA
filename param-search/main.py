@@ -114,21 +114,22 @@ def dev_extract_triples(
 
 def plot_csv_data(file_path: str):
     """
-    プロットする関数。CSVファイルを読み込み、num_unitsを横軸にして
-    "nodes", "relations" と "... per word" を別々のグラフにし、1つの画像ファイルに保存する。
+    Function to plot data. Reads a CSV file and plots "nodes", "relations",
+    and "... per word" metrics against num_units on separate graphs, saving
+    them as a single image file.
 
     Parameters
     ----------
     file_path : str
-        プロットするCSVファイルのパス。
+        Path to the CSV file to be plotted.
     """
-    # CSVファイルを読み込む
+    # Read the CSV file
     data = pd.read_csv(file_path)
 
-    # グラフ全体のレイアウトを設定
-    _, axes = plt.subplots(2, 1, figsize=(10, 12))  # 2行1列のグラフ
+    # Set up the overall layout of the graphs
+    _, axes = plt.subplots(2, 1, figsize=(10, 12))  # 2 rows, 1 column of graphs
 
-    # "nodes" と "relations" をプロット
+    # Plot "nodes" and "relations"
     axes[0].plot(data["num_units"], data["nodes"], label="nodes", marker="o")
     axes[0].plot(data["num_units"], data["relations"], label="relations", marker="o")
     axes[0].set_title("Graph of Nodes and Relations by num_units")
@@ -136,9 +137,9 @@ def plot_csv_data(file_path: str):
     axes[0].set_ylabel("Values")
     axes[0].legend()
     axes[0].grid(True)
-    axes[0].xaxis.set_major_locator(plt.MultipleLocator(1))  # x軸のグリッドを1ごとに設定
+    axes[0].xaxis.set_major_locator(plt.MultipleLocator(1))  # Set x-axis grid at intervals of 1
 
-    # "... per word" をプロット
+    # Plot "... per word" metrics
     axes[1].plot(data["num_units"], data["nodes per word"], label="nodes per word", marker="o")
     axes[1].plot(data["num_units"], data["rels per word"], label="rels per word", marker="o")
     axes[1].set_title("Graph of Metrics per Word by num_units")
@@ -146,9 +147,9 @@ def plot_csv_data(file_path: str):
     axes[1].set_ylabel("Values (0-1)")
     axes[1].legend()
     axes[1].grid(True)
-    axes[1].xaxis.set_major_locator(plt.MultipleLocator(1))  # x軸のグリッドを1ごとに設定
+    axes[1].xaxis.set_major_locator(plt.MultipleLocator(1))  # Set x-axis grid at intervals of 1
 
-    # グラフを1つの画像ファイルに保存
+    # Save the graphs as a single image file
     output_path = f"param-search/{file_path.split('/')[-1].split('.')[0]}.png"
     plt.tight_layout()
     plt.savefig(output_path, dpi=300)
@@ -191,9 +192,9 @@ def conduct_analysis(method, unit, min_units):
         overall_data[num_units] = averages
 
         # Write detailed stats
-        DETAILS_DIR = "param-search/details"
+        DETAILS_DIR = f"param-search/details/{method}"
         os.makedirs(DETAILS_DIR, exist_ok=True)
-        with open(f"{DETAILS_DIR}/{method}_{unit}_{num_units}.csv", "w", newline="", encoding="utf-8") as f:
+        with open(f"{DETAILS_DIR}/{unit}_{num_units}.csv", "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerow(["title", "nodes", "relations", "words", "nodes per word", "rels per word"])
             for title, stats in data.items():
