@@ -1,5 +1,3 @@
-import os
-
 import numpy as np
 import torch
 from transformers import BertTokenizerFast
@@ -215,7 +213,7 @@ class UniRel:
         return results
 
 
-def extract_triples_unirel(texts: list[str]) -> list[dict[str, str]]:
+def extract_triples_unirel(texts: list[str]) -> list[list[dict[str, str]]]:
     """
     Extracts triplets from a list of text strings by using UniRel.
 
@@ -226,12 +224,12 @@ def extract_triples_unirel(texts: list[str]) -> list[dict[str, str]]:
     Parameters
     ----------
     texts : list of str
-        A list of input text strings containing triplet information with specific markers.
+        A list of input text. Each text should be a single sentence.
 
     Returns
     -------
-    list[dict[str, str]]
-        A list of dictionaries where each dictionary represents a triplet with the keys:
+    list[list[dict[str, str]]]
+        List of dictionaries for each input text, where each dictionary represents a triplet with the keys:
         - 'head': The subject of the triplet.
         - 'type': The relation of the triplet.
         - 'tail': The object of the triplet.
@@ -244,32 +242,25 @@ def extract_triples_unirel(texts: list[str]) -> list[dict[str, str]]:
 
 if __name__ == "__main__":
 
-    os.environ["TOKENIZERS_PARALLELISM"] = "false"
-
     texts = [
-        "In perhaps the most ambitious Mekong cruise attempt, Impulse Tourism,\
-                  an operator based in Chiang Mai, Thailand, is organizing an expedition starting\
-                      in November in Jinghong, a small city in the Yunnan province in China.",
-        "Adisham Hall in Sri Lanka was constructed between 1927 and 1931 at\
-                  St Benedicts Monastery , Adisham , Haputhale , Sri Lanka in the Tudor\
-                      and Jacobean style of architecture",
+        # Chiang Mai
+        "In perhaps the most ambitious Mekong cruise attempt, Impulse Tourism, an operator based in Chiang Mai, "
+        "Thailand, is organizing an expedition starting in November in Jinghong, a small city in the Yunnan province "
+        "in China.",
+        # Adisham Hall
+        "Adisham Hall in Sri Lanka was constructed between 1927 and 1931 at St Benedicts Monastery , Adisham , "
+        "Haputhale , Sri Lanka in the Tudor and Jacobean style of architecture",
+        # Anson
         "Anson was born in 1979 in Hong Kong.",
-        "In perhaps the most ambitious Mekong cruise attempt, Impulse Tourism,\
-                      an operator based in Chiang Mai, Thailand, is organizing an expedition starting\
-                          in November in Jinghong, a small city in the Yunnan province in China.",
-        "Adisham Hall in Sri Lanka was constructed between 1927 and 1931 at St Benedicts Monastery ,\
-                      Adisham , Haputhale , Sri Lanka in the Tudor and Jacobean style of architecture",
-        "Naoki Shimoda was born in 2001 in Japan. He is now studying at the University of Tokyo.",
-        "iPhone16 was released in 2024 by Apple.",
-        "Punta Cana is a resort town in the municipality of Higüey,\
-        in La Altagracia Province, the easternmost province of the Dominican Republic."
-        "Alice knows Bob. Bob likes Charlie.",
-        "Charlie is a friend of Alice.",
-        "Bob and Alice are colleagues.",
+        # Punta Cana
+        "Punta Cana is a resort town in the municipality of Higüey, in La Altagracia Province, "
+        "the easternmost province of the Dominican Republic.",
+        # Naoki Shimoda
+        "Naoki Shimoda is a Japanese professional wrestler, better known by his ring name, Adomish.",
     ]
 
     outputs = extract_triples_unirel(texts)
     for output, text in zip(outputs, texts):
-        print("num_rels: {}, len_text: {}".format(len(output), len(text.split())))
+        print("num_rels: {}, num_words: {}".format(len(output), len(text.split())))
     for i, output in enumerate(outputs):
         print("{}: {}".format(i, output))
