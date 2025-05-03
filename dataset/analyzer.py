@@ -9,6 +9,12 @@ def plot_stats(stats: dict[str, dict], ds_name: str):
     categories = list(stats["num_words"].keys())
     word_counts = [stats["num_words"][cat] for cat in categories]
 
+    # append all word counts
+    if len(categories) > 1:
+        all_word_counts = [x for sublist in word_counts for x in sublist]
+        word_counts.append(all_word_counts)
+        categories.append("all")
+
     # boxplot
     plt.figure(figsize=(10, 6))
     plt.boxplot(word_counts, tick_labels=categories, patch_artist=True)
