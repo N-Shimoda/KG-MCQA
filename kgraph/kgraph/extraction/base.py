@@ -58,7 +58,7 @@ def create_chunks(
 
 
 def extract_triples(
-    texts: list[str], method: Literal["rebel", "unirel"], chunk_size: int = 100, overlap: int = 8
+    texts: list[str], method: Literal["rebel", "unirel"], batch_size: int = 32
 ) -> list[KB]:
     """
     Apply relation extraction on the given batch of texts, using the specified method.
@@ -67,13 +67,11 @@ def extract_triples(
     Parameters
     ----------
     texts : list[str]
-        The input texts for relation extraction.
+        List of input texts for relation extraction.
     method : Literal["rebel", "unirel"]
         The method to use for relation extraction. Can be either "rebel" or "unirel".
-    chunk_size : int, optional
-        The size of each chunk for processing. Default is 100.
-    overlap : int, optional
-        The number of overlapping tokens (words) between consecutive chunks. Default is 8.
+    batch_size : int
+        The size of each batch for processing. Default is 32.
 
     Returns
     -------
@@ -87,13 +85,6 @@ def extract_triples(
     rels_li = []
     match method:
         case "rebel":
-            # chunks_li, bounds = create_chunks(texts, chunk_size, overlap)
-            # rels_li_by_chunk = extract_triples_rebel(chunks_li)
-            # for start, end in bounds:
-            #     rels = []
-            #     for i in range(start, end + 1):
-            #         rels.extend(rels_li_by_chunk[i])
-            #     rels_li.append(rels)
             for text in texts:
                 try:
                     rebel_inputs = sent_tokenize(text)
