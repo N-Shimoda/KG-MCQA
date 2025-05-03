@@ -16,49 +16,8 @@ except ImportError:
     from kgraph.extraction.unirel import extract_triples_unirel
 
 
-def create_chunks(
-    texts: list[str], chunk_size: int, overlap: int
-) -> tuple[list[str], list[tuple[int, int]]]:
-    """
-    Splits the input text into chunks of specified size with a given overlap.
-
-    Parameters
-    ----------
-    text : list[str]
-        The input text to be split into chunks.
-    chunk_size : int
-        The size of each chunk.
-    overlap : int
-        The number of overlapping tokens between consecutive chunks.
-
-    Returns
-    -------
-    chunks_li : list[str]
-        A list of text chunks.
-    bounds : list[tuple[int, int]]
-        A list of tuples indicating the start and end indices of each chunk for the original text.
-    """
-    chunks_li = []
-    bounds = []
-
-    for text in texts:
-        tokens = text.split()
-        chunks = []
-        for i in range(0, len(tokens), chunk_size - overlap):
-            chunk = " ".join(tokens[i : i + chunk_size])
-            if chunk:
-                chunks.append(chunk)
-        chunks_li.extend(chunks)
-
-        # calcaulate the bounds
-        start = bounds[-1][1] + 1 if bounds else 0
-        bounds.append((start, start + len(chunks) - 1))
-
-    return chunks_li, bounds
-
-
 def extract_triples(
-    texts: list[str], method: Literal["rebel", "unirel"], batch_size: int = 32
+    texts: list[str], method: Literal["rebel", "unirel"], batch_size: int = 64
 ) -> list[KB]:
     """
     Apply relation extraction on the given batch of texts, using the specified method.
