@@ -17,7 +17,7 @@ def plot_stats(stats: dict[str, dict], ds_name: str):
 
     # boxplot
     plt.figure(figsize=(10, 6))
-    plt.boxplot(word_counts, tick_labels=categories, patch_artist=True)
+    plt.boxplot(word_counts, tick_labels=categories, showmeans=True, patch_artist=True)
 
     # graph settings
     plt.title(f"Statistics per Category ({ds_name})")
@@ -56,7 +56,7 @@ if __name__ == "__main__":
         if not file.endswith(".json"):
             continue
         stats = count_stats(os.path.join(DS_DIR, file))
-        print(f"{file.split('.')[0]}: {stats}")
+        print(f"{file.split('.')[0]}:\n{stats}")
 
         # plot stats
         ds_name = file.split(".")[0]
