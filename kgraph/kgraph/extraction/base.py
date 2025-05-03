@@ -82,38 +82,34 @@ def extract_triples(
         texts[0], str
     ), "Input texts should be a list of strings."
 
-    rels_li = []
-    match method:
-        case "rebel":
-            for text in texts:
-                try:
-                    rebel_inputs = sent_tokenize(text)
-                except LookupError:
-                    nltk.download("punkt_tab")
-                    rebel_inputs = sent_tokenize(text)
-                rels = extract_triples_rebel(rebel_inputs)
-                rels = [triple for triple_list in rels for triple in triple_list]
-                rels_li.append(rels)
-                # print("\nRebel Inputs: {}".format(rebel_inputs))
-                # print("Rebel Outputs: {}".format(rels))
+    # divide each text into sentences
+    try:
+        sents_li = [sent_tokenize(text) for text in texts]
+    except LookupError:
+        nltk.download("punkt_tab")
+        sents_li = [sent_tokenize(text) for text in texts]
 
-        case "unirel":
-            for text in texts:
-                try:
-                    unirel_inputs = sent_tokenize(text)
-                except LookupError:
-                    nltk.download("punkt_tab")
-                    unirel_inputs = sent_tokenize(text)
-                rels = extract_triples_unirel(unirel_inputs)
-                rels = [triple for triple_list in rels for triple in triple_list]
-                rels_li.append(rels)
-                # print("\nUniRel Inputs: {}".format(unirel_inputs))
-                # print("UniRel Outputs: {}".format(rels))
+    # concatenated list of every sentences from input batch
+    concat_sents = [s for sents in sents_li for s in sents]
 
-        case _:
-            raise ValueError(
-                f"Expected relation extraction methods are 'rebel' or 'unirel'. Got {method}."
-            )
+    rels_by_sents = []  # relations for each sentence (not text), list[list[dict]]
+    for i in range(0, len(concat_sents), batch_size):
+        batch = concat_sents[i : i + batch_size]
+        match method:
+            case "rebel":
+                rels = extract_triples_rebel(batch)
+            case "unirel":
+                rels = extract_triples_unirel(batch)
+            case _:
+                raise ValueError(
+                    f"Expected relation extraction methods are 'rebel' or 'unirel'. Got {method}."
+                )
+        rels_by_sents.extend(rels)
+
+    # group the relations by text
+    rels_li = [
+        [rel for _ in range(len(sents)) for rel in rels_by_sents.pop(0)] for sents in sents_li
+    ]
 
     assert len(rels_li) == len(
         texts
