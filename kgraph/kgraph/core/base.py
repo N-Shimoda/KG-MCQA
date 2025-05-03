@@ -236,8 +236,8 @@ class KB:
 
         # Create KB instance
         kb = cls(relations)
-        if node_atts:
-            kb.nodes = node_atts
+        for node_label, attributes in node_atts.items():
+            kb.nodes[node_label] = attributes
 
         return kb
 
@@ -259,20 +259,20 @@ class KB:
         dot_content.append("\t// Nodes")
         for node_label, attributes in self.nodes.items():
             # TODO: This IF statement should be removed.
-            if node_label:
-                # node label
-                node_line = f'\t"{node_label}"'
-                # node attributes
-                wiki_title = attributes.get("wiki_title", "")
-                color = attributes.get("color", "")
-                if wiki_title and color:
-                    node_line += f' [wiki_title="{wiki_title}", color="{color}"]'
-                elif wiki_title:
-                    node_line += f' [wiki_title="{wiki_title}"]'
-                elif color:
-                    node_line += f' [color="{color}"]'
-                node_line += ";"
-                dot_content.append(node_line)
+            assert node_label != "", "Node label should not be empty. Current knowledge graph: {}".format(self)
+            # node label
+            node_line = f'\t"{node_label}"'
+            # node attributes
+            wiki_title = attributes.get("wiki_title", "")
+            color = attributes.get("color", "")
+            if wiki_title and color:
+                node_line += f' [wiki_title="{wiki_title}", color="{color}"]'
+            elif wiki_title:
+                node_line += f' [wiki_title="{wiki_title}"]'
+            elif color:
+                node_line += f' [color="{color}"]'
+            node_line += ";"
+            dot_content.append(node_line)
 
         # Add edges
         dot_content.append("\n\t// Edges")

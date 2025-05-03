@@ -1,3 +1,4 @@
+import torch
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from transformers.models.bart.modeling_bart import BartForConditionalGeneration
 from transformers.tokenization_utils_base import BatchEncoding
@@ -77,7 +78,8 @@ def extract_triples_rebel(texts: list[str]) -> list[list[dict[str, str]]]:
     """
     # Load model and tokenizer
     tokenizer = AutoTokenizer.from_pretrained("Babelscape/rebel-large", clean_up_tokenization_spaces=False)
-    model: BartForConditionalGeneration = AutoModelForSeq2SeqLM.from_pretrained("Babelscape/rebel-large").to("cuda")
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    model: BartForConditionalGeneration = AutoModelForSeq2SeqLM.from_pretrained("Babelscape/rebel-large").to(device)
 
     # Tokenize
     model_inputs: BatchEncoding = tokenizer(texts, max_length=256, padding=True, truncation=True, return_tensors="pt")
@@ -98,8 +100,8 @@ def extract_triples_rebel(texts: list[str]) -> list[list[dict[str, str]]]:
         # "output_attentions": False,
     }
     generated_tokens = model.generate(
-        model_inputs["input_ids"].to(model.device),
-        attention_mask=model_inputs["attention_mask"].to(model.device),
+        model_inputs["input_ids"].to(device),
+        attention_mask=model_inputs["attention_mask"].to(device),
         **gen_kwargs,
     )  # shape is [batch_size * num_return_seqs, max_seq_len]
 
@@ -115,7 +117,9 @@ def extract_triples_rebel(texts: list[str]) -> list[list[dict[str, str]]]:
         for j in range(gen_kwargs["num_return_sequences"]):
             preds = decoded_preds[i * gen_kwargs["num_return_sequences"] + j]
             triples |= set(parse_preds(preds))
-        triples_batch.append([{"head": t[0], "type": t[1], "tail": t[2]} for t in triples])
+        triples_batch.append(
+            [{"head": t[0], "type": t[1], "tail": t[2]} for t in triples if all(t[i] != "" for i in range(3))]
+        )
 
     assert len(triples_batch) == len(texts), "The number of texts and the number of outputs do not match."
 
@@ -131,6 +135,8 @@ if __name__ == "__main__":
         "Alice knows Bob. Bob likes Charlie.",
         "Charlie is a friend of Alice.",
         "Bob and Alice are colleagues.",
+        "{} was an influential figure in the American civil rights movement and delivered the famous "
+        '"I Have a Dream" speech.',
     ]
 
     outputs = extract_triples_rebel(texts)
