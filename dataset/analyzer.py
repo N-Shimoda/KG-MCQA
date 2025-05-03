@@ -4,7 +4,7 @@ import os
 import matplotlib.pyplot as plt
 
 
-def plot_stats(stats: dict[str, dict]):
+def plot_stats(stats: dict[str, dict], ds_name: str):
     # define data
     categories = list(stats["num_words"].keys())
     word_counts = [stats["num_words"][cat] for cat in categories]
@@ -14,7 +14,7 @@ def plot_stats(stats: dict[str, dict]):
     plt.boxplot(word_counts, tick_labels=categories, patch_artist=True)
 
     # graph settings
-    plt.title("Number of Words per Category")
+    plt.title(f"Statistics per Category ({ds_name})")
     plt.xlabel("Categories")
     plt.ylabel("Word Count")
     plt.grid(True, axis="y")
@@ -53,4 +53,5 @@ if __name__ == "__main__":
         print(f"{file.split('.')[0]}: {stats}")
 
         # plot stats
-        plot_stats(stats)
+        ds_name = file.split(".")[0]
+        plot_stats(stats, ds_name)
