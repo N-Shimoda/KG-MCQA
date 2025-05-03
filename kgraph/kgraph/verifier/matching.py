@@ -69,6 +69,8 @@ def find_best_matching(
 
     # check device
     device = "cuda" if torch.cuda.is_available() else "cpu"
+    if device != "cuda":
+        print("Warning: GPU is not available. Using CPU instead.")
 
     # calculate label embeddings
     model = SentenceTransformer(

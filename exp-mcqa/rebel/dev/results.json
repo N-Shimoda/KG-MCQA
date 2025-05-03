@@ -11,7 +11,7 @@
                 "1": {
                     "choice": "Brazil",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 1.0,
+                    "node_score": 0.9508977681398392,
                     "verified_edges": [
                         {
                             "head": "Bras\u00edlia",
@@ -36,7 +36,7 @@
                 "3": {
                     "choice": "Peru",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.9508977681398392,
                     "verified_edges": []
                 },
                 "answer": 1,
@@ -45,9 +45,21 @@
             "geo-1": {
                 "0": {
                     "choice": "Sahara Desert",
-                    "edge_score": 0.16666666666666666,
-                    "node_score": 0.5275893381663731,
+                    "edge_score": 0.23076923076923078,
+                    "node_score": 0.8717032935884264,
                     "verified_edges": [
+                        {
+                            "head": "Bras\u00edlia",
+                            "type": "country",
+                            "tail": "Brazil",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Brazil",
+                            "type": "capital",
+                            "tail": "Bras\u00edlia",
+                            "verified": "true"
+                        },
                         {
                             "head": "Sahara",
                             "type": "instance of",
@@ -58,8 +70,106 @@
                 },
                 "1": {
                     "choice": "Gobi Desert",
-                    "edge_score": 0.3333333333333333,
-                    "node_score": 0.6705423082624163,
+                    "edge_score": 0.23076923076923078,
+                    "node_score": 0.8717032935884264,
+                    "verified_edges": [
+                        {
+                            "head": "Bras\u00edlia",
+                            "type": "country",
+                            "tail": "Brazil",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Brazil",
+                            "type": "capital",
+                            "tail": "Bras\u00edlia",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Sahara",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        }
+                    ]
+                },
+                "2": {
+                    "choice": "Antarctica",
+                    "edge_score": 0.23076923076923078,
+                    "node_score": 0.8717032935884264,
+                    "verified_edges": [
+                        {
+                            "head": "Bras\u00edlia",
+                            "type": "country",
+                            "tail": "Brazil",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Brazil",
+                            "type": "capital",
+                            "tail": "Bras\u00edlia",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Sahara",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        }
+                    ]
+                },
+                "3": {
+                    "choice": "Atacama Desert",
+                    "edge_score": 0.23076923076923078,
+                    "node_score": 0.8752163847287496,
+                    "verified_edges": [
+                        {
+                            "head": "Bras\u00edlia",
+                            "type": "country",
+                            "tail": "Brazil",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Brazil",
+                            "type": "capital",
+                            "tail": "Bras\u00edlia",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Sahara",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        }
+                    ]
+                },
+                "answer": 3,
+                "correct": false
+            },
+            "geo-2": {
+                "0": {
+                    "choice": "China",
+                    "edge_score": 0.15384615384615385,
+                    "node_score": 0.8876947462558746,
+                    "verified_edges": [
+                        {
+                            "head": "Sahara",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Gobi Desert",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        }
+                    ]
+                },
+                "1": {
+                    "choice": "India",
+                    "edge_score": 0.15384615384615385,
+                    "node_score": 0.8876947462558746,
                     "verified_edges": [
                         {
                             "head": "Sahara",
@@ -76,119 +186,39 @@
                     ]
                 },
                 "2": {
-                    "choice": "Antarctica",
-                    "edge_score": 0.3333333333333333,
-                    "node_score": 0.6967067718505859,
-                    "verified_edges": [
-                        {
-                            "head": "Sahara",
-                            "type": "instance of",
-                            "tail": "desert",
-                            "verified": "true"
-                        },
-                        {
-                            "head": "Antarctica",
-                            "type": "instance of",
-                            "tail": "largest desert in the world",
-                            "verified": "true"
-                        }
-                    ]
-                },
-                "3": {
-                    "choice": "Atacama Desert",
-                    "edge_score": 0.5,
-                    "node_score": 0.6967067718505859,
-                    "verified_edges": [
-                        {
-                            "head": "Sahara",
-                            "type": "instance of",
-                            "tail": "desert",
-                            "verified": "true"
-                        },
-                        {
-                            "head": "Atacama Desert",
-                            "type": "instance of",
-                            "tail": "desert",
-                            "verified": "true"
-                        },
-                        {
-                            "head": "Atacama Desert",
-                            "type": "instance of",
-                            "tail": "largest desert in the world",
-                            "verified": "true"
-                        }
-                    ]
-                },
-                "answer": 3,
-                "correct": false
-            },
-            "geo-2": {
-                "0": {
-                    "choice": "China",
-                    "edge_score": 0.3333333333333333,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Nepal",
-                            "type": "shares border with",
-                            "tail": "China",
-                            "verified": "true"
-                        },
-                        {
-                            "head": "Nepal",
-                            "type": "highest point",
-                            "tail": "Mount Everest",
-                            "verified": "true"
-                        }
-                    ]
-                },
-                "1": {
-                    "choice": "India",
-                    "edge_score": 0.3333333333333333,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Nepal",
-                            "type": "shares border with",
-                            "tail": "India",
-                            "verified": "true"
-                        },
-                        {
-                            "head": "Nepal",
-                            "type": "highest point",
-                            "tail": "Mount Everest",
-                            "verified": "true"
-                        }
-                    ]
-                },
-                "2": {
                     "choice": "Bhutan",
-                    "edge_score": 0.3333333333333333,
-                    "node_score": 1.0,
+                    "edge_score": 0.15384615384615385,
+                    "node_score": 0.8845329642295837,
                     "verified_edges": [
                         {
-                            "head": "Nepal",
-                            "type": "shares border with",
-                            "tail": "Bhutan",
+                            "head": "Sahara",
+                            "type": "instance of",
+                            "tail": "desert",
                             "verified": "true"
                         },
                         {
-                            "head": "Nepal",
-                            "type": "highest point",
-                            "tail": "Mount Everest",
+                            "head": "Gobi Desert",
+                            "type": "instance of",
+                            "tail": "desert",
                             "verified": "true"
                         }
                     ]
                 },
                 "3": {
                     "choice": "Pakistan",
-                    "edge_score": 0.16666666666666666,
-                    "node_score": 1.0,
+                    "edge_score": 0.15384615384615385,
+                    "node_score": 0.8845329642295837,
                     "verified_edges": [
                         {
-                            "head": "Nepal",
-                            "type": "highest point",
-                            "tail": "Mount Everest",
+                            "head": "Sahara",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Gobi Desert",
+                            "type": "instance of",
+                            "tail": "desert",
                             "verified": "true"
                         }
                     ]
@@ -199,71 +229,192 @@
             "geo-3": {
                 "0": {
                     "choice": "Amazon",
-                    "edge_score": 0.0,
-                    "node_score": 0.5676926523447037,
-                    "verified_edges": []
+                    "edge_score": 0.15384615384615385,
+                    "node_score": 0.7308216492335001,
+                    "verified_edges": [
+                        {
+                            "head": "Sahara",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Gobi Desert",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        }
+                    ]
                 },
                 "1": {
                     "choice": "Yangtze",
-                    "edge_score": 0.25,
-                    "node_score": 0.8297453224658966,
+                    "edge_score": 0.15384615384615385,
+                    "node_score": 0.7369668831427892,
                     "verified_edges": [
                         {
-                            "head": "Yangtze",
+                            "head": "Sahara",
                             "type": "instance of",
-                            "tail": "river",
+                            "tail": "desert",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Gobi Desert",
+                            "type": "instance of",
+                            "tail": "desert",
                             "verified": "true"
                         }
                     ]
                 },
                 "2": {
                     "choice": "Nile",
-                    "edge_score": 0.0,
-                    "node_score": 0.8284130915999413,
-                    "verified_edges": []
+                    "edge_score": 0.15384615384615385,
+                    "node_score": 0.7369668831427892,
+                    "verified_edges": [
+                        {
+                            "head": "Sahara",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Gobi Desert",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        }
+                    ]
                 },
                 "3": {
                     "choice": "Mississippi",
-                    "edge_score": 0.0,
-                    "node_score": 0.8430585265159607,
-                    "verified_edges": []
+                    "edge_score": 0.15384615384615385,
+                    "node_score": 0.7371108134587606,
+                    "verified_edges": [
+                        {
+                            "head": "Sahara",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Gobi Desert",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        }
+                    ]
                 },
-                "answer": 1,
+                "answer": 3,
                 "correct": false
             },
             "geo-4": {
                 "0": {
                     "choice": "India",
-                    "edge_score": 0.0,
-                    "node_score": 0.9406811793645223,
-                    "verified_edges": []
+                    "edge_score": 0.25,
+                    "node_score": 0.6693796157836914,
+                    "verified_edges": [
+                        {
+                            "head": "Sahara",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Gobi Desert",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Atacama Desert",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        }
+                    ]
                 },
                 "1": {
                     "choice": "Australia",
-                    "edge_score": 0.0,
-                    "node_score": 0.9406811793645223,
-                    "verified_edges": []
+                    "edge_score": 0.25,
+                    "node_score": 0.6843602538108826,
+                    "verified_edges": [
+                        {
+                            "head": "Sahara",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Gobi Desert",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Atacama Desert",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Mexico",
-                    "edge_score": 0.0,
-                    "node_score": 0.9406811793645223,
-                    "verified_edges": []
+                    "edge_score": 0.25,
+                    "node_score": 0.6693796157836914,
+                    "verified_edges": [
+                        {
+                            "head": "Sahara",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Gobi Desert",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Atacama Desert",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        }
+                    ]
                 },
                 "3": {
                     "choice": "South Africa",
-                    "edge_score": 0.0,
-                    "node_score": 0.9406811793645223,
-                    "verified_edges": []
+                    "edge_score": 0.25,
+                    "node_score": 0.6693796157836914,
+                    "verified_edges": [
+                        {
+                            "head": "Sahara",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Gobi Desert",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        },
+                        {
+                            "head": "Atacama Desert",
+                            "type": "instance of",
+                            "tail": "desert",
+                            "verified": "true"
+                        }
+                    ]
                 },
-                "answer": -1,
-                "correct": false
+                "answer": 1,
+                "correct": true
             }
         },
         "stats": {
-            "correct": 1,
+            "correct": 2,
             "fail": 2,
-            "unselectable": 2,
+            "unselectable": 1,
             "total": 5
         }
     },
@@ -273,7 +424,7 @@
                 "0": {
                     "choice": "2.14",
                     "edge_score": 0.0,
-                    "node_score": 0.6911341309547424,
+                    "node_score": 0.799999988079071,
                     "verified_edges": []
                 },
                 "1": {
@@ -301,25 +452,25 @@
                 "0": {
                     "choice": "10",
                     "edge_score": 0.0,
-                    "node_score": 0.5805824001630148,
+                    "node_score": 0.7426117757956187,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "11",
                     "edge_score": 0.0,
-                    "node_score": 0.5849150816599528,
+                    "node_score": 0.8333333233992258,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "12",
                     "edge_score": 0.0,
-                    "node_score": 0.24724904696146646,
+                    "node_score": 0.7426117757956187,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "13",
                     "edge_score": 0.0,
-                    "node_score": 0.5849150816599528,
+                    "node_score": 0.7426117757956187,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -329,25 +480,25 @@
                 "0": {
                     "choice": "4",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.659604047025953,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "6",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.6365243877683368,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "9",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.6365243877683368,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "11",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.7142857142857143,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -357,25 +508,25 @@
                 "0": {
                     "choice": "20",
                     "edge_score": 0.0,
-                    "node_score": 0.6918134242296219,
+                    "node_score": 0.5569588243961334,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "25",
                     "edge_score": 0.0,
-                    "node_score": 0.48368807633717853,
+                    "node_score": 0.5629221647977829,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "30",
                     "edge_score": 0.0,
-                    "node_score": 0.4612089494864146,
+                    "node_score": 0.5569588243961334,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "35",
                     "edge_score": 0.0,
-                    "node_score": 0.4537399709224701,
+                    "node_score": 0.5629221647977829,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -385,25 +536,25 @@
                 "0": {
                     "choice": "90",
                     "edge_score": 0.0,
-                    "node_score": 0.8398773372173309,
+                    "node_score": 0.8169841468334198,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "180",
                     "edge_score": 0.0,
-                    "node_score": 0.8398773372173309,
+                    "node_score": 0.8169841468334198,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "270",
                     "edge_score": 0.0,
-                    "node_score": 0.8398773372173309,
+                    "node_score": 0.7505629062652588,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "360",
                     "edge_score": 0.0,
-                    "node_score": 0.8398773372173309,
+                    "node_score": 0.8169841468334198,
                     "verified_edges": []
                 },
                 "answer": -1,
