@@ -16,49 +16,8 @@ except ImportError:
     from kgraph.extraction.unirel import extract_triples_unirel
 
 
-def create_chunks(
-    texts: list[str], chunk_size: int, overlap: int
-) -> tuple[list[str], list[tuple[int, int]]]:
-    """
-    Splits the input text into chunks of specified size with a given overlap.
-
-    Parameters
-    ----------
-    text : list[str]
-        The input text to be split into chunks.
-    chunk_size : int
-        The size of each chunk.
-    overlap : int
-        The number of overlapping tokens between consecutive chunks.
-
-    Returns
-    -------
-    chunks_li : list[str]
-        A list of text chunks.
-    bounds : list[tuple[int, int]]
-        A list of tuples indicating the start and end indices of each chunk for the original text.
-    """
-    chunks_li = []
-    bounds = []
-
-    for text in texts:
-        tokens = text.split()
-        chunks = []
-        for i in range(0, len(tokens), chunk_size - overlap):
-            chunk = " ".join(tokens[i : i + chunk_size])
-            if chunk:
-                chunks.append(chunk)
-        chunks_li.extend(chunks)
-
-        # calcaulate the bounds
-        start = bounds[-1][1] + 1 if bounds else 0
-        bounds.append((start, start + len(chunks) - 1))
-
-    return chunks_li, bounds
-
-
 def extract_triples(
-    texts: list[str], method: Literal["rebel", "unirel"], chunk_size: int = 100, overlap: int = 8
+    texts: list[str], method: Literal["rebel", "unirel"], batch_size: int = 64
 ) -> list[KB]:
     """
     Apply relation extraction on the given batch of texts, using the specified method.
@@ -67,13 +26,11 @@ def extract_triples(
     Parameters
     ----------
     texts : list[str]
-        The input texts for relation extraction.
+        List of input texts for relation extraction.
     method : Literal["rebel", "unirel"]
         The method to use for relation extraction. Can be either "rebel" or "unirel".
-    chunk_size : int, optional
-        The size of each chunk for processing. Default is 100.
-    overlap : int, optional
-        The number of overlapping tokens (words) between consecutive chunks. Default is 8.
+    batch_size : int
+        The size of each batch for processing. Default is 32.
 
     Returns
     -------
@@ -84,45 +41,34 @@ def extract_triples(
         texts[0], str
     ), "Input texts should be a list of strings."
 
-    rels_li = []
-    match method:
-        case "rebel":
-            # chunks_li, bounds = create_chunks(texts, chunk_size, overlap)
-            # rels_li_by_chunk = extract_triples_rebel(chunks_li)
-            # for start, end in bounds:
-            #     rels = []
-            #     for i in range(start, end + 1):
-            #         rels.extend(rels_li_by_chunk[i])
-            #     rels_li.append(rels)
-            for text in texts:
-                try:
-                    rebel_inputs = sent_tokenize(text)
-                except LookupError:
-                    nltk.download("punkt_tab")
-                    rebel_inputs = sent_tokenize(text)
-                rels = extract_triples_rebel(rebel_inputs)
-                rels = [triple for triple_list in rels for triple in triple_list]
-                rels_li.append(rels)
-                # print("\nRebel Inputs: {}".format(rebel_inputs))
-                # print("Rebel Outputs: {}".format(rels))
+    # divide each text into sentences
+    try:
+        sents_li = [sent_tokenize(text) for text in texts]
+    except LookupError:
+        nltk.download("punkt_tab")
+        sents_li = [sent_tokenize(text) for text in texts]
 
-        case "unirel":
-            for text in texts:
-                try:
-                    unirel_inputs = sent_tokenize(text)
-                except LookupError:
-                    nltk.download("punkt_tab")
-                    unirel_inputs = sent_tokenize(text)
-                rels = extract_triples_unirel(unirel_inputs)
-                rels = [triple for triple_list in rels for triple in triple_list]
-                rels_li.append(rels)
-                # print("\nUniRel Inputs: {}".format(unirel_inputs))
-                # print("UniRel Outputs: {}".format(rels))
+    # concatenated list of every sentences from input batch
+    concat_sents = [s for sents in sents_li for s in sents]
 
-        case _:
-            raise ValueError(
-                f"Expected relation extraction methods are 'rebel' or 'unirel'. Got {method}."
-            )
+    rels_by_sents = []  # relations for each sentence (not text), list[list[dict]]
+    for i in range(0, len(concat_sents), batch_size):
+        batch = concat_sents[i : i + batch_size]
+        match method:
+            case "rebel":
+                rels = extract_triples_rebel(batch)
+            case "unirel":
+                rels = extract_triples_unirel(batch)
+            case _:
+                raise ValueError(
+                    f"Expected relation extraction methods are 'rebel' or 'unirel'. Got {method}."
+                )
+        rels_by_sents.extend(rels)
+
+    # group the relations by text
+    rels_li = [
+        [rel for _ in range(len(sents)) for rel in rels_by_sents.pop(0)] for sents in sents_li
+    ]
 
     assert len(rels_li) == len(
         texts
