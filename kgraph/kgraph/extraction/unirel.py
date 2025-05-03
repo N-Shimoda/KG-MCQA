@@ -12,13 +12,16 @@ except ImportError:
 
 class UniRel:
     def __init__(self, model_path, max_length=128, dataset_name="nyt") -> None:
-        self.model = UniRelModel.from_pretrained(model_path, attn_implementation="eager")  # MODIFIED
+
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.model = UniRelModel.from_pretrained(model_path, attn_implementation="eager").to(device)  # MODIFIED
+
         added_token = [f"[unused{i}]" for i in range(1, 17)]
         self.tokenizer: BertTokenizerFast = BertTokenizerFast.from_pretrained(
             "bert-base-cased",
             additional_special_tokens=added_token,
             do_basic_tokenize=False,
-            clean_up_tokenization_spaces=False,
+            # clean_up_tokenization_spaces=False,
         )
         self.max_length = max_length
         self.max_length = max_length
@@ -27,13 +30,10 @@ class UniRel:
     def _get_pred_str(self, dataset_name):
         self.pred2text = None
         if dataset_name == "nyt":
-            # self.pred2text = dataprocess.rel2text.nyt_rel2text
             self.pred2text = nyt_rel2text
         elif dataset_name == "nyt_star":
-            # self.pred2text = dataprocess.rel2text.nyt_rel2text
             self.pred2text = nyt_rel2text
         elif dataset_name == "webnlg":
-            # self.pred2text = dataprocess.rel2text.webnlg_rel2text
             self.pred2text = webnlg_rel2text
             cnt = 1
             exist_value = []
@@ -161,6 +161,12 @@ class UniRel:
         for head_pred, tail_pred, span_pred, input_ids in zip(
             outputs["head_preds"], outputs["tail_preds"], outputs["span_preds"], input_ids_list
         ):
+            # convert to numpy
+            head_pred = head_pred.cpu().numpy()
+            tail_pred = tail_pred.cpu().numpy()
+            span_pred = span_pred.cpu().numpy()
+            input_ids = input_ids.cpu().numpy()
+
             pred_spo_text = set()
             s_h2r, s2s = self._get_e2r(head_pred)
             s_t2r, _ = self._get_e2r(head_pred.T)
@@ -198,6 +204,7 @@ class UniRel:
 
     def predict(self, text) -> list[list[tuple[str, str, str]]]:
         input_ids, attention_mask, token_type_ids = self._data_process(text)
+
         if isinstance(input_ids, list):
             input_ids = torch.tensor(input_ids)
             attention_mask = torch.tensor(attention_mask)
@@ -207,8 +214,10 @@ class UniRel:
             attention_mask = torch.tensor(attention_mask).unsqueeze(0)
             token_type_ids = torch.tensor(token_type_ids).unsqueeze(0)
         self.model.eval()
+
         with torch.no_grad():
-            outputs = self.model(input_ids, attention_mask, token_type_ids)
+            device = self.model.device
+            outputs = self.model(input_ids.to(device), attention_mask.to(device), token_type_ids.to(device))
             results = self._extractor(outputs, input_ids)
         return results
 
