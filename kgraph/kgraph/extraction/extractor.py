@@ -94,8 +94,8 @@ def extract_triples(
                 rels = extract_triples_rebel(rebel_inputs)
                 rels = [triple for triple_list in rels for triple in triple_list]
                 rels_li.append(rels)
-                print("\nRebel Inputs: {}".format(rebel_inputs))
-                print("Rebel Outputs: {}".format(rels))
+                # print("\nRebel Inputs: {}".format(rebel_inputs))
+                # print("Rebel Outputs: {}".format(rels))
 
         case "unirel":
             for text in texts:

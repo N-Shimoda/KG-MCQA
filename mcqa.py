@@ -4,6 +4,8 @@ import os
 import sys
 from typing import Literal
 
+import numpy as np
+from matplotlib import pyplot as plt
 from tqdm import tqdm
 
 from kgraph import KB, join
@@ -211,9 +213,77 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
             json.dump(result, f, indent=4)
 
 
+def plot_bar_chart(categories: list[str], scores: dict[str, list[int]], output_file: str):
+    if not output_file.endswith(".svg"):
+        raise ValueError("Output file should be in SVG format for article quality.")
+
+    # define data
+    scores = {
+        "Correct": [scores[cat][0] / scores[cat][3] * 100 for cat in categories],
+        "Incorrect": [scores[cat][1] / scores[cat][3] * 100 for cat in categories],
+        "Unselectable": [scores[cat][2] / scores[cat][3] * 100 for cat in categories],
+    }
+
+    colors = {
+        "Correct": "royalblue",
+        "Incorrect": "lightgray",
+        "Unselectable": "lightblue",
+    }
+
+    hatch_styles = {
+        "Correct": "//",  # define hatch style for correct answers
+        "Incorrect": "",
+        "Unselectable": "",
+    }
+
+    # graph settings
+    n_categories = len(categories)
+    n_labels = len(scores)
+    bar_width = 0.15
+    index = np.arange(n_categories)
+
+    _, ax = plt.subplots(figsize=(12, 6))
+
+    for i, (label, values) in enumerate(scores.items()):
+        offset = (i - n_labels / 2) * bar_width + bar_width / 2
+        bars = ax.bar(
+            index + offset,
+            values,
+            bar_width,
+            label=label,
+            color=colors[label],
+            hatch=hatch_styles[label],
+            edgecolor="black",
+        )
+
+        # plot values
+        for bar in bars:
+            height = bar.get_height()
+            ax.text(
+                bar.get_x() + bar.get_width() / 2.0,
+                height + 0.5,
+                f"{height:.1f}",
+                ha="center",
+                va="bottom",
+                fontsize=8,
+            )
+
+    # axies and legend settings
+    ax.set_xticks(index)
+    ax.set_xticklabels(categories, rotation=20)
+    ax.set_ylabel("Number of Samples / Percentile (%)")
+    ax.set_ylim(0, 105)
+    ax.legend()
+    ax.grid(True, axis="y", linestyle="--", alpha=0.5)
+
+    plt.tight_layout()
+    plt.savefig(output_file, format="svg")
+
+
 def collect_results(result_file: str, mcq_file: str):
     """
-    Collect results from the verification process.
+    Count the number of correct, incorrect, and unselectable answers for each category
+    by comparing the result file with the answer key from original MCQ dataset.
 
     Parameters
     ----------
@@ -223,7 +293,7 @@ def collect_results(result_file: str, mcq_file: str):
         Path to the MCQ dataset file (JSON).
     """
     with open(result_file, "r") as f:
-        result = json.load(f)
+        result: dict[str, dict] = json.load(f)
 
     with open(mcq_file, "r") as f:
         mcqs = json.load(f)
@@ -247,20 +317,28 @@ def collect_results(result_file: str, mcq_file: str):
                 counts[1] += 1
 
         # save the count of correct answers for each category
-        result[cat]["correct"], result[cat]["fail"], result[cat]["unselectable"] = counts
-        result[cat]["total"] = len(ans_data.keys())
+        result[cat]["stats"] = dict()
+        result[cat]["stats"]["correct"], result[cat]["stats"]["fail"], result[cat]["stats"]["unselectable"] = counts
+        result[cat]["stats"]["total"] = len(ans_data.keys())
 
+    # save the result to a JSON file
     with open(result_file, "w") as f:
         json.dump(result, f, indent=4)
+
+    # create bar chart
+    categories = result.keys()
+    scores = {cat: list(result[cat]["stats"].values()) for cat in categories}
+    plot_bar_chart(categories, scores, f"{os.path.dirname(result_file)}/bar_plot.svg")
 
 
 if __name__ == "__main__":
 
     # NOTE: Please remove all PG, KG files in OUT_DIR before running the code.
-    # ---- Define hyperparameters ----
+    # ---- Validate arguments ----
     if len(sys.argv) < 3:
         raise ValueError("Usage: python mcqa.py <MCQ_FILE> <MODEL_NAME>")
 
+    # ---- Define hyperparameters ----
     MCQ_FILE = sys.argv[1]
     MODEL = sys.argv[2]  # "unirel" or "rebel"
     if not MCQ_FILE.endswith(".json"):
