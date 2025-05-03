@@ -52,7 +52,7 @@ def create_PG_temps(questions: list[str], choice_li: list[list[str]], model: Lit
     return PG_temps
 
 
-def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"], batch_size: int = 8):
+def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"], batch_size: int = 32):
     """
     Create PGs from given MCQ dataset.
 
@@ -85,7 +85,6 @@ def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"]
             PG_temps = create_PG_temps(questions_batch, choice_li_batch, model)
 
             for j, (PG_temp, choice) in enumerate(zip(PG_temps, choice_li_batch)):
-                print("\nPG_temp: {}\nChoice: {}".format(PG_temp, choice))
                 for c in choice:
                     # substitute choice label into PG_temp
                     PG = swap_label_with_symbol(PG_temp, "#BLANK", c)
