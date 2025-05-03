@@ -53,7 +53,9 @@ def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"]
 
     for cat in sorted(mcqs.keys()):
         # TODO: Implement batch inference here.
-        for i, mcq in enumerate(tqdm(mcqs[cat]["questions"], desc=f"Processing {mcqs[cat]['category']}")):
+        for i, mcq in enumerate(
+            tqdm(mcqs[cat]["questions"], desc=f"Processing {mcqs[cat]['category']}")
+        ):
             choice = mcq["choice"]
             PG_temp = create_PG_temp(mcq["sentence"], choice, model)
 
@@ -80,7 +82,10 @@ def download_wiki_articles(pg_top_dir: str, wiki_dir: str):
     # iterate over each category
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
-        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
+        pg_dirs = [
+            os.path.join(pg_top_dir, cat, subdir)
+            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
+        ]
         for pg_dir in tqdm(pg_dirs, desc=f"Processing {cat}"):
             # reconstruct PGs from dot files
             pg_files = [f for f in os.listdir(pg_dir) if f.endswith(".dot")]
@@ -122,7 +127,10 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
     for cat in sorted(cat_dirs):
 
         # List of PG directories for the given category
-        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
+        pg_dirs = [
+            os.path.join(pg_top_dir, cat, subdir)
+            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
+        ]
         for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
             # Note: pg_dir contains four PG dot files for a single MCQ
             for pg_filename in os.listdir(pg_dir):
@@ -171,7 +179,10 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
         # List of PG directories for the given category
-        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
+        pg_dirs = [
+            os.path.join(pg_top_dir, cat, subdir)
+            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
+        ]
         result[cat] = {"questions": dict()}
 
         for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
@@ -318,7 +329,11 @@ def collect_results(result_file: str, mcq_file: str):
 
         # save the count of correct answers for each category
         result[cat]["stats"] = dict()
-        result[cat]["stats"]["correct"], result[cat]["stats"]["fail"], result[cat]["stats"]["unselectable"] = counts
+        (
+            result[cat]["stats"]["correct"],
+            result[cat]["stats"]["fail"],
+            result[cat]["stats"]["unselectable"],
+        ) = counts
         result[cat]["stats"]["total"] = len(ans_data.keys())
 
     # save the result to a JSON file
@@ -348,10 +363,9 @@ if __name__ == "__main__":
     if MODEL not in ["unirel", "rebel"]:
         raise ValueError("MODEL should be either 'unirel' or 'rebel'.")
 
-    KG_CHACHE_DIR = f"KG_cache/{MODEL}"  # common for all experiments
-
     DS_NAME = os.path.basename(MCQ_FILE).split(".")[0]
     WIKI_DIR = f"wikipedia/{MODEL}/{DS_NAME}"
+    KG_CHACHE_DIR = f"KG_cache/{MODEL}/{DS_NAME}"
     OUT_DIR = f"exp-mcqa/{MODEL}/{DS_NAME}"
     PG_TOP_DIR = f"{OUT_DIR}/PGs"
     KG_TOP_DIR = f"{OUT_DIR}/KGs"

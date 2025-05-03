@@ -1,5 +1,6 @@
 from typing import Literal
 
+import nltk
 from nltk.tokenize import sent_tokenize
 
 try:
@@ -15,7 +16,9 @@ except ImportError:
     from kgraph.extraction.unirel import extract_triples_unirel
 
 
-def create_chunks(texts: list[str], chunk_size: int, overlap: int) -> tuple[list[str], list[tuple[int, int]]]:
+def create_chunks(
+    texts: list[str], chunk_size: int, overlap: int
+) -> tuple[list[str], list[tuple[int, int]]]:
     """
     Splits the input text into chunks of specified size with a given overlap.
 
@@ -77,7 +80,9 @@ def extract_triples(
     kb_list : list[KB]
         A list of knowledge bases (KB) containing the extracted relations.
     """
-    assert isinstance(texts, list) and isinstance(texts[0], str), "Input texts should be a list of strings."
+    assert isinstance(texts, list) and isinstance(
+        texts[0], str
+    ), "Input texts should be a list of strings."
 
     rels_li = []
     match method:
@@ -90,7 +95,11 @@ def extract_triples(
             #         rels.extend(rels_li_by_chunk[i])
             #     rels_li.append(rels)
             for text in texts:
-                rebel_inputs = sent_tokenize(text)
+                try:
+                    rebel_inputs = sent_tokenize(text)
+                except LookupError:
+                    nltk.download("punkt_tab")
+                    rebel_inputs = sent_tokenize(text)
                 rels = extract_triples_rebel(rebel_inputs)
                 rels = [triple for triple_list in rels for triple in triple_list]
                 rels_li.append(rels)
@@ -99,7 +108,11 @@ def extract_triples(
 
         case "unirel":
             for text in texts:
-                unirel_inputs = sent_tokenize(text)
+                try:
+                    unirel_inputs = sent_tokenize(text)
+                except LookupError:
+                    nltk.download("punkt_tab")
+                    unirel_inputs = sent_tokenize(text)
                 rels = extract_triples_unirel(unirel_inputs)
                 rels = [triple for triple_list in rels for triple in triple_list]
                 rels_li.append(rels)
@@ -107,9 +120,13 @@ def extract_triples(
                 # print("UniRel Outputs: {}".format(rels))
 
         case _:
-            raise ValueError(f"Expected relation extraction methods are 'rebel' or 'unirel'. Got {method}.")
+            raise ValueError(
+                f"Expected relation extraction methods are 'rebel' or 'unirel'. Got {method}."
+            )
 
-    assert len(rels_li) == len(texts), "Number of relation lists does not match the number of texts."
+    assert len(rels_li) == len(
+        texts
+    ), "Number of relation lists does not match the number of texts."
     return [KB(rels) for rels in rels_li]
 
 
