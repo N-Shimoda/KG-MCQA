@@ -48,7 +48,7 @@ def create_fever_PGs(
     """
     # Download the FEVER dataset from HuggingFace
     dataset = load_dataset("fever", name="v1.0", split=split)
-    # dataset = dataset.select(range(256))  # for development
+    dataset = dataset.select(range(5000))  # for development
     print(f"Dataset size: {len(dataset)}")
 
     ds_info = dict()
