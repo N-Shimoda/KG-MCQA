@@ -213,7 +213,8 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
 
 def collect_results(result_file: str, mcq_file: str):
     """
-    Collect results from the verification process.
+    Count the number of correct, incorrect, and unselectable answers for each category
+    by comparing the result file with the answer key from original MCQ dataset.
 
     Parameters
     ----------
@@ -247,8 +248,9 @@ def collect_results(result_file: str, mcq_file: str):
                 counts[1] += 1
 
         # save the count of correct answers for each category
-        result[cat]["correct"], result[cat]["fail"], result[cat]["unselectable"] = counts
-        result[cat]["total"] = len(ans_data.keys())
+        result[cat]["stats"] = dict()
+        result[cat]["stats"]["correct"], result[cat]["stats"]["fail"], result[cat]["stats"]["unselectable"] = counts
+        result[cat]["stats"]["total"] = len(ans_data.keys())
 
     with open(result_file, "w") as f:
         json.dump(result, f, indent=4)
@@ -257,10 +259,11 @@ def collect_results(result_file: str, mcq_file: str):
 if __name__ == "__main__":
 
     # NOTE: Please remove all PG, KG files in OUT_DIR before running the code.
-    # ---- Define hyperparameters ----
+    # ---- Validate arguments ----
     if len(sys.argv) < 3:
         raise ValueError("Usage: python mcqa.py <MCQ_FILE> <MODEL_NAME>")
 
+    # ---- Define hyperparameters ----
     MCQ_FILE = sys.argv[1]
     MODEL = sys.argv[2]  # "unirel" or "rebel"
     if not MCQ_FILE.endswith(".json"):
