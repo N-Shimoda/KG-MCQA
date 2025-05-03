@@ -93,17 +93,11 @@
                 },
                 "2": {
                     "choice": "Bhutan",
-                    "edge_score": 1.0,
+                    "edge_score": 0.5,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Nepal",
-                            "type": "/location/location/contains",
-                            "tail": "Mount Everest",
-                            "verified": "true"
-                        },
-                        {
-                            "head": "Bhutan",
                             "type": "/location/location/contains",
                             "tail": "Mount Everest",
                             "verified": "true"
@@ -123,7 +117,7 @@
                         }
                     ]
                 },
-                "answer": 2,
+                "answer": -1,
                 "correct": false
             },
             "geo-3": {
@@ -142,65 +136,53 @@
                 "2": {
                     "choice": "Nile",
                     "edge_score": 0.0,
-                    "node_score": 0.627979964017868,
+                    "node_score": 0.6276978403329849,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Mississippi",
-                    "edge_score": 1.0,
-                    "node_score": 0.6238648295402527,
-                    "verified_edges": [
-                        {
-                            "head": "Mississippi",
-                            "type": "/location/location/contains",
-                            "tail": "longest",
-                            "verified": "true"
-                        }
-                    ]
+                    "edge_score": 0.0,
+                    "node_score": 0.6246343702077866,
+                    "verified_edges": []
                 },
-                "answer": 3,
+                "answer": -1,
                 "correct": false
             },
             "geo-4": {
                 "0": {
                     "choice": "India",
                     "edge_score": 0.0,
-                    "node_score": 0.7141871303319931,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Australia",
-                    "edge_score": 1.0,
-                    "node_score": 0.7141871452331543,
-                    "verified_edges": [
-                        {
-                            "head": "Australia",
-                            "type": "/location/location/contains",
-                            "tail": "Great Barrier Reef",
-                            "verified": "true"
-                        }
-                    ]
+                    "edge_score": 0.0,
+                    "node_score": 1.0,
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Mexico",
                     "edge_score": 0.0,
-                    "node_score": 0.7170751094818115,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "South Africa",
                     "edge_score": 0.0,
-                    "node_score": 0.7141871452331543,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
-                "answer": 1,
-                "correct": true
+                "answer": -1,
+                "correct": false
             }
         },
-        "correct": 2,
-        "fail": 2,
-        "unselectable": 1,
-        "total": 5
+        "stats": {
+            "correct": 1,
+            "fail": 0,
+            "unselectable": 4,
+            "total": 5
+        }
     },
     "mat": {
         "questions": {
@@ -345,9 +327,11 @@
                 "correct": false
             }
         },
-        "correct": 0,
-        "fail": 0,
-        "unselectable": 5,
-        "total": 5
+        "stats": {
+            "correct": 0,
+            "fail": 0,
+            "unselectable": 5,
+            "total": 5
+        }
     }
 }
