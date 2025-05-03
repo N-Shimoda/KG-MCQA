@@ -185,8 +185,8 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
         ]
         result[cat] = {"questions": dict()}
 
+        # NOTE: pg_dir contains four PG dot files for a single MCQ
         for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
-            # Note: pg_dir contains four PG dot files for a single MCQ
             mcq_id = os.path.basename(pg_dir)
             result[cat]["questions"][mcq_id] = dict()
 
@@ -204,12 +204,15 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
             with mp.Pool(processes=num_workers) as pool:
                 results = pool.map(process_pg, args)
 
+            # NOTE: results are sorted by option numbers
+            # since the prefix of PG filename (x[0]) are 0, 1, 2, 3 w.r.t. the choice index
             scores = []
-            for pg_path, edge_score, node_score, verified_edges, _ in results:
+            for pg_path, edge_score, node_score, verified_edges, _ in sorted(
+                results, key=lambda x: x[0]
+            ):
+                # Save the result of verification
                 pg_filename = os.path.basename(pg_path)
                 scores.append((edge_score, node_score))
-
-                # Save the verification result
                 result[cat]["questions"][mcq_id][pg_filename[0]] = {
                     "choice": pg_filename[2:-4],
                     "edge_score": edge_score,
@@ -217,6 +220,7 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
                     "verified_edges": verified_edges,
                 }
 
+            # save chosen answer
             result[cat]["questions"][mcq_id]["answer"] = select_best_answer(scores)
 
         # Save the result to a JSON file
