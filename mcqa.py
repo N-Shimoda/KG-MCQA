@@ -5,6 +5,7 @@ import sys
 from typing import Literal
 
 import numpy as np
+import torch
 from matplotlib import pyplot as plt
 from tqdm import tqdm
 
@@ -93,6 +94,9 @@ def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"]
                     os.makedirs(f"{pg_top_dir}/{cat}/{cat}-{i+j}", exist_ok=True)
                     pg_dot_path = f"{pg_top_dir}/{cat}/{cat}-{i+j}/{choice.index(c)}_{c}.dot"
                     PG.write_dot(pg_dot_path)
+
+    # clean up GPU memory
+    torch.cuda.empty_cache()
 
 
 def download_wiki_articles(pg_top_dir: str, wiki_dir: str):
