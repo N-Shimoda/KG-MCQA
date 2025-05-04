@@ -15,6 +15,8 @@ class UniRel:
 
         device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model = UniRelModel.from_pretrained(model_path, attn_implementation="eager").to(device)  # MODIFIED
+        if device != "cuda":
+            print("Using {} instead of GPU.".format(device))
 
         added_token = [f"[unused{i}]" for i in range(1, 17)]
         self.tokenizer: BertTokenizerFast = BertTokenizerFast.from_pretrained(

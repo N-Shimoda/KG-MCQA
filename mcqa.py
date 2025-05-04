@@ -5,6 +5,7 @@ import sys
 from typing import Literal
 
 import numpy as np
+import torch
 from matplotlib import pyplot as plt
 from tqdm import tqdm
 
@@ -17,24 +18,42 @@ from src.select_ans import select_best_answer
 from src.verification import process_pg
 
 
-def create_PG_temp(question: str, choice: list[str], model: Literal["unirel", "rebel"]) -> KB:
+def create_PG_temps(questions: list[str], choice_li: list[list[str]], model: Literal["unirel", "rebel"]) -> list[KB]:
     """
     Create PG templates for MCQs.
+
+    Parameters
+    ----------
+    questions : list[str]
+        List of questions.
+    choice_li : list[list[str]]
+        List of choices for each question.
+    model : Literal["unirel", "rebel"]
+        Model name for extracting triples.
+
+    Returns
+    -------
+    list[KB]
+        List of PG templates.
     """
     assert model in ["unirel", "rebel"], "model should be either 'unirel' or 'rebel'."
 
-    sentences = [question.format(c) for c in choice]
-    PGs = extract_triples(sentences, method=model)
+    sents_li = [[question.format(c) for c in choice] for question, choice in zip(questions, choice_li)]
+    all_sents = [s for sentences in sents_li for s in sentences]
+    PGs = extract_triples(all_sents, method=model)
 
-    PG_temp = KB()
-    for PG in PGs:
-        PG = swap_label_with_symbol(PG, choice[PGs.index(PG)], "#BLANK")
-        PG_temp = join(PG_temp, PG)
+    PG_temps = []
+    for choice in choice_li:
+        PG_temp = KB()
+        for c in choice:
+            PG = swap_label_with_symbol(PGs.pop(0), c, "#BLANK")
+            PG_temp = join(PG_temp, PG)
+        PG_temps.append(PG_temp)
 
-    return PG_temp
+    return PG_temps
 
 
-def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"]):
+def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"], batch_size: int = 32):
     """
     Create PGs from given MCQ dataset.
 
@@ -44,6 +63,10 @@ def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"]
         Path to the MCQ dataset file (JSON).
     pg_top_dir : str
         Top-level directory to save the generated PGs.
+    model : Literal["unirel", "rebel"]
+        Model name for extracting triples.
+    batch_size : int
+        Batch size (number of questions) for processing at once.
     """
     assert model in ["unirel", "rebel"], "model should be either 'unirel' or 'rebel'."
 
@@ -52,20 +75,28 @@ def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"]
     print("Categories: {}".format(list(mcqs.keys())))
 
     for cat in sorted(mcqs.keys()):
-        # TODO: Implement batch inference here.
-        for i, mcq in enumerate(
-            tqdm(mcqs[cat]["questions"], desc=f"Processing {mcqs[cat]['category']}")
-        ):
-            choice = mcq["choice"]
-            PG_temp = create_PG_temp(mcq["sentence"], choice, model)
+        questions = [mcq["sentence"] for mcq in mcqs[cat]["questions"]]
+        choice_li = [mcq["choice"] for mcq in mcqs[cat]["questions"]]
 
-            for c in choice:
-                PG = swap_label_with_symbol(PG_temp, "#BLANK", c)
+        for i in tqdm(range(0, len(questions), batch_size), desc=f"Processing {cat}"):
+            questions_batch = questions[i : i + batch_size]
+            choice_li_batch = choice_li[i : i + batch_size]
 
-                # save PG to dot file
-                os.makedirs(f"{pg_top_dir}/{cat}/{cat}-{i}", exist_ok=True)
-                pg_dot_path = f"{pg_top_dir}/{cat}/{cat}-{i}/{choice.index(c)}_{c}.dot"
-                PG.write_dot(pg_dot_path)
+            # create PG templates
+            PG_temps = create_PG_temps(questions_batch, choice_li_batch, model)
+
+            for j, (PG_temp, choice) in enumerate(zip(PG_temps, choice_li_batch)):
+                for c in choice:
+                    # substitute choice label into PG_temp
+                    PG = swap_label_with_symbol(PG_temp, "#BLANK", c)
+
+                    # save PG to dot file
+                    os.makedirs(f"{pg_top_dir}/{cat}/{cat}-{i+j}", exist_ok=True)
+                    pg_dot_path = f"{pg_top_dir}/{cat}/{cat}-{i+j}/{choice.index(c)}_{c}.dot"
+                    PG.write_dot(pg_dot_path)
+
+    # clean up GPU memory
+    torch.cuda.empty_cache()
 
 
 def download_wiki_articles(pg_top_dir: str, wiki_dir: str):
@@ -82,10 +113,7 @@ def download_wiki_articles(pg_top_dir: str, wiki_dir: str):
     # iterate over each category
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
-        pg_dirs = [
-            os.path.join(pg_top_dir, cat, subdir)
-            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
-        ]
+        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
         for pg_dir in tqdm(pg_dirs, desc=f"Processing {cat}"):
             # reconstruct PGs from dot files
             pg_files = [f for f in os.listdir(pg_dir) if f.endswith(".dot")]
@@ -127,12 +155,10 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
     for cat in sorted(cat_dirs):
 
         # List of PG directories for the given category
-        pg_dirs = [
-            os.path.join(pg_top_dir, cat, subdir)
-            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
-        ]
+        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
+
+        # NOTE: pg_dir contains four PG dot files for a single MCQ
         for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
-            # Note: pg_dir contains four PG dot files for a single MCQ
             for pg_filename in os.listdir(pg_dir):
 
                 # reconstruct PG from dot file
@@ -147,7 +173,7 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
                 KG_combined = KB()
                 for title in titles:
                     subdir, basename = assign_file_path(title)
-                    KG = KB.from_dot_file(f"{KG_cache_dir}/{subdir}/{basename[:-5]}.dot")
+                    KG = KB.from_dot_file(f"{KG_cache_dir}/{subdir}/{basename.replace('.json', '.dot')}")
                     KG_combined = join(KG_combined, KG)
 
                 # Save combined KG to dot file
@@ -179,10 +205,7 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
         # List of PG directories for the given category
-        pg_dirs = [
-            os.path.join(pg_top_dir, cat, subdir)
-            for subdir in os.listdir(os.path.join(pg_top_dir, cat))
-        ]
+        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
         result[cat] = {"questions": dict()}
 
         # NOTE: pg_dir contains four PG dot files for a single MCQ
@@ -207,9 +230,7 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
             # NOTE: results are sorted by option numbers
             # since the prefix of PG filename (x[0]) are 0, 1, 2, 3 w.r.t. the choice index
             scores = []
-            for pg_path, edge_score, node_score, verified_edges, _ in sorted(
-                results, key=lambda x: x[0]
-            ):
+            for pg_path, edge_score, node_score, verified_edges, _ in sorted(results, key=lambda x: x[0]):
                 # Save the result of verification
                 pg_filename = os.path.basename(pg_path)
                 scores.append((edge_score, node_score))
@@ -360,6 +381,7 @@ if __name__ == "__main__":
     # ---- Define hyperparameters ----
     MCQ_FILE = sys.argv[1]
     MODEL = sys.argv[2]  # "unirel" or "rebel"
+
     if not MCQ_FILE.endswith(".json"):
         raise ValueError("MCQ file should be in JSON format.")
     if not os.path.exists(MCQ_FILE):
@@ -369,7 +391,7 @@ if __name__ == "__main__":
 
     DS_NAME = os.path.basename(MCQ_FILE).split(".")[0]
     WIKI_DIR = f"wikipedia/{MODEL}/{DS_NAME}"
-    KG_CHACHE_DIR = f"KG_cache/{MODEL}/{DS_NAME}"
+    KG_CHACHE_DIR = f"KG_cache/{MODEL}"
     OUT_DIR = f"exp-mcqa/{MODEL}/{DS_NAME}"
     PG_TOP_DIR = f"{OUT_DIR}/PGs"
     KG_TOP_DIR = f"{OUT_DIR}/KGs"

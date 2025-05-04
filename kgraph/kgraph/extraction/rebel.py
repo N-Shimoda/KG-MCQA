@@ -80,6 +80,8 @@ def extract_triples_rebel(texts: list[str]) -> list[list[dict[str, str]]]:
     tokenizer = AutoTokenizer.from_pretrained("Babelscape/rebel-large", clean_up_tokenization_spaces=False)
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model: BartForConditionalGeneration = AutoModelForSeq2SeqLM.from_pretrained("Babelscape/rebel-large").to(device)
+    if device != "cuda":
+        print("Using {} instead of GPU.".format(device))
 
     # Tokenize
     model_inputs: BatchEncoding = tokenizer(texts, max_length=256, padding=True, truncation=True, return_tensors="pt")

@@ -36,6 +36,34 @@ def load_wiki_agent_params() -> tuple[str, str]:
     return project_name, mail_address
 
 
+def assign_file_path(title: str) -> tuple[str, str]:
+    """
+    Assign a sub-directory path based on the first character of the title.
+    Non-alphabetic characters are grouped under '_others'.
+
+    Parameters
+    ----------
+    title : str
+        The title of the Wikipedia page.
+
+    Returns
+    -------
+    subdir : str
+        Sub-directory name based on the first character of the title.
+    basename : str
+        File name for the JSON file, replacing spaces with underscores.
+
+    Example
+    -------
+    >>> assign_file_path("Machine Learning")
+    ('m', 'Machine_Learning.json')
+    """
+    first_char = title[0].lower()
+    subdir = first_char if first_char.isalpha() else "_others"
+    basename = title.replace(" ", "_") + ".json"
+    return subdir, basename
+
+
 def get_wiki_titles(targets: list[str]) -> list[str]:
     """
     Wrapper for the asynchronous get_wiki_titles_async function.
@@ -51,9 +79,7 @@ def get_wiki_titles(targets: list[str]) -> list[str]:
         List of Wikipedia page titles.
     """
 
-    async def fetch_page_title(
-        session: ClientSession, wiki_wiki: wikipediaapi.Wikipedia, target: str
-    ) -> str:
+    async def fetch_page_title(session: ClientSession, wiki_wiki: wikipediaapi.Wikipedia, target: str) -> str:
         """
         Fetch the title of a Wikipedia page asynchronously.
 
@@ -99,34 +125,6 @@ def get_wiki_titles(targets: list[str]) -> list[str]:
             return await asyncio.gather(*tasks)
 
     return asyncio.run(get_wiki_titles_async(targets))
-
-
-def assign_file_path(title: str) -> tuple[str, str]:
-    """
-    Assign a sub-directory path based on the first character of the title.
-    Non-alphabetic characters are grouped under '_others'.
-
-    Parameters
-    ----------
-    title : str
-        The title of the Wikipedia page.
-
-    Returns
-    -------
-    subdir : str
-        Sub-directory name based on the first character of the title.
-    basename : str
-        File name for the JSON file, replacing spaces with underscores.
-
-    Example
-    -------
-    >>> assign_file_path("Machine Learning")
-    ('m', 'Machine_Learning.json')
-    """
-    first_char = title[0].lower()
-    subdir = first_char if first_char.isalpha() else "_others"
-    basename = title.replace(" ", "_") + ".json"
-    return subdir, basename
 
 
 async def download_wiki_pages_async(
@@ -223,8 +221,7 @@ async def download_wiki_pages_async(
         return title, url
 
     tasks = [
-        fetch_and_save(target)
-        for target in tqdm(targets, desc="Downloading Wikipedia pages", disable=tqdm_disable)
+        fetch_and_save(target) for target in tqdm(targets, desc="Downloading Wikipedia pages", disable=tqdm_disable)
     ]
     res = await asyncio.gather(*tasks)
     if res:
@@ -234,9 +231,7 @@ async def download_wiki_pages_async(
     return titles, urls
 
 
-def download_wiki_pages(
-    targets: list[str], out_dir: str, tqdm_disable: bool = True
-) -> tuple[list[str], list[str]]:
+def download_wiki_pages(targets: list[str], out_dir: str, tqdm_disable: bool = True) -> tuple[list[str], list[str]]:
     """
     Wrapper for the asynchronous download_wiki_pages_async function.
 
