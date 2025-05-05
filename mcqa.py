@@ -373,7 +373,7 @@ def collect_results(result_file: str, mcq_file: str):
     # create bar chart
     categories = result.keys()
     scores = {cat: list(result[cat]["stats"].values()) for cat in categories}
-    plot_bar_chart(categories, scores, f"{os.path.dirname(result_file)}/bar_plot.svg")
+    plot_bar_chart(categories, scores, f"{os.path.dirname(result_file)}/accuracy.svg")
 
 
 if __name__ == "__main__":
