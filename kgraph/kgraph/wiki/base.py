@@ -3,6 +3,7 @@ import json
 import os
 from datetime import datetime
 
+import requests
 import wikipediaapi
 from aiohttp import ClientSession
 from dotenv import load_dotenv
@@ -223,7 +224,19 @@ async def download_wiki_pages_async(
     tasks = [
         fetch_and_save(target) for target in tqdm(targets, desc="Downloading Wikipedia pages", disable=tqdm_disable)
     ]
-    res = await asyncio.gather(*tasks)
+
+    retries = 0
+    res = None
+    while retries < 5:
+        try:
+            res = await asyncio.gather(*tasks)
+            break
+        except requests.exceptions.ReadTimeout as e:
+            print(f"ReadTimeout error: {e}. Retrying...")
+            retries += 1
+            await asyncio.sleep(10)
+            continue
+
     if res:
         titles, urls = map(list, zip(*res))
     else:
