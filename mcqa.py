@@ -335,20 +335,22 @@ def collect_results(result_file: str, mcq_file: str):
         result: dict[str, dict] = json.load(f)
 
     with open(mcq_file, "r") as f:
-        mcqs = json.load(f)
+        mcqs: dict[str, dict] = json.load(f)
 
+    # Iterate over each category
     for cat in result.keys():
         counts = [0, 0, 0]  # [correct, incorrect, not_answered]
         ans_data = result[cat]["questions"]
-        mcq_ids = list(ans_data.keys())
-        for mcq_id in ans_data.keys():
-            answer = ans_data[mcq_id]["answer"]
-            correct_answer = mcqs[cat]["questions"][mcq_ids.index(mcq_id)]["answer"]
 
-            if answer == correct_answer:
+        for mcq_id in ans_data:
+            chosen_opt = ans_data[mcq_id]["answer"]
+            correct_opt = mcqs[cat]["questions"][mcq_id]["answer"]
+            print(f"Using key: {mcq_id}")
+
+            if chosen_opt == correct_opt:
                 ans_data[mcq_id]["correct"] = True
                 counts[0] += 1
-            elif answer == -1:
+            elif chosen_opt == -1:
                 ans_data[mcq_id]["correct"] = False
                 counts[2] += 1
             else:
