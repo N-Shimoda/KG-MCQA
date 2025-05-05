@@ -194,37 +194,35 @@ class MCQAGraphViewer:
         # problem id
         cat_dir = root_path / "PGs" / self.selected_cat
         q_ids = self.get_q_ids(cat_dir)
-        q_labels = {
-            (f"{q_id} *" if self.results[self.selected_cat]["questions"][q_id]["correct"] else q_id): q_id
-            for q_id in q_ids
-        }
-
         with col_qid:
-            selected_q_label = st.selectbox("Problem ID", q_labels.keys(), key="problem")
-            self.selected_q_id = q_labels[selected_q_label]
+            self.selected_q_id = st.selectbox(
+                "Problem ID",
+                q_ids,
+                format_func=lambda q_id: (
+                    f"{q_id} *" if self.results[self.selected_cat]["questions"][q_id]["correct"] else q_id
+                ),
+                key="problem",
+                help="\* marks the problems that are correctly answered by the method.",  # noqa: W605
+            )
             # get correct option id
             correct_opt_id = self.dataset[self.selected_cat]["questions"][self.selected_q_id]["answer"]
             # get result (correct or not)
             corrected: bool = self.results[self.selected_cat]["questions"][self.selected_q_id]["correct"]
-            assert isinstance(corrected, bool), "Corrected should be a boolean"
 
-        # option
+        # options
         problem_pg_dir = root_path / "PGs" / self.selected_cat / self.selected_q_id
         opt_files = self.get_opt_files(problem_pg_dir)
-        opt_map = {f.split("_")[0]: f.split("_", 1)[1] for f in opt_files}
-        opt_labels = [
-            (
-                f.split("_", 1)[1].replace(".dot", " *")
-                if opt_files.index(f) == correct_opt_id
-                else f.split("_", 1)[1].replace(".dot", "")
-            )
-            for f in opt_files
-        ]
-        label_to_index = {label: str(i) for i, label in enumerate(opt_labels)}
+        opt_labels = [f.split("_", 1)[1].replace(".dot", "") for f in opt_files]
         with col_opt:
-            selected_label = st.selectbox("Option", opt_labels, key="option", index=correct_opt_id)
-            self.selected_option = label_to_index[selected_label]
-            self.file_suffix = opt_map[self.selected_option]
+            self.selected_option = st.selectbox(
+                "Option",
+                [i for i in range(len(opt_labels))],
+                format_func=lambda x: f"{opt_labels[x]} *" if x == correct_opt_id else opt_labels[x],
+                index=correct_opt_id,
+                key="option",
+                help="\* marks the correct options.",  # noqa: W605"
+            )
+            self.file_suffix = f"{opt_labels[self.selected_option]}.dot"
 
         # display question sentence
         sentence = self.dataset[self.selected_cat]["questions"][self.selected_q_id]["sentence"]
@@ -247,7 +245,7 @@ class MCQAGraphViewer:
         )
         pg_html = self.render_dot_to_html(pg_dot_path, graph_type="pg")
         kg_html = self.render_dot_to_html(kg_dot_path, graph_type="kg")
-        col1, col2 = st.columns([1, 3])
+        col1, col2 = st.columns([1.3, 3])
         with col1:
             st.subheader("Propositional Graph (PG)")
             with open(pg_html, "r", encoding="utf-8") as f:
