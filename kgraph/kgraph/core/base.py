@@ -1,4 +1,5 @@
 # import re
+import copy
 import re
 from typing import Literal
 
@@ -186,6 +187,19 @@ class KB:
     def get_max_degree(self) -> int:
         """Get max degree of KB"""
         return max(self.get_degree().values())
+
+    def copy(self) -> "KB":
+        """
+        Create a deep copy of the KB instance.
+
+        Returns
+        -------
+        KB
+            A new KB instance with the same data as the original.
+        """
+        new_kb = KB(relations=copy.deepcopy(self.relations))
+        new_kb.nodes = copy.deepcopy(self.nodes)
+        return new_kb
 
     @classmethod
     def from_dot_file(cls, dot_file_path: str) -> "KB":

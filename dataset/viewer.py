@@ -43,8 +43,8 @@ def main():
     st.subheader(f"カテゴリ: {selected_label}")
     questions = data[selected_key]["questions"]
 
-    for i, q in enumerate(questions, 1):
-        with st.expander(f"Q{i}: {q['sentence'].replace('{}', '_____')}"):
+    for q in questions:
+        with st.expander(f"{q['id']}: {q['sentence'].replace('{}', '_____')}"):
             if display_mode == "インタラクティブモード":
                 selected = st.radio(
                     "選択肢を選んでください:",

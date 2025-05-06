@@ -1,3 +1,5 @@
+import atexit
+import json
 from pathlib import Path
 from typing import Dict, List
 
@@ -8,19 +10,31 @@ from kgraph import KB
 
 
 class MCQAGraphViewer:
-    def __init__(self):
+    def __init__(self, base_dir: str = "exp-mcqa", dataset_dir: str = "dataset", result_dir: str = "exp-mcqa") -> None:
         """
         Initializes the MCQAGraphViewer with default paths and variables.
         """
-        self.base_dir: Path = Path("exp-mcqa")
+        # paths
+        self.base_dir: Path = Path(base_dir)
         self.html_output_dir: Path = self.base_dir / "temp_html"
+        self.dataset_dir: Path = Path(dataset_dir)
+        self.result_dir: Path = Path(result_dir)
+
+        # cleanup setting for temp_html
         self.html_output_dir.mkdir(exist_ok=True)
+        atexit.register(self._cleanup_temp_files)
+
+        # intermediate data (dictionary)
+        self.dataset: Dict[str, Dict] = None
+        self.results: Dict[str, Dict] = None
+
+        # selected options
         self.models: List[str] = []
         self.model_to_datasets: Dict[str, List[str]] = {}
         self.selected_model: str = None
         self.selected_dataset: str = None
-        self.selected_category: str = None
-        self.selected_problem_id: str = None
+        self.selected_cat: str = None
+        self.selected_q_id: str = None
         self.selected_option: str = None
         self.file_suffix: str = None
 
@@ -76,13 +90,13 @@ class MCQAGraphViewer:
         """
         return sorted([d.name for d in (base_path / "PGs").iterdir() if d.is_dir()])
 
-    def get_problem_ids(self, category_dir: Path) -> List[str]:
+    def get_q_ids(self, cat_dir: Path) -> List[str]:
         """
         Retrieves the list of problem IDs from the given category directory.
 
         Parameters
         ----------
-        category_dir : Path
+        cat_dir : Path
             The directory containing problem IDs.
 
         Returns
@@ -90,9 +104,9 @@ class MCQAGraphViewer:
         List[str]
             A sorted list of problem IDs.
         """
-        return sorted([d.name for d in category_dir.iterdir() if d.is_dir()])
+        return sorted([d.name for d in cat_dir.iterdir() if d.is_dir()], key=lambda x: int(x.split("-")[1]))
 
-    def get_option_files(self, problem_dir: Path) -> List[str]:
+    def get_opt_files(self, problem_dir: Path) -> List[str]:
         """
         Retrieves the list of option files from the given problem directory.
 
@@ -148,47 +162,87 @@ class MCQAGraphViewer:
         net.save_graph(str(html_path))
         return html_path
 
-    def select_model_and_dataset(self) -> None:
+    def create_selectboxes(self) -> None:
         """
-        Displays dropdowns for selecting a model and dataset in the UI.
+        Displays dropdowns for selecting RE model, dataset, category, problem ID, and option in the UI.
+        """
+        # define columns
+        col_model, col_dataset, col_cat, col_qid, col_opt = st.columns([1, 1, 1, 1, 1])
 
-        Notes
-        -----
-        This method updates `self.selected_model` and `self.selected_dataset` based on user input.
-        """
-        col_model, col_dataset = st.columns([1, 2])
+        # model
         with col_model:
             self.selected_model = st.selectbox("Relation Extraction Model", self.models)
+
+        # dataset
         with col_dataset:
             self.selected_dataset = st.selectbox("Dataset", self.model_to_datasets[self.selected_model])
+            # load dataset
+            ds_file = self.dataset_dir / f"{self.selected_dataset}.json"
+            with open(ds_file, "r", encoding="utf-8") as f:
+                self.dataset = json.load(f)
+            # load results
+            res_file = self.result_dir / self.selected_model / self.selected_dataset / "results.json"
+            with open(res_file, "r", encoding="utf-8") as f:
+                self.results = json.load(f)
 
-    def select_category_and_problem(self) -> None:
-        """
-        Displays dropdowns for selecting a category, problem ID, and option in the UI.
-
-        Notes
-        -----
-        This method updates `self.selected_category`, `self.selected_problem_id`, and `self.selected_option`
-        based on user input.
-        """
+        # category
         root_path = self.base_dir / self.selected_model / self.selected_dataset
         categories = self.get_categories(root_path)
-        col_cat, col_qid, col_opt = st.columns([2, 2, 1])
         with col_cat:
-            self.selected_category = st.selectbox("Category", categories, key="category")
-        category_dir = root_path / "PGs" / self.selected_category
-        problem_ids = self.get_problem_ids(category_dir)
+            self.selected_cat = st.selectbox("Category", categories, key="category")
+
+        # problem id
+        cat_dir = root_path / "PGs" / self.selected_cat
+        q_ids = self.get_q_ids(cat_dir)
         with col_qid:
-            self.selected_problem_id = st.selectbox("Problem ID", problem_ids, key="problem")
-        problem_pg_dir = root_path / "PGs" / self.selected_category / self.selected_problem_id
-        option_files = self.get_option_files(problem_pg_dir)
-        option_map = {f.split("_")[0]: f.split("_", 1)[1] for f in option_files}
-        option_labels = [f.split("_", 1)[1].replace(".dot", "") for f in option_files]
-        label_to_index = {label: str(i) for i, label in enumerate(option_labels)}
+            self.selected_q_id = st.selectbox(
+                "Problem ID",
+                q_ids,
+                format_func=lambda q_id: (
+                    f"{q_id} *" if self.results[self.selected_cat]["questions"][q_id]["correct"] else q_id
+                ),
+                key="problem",
+                help="\* marks the problems that are correctly answered by the method.",  # noqa: W605
+            )
+            # get correct option id
+            correct_opt_id = self.dataset[self.selected_cat]["questions"][self.selected_q_id]["answer"]
+            # get result (correct or not)
+            corrected: bool = self.results[self.selected_cat]["questions"][self.selected_q_id]["correct"]
+            chosen_opt_id: int = self.results[self.selected_cat]["questions"][self.selected_q_id]["answer"]
+
+        # options
+        problem_pg_dir = root_path / "PGs" / self.selected_cat / self.selected_q_id
+        opt_files = self.get_opt_files(problem_pg_dir)
+        opt_labels = [f.split("_", 1)[1].replace(".dot", "") for f in opt_files]
         with col_opt:
-            selected_label = st.selectbox("Option", option_labels, key="option")
-            self.selected_option = label_to_index[selected_label]
-            self.file_suffix = option_map[self.selected_option]
+            self.selected_option = st.selectbox(
+                "Option",
+                [i for i in range(len(opt_labels))],
+                format_func=lambda x: (
+                    f"{opt_labels[x]} [*]"
+                    if x == correct_opt_id == chosen_opt_id
+                    else (
+                        f"{opt_labels[x]} *"
+                        if x == correct_opt_id
+                        else f"{opt_labels[x]} []" if x == chosen_opt_id else opt_labels[x]
+                    )
+                ),
+                index=correct_opt_id,
+                key="option",
+                help="\* and [] mark the correct and chosen options, respectively.",  # noqa: W605"
+            )
+            self.file_suffix = f"{opt_labels[self.selected_option]}.dot"
+
+        with st.expander("Overall Accuracy", icon="📊"):
+            st.image(
+                self.result_dir / self.selected_model / self.selected_dataset / "accuracy.svg",
+                width=720,
+                caption="Accuracy for each category",
+            )
+
+        # display question sentence
+        sentence = self.dataset[self.selected_cat]["questions"][self.selected_q_id]["sentence"]
+        st.info(sentence.replace("{}", "____"), icon="✅" if corrected else "❌")
 
     def display_graphs(self) -> None:
         """
@@ -200,22 +254,14 @@ class MCQAGraphViewer:
         """
         root_path = self.base_dir / self.selected_model / self.selected_dataset
         pg_dot_path = (
-            root_path
-            / "PGs"
-            / self.selected_category
-            / self.selected_problem_id
-            / f"{self.selected_option}_{self.file_suffix}"
+            root_path / "PGs" / self.selected_cat / self.selected_q_id / f"{self.selected_option}_{self.file_suffix}"
         )
         kg_dot_path = (
-            root_path
-            / "KGs"
-            / self.selected_category
-            / self.selected_problem_id
-            / f"{self.selected_option}_{self.file_suffix}"
+            root_path / "KGs" / self.selected_cat / self.selected_q_id / f"{self.selected_option}_{self.file_suffix}"
         )
         pg_html = self.render_dot_to_html(pg_dot_path, graph_type="pg")
         kg_html = self.render_dot_to_html(kg_dot_path, graph_type="kg")
-        col1, col2 = st.columns([1, 3])
+        col1, col2 = st.columns([1.3, 3])
         with col1:
             st.subheader("Propositional Graph (PG)")
             with open(pg_html, "r", encoding="utf-8") as f:
@@ -227,6 +273,22 @@ class MCQAGraphViewer:
                 html_content = f.read()
             st.components.v1.html(html_content, height=800, scrolling=True)
 
+    def _cleanup_temp_files(self) -> None:
+        """
+        Function to clean up temporary HTML files.
+
+        Notes
+        -----
+        If the temp_html directory exists, all files inside it will be deleted.
+        """
+        if self.html_output_dir.exists():
+            try:
+                for file in self.html_output_dir.glob("*.html"):
+                    file.unlink()
+                st.write("Temporary files have been cleaned up.")
+            except Exception as e:
+                st.error(f"Failed to clean up temporary files: {e}")
+
     def run(self) -> None:
         """
         Executes the main workflow of the MCQAGraphViewer.
@@ -237,8 +299,7 @@ class MCQAGraphViewer:
         """
         self.setup_ui()
         self.get_models_and_datasets()
-        self.select_model_and_dataset()
-        self.select_category_and_problem()
+        self.create_selectboxes()
         self.display_graphs()
 
 

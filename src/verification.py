@@ -21,6 +21,7 @@ def save_verified_edges(
     color_nodes : list[str]
         A list of nodes to be colored in the PG.
     """
+    pg = pg.copy()
     for edge in verified_edges:
         pg.add_edge_attr(edge["head"], edge["type"], edge["tail"], "verified", "true")
     for node in pg.nodes:

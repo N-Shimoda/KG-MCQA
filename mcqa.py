@@ -55,7 +55,9 @@ def create_PG_temps(questions: list[str], choice_li: list[list[str]], model: Lit
 
 def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"], batch_size: int = 32):
     """
-    Create PGs from given MCQ dataset.
+    Create PGs from given MCQ dataset.\n
+    PGs are saved in the specified directory with the format:
+    `<dataset name>/PGs/<category_id>/<question_id>/<choice_index>_<choice_label>.dot`.
 
     Parameters
     ----------
@@ -65,7 +67,7 @@ def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"]
         Top-level directory to save the generated PGs.
     model : Literal["unirel", "rebel"]
         Model name for extracting triples.
-    batch_size : int
+    batch_size : int (optional)
         Batch size (number of questions) for processing at once.
     """
     assert model in ["unirel", "rebel"], "model should be either 'unirel' or 'rebel'."
@@ -74,16 +76,17 @@ def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"]
         mcqs = json.load(f)
     print("Categories: {}".format(list(mcqs.keys())))
 
-    for cat in sorted(mcqs.keys()):
-        questions = [mcq["sentence"] for mcq in mcqs[cat]["questions"]]
-        choice_li = [mcq["choice"] for mcq in mcqs[cat]["questions"]]
+    # Iterate over each category
+    for cat in mcqs:
+        sentences = [q_data["sentence"] for q_data in mcqs[cat]["questions"].values()]
+        choice_li = [q_data["choice"] for q_data in mcqs[cat]["questions"].values()]
 
-        for i in tqdm(range(0, len(questions), batch_size), desc=f"Processing {cat}"):
-            questions_batch = questions[i : i + batch_size]
-            choice_li_batch = choice_li[i : i + batch_size]
+        for i in tqdm(range(0, len(sentences), batch_size), desc=f"Processing {cat}"):
+            sentences_batch = sentences[i : i + batch_size]  # list[str]
+            choice_li_batch = choice_li[i : i + batch_size]  # list[list[str]]
 
             # create PG templates
-            PG_temps = create_PG_temps(questions_batch, choice_li_batch, model)
+            PG_temps = create_PG_temps(sentences_batch, choice_li_batch, model)
 
             for j, (PG_temp, choice) in enumerate(zip(PG_temps, choice_li_batch)):
                 for c in choice:
@@ -209,7 +212,7 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
         result[cat] = {"questions": dict()}
 
         # NOTE: pg_dir contains four PG dot files for a single MCQ
-        for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
+        for pg_dir in tqdm(sorted(pg_dirs, key=lambda x: os.path.basename(x).split("-")[1]), desc=f"Processing {cat}"):
             mcq_id = os.path.basename(pg_dir)
             result[cat]["questions"][mcq_id] = dict()
 
@@ -332,20 +335,21 @@ def collect_results(result_file: str, mcq_file: str):
         result: dict[str, dict] = json.load(f)
 
     with open(mcq_file, "r") as f:
-        mcqs = json.load(f)
+        mcqs: dict[str, dict] = json.load(f)
 
+    # Iterate over each category
     for cat in result.keys():
         counts = [0, 0, 0]  # [correct, incorrect, not_answered]
         ans_data = result[cat]["questions"]
-        mcq_ids = list(ans_data.keys())
-        for mcq_id in ans_data.keys():
-            answer = ans_data[mcq_id]["answer"]
-            correct_answer = mcqs[cat]["questions"][mcq_ids.index(mcq_id)]["answer"]
 
-            if answer == correct_answer:
+        for mcq_id in ans_data:
+            chosen_opt = ans_data[mcq_id]["answer"]
+            correct_opt = mcqs[cat]["questions"][mcq_id]["answer"]
+
+            if chosen_opt == correct_opt:
                 ans_data[mcq_id]["correct"] = True
                 counts[0] += 1
-            elif answer == -1:
+            elif chosen_opt == -1:
                 ans_data[mcq_id]["correct"] = False
                 counts[2] += 1
             else:
@@ -368,7 +372,7 @@ def collect_results(result_file: str, mcq_file: str):
     # create bar chart
     categories = result.keys()
     scores = {cat: list(result[cat]["stats"].values()) for cat in categories}
-    plot_bar_chart(categories, scores, f"{os.path.dirname(result_file)}/bar_plot.svg")
+    plot_bar_chart(categories, scores, f"{os.path.dirname(result_file)}/accuracy.svg")
 
 
 if __name__ == "__main__":
@@ -378,7 +382,6 @@ if __name__ == "__main__":
     if len(sys.argv) < 3:
         raise ValueError("Usage: python mcqa.py <MCQ_FILE> <MODEL_NAME>")
 
-    # ---- Define hyperparameters ----
     MCQ_FILE = sys.argv[1]
     MODEL = sys.argv[2]  # "unirel" or "rebel"
 
@@ -389,6 +392,7 @@ if __name__ == "__main__":
     if MODEL not in ["unirel", "rebel"]:
         raise ValueError("MODEL should be either 'unirel' or 'rebel'.")
 
+    # ---- Define hyperparameters ----
     DS_NAME = os.path.basename(MCQ_FILE).split(".")[0]
     WIKI_DIR = f"wikipedia/{MODEL}/{DS_NAME}"
     KG_CHACHE_DIR = f"KG_cache/{MODEL}"
