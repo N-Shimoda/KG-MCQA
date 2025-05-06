@@ -208,6 +208,7 @@ class MCQAGraphViewer:
             correct_opt_id = self.dataset[self.selected_cat]["questions"][self.selected_q_id]["answer"]
             # get result (correct or not)
             corrected: bool = self.results[self.selected_cat]["questions"][self.selected_q_id]["correct"]
+            chosen_opt_id: int = self.results[self.selected_cat]["questions"][self.selected_q_id]["answer"]
 
         # options
         problem_pg_dir = root_path / "PGs" / self.selected_cat / self.selected_q_id
@@ -217,12 +218,27 @@ class MCQAGraphViewer:
             self.selected_option = st.selectbox(
                 "Option",
                 [i for i in range(len(opt_labels))],
-                format_func=lambda x: f"{opt_labels[x]} *" if x == correct_opt_id else opt_labels[x],
+                format_func=lambda x: (
+                    f"{opt_labels[x]} [*]"
+                    if x == correct_opt_id == chosen_opt_id
+                    else (
+                        f"{opt_labels[x]} *"
+                        if x == correct_opt_id
+                        else f"{opt_labels[x]} []" if x == chosen_opt_id else opt_labels[x]
+                    )
+                ),
                 index=correct_opt_id,
                 key="option",
-                help="\* marks the correct options.",  # noqa: W605"
+                help="\* and [] mark the correct and chosen options, respectively.",  # noqa: W605"
             )
             self.file_suffix = f"{opt_labels[self.selected_option]}.dot"
+
+        with st.expander("Overall Accuracy", icon="📊"):
+            st.image(
+                self.result_dir / self.selected_model / self.selected_dataset / "accuracy.svg",
+                width=720,
+                caption="Accuracy for each category",
+            )
 
         # display question sentence
         sentence = self.dataset[self.selected_cat]["questions"][self.selected_q_id]["sentence"]
