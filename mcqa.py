@@ -212,7 +212,7 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
         result[cat] = {"questions": dict()}
 
         # NOTE: pg_dir contains four PG dot files for a single MCQ
-        for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
+        for pg_dir in tqdm(sorted(pg_dirs, key=lambda x: os.path.basename(x).split("-")[1]), desc=f"Processing {cat}"):
             mcq_id = os.path.basename(pg_dir)
             result[cat]["questions"][mcq_id] = dict()
 
@@ -345,7 +345,6 @@ def collect_results(result_file: str, mcq_file: str):
         for mcq_id in ans_data:
             chosen_opt = ans_data[mcq_id]["answer"]
             correct_opt = mcqs[cat]["questions"][mcq_id]["answer"]
-            print(f"Using key: {mcq_id}")
 
             if chosen_opt == correct_opt:
                 ans_data[mcq_id]["correct"] = True

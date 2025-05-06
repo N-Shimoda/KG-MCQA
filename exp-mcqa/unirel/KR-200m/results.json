@@ -5,13 +5,13 @@
                 "0": {
                     "choice": "Starry Night",
                     "edge_score": 0.0,
-                    "node_score": 0.4847891330718994,
+                    "node_score": 0.23253348469734192,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "The Persistence of Memory",
                     "edge_score": 0.0,
-                    "node_score": 0.10294847935438156,
+                    "node_score": 0.4847891330718994,
                     "verified_edges": []
                 },
                 "2": {
@@ -23,7 +23,7 @@
                 "3": {
                     "choice": "The Scream",
                     "edge_score": 0.0,
-                    "node_score": 0.15535199642181396,
+                    "node_score": 0.4847891330718994,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -107,7 +107,7 @@
                 "3": {
                     "choice": "Dadaism",
                     "edge_score": 0.0,
-                    "node_score": 0.4448845386505127,
+                    "node_score": 0.5,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -509,7 +509,7 @@
                 "0": {
                     "choice": "Surrealism",
                     "edge_score": 0.0,
-                    "node_score": 0.12120358645915985,
+                    "node_score": 0.14676433801651,
                     "verified_edges": []
                 },
                 "1": {
@@ -699,7 +699,7 @@
                 "0": {
                     "choice": "Tomato",
                     "edge_score": 0.0,
-                    "node_score": 0.16331465542316437,
+                    "node_score": 0.2698846459388733,
                     "verified_edges": []
                 },
                 "1": {
@@ -1615,9 +1615,9 @@
                             "tail": "Kyoto"
                         },
                         {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Tokyo"
+                            "head": "Tokyo",
+                            "type": "/location/administrative_division/country",
+                            "tail": "Japan"
                         },
                         {
                             "head": "Japan",
@@ -1625,13 +1625,13 @@
                             "tail": "Tokyo"
                         },
                         {
-                            "head": "Tokyo",
-                            "type": "/location/administrative_division/country",
-                            "tail": "Japan"
+                            "head": "Japan",
+                            "type": "/location/country/capital",
+                            "tail": "Tokyo"
                         },
                         {
                             "head": "Japan",
-                            "type": "/location/country/capital",
+                            "type": "/location/location/contains",
                             "tail": "Tokyo"
                         }
                     ]
@@ -1652,9 +1652,9 @@
                             "tail": "Kyoto"
                         },
                         {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Tokyo"
+                            "head": "Tokyo",
+                            "type": "/location/administrative_division/country",
+                            "tail": "Japan"
                         },
                         {
                             "head": "Japan",
@@ -1662,13 +1662,13 @@
                             "tail": "Tokyo"
                         },
                         {
-                            "head": "Tokyo",
-                            "type": "/location/administrative_division/country",
-                            "tail": "Japan"
+                            "head": "Japan",
+                            "type": "/location/country/capital",
+                            "tail": "Tokyo"
                         },
                         {
                             "head": "Japan",
-                            "type": "/location/country/capital",
+                            "type": "/location/location/contains",
                             "tail": "Tokyo"
                         }
                     ]
@@ -1684,9 +1684,9 @@
                             "tail": "Kyoto"
                         },
                         {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Tokyo"
+                            "head": "Tokyo",
+                            "type": "/location/administrative_division/country",
+                            "tail": "Japan"
                         },
                         {
                             "head": "Japan",
@@ -1694,13 +1694,13 @@
                             "tail": "Tokyo"
                         },
                         {
-                            "head": "Tokyo",
-                            "type": "/location/administrative_division/country",
-                            "tail": "Japan"
+                            "head": "Japan",
+                            "type": "/location/country/capital",
+                            "tail": "Tokyo"
                         },
                         {
                             "head": "Japan",
-                            "type": "/location/country/capital",
+                            "type": "/location/location/contains",
                             "tail": "Tokyo"
                         }
                     ]
@@ -1716,9 +1716,9 @@
                             "tail": "Kyoto"
                         },
                         {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Tokyo"
+                            "head": "Tokyo",
+                            "type": "/location/administrative_division/country",
+                            "tail": "Japan"
                         },
                         {
                             "head": "Japan",
@@ -1726,13 +1726,13 @@
                             "tail": "Tokyo"
                         },
                         {
-                            "head": "Tokyo",
-                            "type": "/location/administrative_division/country",
-                            "tail": "Japan"
+                            "head": "Japan",
+                            "type": "/location/country/capital",
+                            "tail": "Tokyo"
                         },
                         {
                             "head": "Japan",
-                            "type": "/location/country/capital",
+                            "type": "/location/location/contains",
                             "tail": "Tokyo"
                         }
                     ]
@@ -1996,11 +1996,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Turkey",
-                            "type": "/location/location/contains",
-                            "tail": "Istanbul"
-                        },
-                        {
                             "head": "Europe",
                             "type": "/location/location/contains",
                             "tail": "Turkey"
@@ -2009,6 +2004,11 @@
                             "head": "Asia",
                             "type": "/location/location/contains",
                             "tail": "Turkey"
+                        },
+                        {
+                            "head": "Turkey",
+                            "type": "/location/location/contains",
+                            "tail": "Istanbul"
                         }
                     ]
                 },
@@ -2053,7 +2053,7 @@
                 "0": {
                     "choice": "Abraham Lincoln",
                     "edge_score": 0.0,
-                    "node_score": 0.42098182439804077,
+                    "node_score": 0.4518532454967499,
                     "verified_edges": []
                 },
                 "1": {
@@ -2065,13 +2065,13 @@
                 "2": {
                     "choice": "George Washington",
                     "edge_score": 0.0,
-                    "node_score": 0.3795262575149536,
+                    "node_score": 0.4518532454967499,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "John Adams",
                     "edge_score": 0.0,
-                    "node_score": 0.4518532156944275,
+                    "node_score": 0.3730993866920471,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -2165,7 +2165,7 @@
                 "0": {
                     "choice": "1776",
                     "edge_score": 0.0,
-                    "node_score": 0.30949461460113525,
+                    "node_score": 0.24907363951206207,
                     "verified_edges": []
                 },
                 "1": {
@@ -2177,13 +2177,13 @@
                 "2": {
                     "choice": "1804",
                     "edge_score": 0.0,
-                    "node_score": 0.24907363951206207,
+                    "node_score": 0.30949461460113525,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "1812",
                     "edge_score": 0.0,
-                    "node_score": 0.30949461460113525,
+                    "node_score": 0.24907363951206207,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -2495,12 +2495,12 @@
                     "verified_edges": [
                         {
                             "head": "Germany",
-                            "type": "/location/country/capital",
+                            "type": "/location/country/administrative_divisions",
                             "tail": "Berlin"
                         },
                         {
                             "head": "Germany",
-                            "type": "/location/country/administrative_divisions",
+                            "type": "/location/country/capital",
                             "tail": "Berlin"
                         }
                     ]
@@ -2512,12 +2512,12 @@
                     "verified_edges": [
                         {
                             "head": "Germany",
-                            "type": "/location/country/capital",
+                            "type": "/location/country/administrative_divisions",
                             "tail": "Berlin"
                         },
                         {
                             "head": "Germany",
-                            "type": "/location/country/administrative_divisions",
+                            "type": "/location/country/capital",
                             "tail": "Berlin"
                         }
                     ]
@@ -2529,12 +2529,12 @@
                     "verified_edges": [
                         {
                             "head": "Germany",
-                            "type": "/location/country/capital",
+                            "type": "/location/country/administrative_divisions",
                             "tail": "Berlin"
                         },
                         {
                             "head": "Germany",
-                            "type": "/location/country/administrative_divisions",
+                            "type": "/location/country/capital",
                             "tail": "Berlin"
                         }
                     ]
@@ -2546,12 +2546,12 @@
                     "verified_edges": [
                         {
                             "head": "Germany",
-                            "type": "/location/country/capital",
+                            "type": "/location/country/administrative_divisions",
                             "tail": "Berlin"
                         },
                         {
                             "head": "Germany",
-                            "type": "/location/country/administrative_divisions",
+                            "type": "/location/country/capital",
                             "tail": "Berlin"
                         }
                     ]
@@ -2619,7 +2619,7 @@
                 "0": {
                     "choice": "East",
                     "edge_score": 0.0,
-                    "node_score": 0.21853475272655487,
+                    "node_score": 0.14427924156188965,
                     "verified_edges": []
                 },
                 "1": {
@@ -2753,7 +2753,7 @@
                 "1": {
                     "choice": "Japan",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 0.46651163697242737,
+                    "node_score": 0.6666666666666666,
                     "verified_edges": [
                         {
                             "head": "Japan",
@@ -2843,13 +2843,13 @@
                 "1": {
                     "choice": "Germanic",
                     "edge_score": 0.0,
-                    "node_score": 0.365972638130188,
+                    "node_score": 0.39115285873413086,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Slavic",
                     "edge_score": 0.0,
-                    "node_score": 0.365972638130188,
+                    "node_score": 0.39115285873413086,
                     "verified_edges": []
                 },
                 "3": {
@@ -2877,7 +2877,7 @@
                 "1": {
                     "choice": "The Old Man and the Sea",
                     "edge_score": 0.0,
-                    "node_score": 0.4130030920108159,
+                    "node_score": 0.44984867175420123,
                     "verified_edges": []
                 },
                 "2": {
@@ -2983,25 +2983,25 @@
                 "0": {
                     "choice": "Period",
                     "edge_score": 0.0,
-                    "node_score": 0.22050565481185913,
+                    "node_score": 0.09795078635215759,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Comma",
                     "edge_score": 0.0,
-                    "node_score": 0.5,
+                    "node_score": 0.22050566971302032,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Apostrophe",
                     "edge_score": 0.0,
-                    "node_score": 0.22050565481185913,
+                    "node_score": 0.06261326372623444,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Colon",
                     "edge_score": 0.0,
-                    "node_score": 0.12598207592964172,
+                    "node_score": 0.22050565481185913,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -3825,13 +3825,13 @@
                 "1": {
                     "choice": "Right",
                     "edge_score": 0.0,
-                    "node_score": 0.5534111658732096,
+                    "node_score": 0.6666666666666666,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Obtuse",
                     "edge_score": 0.5,
-                    "node_score": 0.4109562933444977,
+                    "node_score": 0.4685622652371724,
                     "verified_edges": [
                         {
                             "head": "geometry",
@@ -3852,7 +3852,7 @@
                         }
                     ]
                 },
-                "answer": 3,
+                "answer": -1,
                 "correct": false
             },
             "mat-9": {
@@ -3886,8 +3886,8 @@
         },
         "stats": {
             "correct": 0,
-            "fail": 2,
-            "unselectable": 18,
+            "fail": 1,
+            "unselectable": 19,
             "total": 20
         }
     },
@@ -3903,7 +3903,7 @@
                 "1": {
                     "choice": "Socrates",
                     "edge_score": 0.0,
-                    "node_score": 0.27554282546043396,
+                    "node_score": 0.09183721244335175,
                     "verified_edges": []
                 },
                 "2": {
@@ -3953,7 +3953,7 @@
                 "0": {
                     "choice": "Metaphysics",
                     "edge_score": 0.0,
-                    "node_score": 0.11114832758903503,
+                    "node_score": 0.05238291248679161,
                     "verified_edges": []
                 },
                 "1": {
@@ -3965,7 +3965,7 @@
                 "2": {
                     "choice": "Epistemology",
                     "edge_score": 0.0,
-                    "node_score": 0.09654373675584793,
+                    "node_score": 0.09226662665605545,
                     "verified_edges": []
                 },
                 "3": {
@@ -4071,7 +4071,7 @@
                 "1": {
                     "choice": "Zeno of Citium",
                     "edge_score": 0.0,
-                    "node_score": 0.45038092136383057,
+                    "node_score": 0.3466396927833557,
                     "verified_edges": []
                 },
                 "2": {
@@ -4467,13 +4467,13 @@
                 "0": {
                     "choice": "Justin Bieber",
                     "edge_score": 0.0,
-                    "node_score": 0.20102772116661072,
+                    "node_score": 0.12589308619499207,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Ed Sheeran",
                     "edge_score": 0.0,
-                    "node_score": 0.1084098219871521,
+                    "node_score": 0.11556391417980194,
                     "verified_edges": []
                 },
                 "2": {
@@ -4551,7 +4551,7 @@
                 "0": {
                     "choice": "The Witcher",
                     "edge_score": 0.0,
-                    "node_score": 0.07004016637802124,
+                    "node_score": 0.09720943371454875,
                     "verified_edges": []
                 },
                 "1": {
@@ -4697,7 +4697,7 @@
                 "0": {
                     "choice": "Chris Pratt",
                     "edge_score": 0.0,
-                    "node_score": 0.34412992000579834,
+                    "node_score": 0.13612984120845795,
                     "verified_edges": []
                 },
                 "1": {
@@ -4709,13 +4709,13 @@
                 "2": {
                     "choice": "Ryan Reynolds",
                     "edge_score": 0.0,
-                    "node_score": 0.08335152268409729,
+                    "node_score": 0.13612985610961914,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Jack Black",
                     "edge_score": 0.0,
-                    "node_score": 0.13612985610961914,
+                    "node_score": 0.15038122236728668,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -4877,7 +4877,7 @@
                 "1": {
                     "choice": "Robert Downey Jr.",
                     "edge_score": 0.0,
-                    "node_score": 0.46331220865249634,
+                    "node_score": 0.26465556025505066,
                     "verified_edges": []
                 },
                 "2": {
@@ -5023,7 +5023,7 @@
                 "1": {
                     "choice": "James Cameron",
                     "edge_score": 0.0,
-                    "node_score": 0.1721399873495102,
+                    "node_score": 0.23159509897232056,
                     "verified_edges": []
                 },
                 "2": {
@@ -5153,7 +5153,7 @@
                 "3": {
                     "choice": "Galileo",
                     "edge_score": 0.0,
-                    "node_score": 0.30969205498695374,
+                    "node_score": 0.24036066234111786,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -5405,7 +5405,7 @@
                 "0": {
                     "choice": "Solid",
                     "edge_score": 1.0,
-                    "node_score": 0.11778077483177185,
+                    "node_score": 0.13169285655021667,
                     "verified_edges": [
                         {
                             "head": "gas",
@@ -5641,19 +5641,19 @@
                 "1": {
                     "choice": "Nucleus",
                     "edge_score": 0.0,
-                    "node_score": 0.32119443267583847,
+                    "node_score": 0.39901746809482574,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Ribosome",
                     "edge_score": 0.0,
-                    "node_score": 0.14901746809482574,
+                    "node_score": 0.07119444012641907,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Golgi body",
                     "edge_score": 0.0,
-                    "node_score": 0.0615164078772068,
+                    "node_score": 0.07119443267583847,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -5831,7 +5831,7 @@
                 "3": {
                     "choice": "Root",
                     "edge_score": 1.0,
-                    "node_score": 0.15960994362831116,
+                    "node_score": 0.1664583683013916,
                     "verified_edges": [
                         {
                             "head": "website",
@@ -6071,7 +6071,7 @@
                 "0": {
                     "choice": "Bill Gates",
                     "edge_score": 0.0,
-                    "node_score": 0.5635564724604288,
+                    "node_score": 0.4656050006548564,
                     "verified_edges": []
                 },
                 "1": {
@@ -6083,7 +6083,7 @@
                 "2": {
                     "choice": "Steve Jobs",
                     "edge_score": 0.0,
-                    "node_score": 0.5960497061411539,
+                    "node_score": 0.42475271224975586,
                     "verified_edges": []
                 },
                 "3": {
@@ -6092,14 +6092,14 @@
                     "node_score": 0.48683740695317584,
                     "verified_edges": [
                         {
-                            "head": "World Wide Web",
-                            "type": "/business/company/founders",
-                            "tail": "Mark Zuckerberg"
-                        },
-                        {
                             "head": "Mark Zuckerberg",
                             "type": "/business/person/company",
                             "tail": "World Wide Web"
+                        },
+                        {
+                            "head": "World Wide Web",
+                            "type": "/business/company/founders",
+                            "tail": "Mark Zuckerberg"
                         }
                     ]
                 },
