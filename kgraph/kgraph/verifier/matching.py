@@ -115,7 +115,7 @@ def get_subgraph_nodes(Vk: list[str], Vp: list[str]) -> tuple[list[str], list[st
 
         # Find the most similar matching for other nodes
         if len(Vp) > 0 and len(Vk) > 0:
-            matching, score = find_best_matching(Vp, Vk, method="normal")
+            matching, score = find_best_matching(Vp, Vk)
         else:
             # case when there are no nodes in Vp or Vk
             matching = set()
