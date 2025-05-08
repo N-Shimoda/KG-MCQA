@@ -7,12 +7,7 @@ from .matching import get_subgraph_nodes
 
 def eval_edge(e1: str, e2: str) -> int:
     """Function to evaluate similarity between two edge labels"""
-    if e1 == e2:
-        score = 1
-    else:
-        score = 0
-
-    return score
+    return 1 if e1 == e2 else 0
 
 
 def verify_proposition(PG: KB, KG: KB) -> tuple[
@@ -58,17 +53,7 @@ def verify_proposition(PG: KB, KG: KB) -> tuple[
         try:
             KG_hd = subnodes[PG_nodes.index(PG_r["head"])]
             KG_tl = subnodes[PG_nodes.index(PG_r["tail"])]
-
             rels = KG.get_relations_between(KG_hd, KG_tl)
-            # if len(rels) > 1:
-            #     print(
-            #         colorize(
-            #             "Multiple relations were found between '{}' and '{}'.\nRelations are {}".format(
-            #                 KG_hd, KG_tl, rels
-            #             ),
-            #             33,
-            #         )
-            #     )
             if rels:
                 KG_rels = [rel["type"] for rel in rels]
                 scores = [eval_edge(KG_rel, PG_r["type"]) for KG_rel in KG_rels]
@@ -78,7 +63,7 @@ def verify_proposition(PG: KB, KG: KB) -> tuple[
                     evidence_rels.append(rels[scores.index(1)])
         # Exceptional case where PG size is larger than KG
         except ValueError:
-            print(colorize("No matching found for '{}'".format(PG_r), 33))
+            print(colorize("No matching found for '{}' since PG is larger than KG.".format(PG_r), 33))
             continue
 
     # Edge score = [num of verified relations] / [num of all relations]

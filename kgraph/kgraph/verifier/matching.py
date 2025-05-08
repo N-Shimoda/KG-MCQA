@@ -1,5 +1,3 @@
-from typing import Literal
-
 import networkx as nx
 import numpy as np
 import pandas as pd
@@ -7,37 +5,9 @@ import torch
 from sentence_transformers import SentenceTransformer
 
 
-def get_identical_nodes(Vk: list[str], Vp: list[str]) -> tuple[list[str], list[str]]:
+def find_best_matching(Vp: list[str], Vk: list[str]) -> tuple[set[tuple[str, str]], float]:
     """
-    Acquire identical nodes between 2 node groups.
-    This function considers following nodes as identical.
-    - Nodes with the same labels
-    - Nodes linked to the same Wikipedia page
-
-    Parameters
-    ----------
-    Vk: list[str]
-    Vp: list[str]
-        List of node labels.
-
-    Returns
-    -------
-    Vp_identical: list[str]
-    Vk_identical: list[str]
-        List of identical nodes in Vp|Vk.
-    """
-    # Find nodes with same labels
-    Vp_identical = [vp for vp in Vp if (vp in Vk)]
-    Vk_identical = Vp_identical[:]
-
-    return Vp_identical, Vk_identical
-
-
-def find_best_matching(
-    Vp: list[str], Vk: list[str], method: Literal["normal"] = "normal"
-) -> tuple[set[tuple[str, str]], float]:
-    """
-    Find the best matching in bipartite graph B = (Vp, Vk), which maximize the label similarity between nodes.
+    Find the best matching in bipartite graph B = (Vp, Vk), which maximize the sum of label similarity between nodes.
 
     Parameters
     ----------
@@ -45,15 +15,13 @@ def find_best_matching(
         List of PG node labels.
     Vk : list[str]
         List of KG node labels.
-    method: Literal["normal"]
-        Method to find the best matching.
 
     Returns
     -------
     matching : set[tuple[str, str]]
         Set of tuples representing the best matching.
-    score : float
-        Sum of label similarities in `matching`.
+    n_score : float
+        Sum of corresponding label similarities in `matching`. So called "node score".
     """
     if len(Vp) == 0:
         raise ValueError("The number of PG nodes must be greater than 0.")
@@ -97,23 +65,19 @@ def find_best_matching(
     df.columns = Vk
 
     # Solve maximum bipartite matching by Networkx.
-    match method:
-        case "normal":
-            matching = nx.max_weight_matching(B)
-        case _:
-            raise ValueError(f"Unknown method: {method}")
+    matching = nx.max_weight_matching(B)
 
-    # TODO: Is this computation correct...?
-    # compute score of the matching
+    # Calculate the total score of the matching ("node score").
+    n_score = 0
     for u, v in matching:
         if u in Vp and v in Vk:
-            score = df.loc[u][v]
+            n_score += df.loc[u][v]
         elif v in Vp and u in Vk:
-            score = df.loc[v][u]
+            n_score += df.loc[v][u]
         else:
-            raise ValueError("Invalid matching...?")
+            raise ValueError("Invarid similarity table was given.")
 
-    return matching, score
+    return matching, n_score
 
 
 def get_subgraph_nodes(Vk: list[str], Vp: list[str]) -> tuple[list[str], list[str], float]:
@@ -142,7 +106,8 @@ def get_subgraph_nodes(Vk: list[str], Vp: list[str]) -> tuple[list[str], list[st
         return [], [], 0.0
     else:
         # ---- Find identical nodes ----
-        Vp_identical, Vk_identical = get_identical_nodes(Vk, Vp)
+        Vp_identical = [vp for vp in Vp if (vp in Vk)]
+        Vk_identical = Vp_identical[:]
 
         # remove identical nodes
         Vp = [v for v in Vp if (v not in Vp_identical)]
@@ -156,7 +121,7 @@ def get_subgraph_nodes(Vk: list[str], Vp: list[str]) -> tuple[list[str], list[st
             matching = set()
             score = 0.0
 
-        # NOTE: score is total score devided by the original length of Vp
+        # NOTE: score is the total score devided by original length of Vp
         score = (score + len(Vp_identical)) / (len(Vp + Vk_identical))
 
         # initialize output
@@ -179,11 +144,6 @@ if __name__ == "__main__":
     # Example usage
     Vk = ["Kyoto University", "Barack Obama", "Python"]
     Vp = ["Kyoto Univ", "Barack Hussein Obama", "Python 3.12"]
-
-    # subnodes, Vp, score = get_subgraph_nodes(Vk, Vp)
-    # print(f"Subnodes: {subnodes}")
-    # print(f"Vp: {Vp}")
-    # print(f"Score: {score}")
 
     matching, score = find_best_matching(Vp, Vk)
     print(f"Matching: {matching}")
