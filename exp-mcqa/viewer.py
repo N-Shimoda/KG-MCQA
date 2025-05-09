@@ -278,7 +278,7 @@ class MCQAGraphViewer:
 
         # display wikipedia titles with links
         PG = KB.from_dot_file(str(pg_dot_path))
-        wiki_titles = [PG.nodes[n]["wiki_title"] for n in PG.nodes if "wiki_title" in PG.nodes[n]]
+        wiki_titles = [PG.nodes[n]["wiki_title"] for n in PG.nodes if PG.nodes[n]["wiki_title"] is not None]
         wiki_baseurl = "https://en.wikipedia.org/wiki/"
         caption = "Wikipedia articles:\n" + "\n".join(
             [f"1. [{title}]({wiki_baseurl}{title.replace(' ', '_')})" for title in wiki_titles]
