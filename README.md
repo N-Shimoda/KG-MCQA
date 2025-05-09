@@ -2,24 +2,22 @@
 
 ## Setup
 
-1. Use following `conda` command for setting up basic environment.
-   ```shell
-   conda env create -f environment.yml
-   conda activate kg-mcqa
-   ```
-1. Please setup original package `kgraph` via local `pip` installation.
-   ```shell
-   pip install ./kgraph
-   ```
-   Be sure that the 3rd argument `./kgraph` specifies `kg-mcqa/kgraph` directory, not the `kgraph` library from PyPI.
+### Create Environment
 
-You can reinstall the package as follow:
+Run the following command to create conda environment with required libraries. It automatically installs the original package `kgraph`, which is defined under `./kgraph` in this repository.
+
+```shell
+conda env create -f environment.yml
+conda activate kg-mcqa
+```
+
+You can reinstall `kgraph` with following.
 
 ```shell
 pip install --upgrade --no-deps --force-reinstall kgraph/
 ```
 
-## Test
+### Test
 
 You can run a simple test with PyTest.
 
