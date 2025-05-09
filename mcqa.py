@@ -376,8 +376,6 @@ def collect_results(result_file: str, mcq_file: str):
 
 
 if __name__ == "__main__":
-
-    # NOTE: Please remove all PG, KG files in OUT_DIR before running the code.
     # ---- Validate arguments ----
     if len(sys.argv) < 3:
         raise ValueError("Usage: python mcqa.py <MCQ_FILE> <MODEL_NAME>")
@@ -399,6 +397,7 @@ if __name__ == "__main__":
     OUT_DIR = f"exp-mcqa/{MODEL}/{DS_NAME}"
     PG_TOP_DIR = f"{OUT_DIR}/PGs"
     KG_TOP_DIR = f"{OUT_DIR}/KGs"
+    RES_FILE = f"{OUT_DIR}/results.json"
 
     # ---- Start experiment ----
     print("MCQ dataset: {}".format(MCQ_FILE))
@@ -435,4 +434,4 @@ if __name__ == "__main__":
 
     # Step 4. Count correct answers
     print("\nStep 4. Counting correct answers")
-    collect_results(result_file=f"{OUT_DIR}/results.json", mcq_file=MCQ_FILE)
+    collect_results(RES_FILE, mcq_file=MCQ_FILE)
