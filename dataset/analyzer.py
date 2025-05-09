@@ -16,8 +16,9 @@ def plot_stats(stats: dict[str, dict], ds_name: str):
         categories.append("all")
 
     # boxplot
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(5, 6) if len(categories) < 3 else (10, 6))
     plt.boxplot(word_counts, tick_labels=categories, showmeans=True, patch_artist=True)
+    plt.ylim(0, 30)
 
     # graph settings
     plt.title(f"Statistics per Category ({ds_name})")
@@ -42,7 +43,7 @@ def count_stats(filename: str) -> dict[str, dict[str, any]]:
 
     # word count
     stats["num_words"] = {
-        cat: [len(entry["sentence"].split(" ")) for entry in data[cat]["questions"]] for cat in categories
+        cat: [len(entry["sentence"].split(" ")) for entry in data[cat]["questions"].values()] for cat in categories
     }
     return stats
 
