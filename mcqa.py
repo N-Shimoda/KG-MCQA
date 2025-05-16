@@ -6,8 +6,8 @@ import sys
 import numpy as np
 from matplotlib import pyplot as plt
 
-from src.kg_creator import create_KG_cache, create_tailored_KGs, download_wiki_articles
-from src.pg_creator import create_PGs
+from src.kg_creator import create_KG_cache, create_tailored_KGs
+from src.pg_creator import create_PGs, download_wiki_articles
 from src.verification import verify_PGs
 
 

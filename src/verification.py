@@ -152,6 +152,3 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
         # Save the result to a JSON file
         with open(output_file, "w") as f:
             json.dump(result, f, indent=4)
-            json.dump(result, f, indent=4)
-            json.dump(result, f, indent=4)
-            json.dump(result, f, indent=4)

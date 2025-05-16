@@ -85,8 +85,6 @@ def get_wiki_titles(targets: list[str]) -> list[str]:
 
 
 def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 1) -> tuple[list[str], list[str]]:
-    print(targets)
-
     # send request to Wikipedia API
     url = "https://en.wikipedia.org/w/api.php"
     target_str = "|".join(targets)
@@ -108,8 +106,12 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
     #     json.dump(data, f, indent=4, ensure_ascii=False)
 
     # get titles
-    normalize_map = {item["from"]: item["to"] for item in data["query"]["normalized"]}
-    redirect_map = {item["from"]: item["to"] for item in data["query"]["redirects"]}
+    normalize_map = (
+        {item["from"]: item["to"] for item in data["query"]["normalized"]} if "normalized" in data["query"] else {}
+    )
+    redirect_map = (
+        {item["from"]: item["to"] for item in data["query"]["redirects"]} if "redirects" in data["query"] else {}
+    )
     normalized = [normalize_map[target] if target in normalize_map else target for target in targets]
     titles = [redirect_map[target] if target in redirect_map else target for target in normalized]
 

@@ -123,7 +123,7 @@ def download_wiki_articles(pg_top_dir: str, wiki_dir: str):
             targets = list({word for node in PG_nodes_li for word in node})
 
             # Download the Wikipedia article
-            titles, urls = download_wiki_pages(targets, out_dir=wiki_dir, tqdm_disable=True)
+            titles, urls = download_wiki_pages(targets, out_dir=wiki_dir)
             titles = [titles[i] if urls[i] is not None else None for i in range(len(titles))]
             mapping = dict(zip(targets, titles))
 
