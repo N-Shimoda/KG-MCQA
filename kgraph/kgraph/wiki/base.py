@@ -3,34 +3,6 @@ import os
 from datetime import datetime
 
 import requests
-from dotenv import load_dotenv
-
-
-def load_wiki_agent_params() -> tuple[str, str]:
-    """
-    Load Wikipedia agent information from environment variables.
-
-    Returns
-    -------
-    tuple[str, str]
-        Tuple containing the project name and mail address.
-    """
-    # Load environment variables from .env file
-    load_dotenv(".env")
-
-    project_name = os.getenv("WIKI_PRJ_NAME")
-    if not project_name:
-        project_name = input("Enter the project name (WIKI_PRJ_NAME): ")
-        with open(".env", "a", encoding="utf-8") as env_file:
-            env_file.write(f"WIKI_PRJ_NAME={project_name}\n")
-
-    mail_address = os.getenv("WIKI_MAIL")
-    if not mail_address:
-        mail_address = input("Enter the mail address (WIKI_MAIL): ")
-        with open(".env", "a", encoding="utf-8") as env_file:
-            env_file.write(f"WIKI_MAIL={mail_address}\n")
-
-    return project_name, mail_address
 
 
 def assign_file_path(title: str) -> tuple[str, str]:
@@ -62,6 +34,20 @@ def assign_file_path(title: str) -> tuple[str, str]:
 
 
 def get_wiki_titles(targets: list[str]) -> list[str]:
+    """
+    Get Wikipedia page titles for the given targets.
+    The output titles are normalized and redirected if happens.
+
+    Parameters
+    ----------
+    targets : list[str]
+        List of Wikipedia page titles.
+
+    Returns
+    -------
+    titles : list[str]
+        List of Wikipedia page titles.
+    """
     # send request to Wikipedia API
     url = "https://en.wikipedia.org/w/api.php"
     target_str = "|".join(targets)
@@ -77,14 +63,37 @@ def get_wiki_titles(targets: list[str]) -> list[str]:
     normalized = [normalize_map[target] if target in normalize_map else target for target in targets]
     redirected = [redirect_map[target] if target in redirect_map else target for target in normalized]
 
-    print("targets:", targets)
-    print("normalized:", normalized)
-    print("redirected:", redirected)
+    # print("targets:", targets)
+    # print("normalized:", normalized)
+    # print("redirected:", redirected)
 
     return redirected
 
 
 def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 1) -> tuple[list[str], list[str]]:
+    """
+    Download Wikipedia pages and save them as JSON files.
+
+    Parameters
+    ----------
+    targets : list[str]
+        List of Wikipedia page titles to download.
+    out_dir : str
+        Output directory to save the JSON files.
+    cache_ttl_days : int
+        Number of days to keep the cache. Default is 1 day.
+
+    Returns
+    -------
+    titles : list[str]
+        List of Wikipedia page titles.
+    urls : list[str]
+        List of URLs for the downloaded pages.
+    """
+    if len(targets) == 0:
+        print("No targets provided.")
+        return [], []
+
     # send request to Wikipedia API
     url = "https://en.wikipedia.org/w/api.php"
     target_str = "|".join(targets)
@@ -99,11 +108,12 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
         "format": "json",
     }
     response = requests.get(url, params=params)
+    response.raise_for_status()
     data = response.json()
 
     # for dev
-    # with open("response.json", "w") as f:
-    #     json.dump(data, f, indent=4, ensure_ascii=False)
+    with open("response.json", "w") as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
 
     # get titles
     normalize_map = (
@@ -120,7 +130,7 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
     url_map = {page["title"]: page["fullurl"] if int(page_id) > 0 else None for page_id, page in pages.items()}
     urls = [url_map[title] for title in titles]
 
-    # save data
+    # Save articles to JSON files
     today_date = datetime.now()
     for page_id, page in pages.items():
         # skip if page not found
