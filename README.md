@@ -11,7 +11,7 @@ conda env create -f environment.yml
 conda activate kg-mcqa
 ```
 
-You can reinstall `kgraph` with following.
+You can reinstall `kgraph` as follows:
 
 ```shell
 pip install --upgrade --no-deps --force-reinstall kgraph/
@@ -23,6 +23,12 @@ You can run a simple test with PyTest.
 
 ```shell
 pytest ./kgraph
+```
+
+## Experiment
+
+```shell
+python mcqa.py [dataset_path] [re_method]
 ```
 
 ## Documentation
