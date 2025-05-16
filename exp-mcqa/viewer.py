@@ -171,7 +171,15 @@ class MCQAGraphViewer:
 
         # model
         with col_model:
-            self.selected_model = st.selectbox("Relation Extraction Model", self.models)
+            model_mapping = {
+                "rebel": "REBEL",
+                "unirel": "UniRel",
+            }
+            self.selected_model = st.selectbox(
+                "Relation Extraction Model",
+                self.models,
+                format_func=lambda x: model_mapping[x] if x in model_mapping else x,
+            )
 
         # dataset
         with col_dataset:
@@ -202,7 +210,7 @@ class MCQAGraphViewer:
                     f"{q_id} *" if self.results[self.selected_cat]["questions"][q_id]["correct"] else q_id
                 ),
                 key="problem",
-                help="\* marks the problems that are correctly answered by the method.",  # noqa: W605
+                help="\* marks correctly answered problems.",  # noqa: W605
             )
             # get correct option id
             correct_opt_id = self.dataset[self.selected_cat]["questions"][self.selected_q_id]["answer"]

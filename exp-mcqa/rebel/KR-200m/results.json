@@ -134,7 +134,7 @@
                 "2": {
                     "choice": "Surrealism",
                     "edge_score": 0.0,
-                    "node_score": 0.9419985413551331,
+                    "node_score": 0.9749789953231811,
                     "verified_edges": []
                 },
                 "3": {
@@ -357,7 +357,9 @@
                         {
                             "head": "The Nutcracker",
                             "type": "composer",
-                            "tail": "Tchaikovsky"
+                            "tail": "Tchaikovsky",
+                            "color": "orange",
+                            "verified": true
                         }
                     ]
                 },
@@ -373,12 +375,12 @@
                         {
                             "head": "Drum",
                             "type": "subclass of",
-                            "tail": "musical instrument"
+                            "tail": "musical instruments"
                         },
                         {
                             "head": "Drum",
                             "type": "subclass of",
-                            "tail": "musical instruments"
+                            "tail": "musical instrument"
                         },
                         {
                             "head": "Drum",
@@ -461,41 +463,19 @@
             },
             "art-19": {
                 "0": {
-                    "choice": "Hokusai",
-                    "edge_score": 0.5,
+                    "choice": "Matsuo Bash\u014d",
+                    "edge_score": 0.0,
                     "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Hokusai",
-                            "type": "field of work",
-                            "tail": "ukiyo-e"
-                        },
-                        {
-                            "head": "Hokusai",
-                            "type": "genre",
-                            "tail": "ukiyo-e"
-                        },
-                        {
-                            "head": "Hokusai",
-                            "type": "movement",
-                            "tail": "ukiyo-e"
-                        }
-                    ]
+                    "verified_edges": []
                 },
                 "1": {
-                    "choice": "Hiroshige",
-                    "edge_score": 0.16666666666666666,
+                    "choice": "K\u016bkai",
+                    "edge_score": 0.0,
                     "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "ukiyo-e",
-                            "type": "country of origin",
-                            "tail": "Japan"
-                        }
-                    ]
+                    "verified_edges": []
                 },
                 "2": {
-                    "choice": "Both",
+                    "choice": "Sen no Riky\u016b",
                     "edge_score": 0.0,
                     "node_score": 1.0,
                     "verified_edges": []
@@ -511,16 +491,11 @@
             },
             "art-2": {
                 "0": {
-                    "choice": "Mona Lisa",
-                    "edge_score": 0.5714285714285714,
-                    "node_score": 0.9222464263439178,
+                    "choice": "The Birth of Venus",
+                    "edge_score": 0.5,
+                    "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Leonardo da Vinci",
-                            "type": "notable work",
-                            "tail": "Mona Lisa"
-                        },
-                        {
                             "head": "Mona Lisa",
                             "type": "creator",
                             "tail": "Leonardo da Vinci"
@@ -529,62 +504,57 @@
                             "head": "Leonardo da Vinci",
                             "type": "notable work",
                             "tail": "Mona Lisa"
-                        },
-                        {
-                            "head": "Mona Lisa",
-                            "type": "creator",
-                            "tail": "Leonardo da Vinci"
                         }
                     ]
                 },
                 "1": {
-                    "choice": "The Last Supper",
-                    "edge_score": 0.2857142857142857,
-                    "node_score": 0.8972346305847168,
+                    "choice": "The School of Athens",
+                    "edge_score": 0.5,
+                    "node_score": 1.0,
                     "verified_edges": [
-                        {
-                            "head": "Leonardo da Vinci",
-                            "type": "notable work",
-                            "tail": "Mona Lisa"
-                        },
                         {
                             "head": "Mona Lisa",
                             "type": "creator",
                             "tail": "Leonardo da Vinci"
+                        },
+                        {
+                            "head": "Leonardo da Vinci",
+                            "type": "notable work",
+                            "tail": "Mona Lisa"
                         }
                     ]
                 },
                 "2": {
-                    "choice": "Both",
-                    "edge_score": 0.2857142857142857,
-                    "node_score": 1.0000000238418578,
+                    "choice": "The Creation of Adam",
+                    "edge_score": 0.5,
+                    "node_score": 1.0,
                     "verified_edges": [
-                        {
-                            "head": "Leonardo da Vinci",
-                            "type": "notable work",
-                            "tail": "Mona Lisa"
-                        },
                         {
                             "head": "Mona Lisa",
                             "type": "creator",
                             "tail": "Leonardo da Vinci"
+                        },
+                        {
+                            "head": "Leonardo da Vinci",
+                            "type": "notable work",
+                            "tail": "Mona Lisa"
                         }
                     ]
                 },
                 "3": {
-                    "choice": "Neither",
-                    "edge_score": 0.2857142857142857,
-                    "node_score": 0.9057976245880127,
+                    "choice": "The Last Supper",
+                    "edge_score": 0.5,
+                    "node_score": 0.9927494128545126,
                     "verified_edges": [
-                        {
-                            "head": "Leonardo da Vinci",
-                            "type": "notable work",
-                            "tail": "Mona Lisa"
-                        },
                         {
                             "head": "Mona Lisa",
                             "type": "creator",
                             "tail": "Leonardo da Vinci"
+                        },
+                        {
+                            "head": "Leonardo da Vinci",
+                            "type": "notable work",
+                            "tail": "Mona Lisa"
                         }
                     ]
                 },
@@ -672,6 +642,11 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "The Persistence of Memory",
+                            "type": "creator",
+                            "tail": "Salvador Dal\u00ed"
+                        },
+                        {
                             "head": "Salvador Dal\u00ed",
                             "type": "movement",
                             "tail": "surrealist"
@@ -680,11 +655,6 @@
                             "head": "Salvador Dal\u00ed",
                             "type": "notable work",
                             "tail": "The Persistence of Memory"
-                        },
-                        {
-                            "head": "The Persistence of Memory",
-                            "type": "creator",
-                            "tail": "Salvador Dal\u00ed"
                         }
                     ]
                 },
@@ -801,27 +771,27 @@
             },
             "art-9": {
                 "0": {
-                    "choice": "Poem",
+                    "choice": "symphony",
                     "edge_score": 0.0,
-                    "node_score": 0.9152324557304382,
+                    "node_score": 0.9152324438095093,
                     "verified_edges": []
                 },
                 "1": {
-                    "choice": "Painting",
+                    "choice": "opera",
                     "edge_score": 0.0,
                     "node_score": 0.9152324557304382,
                     "verified_edges": []
                 },
                 "2": {
-                    "choice": "Dance",
+                    "choice": "concerto",
                     "edge_score": 0.0,
                     "node_score": 0.9152324557304382,
                     "verified_edges": []
                 },
                 "3": {
-                    "choice": "Music",
+                    "choice": "sonata",
                     "edge_score": 0.0,
-                    "node_score": 0.9152324557304382,
+                    "node_score": 0.9152324438095093,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -844,11 +814,6 @@
                     "node_score": 0.860562781492869,
                     "verified_edges": [
                         {
-                            "head": "Earth",
-                            "type": "part of",
-                            "tail": "solar system"
-                        },
-                        {
                             "head": "solar system",
                             "type": "has part",
                             "tail": "Earth"
@@ -862,6 +827,11 @@
                             "head": "solar system",
                             "type": "has part",
                             "tail": "Earth"
+                        },
+                        {
+                            "head": "Earth",
+                            "type": "part of",
+                            "tail": "solar system"
                         }
                     ]
                 },
@@ -871,14 +841,14 @@
                     "node_score": 0.8954220712184906,
                     "verified_edges": [
                         {
-                            "head": "Earth",
-                            "type": "part of",
-                            "tail": "solar system"
-                        },
-                        {
                             "head": "solar system",
                             "type": "has part",
                             "tail": "Earth"
+                        },
+                        {
+                            "head": "Earth",
+                            "type": "part of",
+                            "tail": "solar system"
                         }
                     ]
                 },
@@ -888,6 +858,11 @@
                     "node_score": 0.8954220712184906,
                     "verified_edges": [
                         {
+                            "head": "solar system",
+                            "type": "has part",
+                            "tail": "Saturn"
+                        },
+                        {
                             "head": "Saturn",
                             "type": "part of",
                             "tail": "solar system"
@@ -895,17 +870,12 @@
                         {
                             "head": "solar system",
                             "type": "has part",
-                            "tail": "Saturn"
+                            "tail": "Earth"
                         },
                         {
                             "head": "Earth",
                             "type": "part of",
                             "tail": "solar system"
-                        },
-                        {
-                            "head": "solar system",
-                            "type": "has part",
-                            "tail": "Earth"
                         }
                     ]
                 },
@@ -915,6 +885,11 @@
                     "node_score": 0.8954220712184906,
                     "verified_edges": [
                         {
+                            "head": "solar system",
+                            "type": "has part",
+                            "tail": "Jupiter"
+                        },
+                        {
                             "head": "Jupiter",
                             "type": "part of",
                             "tail": "solar system"
@@ -922,17 +897,12 @@
                         {
                             "head": "solar system",
                             "type": "has part",
-                            "tail": "Jupiter"
+                            "tail": "Earth"
                         },
                         {
                             "head": "Earth",
                             "type": "part of",
                             "tail": "solar system"
-                        },
-                        {
-                            "head": "solar system",
-                            "type": "has part",
-                            "tail": "Earth"
                         }
                     ]
                 },
@@ -1151,7 +1121,7 @@
                 "0": {
                     "choice": "Tiger",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 1.00000003973643,
                     "verified_edges": []
                 },
                 "1": {
@@ -1286,7 +1256,7 @@
                 "3": {
                     "choice": "Fish",
                     "edge_score": 0.2857142857142857,
-                    "node_score": 1.0000000198682149,
+                    "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "fossils",
@@ -1300,7 +1270,7 @@
                         }
                     ]
                 },
-                "answer": -1,
+                "answer": 0,
                 "correct": false
             },
             "gen-18": {
@@ -1351,13 +1321,13 @@
                     "verified_edges": [
                         {
                             "head": "Sahara",
-                            "type": "continent",
-                            "tail": "Africa"
+                            "type": "instance of",
+                            "tail": "desert"
                         },
                         {
                             "head": "Sahara",
-                            "type": "instance of",
-                            "tail": "desert"
+                            "type": "continent",
+                            "tail": "Africa"
                         }
                     ]
                 },
@@ -1476,17 +1446,17 @@
                 "0": {
                     "choice": "Indian",
                     "edge_score": 0.42857142857142855,
-                    "node_score": 0.8720894257227579,
+                    "node_score": 0.8720894157886505,
                     "verified_edges": [
-                        {
-                            "head": "Indian Ocean",
-                            "type": "instance of",
-                            "tail": "ocean"
-                        },
                         {
                             "head": "ocean",
                             "type": "part of",
                             "tail": "Earth"
+                        },
+                        {
+                            "head": "Indian Ocean",
+                            "type": "instance of",
+                            "tail": "ocean"
                         },
                         {
                             "head": "Indian Ocean",
@@ -1501,24 +1471,24 @@
                     "node_score": 0.9399262567361196,
                     "verified_edges": [
                         {
-                            "head": "Arctic Ocean",
-                            "type": "instance of",
-                            "tail": "ocean"
-                        },
-                        {
                             "head": "ocean",
                             "type": "part of",
                             "tail": "Earth"
                         },
                         {
                             "head": "Arctic Ocean",
-                            "type": "part of",
-                            "tail": "five major oceans"
+                            "type": "instance of",
+                            "tail": "ocean"
                         },
                         {
                             "head": "five major oceans",
                             "type": "has part",
                             "tail": "Arctic Ocean"
+                        },
+                        {
+                            "head": "Arctic Ocean",
+                            "type": "part of",
+                            "tail": "five major oceans"
                         }
                     ]
                 },
@@ -1528,14 +1498,14 @@
                     "node_score": 0.8589953382809957,
                     "verified_edges": [
                         {
-                            "head": "Atlantic Ocean",
-                            "type": "instance of",
-                            "tail": "ocean"
-                        },
-                        {
                             "head": "ocean",
                             "type": "part of",
                             "tail": "Earth"
+                        },
+                        {
+                            "head": "Atlantic Ocean",
+                            "type": "instance of",
+                            "tail": "ocean"
                         }
                     ]
                 },
@@ -1752,8 +1722,8 @@
         },
         "stats": {
             "correct": 2,
-            "fail": 2,
-            "unselectable": 16,
+            "fail": 3,
+            "unselectable": 15,
             "total": 20
         }
     },
@@ -1766,14 +1736,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "South America",
-                            "type": "has part",
-                            "tail": "Argentina"
-                        },
-                        {
                             "head": "Argentina",
                             "type": "continent",
                             "tail": "South America"
+                        },
+                        {
+                            "head": "South America",
+                            "type": "has part",
+                            "tail": "Argentina"
                         }
                     ]
                 },
@@ -1788,14 +1758,14 @@
                             "tail": "Bras\u00edlia"
                         },
                         {
-                            "head": "South America",
-                            "type": "has part",
-                            "tail": "Brazil"
-                        },
-                        {
                             "head": "Brazil",
                             "type": "continent",
                             "tail": "South America"
+                        },
+                        {
+                            "head": "South America",
+                            "type": "has part",
+                            "tail": "Brazil"
                         },
                         {
                             "head": "Bras\u00edlia",
@@ -1810,14 +1780,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "South America",
-                            "type": "has part",
-                            "tail": "Chile"
-                        },
-                        {
                             "head": "Chile",
                             "type": "continent",
                             "tail": "South America"
+                        },
+                        {
+                            "head": "South America",
+                            "type": "has part",
+                            "tail": "Chile"
                         }
                     ]
                 },
@@ -1827,14 +1797,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "South America",
-                            "type": "has part",
-                            "tail": "Peru"
-                        },
-                        {
                             "head": "Peru",
                             "type": "continent",
                             "tail": "South America"
+                        },
+                        {
+                            "head": "South America",
+                            "type": "has part",
+                            "tail": "Peru"
                         }
                     ]
                 },
@@ -1845,7 +1815,7 @@
                 "0": {
                     "choice": "Sahara Desert",
                     "edge_score": 0.2,
-                    "node_score": 0.8311634560426077,
+                    "node_score": 0.8311634759108225,
                     "verified_edges": [
                         {
                             "head": "Sahara Desert",
@@ -1909,7 +1879,7 @@
                 "2": {
                     "choice": "United States",
                     "edge_score": 0.0,
-                    "node_score": 0.8951393451009478,
+                    "node_score": 0.895139353615897,
                     "verified_edges": []
                 },
                 "3": {
@@ -1940,14 +1910,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Kingdom of Denmark",
-                            "type": "contains administrative territorial entity",
-                            "tail": "Greenland"
-                        },
-                        {
                             "head": "Greenland",
                             "type": "country",
                             "tail": "Kingdom of Denmark"
+                        },
+                        {
+                            "head": "Kingdom of Denmark",
+                            "type": "contains administrative territorial entity",
+                            "tail": "Greenland"
                         }
                     ]
                 },
@@ -1978,14 +1948,14 @@
                             "tail": "Europe"
                         },
                         {
-                            "head": "Ural Mountains",
-                            "type": "country",
-                            "tail": "Russia"
-                        },
-                        {
                             "head": "Europe",
                             "type": "shares border with",
                             "tail": "Asia"
+                        },
+                        {
+                            "head": "Ural Mountains",
+                            "type": "country",
+                            "tail": "Russia"
                         }
                     ]
                 },
@@ -2047,11 +2017,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Morocco",
-                            "type": "part of",
-                            "tail": "North Africa"
-                        },
-                        {
                             "head": "Casablanca",
                             "type": "country",
                             "tail": "Morocco"
@@ -2060,6 +2025,11 @@
                             "head": "North Africa",
                             "type": "has part",
                             "tail": "Morocco"
+                        },
+                        {
+                            "head": "Morocco",
+                            "type": "part of",
+                            "tail": "North Africa"
                         }
                     ]
                 },
@@ -2069,14 +2039,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Tunisia",
-                            "type": "part of",
-                            "tail": "North Africa"
-                        },
-                        {
                             "head": "North Africa",
                             "type": "has part",
                             "tail": "Tunisia"
+                        },
+                        {
+                            "head": "Tunisia",
+                            "type": "part of",
+                            "tail": "North Africa"
                         }
                     ]
                 },
@@ -2127,7 +2097,7 @@
                 "1": {
                     "choice": "6",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 1.0,
+                    "node_score": 0.9999999850988388,
                     "verified_edges": [
                         {
                             "head": "Danube",
@@ -2139,7 +2109,7 @@
                 "2": {
                     "choice": "10",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 0.9999999850988388,
+                    "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Danube",
@@ -2210,14 +2180,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Germany",
-                            "type": "continent",
-                            "tail": "Europe"
-                        },
-                        {
                             "head": "Baltic Sea",
                             "type": "basin country",
                             "tail": "Germany"
+                        },
+                        {
+                            "head": "Germany",
+                            "type": "continent",
+                            "tail": "Europe"
                         }
                     ]
                 },
@@ -2226,6 +2196,11 @@
                     "edge_score": 0.4444444444444444,
                     "node_score": 1.0,
                     "verified_edges": [
+                        {
+                            "head": "Baltic Sea",
+                            "type": "basin country",
+                            "tail": "Germany"
+                        },
                         {
                             "head": "Austria",
                             "type": "shares border with",
@@ -2240,11 +2215,6 @@
                             "head": "Germany",
                             "type": "shares border with",
                             "tail": "Austria"
-                        },
-                        {
-                            "head": "Baltic Sea",
-                            "type": "basin country",
-                            "tail": "Germany"
                         }
                     ]
                 },
@@ -2254,14 +2224,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Germany",
-                            "type": "continent",
-                            "tail": "Europe"
-                        },
-                        {
                             "head": "Baltic Sea",
                             "type": "basin country",
                             "tail": "Germany"
+                        },
+                        {
+                            "head": "Germany",
+                            "type": "continent",
+                            "tail": "Europe"
                         },
                         {
                             "head": "Baltic Sea",
@@ -2281,14 +2251,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Germany",
-                            "type": "continent",
-                            "tail": "Europe"
-                        },
-                        {
                             "head": "Baltic Sea",
                             "type": "basin country",
                             "tail": "Germany"
+                        },
+                        {
+                            "head": "Germany",
+                            "type": "continent",
+                            "tail": "Europe"
                         },
                         {
                             "head": "Baltic Sea",
@@ -2319,14 +2289,14 @@
                     "node_score": 0.9436192115147909,
                     "verified_edges": [
                         {
-                            "head": "Africa",
-                            "type": "has part",
-                            "tail": "South Africa"
-                        },
-                        {
                             "head": "South Africa",
                             "type": "continent",
                             "tail": "Africa"
+                        },
+                        {
+                            "head": "Africa",
+                            "type": "has part",
+                            "tail": "South Africa"
                         }
                     ]
                 },
@@ -2336,14 +2306,14 @@
                     "node_score": 0.9436192115147909,
                     "verified_edges": [
                         {
-                            "head": "Africa",
-                            "type": "has part",
-                            "tail": "Nigeria"
-                        },
-                        {
                             "head": "Nigeria",
                             "type": "continent",
                             "tail": "Africa"
+                        },
+                        {
+                            "head": "Africa",
+                            "type": "has part",
+                            "tail": "Nigeria"
                         }
                     ]
                 },
@@ -2374,14 +2344,14 @@
                             "tail": "Kyoto"
                         },
                         {
-                            "head": "Osaka Prefecture",
-                            "type": "country",
-                            "tail": "Japan"
-                        },
-                        {
                             "head": "Japan",
                             "type": "contains administrative territorial entity",
                             "tail": "Osaka Prefecture"
+                        },
+                        {
+                            "head": "Osaka Prefecture",
+                            "type": "country",
+                            "tail": "Japan"
                         },
                         {
                             "head": "Kyoto",
@@ -2396,17 +2366,12 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Japan",
-                            "type": "capital",
+                            "head": "Kyoto Prefecture",
+                            "type": "contains administrative territorial entity",
                             "tail": "Kyoto"
                         },
                         {
-                            "head": "Kyoto Prefecture",
-                            "type": "country",
-                            "tail": "Japan"
-                        },
-                        {
-                            "head": "Kyoto Prefecture",
+                            "head": "Japan",
                             "type": "capital",
                             "tail": "Kyoto"
                         },
@@ -2414,21 +2379,26 @@
                             "head": "Japan",
                             "type": "contains administrative territorial entity",
                             "tail": "Kyoto Prefecture"
-                        },
-                        {
-                            "head": "Kyoto Prefecture",
-                            "type": "contains administrative territorial entity",
-                            "tail": "Kyoto"
-                        },
-                        {
-                            "head": "Kyoto",
-                            "type": "country",
-                            "tail": "Japan"
                         },
                         {
                             "head": "Kyoto",
                             "type": "located in the administrative territorial entity",
                             "tail": "Kyoto Prefecture"
+                        },
+                        {
+                            "head": "Kyoto Prefecture",
+                            "type": "capital",
+                            "tail": "Kyoto"
+                        },
+                        {
+                            "head": "Kyoto Prefecture",
+                            "type": "country",
+                            "tail": "Japan"
+                        },
+                        {
+                            "head": "Kyoto",
+                            "type": "country",
+                            "tail": "Japan"
                         }
                     ]
                 },
@@ -2460,14 +2430,14 @@
                             "tail": "Kyoto"
                         },
                         {
-                            "head": "Fukuoka Prefecture",
-                            "type": "country",
-                            "tail": "Japan"
-                        },
-                        {
                             "head": "Japan",
                             "type": "contains administrative territorial entity",
                             "tail": "Fukuoka Prefecture"
+                        },
+                        {
+                            "head": "Fukuoka Prefecture",
+                            "type": "country",
+                            "tail": "Japan"
                         },
                         {
                             "head": "Kyoto",
@@ -2486,24 +2456,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Himalayas",
-                            "type": "highest point",
-                            "tail": "Mount Everest"
-                        },
-                        {
-                            "head": "Nepal",
-                            "type": "highest point",
-                            "tail": "Mount Everest"
-                        },
-                        {
                             "head": "Mount Everest",
                             "type": "country",
                             "tail": "Nepal"
                         },
                         {
-                            "head": "Nepal",
-                            "type": "located on terrain feature",
-                            "tail": "Himalayas"
+                            "head": "Himalayas",
+                            "type": "highest point",
+                            "tail": "Mount Everest"
                         },
                         {
                             "head": "Mount Everest",
@@ -2519,6 +2479,16 @@
                             "head": "China",
                             "type": "shares border with",
                             "tail": "Nepal"
+                        },
+                        {
+                            "head": "Nepal",
+                            "type": "located on terrain feature",
+                            "tail": "Himalayas"
+                        },
+                        {
+                            "head": "Nepal",
+                            "type": "highest point",
+                            "tail": "Mount Everest"
                         }
                     ]
                 },
@@ -2528,24 +2498,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Himalayas",
-                            "type": "highest point",
-                            "tail": "Mount Everest"
-                        },
-                        {
-                            "head": "Nepal",
-                            "type": "highest point",
-                            "tail": "Mount Everest"
-                        },
-                        {
                             "head": "Mount Everest",
                             "type": "country",
                             "tail": "Nepal"
                         },
                         {
-                            "head": "Nepal",
-                            "type": "located on terrain feature",
-                            "tail": "Himalayas"
+                            "head": "Himalayas",
+                            "type": "highest point",
+                            "tail": "Mount Everest"
                         },
                         {
                             "head": "Mount Everest",
@@ -2556,6 +2516,16 @@
                             "head": "Nepal",
                             "type": "shares border with",
                             "tail": "India"
+                        },
+                        {
+                            "head": "Nepal",
+                            "type": "located on terrain feature",
+                            "tail": "Himalayas"
+                        },
+                        {
+                            "head": "Nepal",
+                            "type": "highest point",
+                            "tail": "Mount Everest"
                         }
                     ]
                 },
@@ -2565,24 +2535,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Himalayas",
-                            "type": "highest point",
-                            "tail": "Mount Everest"
-                        },
-                        {
-                            "head": "Nepal",
-                            "type": "highest point",
-                            "tail": "Mount Everest"
-                        },
-                        {
                             "head": "Mount Everest",
                             "type": "country",
                             "tail": "Nepal"
                         },
                         {
-                            "head": "Nepal",
-                            "type": "located on terrain feature",
-                            "tail": "Himalayas"
+                            "head": "Himalayas",
+                            "type": "highest point",
+                            "tail": "Mount Everest"
                         },
                         {
                             "head": "Mount Everest",
@@ -2600,6 +2560,16 @@
                             "tail": "Nepal"
                         },
                         {
+                            "head": "Nepal",
+                            "type": "located on terrain feature",
+                            "tail": "Himalayas"
+                        },
+                        {
+                            "head": "Nepal",
+                            "type": "highest point",
+                            "tail": "Mount Everest"
+                        },
+                        {
                             "head": "Himalayas",
                             "type": "country",
                             "tail": "Bhutan"
@@ -2612,24 +2582,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Himalayas",
-                            "type": "highest point",
-                            "tail": "Mount Everest"
-                        },
-                        {
-                            "head": "Nepal",
-                            "type": "highest point",
-                            "tail": "Mount Everest"
-                        },
-                        {
                             "head": "Mount Everest",
                             "type": "country",
                             "tail": "Nepal"
                         },
                         {
-                            "head": "Nepal",
-                            "type": "located on terrain feature",
-                            "tail": "Himalayas"
+                            "head": "Himalayas",
+                            "type": "highest point",
+                            "tail": "Mount Everest"
                         },
                         {
                             "head": "Mount Everest",
@@ -2645,6 +2605,16 @@
                             "head": "Pakistan",
                             "type": "shares border with",
                             "tail": "Nepal"
+                        },
+                        {
+                            "head": "Nepal",
+                            "type": "located on terrain feature",
+                            "tail": "Himalayas"
+                        },
+                        {
+                            "head": "Nepal",
+                            "type": "highest point",
+                            "tail": "Mount Everest"
                         }
                     ]
                 },
@@ -2690,7 +2660,7 @@
                 "3": {
                     "choice": "Mississippi",
                     "edge_score": 0.0,
-                    "node_score": 0.9175515413284302,
+                    "node_score": 0.9175515532493591,
                     "verified_edges": []
                 },
                 "answer": 2,
@@ -2879,14 +2849,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "India",
-                            "type": "shares border with",
-                            "tail": "Sri Lanka"
-                        },
-                        {
                             "head": "Sri Lanka",
                             "type": "shares border with",
                             "tail": "India"
+                        },
+                        {
+                            "head": "India",
+                            "type": "shares border with",
+                            "tail": "Sri Lanka"
                         }
                     ]
                 },
@@ -3141,6 +3111,11 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Japan",
+                            "type": "diplomatic relation",
+                            "tail": "United States"
+                        },
+                        {
                             "head": "Cold War",
                             "type": "participant",
                             "tail": "United States"
@@ -3149,11 +3124,6 @@
                             "head": "United States",
                             "type": "diplomatic relation",
                             "tail": "Japan"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "diplomatic relation",
-                            "tail": "United States"
                         }
                     ]
                 },
@@ -3280,7 +3250,7 @@
                 "0": {
                     "choice": "1988",
                     "edge_score": 0.0,
-                    "node_score": 0.924033597111702,
+                    "node_score": 0.9240336120128632,
                     "verified_edges": []
                 },
                 "1": {
@@ -3292,7 +3262,7 @@
                 "2": {
                     "choice": "1990",
                     "edge_score": 0.0,
-                    "node_score": 0.9240336120128632,
+                    "node_score": 0.924033597111702,
                     "verified_edges": []
                 },
                 "3": {
@@ -3482,7 +3452,7 @@
                 "0": {
                     "choice": "Japanese pirates",
                     "edge_score": 0.16666666666666666,
-                    "node_score": 0.9088618755340576,
+                    "node_score": 0.9088618954022726,
                     "verified_edges": [
                         {
                             "head": "Great Wall of China",
@@ -3534,7 +3504,7 @@
                 "0": {
                     "choice": "Rome",
                     "edge_score": 0.0,
-                    "node_score": 0.9505543212095896,
+                    "node_score": 0.9505543311436971,
                     "verified_edges": []
                 },
                 "1": {
@@ -3619,7 +3589,7 @@
                 "1": {
                     "choice": "1988",
                     "edge_score": 0.4,
-                    "node_score": 0.9644540747006735,
+                    "node_score": 0.9644540846347809,
                     "verified_edges": [
                         {
                             "head": "West Germany",
@@ -3677,14 +3647,14 @@
                     "node_score": 0.9612149794896444,
                     "verified_edges": [
                         {
-                            "head": "Second World War",
-                            "type": "participant",
-                            "tail": "Nazi Germany"
-                        },
-                        {
                             "head": "Nazi Germany",
                             "type": "participant in",
                             "tail": "Second World War"
+                        },
+                        {
+                            "head": "Second World War",
+                            "type": "participant",
+                            "tail": "Nazi Germany"
                         }
                     ]
                 },
@@ -3899,14 +3869,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Don Quixote",
-                            "type": "author",
-                            "tail": "Cervantes"
-                        },
-                        {
                             "head": "Cervantes",
                             "type": "notable work",
                             "tail": "Don Quixote"
+                        },
+                        {
+                            "head": "Don Quixote",
+                            "type": "author",
+                            "tail": "Cervantes"
                         }
                     ]
                 },
@@ -3916,11 +3886,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Don Quixote",
-                            "type": "author",
-                            "tail": "Cervantes"
-                        },
-                        {
                             "head": "Cervantes",
                             "type": "notable work",
                             "tail": "Don Quixote"
@@ -3929,6 +3894,11 @@
                             "head": "Don Quixote",
                             "type": "language of work or name",
                             "tail": "Spanish"
+                        },
+                        {
+                            "head": "Don Quixote",
+                            "type": "author",
+                            "tail": "Cervantes"
                         },
                         {
                             "head": "Cervantes",
@@ -3943,14 +3913,14 @@
                     "node_score": 0.9572659730911255,
                     "verified_edges": [
                         {
-                            "head": "Don Quixote",
-                            "type": "author",
-                            "tail": "Cervantes"
-                        },
-                        {
                             "head": "Cervantes",
                             "type": "notable work",
                             "tail": "Don Quixote"
+                        },
+                        {
+                            "head": "Don Quixote",
+                            "type": "author",
+                            "tail": "Cervantes"
                         }
                     ]
                 },
@@ -3960,14 +3930,14 @@
                     "node_score": 0.9547233581542969,
                     "verified_edges": [
                         {
-                            "head": "Don Quixote",
-                            "type": "author",
-                            "tail": "Cervantes"
-                        },
-                        {
                             "head": "Cervantes",
                             "type": "notable work",
                             "tail": "Don Quixote"
+                        },
+                        {
+                            "head": "Don Quixote",
+                            "type": "author",
+                            "tail": "Cervantes"
                         }
                     ]
                 },
@@ -4021,14 +3991,14 @@
                     "node_score": 0.8763612849371774,
                     "verified_edges": [
                         {
-                            "head": "The Great Gatsby",
-                            "type": "author",
-                            "tail": "F. Scott Fitzgerald"
-                        },
-                        {
                             "head": "F. Scott Fitzgerald",
                             "type": "notable work",
                             "tail": "The Great Gatsby"
+                        },
+                        {
+                            "head": "The Great Gatsby",
+                            "type": "author",
+                            "tail": "F. Scott Fitzgerald"
                         }
                     ]
                 },
@@ -4110,14 +4080,14 @@
                     "node_score": 0.9740128815174103,
                     "verified_edges": [
                         {
-                            "head": "Ishmael",
-                            "type": "present in work",
-                            "tail": "Moby-Dick"
-                        },
-                        {
                             "head": "Moby-Dick",
                             "type": "characters",
                             "tail": "Ishmael"
+                        },
+                        {
+                            "head": "Ishmael",
+                            "type": "present in work",
+                            "tail": "Moby-Dick"
                         }
                     ]
                 },
@@ -4136,7 +4106,7 @@
                 "3": {
                     "choice": "Frankenstein",
                     "edge_score": 0.0,
-                    "node_score": 0.8800862282514572,
+                    "node_score": 0.8800862431526184,
                     "verified_edges": []
                 },
                 "answer": 0,
@@ -4177,17 +4147,17 @@
                     "node_score": 0.975472092628479,
                     "verified_edges": [
                         {
-                            "head": "Harry Potter and the Goblet of Fire",
-                            "type": "author",
-                            "tail": "J. K. Rowling"
-                        },
-                        {
                             "head": "J. K. Rowling",
                             "type": "notable work",
                             "tail": "Harry Potter"
                         },
                         {
                             "head": "Harry Potter",
+                            "type": "author",
+                            "tail": "J. K. Rowling"
+                        },
+                        {
+                            "head": "Harry Potter and the Goblet of Fire",
                             "type": "author",
                             "tail": "J. K. Rowling"
                         },
@@ -4204,17 +4174,17 @@
                     "node_score": 0.9940727750460306,
                     "verified_edges": [
                         {
-                            "head": "Harry Potter and the Chamber of Secrets",
-                            "type": "author",
-                            "tail": "J. K. Rowling"
-                        },
-                        {
                             "head": "J. K. Rowling",
                             "type": "notable work",
                             "tail": "Harry Potter"
                         },
                         {
                             "head": "Harry Potter",
+                            "type": "author",
+                            "tail": "J. K. Rowling"
+                        },
+                        {
+                            "head": "Harry Potter and the Chamber of Secrets",
                             "type": "author",
                             "tail": "J. K. Rowling"
                         },
@@ -4231,11 +4201,6 @@
                     "node_score": 0.975472092628479,
                     "verified_edges": [
                         {
-                            "head": "Harry Potter and the Philosopher's Stone",
-                            "type": "author",
-                            "tail": "J. K. Rowling"
-                        },
-                        {
                             "head": "J. K. Rowling",
                             "type": "notable work",
                             "tail": "Harry Potter"
@@ -4246,14 +4211,19 @@
                             "tail": "J. K. Rowling"
                         },
                         {
-                            "head": "Harry Potter series",
+                            "head": "Harry Potter and the Philosopher's Stone",
                             "type": "author",
-                            "tail": "J.K Rowling"
+                            "tail": "J. K. Rowling"
                         },
                         {
                             "head": "J.K Rowling",
                             "type": "notable work",
                             "tail": "Harry Potter series"
+                        },
+                        {
+                            "head": "Harry Potter series",
+                            "type": "author",
+                            "tail": "J.K Rowling"
                         },
                         {
                             "head": "J. K. Rowling",
@@ -4268,17 +4238,17 @@
                     "node_score": 0.975472092628479,
                     "verified_edges": [
                         {
-                            "head": "Harry Potter and the Half-Blood Prince",
-                            "type": "author",
-                            "tail": "J. K. Rowling"
-                        },
-                        {
                             "head": "J. K. Rowling",
                             "type": "notable work",
                             "tail": "Harry Potter"
                         },
                         {
                             "head": "Harry Potter",
+                            "type": "author",
+                            "tail": "J. K. Rowling"
+                        },
+                        {
+                            "head": "Harry Potter and the Half-Blood Prince",
                             "type": "author",
                             "tail": "J. K. Rowling"
                         },
@@ -4296,7 +4266,7 @@
                 "0": {
                     "choice": "Agatha Christie",
                     "edge_score": 0.0,
-                    "node_score": 0.891559362411499,
+                    "node_score": 0.8915593425432841,
                     "verified_edges": []
                 },
                 "1": {
@@ -4341,7 +4311,7 @@
                 "1": {
                     "choice": "Comma",
                     "edge_score": 0.4,
-                    "node_score": 0.8273062705993652,
+                    "node_score": 0.8273062631487846,
                     "verified_edges": [
                         {
                             "head": "Comma",
@@ -4439,14 +4409,14 @@
                             "tail": "Hamlet"
                         },
                         {
-                            "head": "Hamlet",
-                            "type": "author",
-                            "tail": "Shakespearean"
-                        },
-                        {
                             "head": "To be, or not to be",
                             "type": "part of",
                             "tail": "Hamlet"
+                        },
+                        {
+                            "head": "Hamlet",
+                            "type": "author",
+                            "tail": "Shakespearean"
                         }
                     ]
                 },
@@ -4489,14 +4459,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Jane Austen",
-                            "type": "notable work",
-                            "tail": "Pride and Prejudice"
-                        },
-                        {
                             "head": "Pride and Prejudice",
                             "type": "author",
                             "tail": "Jane Austen"
+                        },
+                        {
+                            "head": "Jane Austen",
+                            "type": "notable work",
+                            "tail": "Pride and Prejudice"
                         }
                     ]
                 },
@@ -4525,7 +4495,7 @@
                 "1": {
                     "choice": "Antonym",
                     "edge_score": 0.0,
-                    "node_score": 0.8138304352760315,
+                    "node_score": 0.8138304551442465,
                     "verified_edges": []
                 },
                 "2": {
@@ -4645,14 +4615,14 @@
                     "node_score": 0.9276740849018097,
                     "verified_edges": [
                         {
-                            "head": "The Catcher in the Rye",
-                            "type": "characters",
-                            "tail": "Holden Caulfield"
-                        },
-                        {
                             "head": "Holden Caulfield",
                             "type": "present in work",
                             "tail": "The Catcher in the Rye"
+                        },
+                        {
+                            "head": "The Catcher in the Rye",
+                            "type": "characters",
+                            "tail": "Holden Caulfield"
                         }
                     ]
                 },
@@ -4667,11 +4637,6 @@
                             "tail": "The Catcher in the Rye"
                         },
                         {
-                            "head": "The Catcher in the Rye",
-                            "type": "characters",
-                            "tail": "Holden Caulfield"
-                        },
-                        {
                             "head": "Holden Caulfield",
                             "type": "present in work",
                             "tail": "The Catcher in the Rye"
@@ -4680,6 +4645,11 @@
                             "head": "The Catcher in the Rye",
                             "type": "author",
                             "tail": "J.D. Salinger"
+                        },
+                        {
+                            "head": "The Catcher in the Rye",
+                            "type": "characters",
+                            "tail": "Holden Caulfield"
                         }
                     ]
                 },
@@ -4689,14 +4659,14 @@
                     "node_score": 0.9279668405652046,
                     "verified_edges": [
                         {
-                            "head": "The Catcher in the Rye",
-                            "type": "characters",
-                            "tail": "Holden Caulfield"
-                        },
-                        {
                             "head": "Holden Caulfield",
                             "type": "present in work",
                             "tail": "The Catcher in the Rye"
+                        },
+                        {
+                            "head": "The Catcher in the Rye",
+                            "type": "characters",
+                            "tail": "Holden Caulfield"
                         }
                     ]
                 },
@@ -4706,14 +4676,14 @@
                     "node_score": 0.9352374374866486,
                     "verified_edges": [
                         {
-                            "head": "The Catcher in the Rye",
-                            "type": "characters",
-                            "tail": "Holden Caulfield"
-                        },
-                        {
                             "head": "Holden Caulfield",
                             "type": "present in work",
                             "tail": "The Catcher in the Rye"
+                        },
+                        {
+                            "head": "The Catcher in the Rye",
+                            "type": "characters",
+                            "tail": "Holden Caulfield"
                         }
                     ]
                 },
@@ -4736,7 +4706,7 @@
                 "2": {
                     "choice": "Angry",
                     "edge_score": 0.0,
-                    "node_score": 0.9306684136390686,
+                    "node_score": 0.9306683937708536,
                     "verified_edges": []
                 },
                 "3": {
@@ -5331,7 +5301,7 @@
                 "1": {
                     "choice": "12",
                     "edge_score": 0.0,
-                    "node_score": 0.7896848767995834,
+                    "node_score": 0.7896848618984222,
                     "verified_edges": []
                 },
                 "2": {
@@ -5368,13 +5338,13 @@
                     "node_score": 0.9331081748008728,
                     "verified_edges": [
                         {
-                            "head": "Right angle",
-                            "type": "subclass of",
+                            "head": "90 degrees",
+                            "type": "instance of",
                             "tail": "angle"
                         },
                         {
-                            "head": "90 degrees",
-                            "type": "instance of",
+                            "head": "Right angle",
+                            "type": "subclass of",
                             "tail": "angle"
                         }
                     ]
@@ -5382,7 +5352,7 @@
                 "2": {
                     "choice": "Obtuse",
                     "edge_score": 0.2,
-                    "node_score": 0.8830502748489379,
+                    "node_score": 0.883050262928009,
                     "verified_edges": [
                         {
                             "head": "90 degrees",
@@ -5394,7 +5364,7 @@
                 "3": {
                     "choice": "Reflex",
                     "edge_score": 0.2,
-                    "node_score": 0.8778712391853333,
+                    "node_score": 0.8778712272644043,
                     "verified_edges": [
                         {
                             "head": "90 degrees",
@@ -5413,14 +5383,14 @@
                     "node_score": 0.8932236035664877,
                     "verified_edges": [
                         {
-                            "head": "area of a circle",
-                            "type": "has part",
-                            "tail": "radius"
-                        },
-                        {
                             "head": "radius",
                             "type": "part of",
                             "tail": "area"
+                        },
+                        {
+                            "head": "area of a circle",
+                            "type": "has part",
+                            "tail": "radius"
                         }
                     ]
                 },
@@ -5430,14 +5400,14 @@
                     "node_score": 0.8932236035664877,
                     "verified_edges": [
                         {
-                            "head": "area of a circle",
-                            "type": "has part",
-                            "tail": "radius"
-                        },
-                        {
                             "head": "radius",
                             "type": "part of",
                             "tail": "area"
+                        },
+                        {
+                            "head": "area of a circle",
+                            "type": "has part",
+                            "tail": "radius"
                         }
                     ]
                 },
@@ -5447,14 +5417,14 @@
                     "node_score": 0.8932236035664877,
                     "verified_edges": [
                         {
-                            "head": "area of a circle",
-                            "type": "has part",
-                            "tail": "radius"
-                        },
-                        {
                             "head": "radius",
                             "type": "part of",
                             "tail": "area"
+                        },
+                        {
+                            "head": "area of a circle",
+                            "type": "has part",
+                            "tail": "radius"
                         }
                     ]
                 },
@@ -5464,14 +5434,14 @@
                     "node_score": 0.8932236035664877,
                     "verified_edges": [
                         {
-                            "head": "area of a circle",
-                            "type": "has part",
-                            "tail": "radius"
-                        },
-                        {
                             "head": "radius",
                             "type": "part of",
                             "tail": "area"
+                        },
+                        {
+                            "head": "area of a circle",
+                            "type": "has part",
+                            "tail": "radius"
                         }
                     ]
                 },
@@ -5532,13 +5502,13 @@
                 "2": {
                     "choice": "I think, therefore I am",
                     "edge_score": 0.0,
-                    "node_score": 0.8771640807390213,
+                    "node_score": 0.8771640757719675,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "I know, therefore I exist",
                     "edge_score": 0.0,
-                    "node_score": 0.9073247710863749,
+                    "node_score": 0.9073247810204824,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -5556,14 +5526,14 @@
                             "tail": "philosophy"
                         },
                         {
-                            "head": "Metaphysics",
-                            "type": "part of",
-                            "tail": "philosophy"
-                        },
-                        {
                             "head": "philosophy",
                             "type": "has part",
                             "tail": "Metaphysics"
+                        },
+                        {
+                            "head": "Metaphysics",
+                            "type": "part of",
+                            "tail": "philosophy"
                         }
                     ]
                 },
@@ -5765,36 +5735,36 @@
                 "0": {
                     "choice": "Hobbes",
                     "edge_score": 0.4,
-                    "node_score": 0.9678979814052582,
+                    "node_score": 0.9999999701976776,
                     "verified_edges": [
-                        {
-                            "head": "Hobbes",
-                            "type": "notable work",
-                            "tail": "Leviathan"
-                        },
                         {
                             "head": "Leviathan",
                             "type": "author",
                             "tail": "Hobbes"
+                        },
+                        {
+                            "head": "Hobbes",
+                            "type": "notable work",
+                            "tail": "Leviathan"
                         }
                     ]
                 },
                 "1": {
                     "choice": "Locke",
                     "edge_score": 0.0,
-                    "node_score": 0.9678979814052582,
+                    "node_score": 0.9999999701976776,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Mill",
                     "edge_score": 0.0,
-                    "node_score": 0.9678979814052582,
+                    "node_score": 0.9999999701976776,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Rousseau",
                     "edge_score": 0.0,
-                    "node_score": 0.9453345090150833,
+                    "node_score": 0.9774364829063416,
                     "verified_edges": []
                 },
                 "answer": 0,
@@ -5804,19 +5774,19 @@
                 "0": {
                     "choice": "The sun is hot",
                     "edge_score": 0.0,
-                    "node_score": 0.4907759179671605,
+                    "node_score": 0.4907758980989456,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "I always lie",
                     "edge_score": 0.0,
-                    "node_score": 0.5094041377305984,
+                    "node_score": 0.509404127796491,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "All dogs are mammals",
                     "edge_score": 0.0,
-                    "node_score": 0.48668888707955676,
+                    "node_score": 0.48668888211250305,
                     "verified_edges": []
                 },
                 "3": {
@@ -5868,7 +5838,7 @@
                 "3": {
                     "choice": "Final",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 0.9702432155609131,
+                    "node_score": 0.9702431758244833,
                     "verified_edges": [
                         {
                             "head": "theory of the four causes",
@@ -5889,9 +5859,15 @@
                 },
                 "1": {
                     "choice": "Red Herring",
-                    "edge_score": 0.0,
+                    "edge_score": 0.3333333333333333,
                     "node_score": 1.0,
-                    "verified_edges": []
+                    "verified_edges": [
+                        {
+                            "head": "Red Herring",
+                            "type": "instance of",
+                            "tail": "logical fallacy"
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Ad hominem",
@@ -5905,7 +5881,7 @@
                     "node_score": 0.8712944984436035,
                     "verified_edges": []
                 },
-                "answer": -1,
+                "answer": 1,
                 "correct": false
             },
             "phi-19": {
@@ -5998,7 +5974,7 @@
                 "3": {
                     "choice": "Premise",
                     "edge_score": 0.0,
-                    "node_score": 0.8601950605710348,
+                    "node_score": 0.8601950208346049,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -6105,7 +6081,7 @@
                 "2": {
                     "choice": "Sometimes true",
                     "edge_score": 0.0,
-                    "node_score": 0.7236672838528951,
+                    "node_score": 0.72366730372111,
                     "verified_edges": []
                 },
                 "3": {
@@ -6149,7 +6125,7 @@
                 "0": {
                     "choice": "Hume",
                     "edge_score": 0.14285714285714285,
-                    "node_score": 0.9183912754058838,
+                    "node_score": 0.9183912992477417,
                     "verified_edges": [
                         {
                             "head": "categorical imperative",
@@ -6185,7 +6161,7 @@
                 "3": {
                     "choice": "Sartre",
                     "edge_score": 0.14285714285714285,
-                    "node_score": 0.9183912992477417,
+                    "node_score": 0.9183912754058838,
                     "verified_edges": [
                         {
                             "head": "categorical imperative",
@@ -6234,8 +6210,8 @@
         },
         "stats": {
             "correct": 7,
-            "fail": 2,
-            "unselectable": 11,
+            "fail": 3,
+            "unselectable": 10,
             "total": 20
         }
     },
@@ -6245,7 +6221,7 @@
                 "0": {
                     "choice": "Justin Bieber",
                     "edge_score": 0.0,
-                    "node_score": 0.953263908624649,
+                    "node_score": 0.9532638490200043,
                     "verified_edges": []
                 },
                 "1": {
@@ -6260,12 +6236,12 @@
                         },
                         {
                             "head": "Shape of You",
-                            "type": "performer",
+                            "type": "lyrics by",
                             "tail": "Ed Sheeran"
                         },
                         {
                             "head": "Shape of You",
-                            "type": "lyrics by",
+                            "type": "performer",
                             "tail": "Ed Sheeran"
                         }
                     ]
@@ -6328,7 +6304,7 @@
                 "0": {
                     "choice": "Taylor Swift",
                     "edge_score": 0.0,
-                    "node_score": 0.7327583730220795,
+                    "node_score": 0.7327584624290466,
                     "verified_edges": []
                 },
                 "1": {
@@ -6336,11 +6312,6 @@
                     "edge_score": 0.75,
                     "node_score": 0.8285504877567291,
                     "verified_edges": [
-                        {
-                            "head": "25",
-                            "type": "performer",
-                            "tail": "Adele"
-                        },
                         {
                             "head": "'25'",
                             "type": "performer",
@@ -6350,6 +6321,11 @@
                             "head": "Adele",
                             "type": "notable work",
                             "tail": "25"
+                        },
+                        {
+                            "head": "25",
+                            "type": "performer",
+                            "tail": "Adele"
                         }
                     ]
                 },
@@ -6598,7 +6574,7 @@
                 "1": {
                     "choice": "Parasite",
                     "edge_score": 0.2,
-                    "node_score": 0.8679603099822998,
+                    "node_score": 0.8679603159427642,
                     "verified_edges": [
                         {
                             "head": "2020 Academy Awards",
@@ -6817,14 +6793,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Tony Stark",
-                            "type": "performer",
-                            "tail": "Robert Downey Jr."
-                        },
-                        {
                             "head": "Iron Man",
                             "type": "present in work",
                             "tail": "Marvel Cinematic Universe"
+                        },
+                        {
+                            "head": "Tony Stark",
+                            "type": "performer",
+                            "tail": "Robert Downey Jr."
                         }
                     ]
                 },
@@ -6875,13 +6851,13 @@
                     "verified_edges": [
                         {
                             "head": "Tetris",
-                            "type": "genre",
-                            "tail": "puzzle video game"
+                            "type": "instance of",
+                            "tail": "video game"
                         },
                         {
                             "head": "Tetris",
-                            "type": "instance of",
-                            "tail": "video game"
+                            "type": "genre",
+                            "tail": "puzzle video game"
                         }
                     ]
                 },
@@ -6949,12 +6925,12 @@
                         {
                             "head": "Facebook",
                             "type": "instance of",
-                            "tail": "social media platform"
+                            "tail": "social media"
                         },
                         {
                             "head": "Facebook",
                             "type": "instance of",
-                            "tail": "social media"
+                            "tail": "social media platform"
                         }
                     ]
                 },
@@ -7293,7 +7269,7 @@
                 "1": {
                     "choice": "Gold",
                     "edge_score": 0.0,
-                    "node_score": 0.6970527172088623,
+                    "node_score": 0.6970527052879334,
                     "verified_edges": []
                 },
                 "2": {
@@ -7352,14 +7328,14 @@
                     "node_score": 0.9588193893432617,
                     "verified_edges": [
                         {
-                            "head": "stratosphere",
-                            "type": "has part",
-                            "tail": "ozone layer"
-                        },
-                        {
                             "head": "ozone layer",
                             "type": "part of",
                             "tail": "stratosphere"
+                        },
+                        {
+                            "head": "stratosphere",
+                            "type": "has part",
+                            "tail": "ozone layer"
                         },
                         {
                             "head": "stratosphere",
@@ -7374,14 +7350,14 @@
                     "node_score": 0.9588193893432617,
                     "verified_edges": [
                         {
-                            "head": "stratosphere",
-                            "type": "has part",
-                            "tail": "ozone layer"
-                        },
-                        {
                             "head": "ozone layer",
                             "type": "part of",
                             "tail": "stratosphere"
+                        },
+                        {
+                            "head": "stratosphere",
+                            "type": "has part",
+                            "tail": "ozone layer"
                         },
                         {
                             "head": "stratosphere",
@@ -7396,14 +7372,14 @@
                     "node_score": 0.9588193893432617,
                     "verified_edges": [
                         {
-                            "head": "stratosphere",
-                            "type": "has part",
-                            "tail": "ozone layer"
-                        },
-                        {
                             "head": "ozone layer",
                             "type": "part of",
                             "tail": "stratosphere"
+                        },
+                        {
+                            "head": "stratosphere",
+                            "type": "has part",
+                            "tail": "ozone layer"
                         },
                         {
                             "head": "stratosphere",
@@ -7418,14 +7394,14 @@
                     "node_score": 0.9588193893432617,
                     "verified_edges": [
                         {
-                            "head": "stratosphere",
-                            "type": "has part",
-                            "tail": "ozone layer"
-                        },
-                        {
                             "head": "ozone layer",
                             "type": "part of",
                             "tail": "stratosphere"
+                        },
+                        {
+                            "head": "stratosphere",
+                            "type": "has part",
+                            "tail": "ozone layer"
                         },
                         {
                             "head": "stratosphere",
@@ -7493,7 +7469,7 @@
                 "1": {
                     "choice": "B",
                     "edge_score": 0.25,
-                    "node_score": 0.9652294218540192,
+                    "node_score": 0.9652294367551804,
                     "verified_edges": [
                         {
                             "head": "B",
@@ -7609,13 +7585,13 @@
                             "tail": "solar system"
                         },
                         {
-                            "head": "ring system",
-                            "type": "part of",
+                            "head": "solar system",
+                            "type": "has part",
                             "tail": "Jupiter"
                         },
                         {
-                            "head": "solar system",
-                            "type": "has part",
+                            "head": "ring system",
+                            "type": "part of",
                             "tail": "Jupiter"
                         }
                     ]
@@ -7835,12 +7811,12 @@
                     "verified_edges": [
                         {
                             "head": "Argon",
-                            "type": "instance of",
+                            "type": "part of",
                             "tail": "noble gas"
                         },
                         {
                             "head": "Argon",
-                            "type": "part of",
+                            "type": "instance of",
                             "tail": "noble gas"
                         }
                     ]
@@ -7852,12 +7828,12 @@
                     "verified_edges": [
                         {
                             "head": "Argon",
-                            "type": "instance of",
+                            "type": "part of",
                             "tail": "noble gas"
                         },
                         {
                             "head": "Argon",
-                            "type": "part of",
+                            "type": "instance of",
                             "tail": "noble gas"
                         }
                     ]
@@ -7869,11 +7845,6 @@
                     "verified_edges": [
                         {
                             "head": "Argon",
-                            "type": "instance of",
-                            "tail": "noble gas"
-                        },
-                        {
-                            "head": "Argon",
                             "type": "part of",
                             "tail": "noble gas"
                         },
@@ -7885,6 +7856,11 @@
                         {
                             "head": "Argon",
                             "type": "part of",
+                            "tail": "noble gas"
+                        },
+                        {
+                            "head": "Argon",
+                            "type": "instance of",
                             "tail": "noble gas"
                         }
                     ]
@@ -7896,12 +7872,12 @@
                     "verified_edges": [
                         {
                             "head": "Argon",
-                            "type": "instance of",
+                            "type": "part of",
                             "tail": "noble gas"
                         },
                         {
                             "head": "Argon",
-                            "type": "part of",
+                            "type": "instance of",
                             "tail": "noble gas"
                         }
                     ]
@@ -7953,12 +7929,12 @@
                         {
                             "head": "Vitamin B12",
                             "type": "instance of",
-                            "tail": "vitamin"
+                            "tail": "vitamins"
                         },
                         {
                             "head": "Vitamin B12",
                             "type": "instance of",
-                            "tail": "vitamins"
+                            "tail": "vitamin"
                         },
                         {
                             "head": "Vitamin B12",
@@ -8014,7 +7990,7 @@
                 "2": {
                     "choice": "Ribosome",
                     "edge_score": 0.0,
-                    "node_score": 0.7727538049221039,
+                    "node_score": 0.7727538123726845,
                     "verified_edges": []
                 },
                 "3": {
@@ -8043,12 +8019,12 @@
                     "node_score": 0.8916313648223877,
                     "verified_edges": [
                         {
-                            "head": "HighText Machine Language",
+                            "head": "HTML",
                             "type": "instance of",
                             "tail": "markup language"
                         },
                         {
-                            "head": "HTML",
+                            "head": "HighText Machine Language",
                             "type": "instance of",
                             "tail": "markup language"
                         },
@@ -8065,12 +8041,12 @@
                     "node_score": 1.0000000298023224,
                     "verified_edges": [
                         {
-                            "head": "HyperText Markup Language",
+                            "head": "HTML",
                             "type": "instance of",
                             "tail": "markup language"
                         },
                         {
-                            "head": "HTML",
+                            "head": "HyperText Markup Language",
                             "type": "instance of",
                             "tail": "markup language"
                         },
@@ -8087,12 +8063,12 @@
                     "node_score": 0.8838401138782501,
                     "verified_edges": [
                         {
-                            "head": "HyperTool Multi Language",
+                            "head": "HTML",
                             "type": "instance of",
                             "tail": "markup language"
                         },
                         {
-                            "head": "HTML",
+                            "head": "HyperTool Multi Language",
                             "type": "instance of",
                             "tail": "markup language"
                         },
@@ -8109,12 +8085,12 @@
                     "node_score": 0.9767622649669647,
                     "verified_edges": [
                         {
-                            "head": "HyperText Markdown Language",
+                            "head": "HTML",
                             "type": "instance of",
                             "tail": "markup language"
                         },
                         {
-                            "head": "HTML",
+                            "head": "HyperText Markdown Language",
                             "type": "instance of",
                             "tail": "markup language"
                         },
@@ -8187,13 +8163,13 @@
                     "verified_edges": [
                         {
                             "head": "Android",
-                            "type": "based on",
-                            "tail": "Linux"
+                            "type": "developer",
+                            "tail": "Google"
                         },
                         {
                             "head": "Android",
-                            "type": "developer",
-                            "tail": "Google"
+                            "type": "based on",
+                            "tail": "Linux"
                         },
                         {
                             "head": "Android",
@@ -8232,7 +8208,7 @@
                 "3": {
                     "choice": "Logic error",
                     "edge_score": 0.0,
-                    "node_score": 0.9033903360366822,
+                    "node_score": 0.9033903121948242,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -8285,12 +8261,12 @@
                     "verified_edges": [
                         {
                             "head": "AWS",
-                            "type": "instance of",
+                            "type": "industry",
                             "tail": "cloud computing"
                         },
                         {
                             "head": "AWS",
-                            "type": "industry",
+                            "type": "instance of",
                             "tail": "cloud computing"
                         }
                     ]
@@ -8402,14 +8378,14 @@
                     "node_score": 0.9495605945587158,
                     "verified_edges": [
                         {
-                            "head": "Networking device",
-                            "type": "part of",
-                            "tail": "computer network"
-                        },
-                        {
                             "head": "computer network",
                             "type": "has part",
                             "tail": "Networking device"
+                        },
+                        {
+                            "head": "Networking device",
+                            "type": "part of",
+                            "tail": "computer network"
                         }
                     ]
                 },
@@ -8432,7 +8408,7 @@
                 "1": {
                     "choice": "Memory",
                     "edge_score": 0.0,
-                    "node_score": 0.8048330247402191,
+                    "node_score": 0.8048330307006836,
                     "verified_edges": []
                 },
                 "2": {
@@ -8480,7 +8456,7 @@
                 },
                 "1": {
                     "choice": "Version Control",
-                    "edge_score": 0.8,
+                    "edge_score": 1.0,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
@@ -8497,6 +8473,11 @@
                             "head": "Git",
                             "type": "use",
                             "tail": "distributed version control"
+                        },
+                        {
+                            "head": "Git",
+                            "type": "use",
+                            "tail": "Version Control"
                         },
                         {
                             "head": "Git",
@@ -8559,8 +8540,8 @@
                         }
                     ]
                 },
-                "answer": -1,
-                "correct": false
+                "answer": 1,
+                "correct": true
             },
             "tech-18": {
                 "0": {
@@ -8723,13 +8704,13 @@
                     "node_score": 0.9788496732711792,
                     "verified_edges": [
                         {
-                            "head": "C++",
-                            "type": "instance of",
+                            "head": "high-level",
+                            "type": "subclass of",
                             "tail": "programming language"
                         },
                         {
-                            "head": "high-level",
-                            "type": "subclass of",
+                            "head": "C++",
+                            "type": "instance of",
                             "tail": "programming language"
                         }
                     ]
@@ -8759,7 +8740,7 @@
                 "3": {
                     "choice": "Mark Zuckerberg",
                     "edge_score": 0.0,
-                    "node_score": 0.971456785996755,
+                    "node_score": 0.9714568058649699,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -8818,14 +8799,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "World Wide Web",
-                            "type": "uses",
-                            "tail": "HTTP"
-                        },
-                        {
                             "head": "HTTP",
                             "type": "part of",
                             "tail": "World Wide Web"
+                        },
+                        {
+                            "head": "World Wide Web",
+                            "type": "uses",
+                            "tail": "HTTP"
                         }
                     ]
                 },
@@ -8835,14 +8816,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "World Wide Web",
-                            "type": "uses",
-                            "tail": "HTTP"
-                        },
-                        {
                             "head": "HTTP",
                             "type": "part of",
                             "tail": "World Wide Web"
+                        },
+                        {
+                            "head": "World Wide Web",
+                            "type": "uses",
+                            "tail": "HTTP"
                         }
                     ]
                 },
@@ -8852,14 +8833,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "World Wide Web",
-                            "type": "uses",
-                            "tail": "HTTP"
-                        },
-                        {
                             "head": "HTTP",
                             "type": "part of",
                             "tail": "World Wide Web"
+                        },
+                        {
+                            "head": "World Wide Web",
+                            "type": "uses",
+                            "tail": "HTTP"
                         }
                     ]
                 },
@@ -8869,14 +8850,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "World Wide Web",
-                            "type": "uses",
-                            "tail": "HTTP"
-                        },
-                        {
                             "head": "HTTP",
                             "type": "part of",
                             "tail": "World Wide Web"
+                        },
+                        {
+                            "head": "World Wide Web",
+                            "type": "uses",
+                            "tail": "HTTP"
                         }
                     ]
                 },
@@ -8993,9 +8974,9 @@
             }
         },
         "stats": {
-            "correct": 6,
+            "correct": 7,
             "fail": 1,
-            "unselectable": 13,
+            "unselectable": 12,
             "total": 20
         }
     }
