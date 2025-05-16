@@ -48,6 +48,9 @@ def get_wiki_titles(targets: list[str]) -> list[str]:
     titles : list[str]
         List of Wikipedia page titles.
     """
+    if len(targets) == 0:
+        return []
+
     # send request to Wikipedia API
     url = "https://en.wikipedia.org/w/api.php"
     target_str = "|".join(targets)
@@ -91,7 +94,6 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
         List of URLs for the downloaded pages.
     """
     if len(targets) == 0:
-        print("No targets provided.")
         return [], []
 
     # send request to Wikipedia API
@@ -112,8 +114,8 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
     data = response.json()
 
     # for dev
-    with open("response.json", "w") as f:
-        json.dump(data, f, indent=4, ensure_ascii=False)
+    # with open("response.json", "w") as f:
+    #     json.dump(data, f, indent=4, ensure_ascii=False)
 
     # get titles
     normalize_map = (
