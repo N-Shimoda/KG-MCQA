@@ -2,6 +2,7 @@ import json
 import os
 from typing import Literal
 
+import torch
 from tqdm import tqdm
 
 from kgraph import KB, join
@@ -68,6 +69,9 @@ def create_KG_cache(
                     data["converted"] = True
                     with open(os.path.join(wiki_dir, subdir, file), "w") as f:
                         json.dump(data, f, indent=4)
+
+    # clean up GPU memory
+    torch.cuda.empty_cache()
 
 
 def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
