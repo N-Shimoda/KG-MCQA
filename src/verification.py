@@ -1,7 +1,13 @@
+import json
+import multiprocessing as mp
+import os
 from typing import Literal
+
+from tqdm import tqdm
 
 from kgraph import KB
 from kgraph.verifier import verify_proposition
+from src.select_ans import select_best_answer
 
 
 def save_verified_edges(
@@ -79,3 +85,73 @@ def process_pg(
     save_verified_edges(KG, kg_path, kg_edges, matching.values())
 
     return pg_path, edge_score, node_score, verified_edges, kg_edges
+
+
+def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: int = 16):
+    """
+    Verify PGs against KGs and select the best answer.
+    This function iterates over each category and each PG, verifies the PG against the KG,
+    and saves the verification results in a JSON file.
+
+    Parameters
+    ----------
+    pg_top_dir : str
+        Top-level directory containing subdirectories of PGs.
+    kg_top_dir : str
+        Top-level directory containing subdirectories of KGs.
+    output_file : str
+        Path to the output JSON file for verification results.
+    num_workers : int
+        Number of parallel workers to use.
+    """
+    result = dict()
+
+    # Iterate over each category
+    cat_dirs = os.listdir(pg_top_dir)
+    for cat in sorted(cat_dirs):
+        # List of PG directories for the given category
+        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
+        result[cat] = {"questions": dict()}
+
+        # NOTE: pg_dir contains four PG dot files for a single MCQ
+        for pg_dir in tqdm(sorted(pg_dirs, key=lambda x: os.path.basename(x).split("-")[1]), desc=f"Processing {cat}"):
+            mcq_id = os.path.basename(pg_dir)
+            result[cat]["questions"][mcq_id] = dict()
+
+            # Prepare arguments for parallel processing
+            pg_files = os.listdir(pg_dir)
+            args = [
+                (
+                    os.path.join(pg_dir, pg_filename),
+                    os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename),
+                )
+                for pg_filename in pg_files
+            ]
+
+            # Use multiprocessing to process PGs in parallel
+            with mp.Pool(processes=num_workers) as pool:
+                results = pool.map(process_pg, args)
+
+            # NOTE: results are sorted by option numbers
+            # since the prefix of PG filename (x[0]) are 0, 1, 2, 3 w.r.t. the choice index
+            scores = []
+            for pg_path, edge_score, node_score, verified_edges, _ in sorted(results, key=lambda x: x[0]):
+                # Save the result of verification
+                pg_filename = os.path.basename(pg_path)
+                scores.append((edge_score, node_score))
+                result[cat]["questions"][mcq_id][pg_filename[0]] = {
+                    "choice": pg_filename[2:-4],
+                    "edge_score": edge_score,
+                    "node_score": node_score,
+                    "verified_edges": verified_edges,
+                }
+
+            # save chosen answer
+            result[cat]["questions"][mcq_id]["answer"] = select_best_answer(scores)
+
+        # Save the result to a JSON file
+        with open(output_file, "w") as f:
+            json.dump(result, f, indent=4)
+            json.dump(result, f, indent=4)
+            json.dump(result, f, indent=4)
+            json.dump(result, f, indent=4)
