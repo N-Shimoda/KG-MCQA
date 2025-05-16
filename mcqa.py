@@ -11,7 +11,7 @@ from src.pg_creator import create_PGs, download_wiki_articles
 from src.verification import verify_PGs
 
 
-def plot_bar_chart(categories: list[str], scores: dict[str, list[int]], output_file: str):
+def plot_bar_chart(categories: list[str], scores: dict[str, list[int]], title: str, output_file: str):
     if not output_file.endswith(".svg"):
         raise ValueError("Output file should be in SVG format for article quality.")
 
@@ -74,6 +74,7 @@ def plot_bar_chart(categories: list[str], scores: dict[str, list[int]], output_f
     ax.legend()
     ax.grid(True, axis="y", linestyle="--", alpha=0.5)
 
+    plt.title(title)
     plt.tight_layout()
     plt.savefig(output_file, format="svg")
 
@@ -131,7 +132,8 @@ def collect_results(result_file: str, mcq_file: str):
     # create bar chart
     categories = result.keys()
     scores = {cat: list(result[cat]["stats"].values()) for cat in categories}
-    plot_bar_chart(categories, scores, f"{os.path.dirname(result_file)}/accuracy.svg")
+    ds_name = os.path.basename(mcq_file).split(".")[0]
+    plot_bar_chart(categories, scores, title=ds_name, output_file=f"{os.path.dirname(result_file)}/accuracy.svg")
 
 
 if __name__ == "__main__":
