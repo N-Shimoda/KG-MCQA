@@ -10,7 +10,7 @@ def get_wikipedia_page_url(title: str, lang: str = "en") -> str:
     response = requests.get(url, params=params)
     data = response.json()
 
-    with open("wiki_test.json", "w") as f:
+    with open("response.json", "w") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
     pages = data["query"]["pages"]
@@ -23,4 +23,4 @@ def get_wikipedia_page_url(title: str, lang: str = "en") -> str:
 
 
 # 例
-print(get_wikipedia_page_url("Kyoto University|Parasite|Naoki Shimoda"))
+print(get_wikipedia_page_url("Kyoto University|Parasite|woodwind|Cubist Movement"))
