@@ -8,6 +8,7 @@ from tqdm import tqdm
 from kgraph import KB, join
 from kgraph.extraction import extract_triples
 from kgraph.utils import swap_label_with_symbol
+from kgraph.wiki import download_wiki_pages
 
 
 def create_PG_temps(questions: list[str], choice_li: list[list[str]], model: Literal["unirel", "rebel"]) -> list[KB]:
@@ -92,3 +93,44 @@ def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"]
 
     # clean up GPU memory
     torch.cuda.empty_cache()
+
+
+def download_wiki_articles(pg_top_dir: str, wiki_dir: str):
+    """
+    Download Wikipedia articles for all PGs stored in the specified top-level directory.
+    This function saves the titles of related Wikipedia articles in the PG dot files.
+
+    Parameters
+    ----------
+    pg_top_dir : str
+        Top-level directory containing subdirectories of PGs.
+    wiki_dir : str
+        Directory to save the downloaded Wikipedia articles.
+    """
+    # iterate over each category
+    cat_dirs = os.listdir(pg_top_dir)
+    for cat in sorted(cat_dirs):
+        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
+
+        # iterate over each PG directory
+        for pg_dir in tqdm(pg_dirs, desc=f"Processing {cat}"):
+            # reconstruct PGs from dot files
+            pg_files = [f for f in os.listdir(pg_dir) if f.endswith(".dot")]
+            PGs = [KB.from_dot_file(os.path.join(pg_dir, file)) for file in pg_files]
+
+            # get target titles from all PGs
+            PG_nodes_li = [PG.get_nodes() for PG in PGs]
+            targets = list({word for node in PG_nodes_li for word in node})
+
+            # Download the Wikipedia article
+            titles, urls = download_wiki_pages(targets, out_dir=wiki_dir, tqdm_disable=True)
+            titles = [titles[i] if urls[i] is not None else None for i in range(len(titles))]
+            mapping = dict(zip(targets, titles))
+
+            # Add page titles as node attributes
+            for PG in PGs:
+                # update PG dot files with Wiki titles if exists
+                for node in PG.get_nodes():
+                    if mapping[node] is not None:
+                        PG.add_node_attr(node, "wiki_title", mapping[node])
+                PG.write_dot(os.path.join(pg_dir, pg_files[PGs.index(PG)]))
