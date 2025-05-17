@@ -75,30 +75,38 @@ def create_PGs(
 
     # Iterate over each category
     for cat in mcqs:
-        sentences = [q_data["sentence"] for q_data in mcqs[cat]["questions"].values()]
-        choice_li = [q_data["choice"] for q_data in mcqs[cat]["questions"].values()]
+        sentences: list[str] = [q_data["sentence"] for q_data in mcqs[cat]["questions"].values()]
+        choice_li: list[list[str]] = [q_data["choice"] for q_data in mcqs[cat]["questions"].values()]
 
+        # Batch processing for PG creation
         for i in tqdm(range(0, len(sentences), batch_size), desc=f"Processing {cat}"):
-            sentences_batch: list[str] = sentences[i : i + batch_size]  # list[str]
-            choice_li_batch: list[list[str]] = choice_li[i : i + batch_size]  # list[list[str]]
+            sentences_batch = sentences[i : i + batch_size]
+            choice_li_batch = choice_li[i : i + batch_size]
 
             # create PG templates
             PG_temps = create_PG_temps(sentences_batch, choice_li_batch, model)
 
             for j, (PG_temp, choice) in enumerate(zip(PG_temps, choice_li_batch)):
+                # Create mapping for entity linking
                 if el_enabled:
                     targets = PG_temp.get_nodes() + choice
-                    targets.remove("#BLANK")
-                    titles = get_wiki_titles([target for target in targets if target != "#BLANK"])
+                    subst_targets = []
+                    for t in targets:
+                        if "#BLANK" in t:
+                            subst_targets.extend([t.replace("#BLANK", c) for c in choice])
+                        else:
+                            subst_targets.append(t)
+                    targets = subst_targets
+
+                    titles = get_wiki_titles(targets)
                     mapping = {label: title for label, title in zip(targets, titles) if title is not None}
+                else:
+                    mapping = {}
 
                 for c in choice:
                     # substitute choice label into PG_temp
                     PG = swap_label_with_symbol(PG_temp, "#BLANK", c)
-
-                    # TODO: add entity linking
-                    if el_enabled:
-                        PG.apply_entity_linking(mapping)
+                    PG.apply_entity_linking(mapping)  # do nothing if mapping is empty
 
                     # save PG to dot file
                     os.makedirs(f"{pg_top_dir}/{cat}/{cat}-{i+j}", exist_ok=True)
