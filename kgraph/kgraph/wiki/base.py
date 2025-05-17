@@ -1,8 +1,13 @@
 import json
+import logging
 import os
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 
 import requests
+
+# Set up logging to file (at the top of the file)
+logging.basicConfig(filename="wikipedia_api.log", level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
 
 def assign_file_path(title: str) -> tuple[str, str]:
@@ -53,20 +58,38 @@ def get_wiki_titles(targets: list[str]) -> list[str]:
 
     all_titles = []
     chunk_size = 50
-    for i in range(0, len(targets), chunk_size):
-        chunk = targets[i : i + chunk_size]
+
+    def fetch_titles(chunk: list[str]) -> list[str]:
+        """
+        Fetches the canonical Wikipedia page titles for a given list of titles.
+
+        This function queries the Wikipedia API with a chunk of page titles, handling normalization and redirects.
+        It returns the final resolved titles as they exist on Wikipedia.
+
+        Parameters
+        ----------
+        chunk : list of str
+            A list of Wikipedia page titles to query.
+
+        Returns
+        -------
+        list of str
+            A list of resolved Wikipedia page titles after normalization and redirect resolution.
+
+        Examples
+        --------
+        >>> fetch_titles(["Albert Einstein", "Python (programming language)"])
+        ['Albert Einstein', 'Python (programming language)']
+        """
         url = "https://en.wikipedia.org/w/api.php"
         target_str = "|".join(chunk)
         params = {"action": "query", "prop": "info", "titles": target_str, "redirects": 1, "format": "json"}
-
         response = requests.get(url, params=params)
         data = response.json()
 
-        # for dev
-        with open("response.json", "w") as f:
-            json.dump(data, f, indent=4, ensure_ascii=False)
+        # Log API call to file
+        logging.info("Wikipedia API call executed for titles: %s", target_str)
 
-        # trace normalization and redirects
         normalize_map = (
             {item["from"]: item["to"] for item in data["query"]["normalized"]} if "normalized" in data["query"] else {}
         )
@@ -76,8 +99,14 @@ def get_wiki_titles(targets: list[str]) -> list[str]:
 
         normalized = [normalize_map[target] if target in normalize_map else target for target in chunk]
         titles = [redirect_map[target] if target in redirect_map else target for target in normalized]
+        return titles
 
-        all_titles.extend(titles)
+    chunks = [targets[i : i + chunk_size] for i in range(0, len(targets), chunk_size)]
+
+    with ThreadPoolExecutor() as executor:
+        futures = [executor.submit(fetch_titles, chunk) for chunk in chunks]
+        for future in as_completed(futures):
+            all_titles.extend(future.result())
 
     return all_titles
 
@@ -108,16 +137,32 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
     all_titles = []
     all_urls = []
     chunk_size = 50
-    for i in range(0, len(targets), chunk_size):
-        chunk = targets[i : i + chunk_size]
+
+    def fetch_and_save(chunk: list[str]) -> tuple[list[str], list[str]]:
+        """
+        Fetch Wikipedia page data for a chunk of titles, save each page as a JSON file,
+        and return the list of normalized/redirected titles and their URLs.
+
+        Parameters
+        ----------
+        chunk : list[str]
+            List of Wikipedia page titles (up to 50).
+
+        Returns
+        -------
+        titles : list[str]
+            List of normalized and redirected Wikipedia page titles.
+        urls : list[str]
+            List of URLs corresponding to the Wikipedia pages.
+        """
         url = "https://en.wikipedia.org/w/api.php"
         target_str = "|".join(chunk)
         params = {
             "action": "query",
             "prop": "info|extracts",
             "inprop": "url",
-            "exintro": 1,  # 冒頭部分のみ
-            "explaintext": 1,  # プレーンテキストで取得
+            "exintro": 1,
+            "explaintext": 1,
             "titles": target_str,
             "redirects": 1,
             "format": "json",
@@ -126,7 +171,9 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
         response.raise_for_status()
         data = response.json()
 
-        # get titles
+        # Log API call to file
+        logging.info("Wikipedia API call executed for titles: %s", target_str)
+
         normalize_map = (
             {item["from"]: item["to"] for item in data["query"]["normalized"]} if "normalized" in data["query"] else {}
         )
@@ -136,7 +183,7 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
         normalized = [normalize_map[target] if target in normalize_map else target for target in chunk]
         titles = [redirect_map[target] if target in redirect_map else target for target in normalized]
 
-        # get URLs
+        # Get URLs for each title
         pages = data["query"]["pages"]
         url_map = {page["title"]: page["fullurl"] if int(page_id) > 0 else None for page_id, page in pages.items()}
         urls = [url_map[title] for title in titles]
@@ -144,7 +191,6 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
         # Save articles to JSON files
         today_date = datetime.now()
         for page_id, page in pages.items():
-            # skip if page not found
             if int(page_id) < 0:
                 continue
 
@@ -156,12 +202,10 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
                 "summary": page["extract"],
             }
 
-            # Create output directory if it doesn't exist
             subdir, basename = assign_file_path(page["title"])
             os.makedirs(f"{out_dir}/{subdir}", exist_ok=True)
             output_path = f"{out_dir}/{subdir}/{basename}"
 
-            # Save article to JSON file
             save_file = True
             if os.path.exists(output_path):
                 with open(output_path, "r", encoding="utf-8") as output_file:
@@ -174,8 +218,16 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
                 with open(output_path, "w", encoding="utf-8") as output_file:
                     json.dump(data_to_save, output_file, indent=4)
 
-        all_titles.extend(titles)
-        all_urls.extend(urls)
+        return titles, urls
+
+    chunks = [targets[i : i + chunk_size] for i in range(0, len(targets), chunk_size)]
+
+    with ThreadPoolExecutor() as executor:
+        futures = [executor.submit(fetch_and_save, chunk) for chunk in chunks]
+        for future in as_completed(futures):
+            titles, urls = future.result()
+            all_titles.extend(titles)
+            all_urls.extend(urls)
 
     return all_titles, all_urls
 
