@@ -51,26 +51,35 @@ def get_wiki_titles(targets: list[str]) -> list[str]:
     if len(targets) == 0:
         return []
 
-    # send request to Wikipedia API
-    url = "https://en.wikipedia.org/w/api.php"
-    target_str = "|".join(targets)
-    params = {"action": "query", "prop": "info", "titles": target_str, "redirects": 1, "format": "json"}
+    all_titles = []
+    chunk_size = 50
+    for i in range(0, len(targets), chunk_size):
+        chunk = targets[i : i + chunk_size]
+        url = "https://en.wikipedia.org/w/api.php"
+        target_str = "|".join(chunk)
+        params = {"action": "query", "prop": "info", "titles": target_str, "redirects": 1, "format": "json"}
 
-    response = requests.get(url, params=params)
-    data = response.json()
+        response = requests.get(url, params=params)
+        data = response.json()
 
-    # trace normalization and redirects
-    normalize_map = {item["from"]: item["to"] for item in data["query"]["normalized"]}
-    redirect_map = {item["from"]: item["to"] for item in data["query"]["redirects"]}
+        # for dev
+        with open("response.json", "w") as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
 
-    normalized = [normalize_map[target] if target in normalize_map else target for target in targets]
-    redirected = [redirect_map[target] if target in redirect_map else target for target in normalized]
+        # trace normalization and redirects
+        normalize_map = (
+            {item["from"]: item["to"] for item in data["query"]["normalized"]} if "normalized" in data["query"] else {}
+        )
+        redirect_map = (
+            {item["from"]: item["to"] for item in data["query"]["redirects"]} if "redirects" in data["query"] else {}
+        )
 
-    # print("targets:", targets)
-    # print("normalized:", normalized)
-    # print("redirected:", redirected)
+        normalized = [normalize_map[target] if target in normalize_map else target for target in chunk]
+        titles = [redirect_map[target] if target in redirect_map else target for target in normalized]
 
-    return redirected
+        all_titles.extend(titles)
+
+    return all_titles
 
 
 def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 1) -> tuple[list[str], list[str]]:
@@ -96,76 +105,79 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
     if len(targets) == 0:
         return [], []
 
-    # send request to Wikipedia API
-    url = "https://en.wikipedia.org/w/api.php"
-    target_str = "|".join(targets)
-    params = {
-        "action": "query",
-        "prop": "info|extracts",
-        "inprop": "url",
-        "exintro": 1,  # 冒頭部分のみ
-        "explaintext": 1,  # プレーンテキストで取得
-        "titles": target_str,
-        "redirects": 1,
-        "format": "json",
-    }
-    response = requests.get(url, params=params)
-    response.raise_for_status()
-    data = response.json()
-
-    # for dev
-    # with open("response.json", "w") as f:
-    #     json.dump(data, f, indent=4, ensure_ascii=False)
-
-    # get titles
-    normalize_map = (
-        {item["from"]: item["to"] for item in data["query"]["normalized"]} if "normalized" in data["query"] else {}
-    )
-    redirect_map = (
-        {item["from"]: item["to"] for item in data["query"]["redirects"]} if "redirects" in data["query"] else {}
-    )
-    normalized = [normalize_map[target] if target in normalize_map else target for target in targets]
-    titles = [redirect_map[target] if target in redirect_map else target for target in normalized]
-
-    # get URLs
-    pages = data["query"]["pages"]
-    url_map = {page["title"]: page["fullurl"] if int(page_id) > 0 else None for page_id, page in pages.items()}
-    urls = [url_map[title] for title in titles]
-
-    # Save articles to JSON files
-    today_date = datetime.now()
-    for page_id, page in pages.items():
-        # skip if page not found
-        if int(page_id) < 0:
-            continue
-
-        data = {
-            "title": page["title"],
-            "fullurl": page["fullurl"],
-            "retrieved-date": today_date.strftime("%Y/%m/%d %H:%M:%S"),
-            "converted": False,
-            "summary": page["extract"],
+    all_titles = []
+    all_urls = []
+    chunk_size = 50
+    for i in range(0, len(targets), chunk_size):
+        chunk = targets[i : i + chunk_size]
+        url = "https://en.wikipedia.org/w/api.php"
+        target_str = "|".join(chunk)
+        params = {
+            "action": "query",
+            "prop": "info|extracts",
+            "inprop": "url",
+            "exintro": 1,  # 冒頭部分のみ
+            "explaintext": 1,  # プレーンテキストで取得
+            "titles": target_str,
+            "redirects": 1,
+            "format": "json",
         }
+        response = requests.get(url, params=params)
+        response.raise_for_status()
+        data = response.json()
 
-        # Create output directory if it doesn't exist
-        subdir, basename = assign_file_path(page["title"])
-        os.makedirs(f"{out_dir}/{subdir}", exist_ok=True)
-        output_path = f"{out_dir}/{subdir}/{basename}"
+        # get titles
+        normalize_map = (
+            {item["from"]: item["to"] for item in data["query"]["normalized"]} if "normalized" in data["query"] else {}
+        )
+        redirect_map = (
+            {item["from"]: item["to"] for item in data["query"]["redirects"]} if "redirects" in data["query"] else {}
+        )
+        normalized = [normalize_map[target] if target in normalize_map else target for target in chunk]
+        titles = [redirect_map[target] if target in redirect_map else target for target in normalized]
 
-        # Save article to JSON file
-        save_file = True
-        if os.path.exists(output_path):
-            with open(output_path, "r", encoding="utf-8") as output_file:
-                date_str = json.load(output_file).get("retrieved-date")
-                retriedved_date = datetime.strptime(date_str, "%Y/%m/%d %H:%M:%S")
-                if (today_date - retriedved_date).days < cache_ttl_days:
-                    save_file = False
+        # get URLs
+        pages = data["query"]["pages"]
+        url_map = {page["title"]: page["fullurl"] if int(page_id) > 0 else None for page_id, page in pages.items()}
+        urls = [url_map[title] for title in titles]
 
-        if save_file:
-            with open(output_path, "w", encoding="utf-8") as output_file:
-                json.dump(data, output_file, indent=4)
+        # Save articles to JSON files
+        today_date = datetime.now()
+        for page_id, page in pages.items():
+            # skip if page not found
+            if int(page_id) < 0:
+                continue
 
-    return titles, urls
+            data_to_save = {
+                "title": page["title"],
+                "fullurl": page["fullurl"],
+                "retrieved-date": today_date.strftime("%Y/%m/%d %H:%M:%S"),
+                "converted": False,
+                "summary": page["extract"],
+            }
+
+            # Create output directory if it doesn't exist
+            subdir, basename = assign_file_path(page["title"])
+            os.makedirs(f"{out_dir}/{subdir}", exist_ok=True)
+            output_path = f"{out_dir}/{subdir}/{basename}"
+
+            # Save article to JSON file
+            save_file = True
+            if os.path.exists(output_path):
+                with open(output_path, "r", encoding="utf-8") as output_file:
+                    date_str = json.load(output_file).get("retrieved-date")
+                    retriedved_date = datetime.strptime(date_str, "%Y/%m/%d %H:%M:%S")
+                    if (today_date - retriedved_date).days < cache_ttl_days:
+                        save_file = False
+
+            if save_file:
+                with open(output_path, "w", encoding="utf-8") as output_file:
+                    json.dump(data_to_save, output_file, indent=4)
+
+        all_titles.extend(titles)
+        all_urls.extend(urls)
+
+    return all_titles, all_urls
 
 
 if __name__ == "__main__":

@@ -1,8 +1,10 @@
 import os
+from unittest.mock import Mock, patch
 
 import pytest
 
 from kgraph.core.base import KB
+from kgraph.wiki.base import get_wiki_titles
 
 
 @pytest.mark.parametrize(
@@ -112,3 +114,85 @@ def test_from_dot_file(dot_content, expected_nodes, expected_relations):
     finally:
         # Clean up the temporary file
         os.remove(dot_file_path)
+
+        @pytest.mark.parametrize(
+            "targets, api_response, expected_titles",
+            [
+                # 1. Empty input
+                ([], None, []),
+                # 2. Single title, no normalization/redirect
+                (
+                    ["Python"],
+                    {
+                        "query": {
+                            "pages": {"123": {"title": "Python"}},
+                        }
+                    },
+                    ["Python"],
+                ),
+                # 3. Multiple titles, with normalization
+                (
+                    ["machine learning", "AI"],
+                    {
+                        "query": {
+                            "normalized": [
+                                {"from": "machine learning", "to": "Machine learning"},
+                                {"from": "AI", "to": "Ai"},
+                            ],
+                            "pages": {
+                                "1": {"title": "Machine learning"},
+                                "2": {"title": "Ai"},
+                            },
+                        }
+                    },
+                    ["Machine learning", "Ai"],
+                ),
+                # 4. Multiple titles, with redirect
+                (
+                    ["ML", "Artificial Intelligence"],
+                    {
+                        "query": {
+                            "redirects": [
+                                {"from": "ML", "to": "Machine learning"},
+                                {"from": "Artificial Intelligence", "to": "AI"},
+                            ],
+                            "pages": {
+                                "1": {"title": "Machine learning"},
+                                "2": {"title": "AI"},
+                            },
+                        }
+                    },
+                    ["Machine learning", "AI"],
+                ),
+                # 5. Titles with both normalization and redirect
+                (
+                    ["ml", "artificial intelligence"],
+                    {
+                        "query": {
+                            "normalized": [
+                                {"from": "ml", "to": "ML"},
+                                {"from": "artificial intelligence", "to": "Artificial Intelligence"},
+                            ],
+                            "redirects": [
+                                {"from": "ML", "to": "Machine learning"},
+                                {"from": "Artificial Intelligence", "to": "AI"},
+                            ],
+                            "pages": {
+                                "1": {"title": "Machine learning"},
+                                "2": {"title": "AI"},
+                            },
+                        }
+                    },
+                    ["Machine learning", "AI"],
+                ),
+            ],
+        )
+        def test_get_wiki_titles(targets, api_response, expected_titles, tmp_path):
+            # Patch requests.get to return a mock response with .json() method
+            with patch("kgraph.wiki.base.requests.get") as mock_get:
+                if api_response is not None:
+                    mock_resp = Mock()
+                    mock_resp.json.return_value = api_response
+                    mock_get.return_value = mock_resp
+                result = get_wiki_titles(targets)
+                assert result == expected_titles

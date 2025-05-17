@@ -188,6 +188,32 @@ class KB:
         """Get max degree of KB"""
         return max(self.get_degree().values())
 
+    def apply_entity_linking(self, mapping: dict[str, str]):
+        """
+        Apply entity linking to the KB.
+
+        Parameters
+        ----------
+        mapping: dict[str, str]
+            Mapping of node labels to their linked entities.
+        """
+        self.relations = [
+            (
+                {"head": mapping[r["head"]], "type": r["type"], "tail": mapping[r["tail"]]}
+                if r["head"] in mapping and r["tail"] in mapping
+                else (
+                    {"head": mapping[r["head"]], "type": r["type"], "tail": r["tail"]}
+                    if r["head"] in mapping
+                    else (
+                        {"head": r["head"], "type": r["type"], "tail": mapping[r["tail"]]}
+                        if r["tail"] in mapping
+                        else r
+                    )
+                )
+            )
+            for r in self.relations
+        ]
+
     def copy(self) -> "KB":
         """
         Create a deep copy of the KB instance.
