@@ -6,9 +6,6 @@ from datetime import datetime
 
 import aiohttp
 
-# Set up logging to file (at the top of the file)
-logging.basicConfig(filename="wikipedia_api.log", level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-
 
 def assign_file_path(title: str) -> tuple[str, str]:
     """

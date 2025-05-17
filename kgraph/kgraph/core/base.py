@@ -197,7 +197,7 @@ class KB:
         mapping: dict[str, str]
             Mapping of node labels to their linked entities.
         """
-        self.relations = [
+        rels = [
             (
                 {"head": mapping[r["head"]], "type": r["type"], "tail": mapping[r["tail"]]}
                 if r["head"] in mapping and r["tail"] in mapping
@@ -213,6 +213,8 @@ class KB:
             )
             for r in self.relations
         ]
+        unique_rels = [dict(t) for t in set(tuple(r.items()) for r in rels)]  # remove duplicates
+        self.relations = unique_rels
 
     def copy(self) -> "KB":
         """
