@@ -174,6 +174,8 @@ class MCQAGraphViewer:
             model_mapping = {
                 "rebel": "REBEL",
                 "unirel": "UniRel",
+                "rebel_el": "REBEL (EL)",
+                "unirel_el": "UniRel (EL)",
             }
             self.selected_model = st.selectbox(
                 "Relation Extraction Model",
