@@ -5,7 +5,7 @@
                 "0": {
                     "choice": "Starry Night",
                     "edge_score": 0.0,
-                    "node_score": 0.7173226177692413,
+                    "node_score": 0.7173227071762085,
                     "verified_edges": []
                 },
                 "1": {
@@ -101,7 +101,7 @@
                 "2": {
                     "choice": "Surrealism",
                     "edge_score": 0.0,
-                    "node_score": 0.6932610422372818,
+                    "node_score": 0.8508429527282715,
                     "verified_edges": []
                 },
                 "3": {
@@ -245,9 +245,9 @@
                     "verified_edges": []
                 },
                 "3": {
-                    "choice": "The Nutcracker",
+                    "choice": "Giselle",
                     "edge_score": 0.0,
-                    "node_score": 0.9709488749504089,
+                    "node_score": 0.6505659967660904,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -311,55 +311,67 @@
             },
             "art-19": {
                 "0": {
-                    "choice": "Hokusai",
-                    "edge_score": 0,
-                    "node_score": 0.0,
-                    "verified_edges": []
+                    "choice": "Matsuo Bash\u014d",
+                    "edge_score": 0.5,
+                    "node_score": 0.8594209849834442,
+                    "verified_edges": [
+                        {
+                            "head": "Matsuo Bash\u014d",
+                            "type": "/people/person/nationality",
+                            "tail": "Japanese"
+                        }
+                    ]
                 },
                 "1": {
-                    "choice": "Hiroshige",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "choice": "K\u016bkai",
+                    "edge_score": 0.0,
+                    "node_score": 0.8594210147857666,
                     "verified_edges": []
                 },
                 "2": {
-                    "choice": "Both",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "choice": "Sen no Riky\u016b",
+                    "edge_score": 0.0,
+                    "node_score": 0.7699966430664062,
                     "verified_edges": []
                 },
                 "3": {
-                    "choice": "Neither",
-                    "edge_score": 0,
-                    "node_score": 0.0,
-                    "verified_edges": []
+                    "choice": "Katsushika Hokusai",
+                    "edge_score": 0.5,
+                    "node_score": 0.5222902297973633,
+                    "verified_edges": [
+                        {
+                            "head": "Japanese",
+                            "type": "/location/location/contains",
+                            "tail": "Katsushika Hokusai"
+                        }
+                    ]
                 },
-                "answer": -1,
+                "answer": 0,
                 "correct": false
             },
             "art-2": {
                 "0": {
-                    "choice": "Mona Lisa",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "choice": "The Birth of Venus",
+                    "edge_score": 0.0,
+                    "node_score": 0.9454495310783386,
                     "verified_edges": []
                 },
                 "1": {
-                    "choice": "The Last Supper",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "choice": "The School of Athens",
+                    "edge_score": 0.0,
+                    "node_score": 0.9454495310783386,
                     "verified_edges": []
                 },
                 "2": {
-                    "choice": "Both",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "choice": "The Creation of Adam",
+                    "edge_score": 0.0,
+                    "node_score": 0.9454495310783386,
                     "verified_edges": []
                 },
                 "3": {
-                    "choice": "Neither",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "choice": "The Last Supper",
+                    "edge_score": 0.0,
+                    "node_score": 0.9454495310783386,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -509,7 +521,7 @@
                 "0": {
                     "choice": "Surrealism",
                     "edge_score": 0.0,
-                    "node_score": 0.26796792447566986,
+                    "node_score": 0.5527227222919464,
                     "verified_edges": []
                 },
                 "1": {
@@ -535,25 +547,25 @@
             },
             "art-9": {
                 "0": {
-                    "choice": "Poem",
+                    "choice": "symphony",
                     "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
-                    "choice": "Painting",
+                    "choice": "opera",
                     "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
-                    "choice": "Dance",
+                    "choice": "concerto",
                     "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
-                    "choice": "Music",
+                    "choice": "sonata",
                     "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
@@ -564,8 +576,8 @@
         },
         "stats": {
             "correct": 0,
-            "fail": 0,
-            "unselectable": 20,
+            "fail": 1,
+            "unselectable": 19,
             "total": 20
         }
     },
@@ -1607,27 +1619,27 @@
                         {
                             "head": "Japan",
                             "type": "/location/location/contains",
-                            "tail": "Kyoto"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
                             "tail": "Osaka Prefecture"
                         },
                         {
                             "head": "Japan",
                             "type": "/location/location/contains",
+                            "tail": "Kyoto"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/location/contains",
+                            "tail": "Tokyo"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/country/administrative_divisions",
                             "tail": "Tokyo"
                         },
                         {
                             "head": "Tokyo",
                             "type": "/location/administrative_division/country",
                             "tail": "Japan"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/country/administrative_divisions",
-                            "tail": "Tokyo"
                         },
                         {
                             "head": "Japan",
@@ -1644,27 +1656,27 @@
                         {
                             "head": "Japan",
                             "type": "/location/location/contains",
-                            "tail": "Kyoto"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
                             "tail": "Kyoto Prefecture"
                         },
                         {
                             "head": "Japan",
                             "type": "/location/location/contains",
+                            "tail": "Kyoto"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/location/contains",
+                            "tail": "Tokyo"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/country/administrative_divisions",
                             "tail": "Tokyo"
                         },
                         {
                             "head": "Tokyo",
                             "type": "/location/administrative_division/country",
                             "tail": "Japan"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/country/administrative_divisions",
-                            "tail": "Tokyo"
                         },
                         {
                             "head": "Japan",
@@ -1689,14 +1701,14 @@
                             "tail": "Tokyo"
                         },
                         {
-                            "head": "Tokyo",
-                            "type": "/location/administrative_division/country",
-                            "tail": "Japan"
-                        },
-                        {
                             "head": "Japan",
                             "type": "/location/country/administrative_divisions",
                             "tail": "Tokyo"
+                        },
+                        {
+                            "head": "Tokyo",
+                            "type": "/location/administrative_division/country",
+                            "tail": "Japan"
                         },
                         {
                             "head": "Japan",
@@ -1721,14 +1733,14 @@
                             "tail": "Tokyo"
                         },
                         {
-                            "head": "Tokyo",
-                            "type": "/location/administrative_division/country",
-                            "tail": "Japan"
-                        },
-                        {
                             "head": "Japan",
                             "type": "/location/country/administrative_divisions",
                             "tail": "Tokyo"
+                        },
+                        {
+                            "head": "Tokyo",
+                            "type": "/location/administrative_division/country",
+                            "tail": "Japan"
                         },
                         {
                             "head": "Japan",
@@ -1996,6 +2008,11 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Turkey",
+                            "type": "/location/location/contains",
+                            "tail": "Istanbul"
+                        },
+                        {
                             "head": "Asia",
                             "type": "/location/location/contains",
                             "tail": "Turkey"
@@ -2004,11 +2021,6 @@
                             "head": "Europe",
                             "type": "/location/location/contains",
                             "tail": "Turkey"
-                        },
-                        {
-                            "head": "Turkey",
-                            "type": "/location/location/contains",
-                            "tail": "Istanbul"
                         }
                     ]
                 },
@@ -2889,7 +2901,7 @@
                 "3": {
                     "choice": "Frankenstein",
                     "edge_score": 0.0,
-                    "node_score": 0.6096508204936981,
+                    "node_score": 0.5760671496391296,
                     "verified_edges": []
                 },
                 "answer": 0,
@@ -4065,7 +4077,7 @@
                 "0": {
                     "choice": "Epicurus",
                     "edge_score": 0.0,
-                    "node_score": 0.9503808915615082,
+                    "node_score": 0.9503809213638306,
                     "verified_edges": []
                 },
                 "1": {
@@ -5141,7 +5153,7 @@
                 "1": {
                     "choice": "Einstein",
                     "edge_score": 0.0,
-                    "node_score": 0.8096919655799866,
+                    "node_score": 0.809691995382309,
                     "verified_edges": []
                 },
                 "2": {
@@ -5153,7 +5165,7 @@
                 "3": {
                     "choice": "Galileo",
                     "edge_score": 0.0,
-                    "node_score": 0.5500527173280716,
+                    "node_score": 0.5388884842395782,
                     "verified_edges": []
                 },
                 "answer": -1,

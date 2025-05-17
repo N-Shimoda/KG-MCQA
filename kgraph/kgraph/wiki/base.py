@@ -1,40 +1,8 @@
-import asyncio
 import json
 import os
 from datetime import datetime
 
 import requests
-import wikipediaapi
-from aiohttp import ClientSession
-from dotenv import load_dotenv
-from tqdm import tqdm
-
-
-def load_wiki_agent_params() -> tuple[str, str]:
-    """
-    Load Wikipedia agent information from environment variables.
-
-    Returns
-    -------
-    tuple[str, str]
-        Tuple containing the project name and mail address.
-    """
-    # Load environment variables from .env file
-    load_dotenv(".env")
-
-    project_name = os.getenv("WIKI_PRJ_NAME")
-    if not project_name:
-        project_name = input("Enter the project name (WIKI_PRJ_NAME): ")
-        with open(".env", "a", encoding="utf-8") as env_file:
-            env_file.write(f"WIKI_PRJ_NAME={project_name}\n")
-
-    mail_address = os.getenv("WIKI_MAIL")
-    if not mail_address:
-        mail_address = input("Enter the mail address (WIKI_MAIL): ")
-        with open(".env", "a", encoding="utf-8") as env_file:
-            env_file.write(f"WIKI_MAIL={mail_address}\n")
-
-    return project_name, mail_address
 
 
 def assign_file_path(title: str) -> tuple[str, str]:
@@ -67,205 +35,137 @@ def assign_file_path(title: str) -> tuple[str, str]:
 
 def get_wiki_titles(targets: list[str]) -> list[str]:
     """
-    Wrapper for the asynchronous get_wiki_titles_async function.
+    Get Wikipedia page titles for the given targets.
+    The output titles are normalized and redirected if happens.
 
     Parameters
     ----------
     targets : list[str]
-        List of target Wikipedia pages.
+        List of Wikipedia page titles.
 
     Returns
     -------
-    list[str]
+    titles : list[str]
         List of Wikipedia page titles.
     """
+    if len(targets) == 0:
+        return []
 
-    async def fetch_page_title(session: ClientSession, wiki_wiki: wikipediaapi.Wikipedia, target: str) -> str:
-        """
-        Fetch the title of a Wikipedia page asynchronously.
+    # send request to Wikipedia API
+    url = "https://en.wikipedia.org/w/api.php"
+    target_str = "|".join(targets)
+    params = {"action": "query", "prop": "info", "titles": target_str, "redirects": 1, "format": "json"}
 
-        Parameters
-        ----------
-        session : ClientSession
-            The aiohttp session for making requests.
-        wiki_wiki : wikipediaapi.Wikipedia
-            Wikipedia API instance.
-        target : str
-            Target Wikipedia page.
+    response = requests.get(url, params=params)
+    data = response.json()
 
-        Returns
-        -------
-        str
-            Title of the Wikipedia page if it exists, otherwise None.
-        """
-        page = wiki_wiki.page(target)
-        return page.title if page.exists() else None
+    # trace normalization and redirects
+    normalize_map = {item["from"]: item["to"] for item in data["query"]["normalized"]}
+    redirect_map = {item["from"]: item["to"] for item in data["query"]["redirects"]}
 
-    async def get_wiki_titles_async(targets: list[str]) -> list[str]:
-        """
-        Find Wikipedia page titles for the specified targets asynchronously.
+    normalized = [normalize_map[target] if target in normalize_map else target for target in targets]
+    redirected = [redirect_map[target] if target in redirect_map else target for target in normalized]
 
-        Parameters
-        ----------
-        targets : list[str]
-            List of target Wikipedia pages.
+    # print("targets:", targets)
+    # print("normalized:", normalized)
+    # print("redirected:", redirected)
 
-        Returns
-        -------
-        list[str]
-            List of Wikipedia page titles.
-        """
-        project_name, mail_address = load_wiki_agent_params()
-        wiki_wiki = wikipediaapi.Wikipedia(
-            user_agent=f"{project_name} ({mail_address})",
-            language="en",
-        )
-
-        async with ClientSession() as session:
-            tasks = [fetch_page_title(session, wiki_wiki, target) for target in targets]
-            return await asyncio.gather(*tasks)
-
-    return asyncio.run(get_wiki_titles_async(targets))
+    return redirected
 
 
-async def download_wiki_pages_async(
-    targets: list[str], out_dir: str, tqdm_disable: bool = False
-) -> list[tuple[str, str]]:
+def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 1) -> tuple[list[str], list[str]]:
     """
-    Download Wikipedia articles for the specified target titles asynchronously and save them as JSON files
-    in the specified output directory.
-
-    Parameters
-    ----------
-    targets: list[str]
-        A list of Wikipedia page titles to download.
-    out_dir: str
-        The directory where the downloaded pages will be saved. Subdirectories may be created based on the titles.
-    tqdm_disable : bool, optional
-        If True, disables the tqdm progress bar. Defaults to False.
-
-    Returns
-    -------
-    titles: list[str]
-        List of Wikipedia page titles if exists, otherwise original None.
-    urls: list[str]
-        List of full URLs for the Wikipedia pages if exists, otherwise None.
-
-    Notes
-    -----
-    - The function uses the Wikipedia API to fetch page data.
-    - Each downloaded page is saved as a JSON file containing metadata such as title, URL, retrieval date,
-        and a summary of the page.
-    - The output directory structure may include subdirectories based on the page titles.
-    - This function is asynchronous and uses asyncio for concurrent downloads.
-    """
-    # Wikipedia API
-    project_name, mail_address = load_wiki_agent_params()
-    wiki_wiki = wikipediaapi.Wikipedia(
-        user_agent=f"{project_name} ({mail_address})",
-        language="en",
-    )
-
-    # date
-    today_date = datetime.now()
-
-    async def fetch_and_save(target: str, cache_ttl_days: int = 3) -> tuple[str, str]:
-        """
-        Fetch and save a Wikipedia page asynchronously.
-
-        Parameters
-        ----------
-        target : str
-            Target Wikipedia page.
-        cache_ttl_days : int, optional
-            Number of days to consider the cached page valid. Defaults to 3 days.
-
-        Returns
-        -------
-        page.title : str
-            Title of the Wikipedia page if it exists, otherwise original query text.
-        page.fullurl : str | None
-            Full URL of the Wikipedia page if it exists, otherwise None.
-        """
-        page = wiki_wiki.page(target)
-        if page.exists():
-            # article data
-            data = {
-                "title": page.title,
-                "fullurl": page.fullurl,
-                "retrieved-date": today_date.strftime("%Y/%m/%d %H:%M:%S"),
-                "converted": False,
-                "summary": page.summary,
-            }
-
-            # Create output directory if it doesn't exist
-            subdir, basename = assign_file_path(page.title)
-            os.makedirs(f"{out_dir}/{subdir}", exist_ok=True)
-            output_path = f"{out_dir}/{subdir}/{basename}"
-
-            # Save article to JSON file
-            save_file = True
-            if os.path.exists(output_path):
-                with open(output_path, "r", encoding="utf-8") as output_file:
-                    date_str = json.load(output_file).get("retrieved-date")
-                    retriedved_date = datetime.strptime(date_str, "%Y/%m/%d %H:%M:%S")
-                    if (today_date - retriedved_date).days < cache_ttl_days:
-                        save_file = False
-
-            if save_file:
-                with open(output_path, "w", encoding="utf-8") as output_file:
-                    json.dump(data, output_file, indent=4)
-
-        title = page.title if page.exists() else None
-        url = page.fullurl if page.exists() else None
-
-        return title, url
-
-    tasks = [
-        fetch_and_save(target) for target in tqdm(targets, desc="Downloading Wikipedia pages", disable=tqdm_disable)
-    ]
-
-    retries = 0
-    res = None
-    while retries < 5:
-        try:
-            res = await asyncio.gather(*tasks)
-            break
-        except requests.exceptions.ReadTimeout as e:
-            print(f"ReadTimeout error: {e}. Retrying...")
-            retries += 1
-            await asyncio.sleep(10)
-            continue
-
-    if res:
-        titles, urls = map(list, zip(*res))
-    else:
-        titles, urls = [], []
-    return titles, urls
-
-
-def download_wiki_pages(targets: list[str], out_dir: str, tqdm_disable: bool = True) -> tuple[list[str], list[str]]:
-    """
-    Wrapper for the asynchronous download_wiki_pages_async function.
+    Download Wikipedia pages and save them as JSON files.
 
     Parameters
     ----------
     targets : list[str]
-        List or set of target Wikipedia pages to download.
+        List of Wikipedia page titles to download.
     out_dir : str
-        Directory to save the downloaded pages.
-    tqdm_disable : bool, optional
-        If True, disables the tqdm progress bar. Defaults to False.
+        Output directory to save the JSON files.
+    cache_ttl_days : int
+        Number of days to keep the cache. Default is 1 day.
 
     Returns
     -------
-    titles: list[str]
-        List of Wikipedia page titles if exists, otherwise None.
-    urls: list[str]
-        List of full URLs for the Wikipedia pages if exists, otherwise None.
+    titles : list[str]
+        List of Wikipedia page titles.
+    urls : list[str]
+        List of URLs for the downloaded pages.
     """
-    assert type(targets) is list, "targets should be a list"
-    return asyncio.run(download_wiki_pages_async(targets, out_dir, tqdm_disable))
+    if len(targets) == 0:
+        return [], []
+
+    # send request to Wikipedia API
+    url = "https://en.wikipedia.org/w/api.php"
+    target_str = "|".join(targets)
+    params = {
+        "action": "query",
+        "prop": "info|extracts",
+        "inprop": "url",
+        "exintro": 1,  # 冒頭部分のみ
+        "explaintext": 1,  # プレーンテキストで取得
+        "titles": target_str,
+        "redirects": 1,
+        "format": "json",
+    }
+    response = requests.get(url, params=params)
+    response.raise_for_status()
+    data = response.json()
+
+    # for dev
+    # with open("response.json", "w") as f:
+    #     json.dump(data, f, indent=4, ensure_ascii=False)
+
+    # get titles
+    normalize_map = (
+        {item["from"]: item["to"] for item in data["query"]["normalized"]} if "normalized" in data["query"] else {}
+    )
+    redirect_map = (
+        {item["from"]: item["to"] for item in data["query"]["redirects"]} if "redirects" in data["query"] else {}
+    )
+    normalized = [normalize_map[target] if target in normalize_map else target for target in targets]
+    titles = [redirect_map[target] if target in redirect_map else target for target in normalized]
+
+    # get URLs
+    pages = data["query"]["pages"]
+    url_map = {page["title"]: page["fullurl"] if int(page_id) > 0 else None for page_id, page in pages.items()}
+    urls = [url_map[title] for title in titles]
+
+    # Save articles to JSON files
+    today_date = datetime.now()
+    for page_id, page in pages.items():
+        # skip if page not found
+        if int(page_id) < 0:
+            continue
+
+        data = {
+            "title": page["title"],
+            "fullurl": page["fullurl"],
+            "retrieved-date": today_date.strftime("%Y/%m/%d %H:%M:%S"),
+            "converted": False,
+            "summary": page["extract"],
+        }
+
+        # Create output directory if it doesn't exist
+        subdir, basename = assign_file_path(page["title"])
+        os.makedirs(f"{out_dir}/{subdir}", exist_ok=True)
+        output_path = f"{out_dir}/{subdir}/{basename}"
+
+        # Save article to JSON file
+        save_file = True
+        if os.path.exists(output_path):
+            with open(output_path, "r", encoding="utf-8") as output_file:
+                date_str = json.load(output_file).get("retrieved-date")
+                retriedved_date = datetime.strptime(date_str, "%Y/%m/%d %H:%M:%S")
+                if (today_date - retriedved_date).days < cache_ttl_days:
+                    save_file = False
+
+        if save_file:
+            with open(output_path, "w", encoding="utf-8") as output_file:
+                json.dump(data, output_file, indent=4)
+
+    return titles, urls
 
 
 if __name__ == "__main__":
@@ -280,6 +180,6 @@ if __name__ == "__main__":
         "Naoki Shimoda",
     ]
     # targets = []
-    titles, urls = download_wiki_pages(targets, out_dir="wikipedia")
+    titles, urls = download_wiki_pages(targets, out_dir="wikipedia/test")
     print("Wiki titles: ", titles)
     print("URLs: ", urls)

@@ -2,13 +2,16 @@ import json
 import os
 from typing import Literal
 
+import torch
 from tqdm import tqdm
 
+from kgraph import KB, join
 from kgraph.extraction import extract_triples
+from kgraph.wiki import assign_file_path
 
 
 def create_KG_cache(
-    wiki_dir: str, KG_dir: str, model: Literal["unirel", "rebel"], force: bool = False, batch_size: int = 32
+    wiki_dir: str, KG_dir: str, model: Literal["unirel", "rebel"], force: bool = False, batch_size: int = 64
 ):
     """
     Create KGs for every Wikipedia article in the specified directory.
@@ -66,3 +69,52 @@ def create_KG_cache(
                     data["converted"] = True
                     with open(os.path.join(wiki_dir, subdir, file), "w") as f:
                         json.dump(data, f, indent=4)
+
+    # clean up GPU memory
+    torch.cuda.empty_cache()
+
+
+def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
+    """
+    Create KGs for each PG in the given directory.
+
+    Parameters
+    ----------
+    pg_top_dir : str
+        Top-level directory containing subdirectories of PGs.
+    kg_top_dir : str
+        Top-level directory to save the generated KGs.
+    KG_cache_dir : str
+        Directory containing cached KGs for Wikipedia articles.
+    """
+    # iterate over each category
+    cat_dirs = os.listdir(pg_top_dir)
+    for cat in sorted(cat_dirs):
+
+        # List of PG directories for the given category
+        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
+
+        # NOTE: pg_dir contains four PG dot files for a single MCQ
+        for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
+            for pg_filename in os.listdir(pg_dir):
+
+                # reconstruct PG from dot file
+                PG = KB.from_dot_file(os.path.join(pg_dir, pg_filename))
+                titles = [
+                    PG.nodes[node_label]["wiki_title"]
+                    for node_label in PG.get_nodes()
+                    if PG.nodes[node_label]["wiki_title"] is not None
+                ]
+
+                # combine KGs for the found Wikipedia articles
+                KG_combined = KB()
+                for title in titles:
+                    subdir, basename = assign_file_path(title)
+                    KG = KB.from_dot_file(f"{KG_cache_dir}/{subdir}/{basename.replace('.json', '.dot')}")
+                    KG_combined = join(KG_combined, KG)
+
+                # Save combined KG to dot file
+                kg_file_name = os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename)
+                os.makedirs(os.path.dirname(kg_file_name), exist_ok=True)
+                KG_combined.write_dot(kg_file_name)
+                KG_combined.write_dot(kg_file_name)

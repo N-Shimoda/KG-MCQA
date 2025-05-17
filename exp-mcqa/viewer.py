@@ -171,7 +171,15 @@ class MCQAGraphViewer:
 
         # model
         with col_model:
-            self.selected_model = st.selectbox("Relation Extraction Model", self.models)
+            model_mapping = {
+                "rebel": "REBEL",
+                "unirel": "UniRel",
+            }
+            self.selected_model = st.selectbox(
+                "Relation Extraction Model",
+                self.models,
+                format_func=lambda x: model_mapping[x] if x in model_mapping else x,
+            )
 
         # dataset
         with col_dataset:
@@ -202,7 +210,7 @@ class MCQAGraphViewer:
                     f"{q_id} *" if self.results[self.selected_cat]["questions"][q_id]["correct"] else q_id
                 ),
                 key="problem",
-                help="\* marks the problems that are correctly answered by the method.",  # noqa: W605
+                help="\* marks correctly answered problems.",  # noqa: W605
             )
             # get correct option id
             correct_opt_id = self.dataset[self.selected_cat]["questions"][self.selected_q_id]["answer"]
@@ -252,6 +260,7 @@ class MCQAGraphViewer:
         -----
         This method generates HTML files for the graphs and embeds them in the Streamlit app.
         """
+        # load DOT files to create HTML.
         root_path = self.base_dir / self.selected_model / self.selected_dataset
         pg_dot_path = (
             root_path / "PGs" / self.selected_cat / self.selected_q_id / f"{self.selected_option}_{self.file_suffix}"
@@ -261,17 +270,28 @@ class MCQAGraphViewer:
         )
         pg_html = self.render_dot_to_html(pg_dot_path, graph_type="pg")
         kg_html = self.render_dot_to_html(kg_dot_path, graph_type="kg")
+
+        # display HTML files
         col1, col2 = st.columns([1.3, 3])
         with col1:
             st.subheader("Propositional Graph (PG)")
             with open(pg_html, "r", encoding="utf-8") as f:
                 html_content = f.read()
-            st.components.v1.html(html_content, height=800, scrolling=True)
+            st.components.v1.html(html_content, height=730, scrolling=True)
         with col2:
             st.subheader("Knowledge Graph (KG)")
             with open(kg_html, "r", encoding="utf-8") as f:
                 html_content = f.read()
-            st.components.v1.html(html_content, height=800, scrolling=True)
+            st.components.v1.html(html_content, height=730, scrolling=True)
+
+        # display wikipedia titles with links
+        PG = KB.from_dot_file(str(pg_dot_path))
+        wiki_titles = [PG.nodes[n]["wiki_title"] for n in PG.nodes if PG.nodes[n]["wiki_title"] is not None]
+        wiki_baseurl = "https://en.wikipedia.org/wiki/"
+        caption = "Wikipedia articles:\n" + "\n".join(
+            [f"1. [{title}]({wiki_baseurl}{title.replace(' ', '_')})" for title in wiki_titles]
+        )
+        st.caption(caption, unsafe_allow_html=True)
 
     def _cleanup_temp_files(self) -> None:
         """

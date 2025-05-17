@@ -416,7 +416,7 @@
                 "0": {
                     "choice": "Isaac Newton",
                     "edge_score": 0.0,
-                    "node_score": 0.5513993501663208,
+                    "node_score": 0.5513993799686432,
                     "verified_edges": []
                 },
                 "1": {
@@ -456,7 +456,7 @@
                 "0": {
                     "choice": "Charles Lindbergh",
                     "edge_score": 0.0,
-                    "node_score": 0.9010405540466309,
+                    "node_score": 0.9010406136512756,
                     "verified_edges": []
                 },
                 "1": {
@@ -916,27 +916,15 @@
                 },
                 "1": {
                     "choice": "Carl Jung",
-                    "edge_score": 0.5,
-                    "node_score": 0.6057549566030502,
-                    "verified_edges": [
-                        {
-                            "head": "Carl Jung",
-                            "type": "/business/person/company",
-                            "tail": "psychoanalysis"
-                        }
-                    ]
+                    "edge_score": 0.0,
+                    "node_score": 0.5423135012388229,
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Alfred Adler",
-                    "edge_score": 0.5,
-                    "node_score": 0.861905038356781,
-                    "verified_edges": [
-                        {
-                            "head": "Alfred Adler",
-                            "type": "/business/person/company",
-                            "tail": "psychoanalysis"
-                        }
-                    ]
+                    "edge_score": 0.0,
+                    "node_score": 0.8619050979614258,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "Erik Erikson",
@@ -944,7 +932,7 @@
                     "node_score": 0.8464632034301758,
                     "verified_edges": []
                 },
-                "answer": 2,
+                "answer": -1,
                 "correct": false
             },
             "hun-35": {
@@ -1496,9 +1484,15 @@
             "hun-51": {
                 "0": {
                     "choice": "Siddhartha Gautama",
-                    "edge_score": 0.0,
-                    "node_score": 0.8931159377098083,
-                    "verified_edges": []
+                    "edge_score": 1.0,
+                    "node_score": 0.893115907907486,
+                    "verified_edges": [
+                        {
+                            "head": "Siddhartha Gautama",
+                            "type": "/people/person/religion",
+                            "tail": "Buddhism"
+                        }
+                    ]
                 },
                 "1": {
                     "choice": "Mahavira",
@@ -1633,7 +1627,7 @@
                 "3": {
                     "choice": "Anne",
                     "edge_score": 0.0,
-                    "node_score": 0.8590451180934906,
+                    "node_score": 0.8590450882911682,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -1705,13 +1699,13 @@
                 "1": {
                     "choice": "Carl Jung",
                     "edge_score": 0.0,
-                    "node_score": 0.6057549566030502,
+                    "node_score": 0.5423135012388229,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Alfred Adler",
                     "edge_score": 0.0,
-                    "node_score": 0.861905038356781,
+                    "node_score": 0.8619050979614258,
                     "verified_edges": []
                 },
                 "3": {
@@ -1783,7 +1777,7 @@
                 "0": {
                     "choice": "Nelson Mandela",
                     "edge_score": 0.0,
-                    "node_score": 0.9795269668102264,
+                    "node_score": 0.9795269072055817,
                     "verified_edges": []
                 },
                 "1": {
@@ -2010,11 +2004,17 @@
                 },
                 "3": {
                     "choice": "Epicurus",
-                    "edge_score": 0.0,
+                    "edge_score": 0.5,
                     "node_score": 1.0,
-                    "verified_edges": []
+                    "verified_edges": [
+                        {
+                            "head": "Epicurus",
+                            "type": "/people/person/place_lived",
+                            "tail": "Athens"
+                        }
+                    ]
                 },
-                "answer": -1,
+                "answer": 3,
                 "correct": false
             },
             "hun-67": {
@@ -2646,7 +2646,7 @@
                     "verified_edges": [
                         {
                             "head": "Larry Page",
-                            "type": "/business/person/company",
+                            "type": "/business/company_shareholder/major_shareholder_of",
                             "tail": "Amazon. com"
                         },
                         {
@@ -2661,7 +2661,7 @@
                         },
                         {
                             "head": "Larry Page",
-                            "type": "/business/company_shareholder/major_shareholder_of",
+                            "type": "/business/person/company",
                             "tail": "Amazon. com"
                         }
                     ]
@@ -2673,7 +2673,7 @@
                     "verified_edges": [
                         {
                             "head": "Warren Buffett",
-                            "type": "/business/person/company",
+                            "type": "/business/company_shareholder/major_shareholder_of",
                             "tail": "Amazon. com"
                         },
                         {
@@ -2683,7 +2683,7 @@
                         },
                         {
                             "head": "Warren Buffett",
-                            "type": "/business/company_shareholder/major_shareholder_of",
+                            "type": "/business/person/company",
                             "tail": "Amazon. com"
                         }
                     ]
@@ -3145,25 +3145,25 @@
                 "0": {
                     "choice": "Queen Victoria",
                     "edge_score": 0.0,
-                    "node_score": 0.7188526888688406,
+                    "node_score": 0.718852678934733,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Queen Elizabeth I",
                     "edge_score": 0.0,
-                    "node_score": 0.7188526888688406,
+                    "node_score": 0.718852678934733,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Queen Mary I",
                     "edge_score": 0.0,
-                    "node_score": 0.7188526888688406,
+                    "node_score": 0.718852678934733,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Queen Anne",
                     "edge_score": 0.0,
-                    "node_score": 0.7188526888688406,
+                    "node_score": 0.718852678934733,
                     "verified_edges": []
                 },
                 "answer": -1,

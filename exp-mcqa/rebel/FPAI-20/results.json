@@ -127,7 +127,7 @@
                 "2": {
                     "choice": "Tim Cook",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.9280845522880554,
                     "verified_edges": []
                 },
                 "3": {
@@ -136,14 +136,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Bill Gates",
-                            "type": "owner of",
-                            "tail": "Microsoft"
-                        },
-                        {
                             "head": "Microsoft",
                             "type": "founded by",
                             "tail": "Bill Gates"
+                        },
+                        {
+                            "head": "Bill Gates",
+                            "type": "owner of",
+                            "tail": "Microsoft"
                         }
                     ]
                 },
@@ -200,7 +200,7 @@
                 "1": {
                     "choice": "Donald Trump",
                     "edge_score": 0.14285714285714285,
-                    "node_score": 0.990659087896347,
+                    "node_score": 0.9906590580940247,
                     "verified_edges": [
                         {
                             "head": "Barack Obama",
@@ -244,13 +244,13 @@
                     "verified_edges": [
                         {
                             "head": "Alibaba Group",
-                            "type": "industry",
-                            "tail": "e-commerce"
+                            "type": "founded by",
+                            "tail": "Jack Ma"
                         },
                         {
                             "head": "Alibaba Group",
-                            "type": "founded by",
-                            "tail": "Jack Ma"
+                            "type": "industry",
+                            "tail": "e-commerce"
                         }
                     ]
                 },
@@ -336,9 +336,20 @@
                 },
                 "1": {
                     "choice": "Angela Merkel",
-                    "edge_score": 0.0,
-                    "node_score": 0.9851640661557516,
-                    "verified_edges": []
+                    "edge_score": 0.5,
+                    "node_score": 0.944776733716329,
+                    "verified_edges": [
+                        {
+                            "head": "Angela Merkel",
+                            "type": "position held",
+                            "tail": "German Chancellor"
+                        },
+                        {
+                            "head": "German Chancellor",
+                            "type": "officeholder",
+                            "tail": "Angela Merkel"
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Boris Johnson",
@@ -352,8 +363,8 @@
                     "node_score": 0.9624739686648051,
                     "verified_edges": []
                 },
-                "answer": -1,
-                "correct": false
+                "answer": 1,
+                "correct": true
             },
             "cf-8": {
                 "0": {
@@ -421,7 +432,7 @@
                 "2": {
                     "choice": "Rafael Nadal",
                     "edge_score": 0.16666666666666666,
-                    "node_score": 0.9684928258260092,
+                    "node_score": 0.9684928357601166,
                     "verified_edges": [
                         {
                             "head": "Rafael Nadal",
@@ -433,7 +444,7 @@
                 "3": {
                     "choice": "Serena Williams",
                     "edge_score": 0.0,
-                    "node_score": 0.9684928357601166,
+                    "node_score": 0.9684928258260092,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -441,9 +452,9 @@
             }
         },
         "stats": {
-            "correct": 6,
+            "correct": 7,
             "fail": 0,
-            "unselectable": 4,
+            "unselectable": 3,
             "total": 10
         }
     },
@@ -568,14 +579,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "French Revolution",
-                            "type": "participant",
-                            "tail": "Napoleon Bonaparte"
-                        },
-                        {
                             "head": "Napoleon Bonaparte",
                             "type": "participant in",
                             "tail": "French Revolution"
+                        },
+                        {
+                            "head": "French Revolution",
+                            "type": "participant",
+                            "tail": "Napoleon Bonaparte"
                         }
                     ]
                 },
@@ -705,14 +716,14 @@
                     "node_score": 0.9990824262301127,
                     "verified_edges": [
                         {
-                            "head": "theory of relativity",
-                            "type": "discoverer or inventor",
-                            "tail": "Albert Einstein"
-                        },
-                        {
                             "head": "Albert Einstein",
                             "type": "notable work",
                             "tail": "theory of relativity"
+                        },
+                        {
+                            "head": "theory of relativity",
+                            "type": "discoverer or inventor",
+                            "tail": "Albert Einstein"
                         }
                     ]
                 },
@@ -824,14 +835,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "The Art of War",
-                            "type": "main subject",
-                            "tail": "military strategy"
-                        },
-                        {
                             "head": "Sun Tzu",
                             "type": "notable work",
                             "tail": "The Art of War"
+                        },
+                        {
+                            "head": "The Art of War",
+                            "type": "main subject",
+                            "tail": "military strategy"
                         },
                         {
                             "head": "The Art of War",

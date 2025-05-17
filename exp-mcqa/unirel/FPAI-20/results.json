@@ -106,7 +106,7 @@
                 "1": {
                     "choice": "Chris Martin",
                     "edge_score": 0.0,
-                    "node_score": 0.9220348298549652,
+                    "node_score": 0.9220348000526428,
                     "verified_edges": []
                 },
                 "2": {
@@ -145,11 +145,17 @@
                 },
                 "3": {
                     "choice": "Kamala Harris",
-                    "edge_score": 0.0,
-                    "node_score": 0.8670292099316915,
-                    "verified_edges": []
+                    "edge_score": 0.3333333333333333,
+                    "node_score": 0.9521103700002035,
+                    "verified_edges": [
+                        {
+                            "head": "Kamala Harris",
+                            "type": "/business/person/company",
+                            "tail": "United States"
+                        }
+                    ]
                 },
-                "answer": -1,
+                "answer": 3,
                 "correct": false
             },
             "cf-5": {
@@ -313,8 +319,8 @@
         },
         "stats": {
             "correct": 1,
-            "fail": 2,
-            "unselectable": 7,
+            "fail": 3,
+            "unselectable": 6,
             "total": 10
         }
     },

@@ -9,6 +9,9 @@ do
             python mcqa.py $ds $MODEL
             if [ $? -ne 0 ]; then
                 echo "Error: MCQA failed on $ds (model: $MODEL)" >&2
+                echo "$(date '+%Y-%m-%d %H:%M:%S') [ERROR] $ds ($MODEL)" >> log.txt
+            else
+                echo "$(date '+%Y-%m-%d %H:%M:%S') [SUCCESS] $ds ($MODEL)" >> log.txt
             fi
         fi
     done

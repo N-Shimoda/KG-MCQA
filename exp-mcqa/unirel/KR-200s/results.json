@@ -5,7 +5,7 @@
                 "0": {
                     "choice": "Starry Night",
                     "edge_score": 0.0,
-                    "node_score": 0.7173226177692413,
+                    "node_score": 0.7173227071762085,
                     "verified_edges": []
                 },
                 "1": {
@@ -106,15 +106,9 @@
                 },
                 "2": {
                     "choice": "Surrealism",
-                    "edge_score": 0.5,
-                    "node_score": 0.6932610422372818,
-                    "verified_edges": [
-                        {
-                            "head": "Surrealism",
-                            "type": "/business/company/founders",
-                            "tail": "Claude Monet"
-                        }
-                    ]
+                    "edge_score": 0.0,
+                    "node_score": 0.8508429527282715,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "Dadaism",
@@ -257,9 +251,9 @@
                     "verified_edges": []
                 },
                 "3": {
-                    "choice": "The Nutcracker",
+                    "choice": "Giselle",
                     "edge_score": 0.0,
-                    "node_score": 0.9709488749504089,
+                    "node_score": 0.6505659967660904,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -323,25 +317,25 @@
             },
             "art-19": {
                 "0": {
-                    "choice": "Hokusai",
+                    "choice": "Matsuo Bash\u014d",
                     "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
-                    "choice": "Hiroshige",
+                    "choice": "K\u016bkai",
                     "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
-                    "choice": "Both",
+                    "choice": "Sen no Riky\u016b",
                     "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
-                    "choice": "Neither",
+                    "choice": "Katsushika Hokusai",
                     "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
@@ -351,27 +345,27 @@
             },
             "art-2": {
                 "0": {
-                    "choice": "Mona Lisa",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "choice": "The Birth of Venus",
+                    "edge_score": 0.0,
+                    "node_score": 0.9454495310783386,
                     "verified_edges": []
                 },
                 "1": {
-                    "choice": "The Last Supper",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "choice": "The School of Athens",
+                    "edge_score": 0.0,
+                    "node_score": 0.9454495310783386,
                     "verified_edges": []
                 },
                 "2": {
-                    "choice": "Both",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "choice": "The Creation of Adam",
+                    "edge_score": 0.0,
+                    "node_score": 0.9454495310783386,
                     "verified_edges": []
                 },
                 "3": {
-                    "choice": "Neither",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "choice": "The Last Supper",
+                    "edge_score": 0.0,
+                    "node_score": 0.9454495310783386,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -604,9 +598,15 @@
                 },
                 "1": {
                     "choice": "Mars",
-                    "edge_score": 0.0,
+                    "edge_score": 1.0,
                     "node_score": 1.0,
-                    "verified_edges": []
+                    "verified_edges": [
+                        {
+                            "head": "Mars",
+                            "type": "/location/location/contains",
+                            "tail": "Mars"
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Saturn",
@@ -620,7 +620,7 @@
                     "node_score": 1.0,
                     "verified_edges": []
                 },
-                "answer": -1,
+                "answer": 1,
                 "correct": false
             },
             "gen-1": {
@@ -1164,8 +1164,8 @@
         },
         "stats": {
             "correct": 1,
-            "fail": 0,
-            "unselectable": 19,
+            "fail": 1,
+            "unselectable": 18,
             "total": 20
         }
     },
@@ -2576,7 +2576,7 @@
                     "node_score": 0.5823309520880381,
                     "verified_edges": [
                         {
-                            "head": "Moby - Dick",
+                            "head": "Moby-Dick",
                             "type": "/people/person/children",
                             "tail": "Ishmael"
                         }
@@ -2609,7 +2609,7 @@
                 "3": {
                     "choice": "Frankenstein",
                     "edge_score": 0.5,
-                    "node_score": 0.6096508204936981,
+                    "node_score": 0.5760671496391296,
                     "verified_edges": [
                         {
                             "head": "Moby - Dick",
@@ -2618,8 +2618,8 @@
                         }
                     ]
                 },
-                "answer": 3,
-                "correct": false
+                "answer": 0,
+                "correct": true
             },
             "lit-15": {
                 "0": {
@@ -2987,8 +2987,8 @@
             }
         },
         "stats": {
-            "correct": 1,
-            "fail": 1,
+            "correct": 2,
+            "fail": 0,
             "unselectable": 18,
             "total": 20
         }
@@ -3749,7 +3749,7 @@
                 "0": {
                     "choice": "Epicurus",
                     "edge_score": 0.0,
-                    "node_score": 0.9503808915615082,
+                    "node_score": 0.9503809213638306,
                     "verified_edges": []
                 },
                 "1": {
@@ -4001,7 +4001,7 @@
                 "0": {
                     "choice": "Heidegger",
                     "edge_score": 0.0,
-                    "node_score": 0.7090845306714376,
+                    "node_score": 0.7090845108032227,
                     "verified_edges": []
                 },
                 "1": {
