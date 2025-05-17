@@ -11,7 +11,7 @@ from kgraph.wiki import assign_file_path
 
 
 def create_KG_cache(
-    wiki_dir: str, KG_dir: str, model: Literal["unirel", "rebel"], force: bool = False, batch_size: int = 32
+    wiki_dir: str, KG_dir: str, model: Literal["unirel", "rebel"], force: bool = False, batch_size: int = 64
 ):
     """
     Create KGs for every Wikipedia article in the specified directory.
