@@ -86,9 +86,10 @@ def create_PGs(
             # create PG templates
             PG_temps = create_PG_temps(sentences_batch, choice_li_batch, model)
 
-            for j, (PG_temp, choice) in enumerate(zip(PG_temps, choice_li_batch)):
-                # Create mapping for entity linking
-                if el_enabled:
+            # Create mapping for entity linking per batch
+            if el_enabled:
+                batch_targets = []
+                for PG_temp, choice in zip(PG_temps, choice_li_batch):
                     targets = PG_temp.get_nodes() + choice
                     subst_targets = []
                     for t in targets:
@@ -96,19 +97,23 @@ def create_PGs(
                             subst_targets.extend([t.replace("#BLANK", c) for c in choice])
                         else:
                             subst_targets.append(t)
-                    targets = subst_targets
+                    batch_targets.extend(subst_targets)
 
-                    titles = get_wiki_titles(targets)
-                    mapping = {label: title for label, title in zip(targets, titles) if title is not None}
-                else:
-                    mapping = {}
+                # Remove duplicates
+                batch_targets = list(set(batch_targets))
+                titles = get_wiki_titles(batch_targets)
+                batch_mapping = {label: title for label, title in zip(batch_targets, titles) if title is not None}
+            else:
+                batch_mapping = {}
 
+            # Create and save PGs for each choice
+            for j, (PG_temp, choice) in enumerate(zip(PG_temps, choice_li_batch)):
                 for c in choice:
-                    # substitute choice label into PG_temp
+                    # Substitute choice label into PG_temp
                     PG = swap_label_with_symbol(PG_temp, "#BLANK", c)
-                    PG.apply_entity_linking(mapping)  # do nothing if mapping is empty
+                    PG.apply_entity_linking(batch_mapping)  # Use batch mapping
 
-                    # save PG to dot file
+                    # Save PG to dot file
                     os.makedirs(f"{pg_top_dir}/{cat}/{cat}-{i+j}", exist_ok=True)
                     pg_dot_path = f"{pg_top_dir}/{cat}/{cat}-{i+j}/{choice.index(c)}_{c}.dot"
                     PG.write_dot(pg_dot_path)
@@ -117,7 +122,7 @@ def create_PGs(
     torch.cuda.empty_cache()
 
 
-def download_wiki_articles(pg_top_dir: str, wiki_dir: str):
+def download_wiki_articles(pg_top_dir: str, wiki_dir: str, batch_size: int = 32):
     """
     Download Wikipedia articles for all PGs stored in the specified top-level directory.
     This function saves the titles of related Wikipedia articles in the PG dot files.
@@ -128,31 +133,43 @@ def download_wiki_articles(pg_top_dir: str, wiki_dir: str):
         Top-level directory containing subdirectories of PGs.
     wiki_dir : str
         Directory to save the downloaded Wikipedia articles.
+    batch_size : int (optional)
+        Batch size for processing (default: 32).
+        You can adjust this value for optimal performance.
     """
-    # iterate over each category
+    # Collect all PG directories across all categories
     cat_dirs = os.listdir(pg_top_dir)
+    pg_dirs = []
     for cat in sorted(cat_dirs):
-        pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
+        cat_pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
+        pg_dirs.extend(cat_pg_dirs)
 
-        # iterate over each PG directory
-        for pg_dir in tqdm(pg_dirs, desc=f"Processing {cat}"):
-            # reconstruct PGs from dot files
-            pg_files = [f for f in os.listdir(pg_dir) if f.endswith(".dot")]
-            PGs = [KB.from_dot_file(os.path.join(pg_dir, file)) for file in pg_files]
+    # Batch processing for all PG directories to speed up API calls
+    # Flatten all PG files and keep track of their directories
+    all_pg_files = []
+    for pg_dir in tqdm(pg_dirs, desc="Collecting PG files"):
+        pg_files = [f for f in os.listdir(pg_dir) if f.endswith(".dot")]
+        for file in pg_files:
+            all_pg_files.append((pg_dir, file))
 
-            # get target titles from all PGs
-            PG_nodes_li = [PG.get_nodes() for PG in PGs]
-            targets = list({word for node in PG_nodes_li for word in node})
+    # Process in batches
+    for i in tqdm(range(0, len(all_pg_files), batch_size), desc="Processing all PGs in batches"):
+        batch = all_pg_files[i : i + batch_size]
+        PGs = [KB.from_dot_file(os.path.join(pg_dir, file)) for pg_dir, file in batch]
 
-            # Download the Wikipedia article
-            titles, urls = download_wiki_pages(targets, out_dir=wiki_dir)
-            titles = [titles[i] if urls[i] is not None else None for i in range(len(titles))]
-            mapping = dict(zip(targets, titles))
+        # Collect all unique targets in the batch
+        PG_nodes_li = [PG.get_nodes() for PG in PGs]
+        targets = list({word for node in PG_nodes_li for word in node})
 
-            # Add page titles as node attributes
-            for PG in PGs:
-                # update PG dot files with Wiki titles if exists
-                for node in PG.get_nodes():
-                    if mapping[node] is not None:
-                        PG.add_node_attr(node, "wiki_title", mapping[node])
-                PG.write_dot(os.path.join(pg_dir, pg_files[PGs.index(PG)]))
+        # Download the Wikipedia articles for all targets in the batch
+        titles, urls = download_wiki_pages(targets, out_dir=wiki_dir)
+        titles = [titles[i] if urls[i] is not None else None for i in range(len(titles))]
+        mapping = dict(zip(targets, titles))
+
+        # Add page titles as node attributes and write back to dot files
+        for idx, PG in enumerate(PGs):
+            for node in PG.get_nodes():
+                if mapping.get(node) is not None:
+                    PG.add_node_attr(node, "wiki_title", mapping[node])
+            pg_dir, file = batch[idx]
+            PG.write_dot(os.path.join(pg_dir, file))

@@ -78,7 +78,7 @@ def get_wiki_titles(targets: list[str]) -> list[str]:
             data = await response.json()
 
         # Log API call to file
-        logging.info(f"Wikipedia API call executed with {len(chunk)} titles: {target_str}")
+        logging.info(f"Get title executed with {len(chunk)} targets: {target_str}")
 
         normalize_map = {item["from"]: item["to"] for item in data["query"].get("normalized", [])}
         redirect_map = {item["from"]: item["to"] for item in data["query"].get("redirects", [])}
@@ -123,7 +123,7 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
     if len(targets) == 0:
         return [], []
 
-    chunk_size = 50
+    chunk_size = 20  # NOTE: API returns at most 20 extracts per request
 
     async def fetch_and_save(session: aiohttp.ClientSession, chunk: list[str]) -> tuple[list[str], list[str]]:
         """
@@ -136,8 +136,8 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
             "action": "query",
             "prop": "info|extracts",
             "inprop": "url",
-            "exintro": 1,
-            "explaintext": 1,
+            "exintro": 1,  # Extract only intro part (before the first section)
+            "explaintext": 1,  # Extract plain text
             "titles": target_str,
             "redirects": 1,
             "format": "json",
@@ -146,7 +146,7 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
             data = await response.json()
 
         # Log API call to file
-        logging.info(f"Wikipedia API call executed with {len(chunk)} titles: {target_str}")
+        logging.info(f"Page donwloading executed with {len(chunk)} titles: {target_str}")
 
         normalize_map = (
             {item["from"]: item["to"] for item in data["query"]["normalized"]} if "normalized" in data["query"] else {}
