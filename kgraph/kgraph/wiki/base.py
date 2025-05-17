@@ -1,10 +1,10 @@
+import asyncio
 import json
 import logging
 import os
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 
-import requests
+import aiohttp
 
 # Set up logging to file (at the top of the file)
 logging.basicConfig(filename="wikipedia_api.log", level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -40,7 +40,7 @@ def assign_file_path(title: str) -> tuple[str, str]:
 
 def get_wiki_titles(targets: list[str]) -> list[str]:
     """
-    Get Wikipedia page titles for the given targets.
+    Get Wikipedia page titles for the given targets using asynchronous requests.
     The output titles are normalized and redirected if happens.
 
     Parameters
@@ -56,64 +56,56 @@ def get_wiki_titles(targets: list[str]) -> list[str]:
     if len(targets) == 0:
         return []
 
-    all_titles = []
     chunk_size = 50
 
-    def fetch_titles(chunk: list[str]) -> list[str]:
+    async def fetch_titles(session: aiohttp.ClientSession, chunk: list[str]) -> list[str]:
         """
-        Fetches the canonical Wikipedia page titles for a given list of titles.
-
-        This function queries the Wikipedia API with a chunk of page titles, handling normalization and redirects.
-        It returns the final resolved titles as they exist on Wikipedia.
+        Fetches the canonical Wikipedia page titles for a given list of titles asynchronously.
 
         Parameters
         ----------
-        chunk : list of str
+        session : aiohttp.ClientSession
+            The aiohttp session to use for the request.
+        chunk : list[str]
             A list of Wikipedia page titles to query.
 
         Returns
         -------
         list of str
             A list of resolved Wikipedia page titles after normalization and redirect resolution.
-
-        Examples
-        --------
-        >>> fetch_titles(["Albert Einstein", "Python (programming language)"])
-        ['Albert Einstein', 'Python (programming language)']
         """
         url = "https://en.wikipedia.org/w/api.php"
         target_str = "|".join(chunk)
         params = {"action": "query", "prop": "info", "titles": target_str, "redirects": 1, "format": "json"}
-        response = requests.get(url, params=params)
-        data = response.json()
+        async with session.get(url, params=params) as response:
+            data = await response.json()
 
         # Log API call to file
         logging.info("Wikipedia API call executed for titles: %s", target_str)
 
-        normalize_map = (
-            {item["from"]: item["to"] for item in data["query"]["normalized"]} if "normalized" in data["query"] else {}
-        )
-        redirect_map = (
-            {item["from"]: item["to"] for item in data["query"]["redirects"]} if "redirects" in data["query"] else {}
-        )
+        normalize_map = {item["from"]: item["to"] for item in data["query"].get("normalized", [])}
+        redirect_map = {item["from"]: item["to"] for item in data["query"].get("redirects", [])}
 
-        normalized = [normalize_map[target] if target in normalize_map else target for target in chunk]
-        titles = [redirect_map[target] if target in redirect_map else target for target in normalized]
+        normalized = [normalize_map.get(target, target) for target in chunk]
+        titles = [redirect_map.get(target, target) for target in normalized]
         return titles
 
-    chunks = [targets[i : i + chunk_size] for i in range(0, len(targets), chunk_size)]
+    async def titles_main() -> list[str]:
+        all_titles = []
+        chunks = [targets[i : i + chunk_size] for i in range(0, len(targets), chunk_size)]
+        async with aiohttp.ClientSession() as session:
+            tasks = [fetch_titles(session, chunk) for chunk in chunks]
+            results = await asyncio.gather(*tasks)
+            for titles in results:
+                all_titles.extend(titles)
+        return all_titles
 
-    with ThreadPoolExecutor() as executor:
-        futures = [executor.submit(fetch_titles, chunk) for chunk in chunks]
-        for future in as_completed(futures):
-            all_titles.extend(future.result())
-
-    return all_titles
+    return asyncio.run(titles_main())
 
 
 def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 1) -> tuple[list[str], list[str]]:
     """
-    Download Wikipedia pages and save them as JSON files.
+    Download Wikipedia pages and save them as JSON files (async version).
 
     Parameters
     ----------
@@ -134,26 +126,12 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
     if len(targets) == 0:
         return [], []
 
-    all_titles = []
-    all_urls = []
     chunk_size = 50
 
-    def fetch_and_save(chunk: list[str]) -> tuple[list[str], list[str]]:
+    async def fetch_and_save(session: aiohttp.ClientSession, chunk: list[str]) -> tuple[list[str], list[str]]:
         """
-        Fetch Wikipedia page data for a chunk of titles, save each page as a JSON file,
+        Fetch Wikipedia page data for a chunk of titles asynchronously, save each page as a JSON file,
         and return the list of normalized/redirected titles and their URLs.
-
-        Parameters
-        ----------
-        chunk : list[str]
-            List of Wikipedia page titles (up to 50).
-
-        Returns
-        -------
-        titles : list[str]
-            List of normalized and redirected Wikipedia page titles.
-        urls : list[str]
-            List of URLs corresponding to the Wikipedia pages.
         """
         url = "https://en.wikipedia.org/w/api.php"
         target_str = "|".join(chunk)
@@ -167,9 +145,8 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
             "redirects": 1,
             "format": "json",
         }
-        response = requests.get(url, params=params)
-        response.raise_for_status()
-        data = response.json()
+        async with session.get(url, params=params) as response:
+            data = await response.json()
 
         # Log API call to file
         logging.info("Wikipedia API call executed for titles: %s", target_str)
@@ -220,16 +197,19 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
 
         return titles, urls
 
-    chunks = [targets[i : i + chunk_size] for i in range(0, len(targets), chunk_size)]
+    async def download_main() -> tuple[list[str], list[str]]:
+        all_titles = []
+        all_urls = []
+        chunks = [targets[i : i + chunk_size] for i in range(0, len(targets), chunk_size)]
+        async with aiohttp.ClientSession() as session:
+            tasks = [fetch_and_save(session, chunk) for chunk in chunks]
+            results = await asyncio.gather(*tasks)
+            for titles, urls in results:
+                all_titles.extend(titles)
+                all_urls.extend(urls)
+        return all_titles, all_urls
 
-    with ThreadPoolExecutor() as executor:
-        futures = [executor.submit(fetch_and_save, chunk) for chunk in chunks]
-        for future in as_completed(futures):
-            titles, urls = future.result()
-            all_titles.extend(titles)
-            all_urls.extend(urls)
-
-    return all_titles, all_urls
+    return asyncio.run(download_main())
 
 
 if __name__ == "__main__":
@@ -244,6 +224,9 @@ if __name__ == "__main__":
         "Naoki Shimoda",
     ]
     # targets = []
+    titles = get_wiki_titles(targets)
+    print("Wiki titles: ", titles)
+
     titles, urls = download_wiki_pages(targets, out_dir="wikipedia/test")
     print("Wiki titles: ", titles)
     print("URLs: ", urls)
