@@ -46,8 +46,8 @@ def find_best_matching(Vp: list[str], Vk: list[str]) -> tuple[set[tuple[str, str
         tokenizer_kwargs={"clean_up_tokenization_spaces": True},
         device=device,
     )
-    PG_node_embeddings = model.encode(Vp, device=device)
-    KG_node_embeddings = model.encode(Vk, device=device)
+    PG_node_embeddings = model.encode(Vp, device=device, show_progress_bar=False)
+    KG_node_embeddings = model.encode(Vk, device=device, show_progress_bar=False)
 
     # create similarity table `df`
     sim_table = {}
