@@ -79,11 +79,6 @@ def process_pg(
     # Verify PG agains KG
     pg_path, kg_path, model = args
 
-    # check device
-    # device = model.device
-    # if device != "cuda":
-    #     print("Warning: GPU is not available. Using CPU instead.")
-
     # Load PG and KG
     PG = KB.from_dot_file(pg_path)
     KG = KB.from_dot_file(kg_path)
@@ -126,48 +121,55 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
 
     # Iterate over each category
     cat_dirs = os.listdir(pg_top_dir)
+    # Gather all (cat, pg_dir) pairs for global progress bar
+    all_pg_dirs = []
     for cat in sorted(cat_dirs):
-        # List of PG directories for the given category
         pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
-        result[cat] = {"questions": dict()}
+        for pg_dir in sorted(pg_dirs, key=lambda x: os.path.basename(x).split("-")[1]):
+            all_pg_dirs.append((cat, pg_dir))
 
-        # NOTE: pg_dir contains four PG dot files for a single MCQ
-        for pg_dir in tqdm(sorted(pg_dirs, key=lambda x: os.path.basename(x).split("-")[1]), desc=f"Processing {cat}"):
-            mcq_id = os.path.basename(pg_dir)
-            result[cat]["questions"][mcq_id] = dict()
+    # Global progress bar over all pg_dirs
+    for cat, pg_dir in tqdm(all_pg_dirs, desc="Verifying PGs against KGs"):
+        if cat not in result:
+            result[cat] = {"questions": dict()}
+        mcq_id = os.path.basename(pg_dir)
+        result[cat]["questions"][mcq_id] = dict()
 
-            # Prepare arguments for parallel processing
-            pg_files = os.listdir(pg_dir)
-            args = [
-                (
-                    os.path.join(pg_dir, pg_filename),
-                    os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename),
-                    model,
-                )
-                for pg_filename in pg_files
-            ]
+        # Prepare arguments for parallel processing
+        pg_files = os.listdir(pg_dir)
+        args = [
+            (
+                os.path.join(pg_dir, pg_filename),
+                os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename),
+                model,
+            )
+            for pg_filename in pg_files
+        ]
 
-            # Use ThreadPoolExecutor to process PGs in parallel
-            with ThreadPoolExecutor(max_workers=num_workers) as executor:
-                results = list(executor.map(process_pg, args))
+        # Use ThreadPoolExecutor to process PGs in parallel
+        with ThreadPoolExecutor(max_workers=num_workers) as executor:
+            results = list(executor.map(process_pg, args))
 
-            # NOTE: results are sorted by option numbers
-            # since the prefix of PG filename (x[0]) are 0, 1, 2, 3 w.r.t. the choice index
-            scores = []
-            for pg_path, edge_score, node_score, verified_edges, _ in sorted(results, key=lambda x: x[0]):
-                # Save the result of verification
-                pg_filename = os.path.basename(pg_path)
-                scores.append((edge_score, node_score))
-                result[cat]["questions"][mcq_id][pg_filename[0]] = {
-                    "choice": pg_filename[2:-4],
-                    "edge_score": edge_score,
-                    "node_score": node_score,
-                    "verified_edges": verified_edges,
-                }
+        # NOTE: results are sorted by option numbers
+        # since the prefix of PG filename (x[0]) are 0, 1, 2, 3 w.r.t. the option index
+        scores = []
+        for pg_path, edge_score, node_score, verified_edges, _ in sorted(results, key=lambda x: x[0]):
+            # Save the result of verification
+            pg_filename = os.path.basename(pg_path)
+            scores.append((edge_score, node_score))
+            result[cat]["questions"][mcq_id][pg_filename[0]] = {
+                "choice": pg_filename[2:-4],
+                "edge_score": edge_score,
+                "node_score": node_score,
+                "verified_edges": verified_edges,
+            }
 
-            # Save chosen answer
-            result[cat]["questions"][mcq_id]["answer"] = select_best_answer(scores)
+        # Save chosen answer
+        result[cat]["questions"][mcq_id]["answer"] = select_best_answer(scores)
 
         # Save the result to a JSON file
         with open(output_file, "w") as f:
             json.dump(result, f, indent=4)
+
+    # clean up GPU memory
+    torch.cuda.empty_cache()
