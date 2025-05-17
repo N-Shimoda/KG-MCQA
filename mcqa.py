@@ -1,7 +1,9 @@
+import argparse
 import json
 import multiprocessing as mp
 import os
-import sys
+from pathlib import Path
+from typing import Literal
 
 import numpy as np
 from matplotlib import pyplot as plt
@@ -9,6 +11,37 @@ from matplotlib import pyplot as plt
 from src.kg_creator import create_KG_cache, create_tailored_KGs
 from src.pg_creator import create_PGs, download_wiki_articles
 from src.verification import verify_PGs
+
+
+def parse_args() -> argparse.Namespace:
+    """
+    Parse command-line arguments for running MCQA with a specified model and dataset.
+
+    Returns
+    -------
+    argparse.Namespace
+        Parsed command-line arguments with the following attributes:
+        - dataset_path : Path
+            Path to the dataset JSON file (positional argument).
+        - model : str
+            Model to use, must be either "rebel" or "unirel" (required option).
+        - el : bool
+            Flag indicating whether to enable entity linking (optional, defaults to False).
+    """
+    parser = argparse.ArgumentParser(description="Run MCQA with specified model and dataset")
+
+    # Positional argument: dataset path (str or Path)
+    parser.add_argument("dataset_path", type=Path, help="Path to the dataset JSON file")
+
+    # Required option argument: --model
+    parser.add_argument(
+        "--model", type=str, choices=["rebel", "unirel"], required=True, help='Model to use: "rebel" or "unirel"'
+    )
+
+    # Optional argument: --el (True if specified)
+    parser.add_argument("--el", action="store_true", help="Enable entity linking (merge nodes for same entity)")
+
+    return parser.parse_args()
 
 
 def plot_bar_chart(categories: list[str], scores: dict[str, list[int]], title: str, output_file: str):
@@ -138,21 +171,19 @@ def collect_results(result_file: str, mcq_file: str):
 
 if __name__ == "__main__":
     # ---- Validate arguments ----
-    if len(sys.argv) < 3:
-        raise ValueError("Usage: python mcqa.py <MCQ_FILE> <MODEL_NAME>")
+    args = parse_args()
 
-    MCQ_FILE = sys.argv[1]
-    MODEL = sys.argv[2]  # "unirel" or "rebel"
+    MCQ_FILE: Path = args.dataset_path  # Path to the MCQ dataset
+    MODEL: Literal["rebel", "unirel"] = args.model  # "rebel" or "unirel"
+    EL: bool = args.el  # True or False
 
-    if not MCQ_FILE.endswith(".json"):
+    if MCQ_FILE.suffix != ".json":
         raise ValueError("MCQ file should be in JSON format.")
     if not os.path.exists(MCQ_FILE):
         raise FileNotFoundError(f"MCQ file {MCQ_FILE} does not exist.")
-    if MODEL not in ["unirel", "rebel"]:
-        raise ValueError("MODEL should be either 'unirel' or 'rebel'.")
 
     # ---- Define hyperparameters ----
-    DS_NAME = os.path.basename(MCQ_FILE).split(".")[0]
+    DS_NAME = MCQ_FILE.stem
     WIKI_DIR = f"wikipedia/{MODEL}/{DS_NAME}"
     KG_CHACHE_DIR = f"KG_cache/{MODEL}"
     OUT_DIR = f"exp-mcqa/{MODEL}/{DS_NAME}"
