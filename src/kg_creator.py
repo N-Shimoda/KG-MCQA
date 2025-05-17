@@ -43,7 +43,7 @@ def create_KG_cache(
             all_files.append((subdir, file))
 
     # Process all files in batches, regardless of subdir
-    for i in tqdm(range(0, len(all_files), batch_size), desc="Processing"):
+    for i in tqdm(range(0, len(all_files), batch_size), desc="Processing batches"):
         batch = all_files[i : i + batch_size]
         summaries = []
         titles = []
