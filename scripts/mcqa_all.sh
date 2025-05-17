@@ -7,7 +7,7 @@ fi
 
 for MODEL in rebel unirel
 do
-    for ds in KR-200s KR-200m FPAI-100 FPAI-20
+    for ds in KR-200m KR-200s FPAI-20 FPAI-100
     do
         ds_path="./dataset/${ds}.json"
         for EL_FLAG in "--el" ""
