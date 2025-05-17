@@ -1,6 +1,6 @@
 #!/bin/bash
 
-log_file="mcqa_main.log"
+log_file="exp-mcqa.log"
 if [ -f "$log_file" ]; then
     rm "$log_file"
 fi
