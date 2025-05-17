@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 from kgraph import KB, join
 from kgraph.extraction import extract_triples
-from kgraph.wiki import assign_file_path
+from kgraph.wiki import assign_file_path, get_wiki_titles
 
 
 def create_KG_cache(
@@ -74,7 +74,7 @@ def create_KG_cache(
     torch.cuda.empty_cache()
 
 
-def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
+def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str, el_enabled: bool = False):
     """
     Create KGs for each PG in the given directory.
 
@@ -86,6 +86,8 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
         Top-level directory to save the generated KGs.
     KG_cache_dir : str
         Directory containing cached KGs for Wikipedia articles.
+    el_enabled : bool, optional
+        Flag to enable entity linking (default: False).
     """
     # iterate over each category
     cat_dirs = os.listdir(pg_top_dir)
@@ -112,6 +114,14 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str):
                     subdir, basename = assign_file_path(title)
                     KG = KB.from_dot_file(f"{KG_cache_dir}/{subdir}/{basename.replace('.json', '.dot')}")
                     KG_combined = join(KG_combined, KG)
+
+                # TODO: Add entity linking
+                if el_enabled:
+                    titles = get_wiki_titles(KG_combined.get_nodes())
+                    mapping = {
+                        label: title for label, title in zip(KG_combined.get_nodes(), titles) if title is not None
+                    }
+                    KG_combined.apply_entity_linking(mapping)
 
                 # Save combined KG to dot file
                 kg_file_name = os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename)

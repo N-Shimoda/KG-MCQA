@@ -8,7 +8,7 @@ from tqdm import tqdm
 from kgraph import KB, join
 from kgraph.extraction import extract_triples
 from kgraph.utils import swap_label_with_symbol
-from kgraph.wiki import download_wiki_pages
+from kgraph.wiki import download_wiki_pages, get_wiki_titles
 
 
 def create_PG_temps(questions: list[str], choice_li: list[list[str]], model: Literal["unirel", "rebel"]) -> list[KB]:
@@ -46,7 +46,9 @@ def create_PG_temps(questions: list[str], choice_li: list[list[str]], model: Lit
     return PG_temps
 
 
-def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"], batch_size: int = 32):
+def create_PGs(
+    filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"], batch_size: int = 32, el_enabled: bool = False
+):
     """
     Create PGs from given MCQ dataset.\n
     PGs are saved in the specified directory with the format:
@@ -62,6 +64,8 @@ def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"]
         Model name for extracting triples.
     batch_size : int (optional)
         Batch size (number of questions) for processing at once.
+    el_enabled : bool (optional)
+        Flag to enable entity linking (default: False).
     """
     assert model in ["unirel", "rebel"], "model should be either 'unirel' or 'rebel'."
 
@@ -85,6 +89,12 @@ def create_PGs(filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"]
                 for c in choice:
                     # substitute choice label into PG_temp
                     PG = swap_label_with_symbol(PG_temp, "#BLANK", c)
+
+                    # TODO: add entity linking
+                    if el_enabled:
+                        titles = get_wiki_titles(PG.get_nodes())
+                        mapping = {label: title for label, title in zip(PG.get_nodes(), titles) if title is not None}
+                        PG.apply_entity_linking(mapping)
 
                     # save PG to dot file
                     os.makedirs(f"{pg_top_dir}/{cat}/{cat}-{i+j}", exist_ok=True)

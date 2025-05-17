@@ -196,7 +196,7 @@ if __name__ == "__main__":
 
     # Step 1-1. Create PGs
     print("\nStep 1-1. Creating PGs")
-    create_PGs(MCQ_FILE, PG_TOP_DIR, MODEL)
+    create_PGs(MCQ_FILE, PG_TOP_DIR, MODEL, el_enabled=EL)  # TODO: Add EL option
 
     # Step 1-2. Download Wikipedia articles for each PG
     print("\nStep 1-2. Downloading Wikipedia articles")
@@ -212,7 +212,8 @@ if __name__ == "__main__":
         pg_top_dir=PG_TOP_DIR,
         kg_top_dir=KG_TOP_DIR,
         KG_cache_dir=KG_CHACHE_DIR,
-    )
+        el_enabled=EL,
+    )  # TODO: Add EL option
 
     # Step 2 & 3. Node matching + Verification
     print("\nStep 2 & 3. Node matching + Verification")
