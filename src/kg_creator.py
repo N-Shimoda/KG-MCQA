@@ -35,40 +35,43 @@ def create_KG_cache(
 
     subdirs = os.listdir(wiki_dir)
 
-    # Create KGs for each subdir (prefix)
+    # Collect all (subdir, file) pairs for JSON files
+    all_files = []
     for subdir in sorted(subdirs):
-        # JSON files which contain downloaded articles
         files = [file for file in os.listdir(os.path.join(wiki_dir, subdir)) if file.endswith(".json")]
+        for file in files:
+            all_files.append((subdir, file))
 
-        for i in tqdm(range(0, len(files), batch_size), desc=f"Processing {subdir}"):
-            batch_files = files[i : i + batch_size]
-            summaries = []
-            titles = []
-            file_data = []
+    # Process all files in batches, regardless of subdir
+    for i in tqdm(range(0, len(all_files), batch_size), desc="Processing"):
+        batch = all_files[i : i + batch_size]
+        summaries = []
+        titles = []
+        file_data = []
 
-            # Collect summaries and titles for the batch
-            for file in batch_files:
-                with open(os.path.join(wiki_dir, subdir, file), "r") as f:
-                    data = json.load(f)
-                    if force or not data["converted"]:
-                        summaries.append(data["summary"])
-                        titles.append(data["title"])
-                        file_data.append((file, data))
+        # Collect summaries and titles for the batch
+        for subdir, file in batch:
+            with open(os.path.join(wiki_dir, subdir, file), "r") as f:
+                data = json.load(f)
+                if force or not data["converted"]:
+                    summaries.append(data["summary"])
+                    titles.append(data["title"])
+                    file_data.append((subdir, file, data))
 
-            # Create KGs in batch
-            if summaries:
-                KGs = extract_triples(summaries, model)
+        # Create KGs in batch
+        if summaries:
+            KGs = extract_triples(summaries, model)
 
-                for KG, title, (file, data) in zip(KGs, titles, file_data):
-                    # Save KG to dot file
-                    os.makedirs(f"{KG_dir}/{subdir}", exist_ok=True)
-                    kg_dot_path = f"{KG_dir}/{subdir}/{title.replace(' ', '_')}.dot"
-                    KG.write_dot(kg_dot_path)
+            for KG, title, (subdir, file, data) in zip(KGs, titles, file_data):
+                # Save KG to dot file
+                os.makedirs(f"{KG_dir}/{subdir}", exist_ok=True)
+                kg_dot_path = f"{KG_dir}/{subdir}/{title.replace(' ', '_')}.dot"
+                KG.write_dot(kg_dot_path)
 
-                    # Update the JSON file
-                    data["converted"] = True
-                    with open(os.path.join(wiki_dir, subdir, file), "w") as f:
-                        json.dump(data, f, indent=4)
+                # Update the JSON file
+                data["converted"] = True
+                with open(os.path.join(wiki_dir, subdir, file), "w") as f:
+                    json.dump(data, f, indent=4)
 
     # clean up GPU memory
     torch.cuda.empty_cache()
@@ -89,42 +92,39 @@ def create_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: str, el_
     el_enabled : bool, optional
         Flag to enable entity linking (default: False).
     """
-    # iterate over each category
+    # Collect all (cat, pg_dir, pg_filename) tuples for all PG dot files
     cat_dirs = os.listdir(pg_top_dir)
+    all_pg_files = []
     for cat in sorted(cat_dirs):
-
-        # List of PG directories for the given category
         pg_dirs = [os.path.join(pg_top_dir, cat, subdir) for subdir in os.listdir(os.path.join(pg_top_dir, cat))]
-
-        # NOTE: pg_dir contains four PG dot files for a single MCQ
-        for pg_dir in tqdm(sorted(pg_dirs), desc=f"Processing {cat}"):
+        for pg_dir in sorted(pg_dirs):
             for pg_filename in os.listdir(pg_dir):
+                all_pg_files.append((cat, pg_dir, pg_filename))
 
-                # reconstruct PG from dot file
-                PG = KB.from_dot_file(os.path.join(pg_dir, pg_filename))
-                titles = [
-                    PG.nodes[node_label]["wiki_title"]
-                    for node_label in PG.get_nodes()
-                    if PG.nodes[node_label]["wiki_title"] is not None
-                ]
+    # Process all PG files in one batch
+    for cat, pg_dir, pg_filename in tqdm(all_pg_files, desc="Processing"):
+        # Reconstruct PG from dot file
+        PG = KB.from_dot_file(os.path.join(pg_dir, pg_filename))
+        titles = [
+            PG.nodes[node_label]["wiki_title"]
+            for node_label in PG.get_nodes()
+            if PG.nodes[node_label]["wiki_title"] is not None
+        ]
 
-                # combine KGs for the found Wikipedia articles
-                KG_combined = KB()
-                for title in titles:
-                    subdir, basename = assign_file_path(title)
-                    KG = KB.from_dot_file(f"{KG_cache_dir}/{subdir}/{basename.replace('.json', '.dot')}")
-                    KG_combined = join(KG_combined, KG)
+        # Combine KGs for the found Wikipedia articles
+        KG_combined = KB()
+        for title in titles:
+            subdir, basename = assign_file_path(title)
+            KG = KB.from_dot_file(f"{KG_cache_dir}/{subdir}/{basename.replace('.json', '.dot')}")
+            KG_combined = join(KG_combined, KG)
 
-                # TODO: Add entity linking
-                if el_enabled:
-                    titles = get_wiki_titles(KG_combined.get_nodes())
-                    mapping = {
-                        label: title for label, title in zip(KG_combined.get_nodes(), titles) if title is not None
-                    }
-                    KG_combined.apply_entity_linking(mapping)
+        # Optionally add entity linking
+        if el_enabled:
+            titles = get_wiki_titles(KG_combined.get_nodes())
+            mapping = {label: title for label, title in zip(KG_combined.get_nodes(), titles) if title is not None}
+            KG_combined.apply_entity_linking(mapping)
 
-                # Save combined KG to dot file
-                kg_file_name = os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename)
-                os.makedirs(os.path.dirname(kg_file_name), exist_ok=True)
-                KG_combined.write_dot(kg_file_name)
-                KG_combined.write_dot(kg_file_name)
+        # Save combined KG to dot file
+        kg_file_name = os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename)
+        os.makedirs(os.path.dirname(kg_file_name), exist_ok=True)
+        KG_combined.write_dot(kg_file_name)

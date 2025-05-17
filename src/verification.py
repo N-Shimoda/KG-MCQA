@@ -87,7 +87,7 @@ def process_pg(
     return pg_path, edge_score, node_score, verified_edges, kg_edges
 
 
-def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: int = 16):
+def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: int):
     """
     Verify PGs against KGs and select the best answer.
     This function iterates over each category and each PG, verifies the PG against the KG,

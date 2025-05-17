@@ -184,9 +184,10 @@ if __name__ == "__main__":
 
     # ---- Define hyperparameters ----
     DS_NAME = MCQ_FILE.stem
-    WIKI_DIR = f"wikipedia/{MODEL}/{DS_NAME}"
-    KG_CHACHE_DIR = f"KG_cache/{MODEL}"
-    OUT_DIR = f"exp-mcqa/{MODEL}/{DS_NAME}"
+    WIKI_DIR = f"wikipedia/{MODEL}{'_el' if EL else ''}/{DS_NAME}"
+    KG_CHACHE_DIR = f"KG_cache/{MODEL}{'_el' if EL else ''}"
+    OUT_DIR = f"exp-mcqa/{MODEL}{'_el' if EL else ''}/{DS_NAME}"
+
     PG_TOP_DIR = f"{OUT_DIR}/PGs"
     KG_TOP_DIR = f"{OUT_DIR}/KGs"
     RES_FILE = f"{OUT_DIR}/results.json"
