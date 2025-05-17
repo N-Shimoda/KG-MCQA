@@ -1,5 +1,6 @@
 import argparse
 import json
+import logging
 import multiprocessing as mp
 import os
 from pathlib import Path
@@ -193,6 +194,8 @@ if __name__ == "__main__":
     RES_FILE = f"{OUT_DIR}/results.json"
 
     # ---- Start experiment ----
+    # Set up logging to file (at the top of the file)
+    logging.basicConfig(filename="wiki_api.log", level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
     print("MCQ dataset: {}".format(MCQ_FILE))
 
     # Step 1-1. Create PGs
