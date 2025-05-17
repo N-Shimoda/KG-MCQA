@@ -79,21 +79,25 @@ def create_PGs(
         choice_li = [q_data["choice"] for q_data in mcqs[cat]["questions"].values()]
 
         for i in tqdm(range(0, len(sentences), batch_size), desc=f"Processing {cat}"):
-            sentences_batch = sentences[i : i + batch_size]  # list[str]
-            choice_li_batch = choice_li[i : i + batch_size]  # list[list[str]]
+            sentences_batch: list[str] = sentences[i : i + batch_size]  # list[str]
+            choice_li_batch: list[list[str]] = choice_li[i : i + batch_size]  # list[list[str]]
 
             # create PG templates
             PG_temps = create_PG_temps(sentences_batch, choice_li_batch, model)
 
             for j, (PG_temp, choice) in enumerate(zip(PG_temps, choice_li_batch)):
+                if el_enabled:
+                    targets = PG_temp.get_nodes() + choice
+                    targets.remove("#BLANK")
+                    titles = get_wiki_titles([target for target in targets if target != "#BLANK"])
+                    mapping = {label: title for label, title in zip(targets, titles) if title is not None}
+
                 for c in choice:
                     # substitute choice label into PG_temp
                     PG = swap_label_with_symbol(PG_temp, "#BLANK", c)
 
                     # TODO: add entity linking
                     if el_enabled:
-                        titles = get_wiki_titles(PG.get_nodes())
-                        mapping = {label: title for label, title in zip(PG.get_nodes(), titles) if title is not None}
                         PG.apply_entity_linking(mapping)
 
                     # save PG to dot file
