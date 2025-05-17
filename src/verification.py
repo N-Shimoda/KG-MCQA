@@ -1,8 +1,10 @@
 import json
-import multiprocessing as mp
 import os
+from concurrent.futures import ThreadPoolExecutor
 from typing import Literal
 
+import torch
+from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
 
 from kgraph import KB
@@ -37,7 +39,7 @@ def save_verified_edges(
 
 
 def process_pg(
-    args: tuple[str, str],
+    args: tuple[str, str, SentenceTransformer],
 ) -> tuple[
     str,
     float,
@@ -51,8 +53,8 @@ def process_pg(
 
     Parameters
     ----------
-    args : tuple[str, str]
-        A tuple containing the paths to the PG dot file and the KG dot file.
+    args : tuple[str, str, SentenceTransformer]
+        A tuple containing the paths to the PG dot file, KG dot file and the SentenceTransformer model.
 
     Returns
     -------
@@ -75,10 +77,17 @@ def process_pg(
     to the dot files. Corresponding edge attribute in dot file is "verified" with value "true".
     """
     # Verify PG agains KG
-    pg_path, kg_path = args
+    pg_path, kg_path, model = args
+
+    # check device
+    # device = model.device
+    # if device != "cuda":
+    #     print("Warning: GPU is not available. Using CPU instead.")
+
+    # Load PG and KG
     PG = KB.from_dot_file(pg_path)
     KG = KB.from_dot_file(kg_path)
-    edge_score, node_score, verified_edges, kg_edges, matching = verify_proposition(PG, KG)
+    edge_score, node_score, verified_edges, kg_edges, matching = verify_proposition(PG, KG, model)
 
     # Save PG/KG with verified edges
     save_verified_edges(PG, pg_path, verified_edges, matching.keys())
@@ -106,6 +115,15 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
     """
     result = dict()
 
+    # sentence embedding model
+    # NOTE: The model is loaded only once per thread pool
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    model = SentenceTransformer(
+        "sentence-transformers/all-MiniLM-L6-v2",
+        tokenizer_kwargs={"clean_up_tokenization_spaces": True},
+        device=device,
+    )
+
     # Iterate over each category
     cat_dirs = os.listdir(pg_top_dir)
     for cat in sorted(cat_dirs):
@@ -124,13 +142,14 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
                 (
                     os.path.join(pg_dir, pg_filename),
                     os.path.join(kg_top_dir, cat, os.path.basename(pg_dir), pg_filename),
+                    model,
                 )
                 for pg_filename in pg_files
             ]
 
-            # Use multiprocessing to process PGs in parallel
-            with mp.Pool(processes=num_workers) as pool:
-                results = pool.map(process_pg, args)
+            # Use ThreadPoolExecutor to process PGs in parallel
+            with ThreadPoolExecutor(max_workers=num_workers) as executor:
+                results = list(executor.map(process_pg, args))
 
             # NOTE: results are sorted by option numbers
             # since the prefix of PG filename (x[0]) are 0, 1, 2, 3 w.r.t. the choice index
@@ -146,7 +165,7 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
                     "verified_edges": verified_edges,
                 }
 
-            # save chosen answer
+            # Save chosen answer
             result[cat]["questions"][mcq_id]["answer"] = select_best_answer(scores)
 
         # Save the result to a JSON file

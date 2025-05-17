@@ -1,5 +1,7 @@
 from typing import Literal
 
+from sentence_transformers import SentenceTransformer
+
 from ..core import KB
 from ..utils.utils import colorize
 from .matching import get_subgraph_nodes
@@ -10,7 +12,7 @@ def eval_edge(e1: str, e2: str) -> int:
     return 1 if e1 == e2 else 0
 
 
-def verify_proposition(PG: KB, KG: KB) -> tuple[
+def verify_proposition(PG: KB, KG: KB, model: SentenceTransformer) -> tuple[
     float,
     float,
     list[dict[Literal["head", "type", "tail"], str]],
@@ -41,7 +43,7 @@ def verify_proposition(PG: KB, KG: KB) -> tuple[
     matching : dict[str, str]
         Dictionary mapping PG nodes to their corresponding KG nodes.
     """
-    subnodes, PG_nodes, node_score = get_subgraph_nodes(KG.get_nodes(), PG.get_nodes())
+    subnodes, PG_nodes, node_score = get_subgraph_nodes(KG.get_nodes(), PG.get_nodes(), model)
     matching = dict(zip(PG_nodes, subnodes))
 
     count = 0
