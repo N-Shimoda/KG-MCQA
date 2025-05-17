@@ -145,21 +145,20 @@ def download_wiki_articles(pg_top_dir: str, wiki_dir: str, batch_size: int = 32)
         pg_dirs.extend(cat_pg_dirs)
 
     # Batch processing for all PG directories to speed up API calls
-    # Flatten all PG files and keep track of their directories
+    # Collect all PG files with `subdir/file.dot` format
     all_pg_files = []
-    for pg_dir in tqdm(pg_dirs, desc="Collecting PG files"):
+    for pg_dir in pg_dirs:
         pg_files = [f for f in os.listdir(pg_dir) if f.endswith(".dot")]
-        for file in pg_files:
-            all_pg_files.append((pg_dir, file))
+        all_pg_files.extend([(pg_dir, f) for f in pg_files])
 
     # Process in batches
-    for i in tqdm(range(0, len(all_pg_files), batch_size), desc="Processing all PGs in batches"):
+    for i in tqdm(range(0, len(all_pg_files), batch_size), desc="Processing batches"):
         batch = all_pg_files[i : i + batch_size]
         PGs = [KB.from_dot_file(os.path.join(pg_dir, file)) for pg_dir, file in batch]
 
         # Collect all unique targets in the batch
         PG_nodes_li = [PG.get_nodes() for PG in PGs]
-        targets = list({word for node in PG_nodes_li for word in node})
+        targets = list(set(word for node in PG_nodes_li for word in node))
 
         # Download the Wikipedia articles for all targets in the batch
         titles, urls = download_wiki_pages(targets, out_dir=wiki_dir)
