@@ -78,7 +78,7 @@ def get_wiki_titles(targets: list[str]) -> list[str]:
             data = await response.json()
 
         # Log API call to file
-        logging.info(f"Get title executed with {len(chunk)} targets: {target_str}")
+        logging.info(f"Getting titles with {len(chunk)} targets: {target_str}")
 
         normalize_map = {item["from"]: item["to"] for item in data["query"].get("normalized", [])}
         redirect_map = {item["from"]: item["to"] for item in data["query"].get("redirects", [])}
@@ -146,7 +146,7 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
             data = await response.json()
 
         # Log API call to file
-        logging.info(f"Page donwloading executed with {len(chunk)} titles: {target_str}")
+        logging.info(f"Donwloading pages with {len(chunk)} titles: {target_str}")
 
         normalize_map = (
             {item["from"]: item["to"] for item in data["query"]["normalized"]} if "normalized" in data["query"] else {}
