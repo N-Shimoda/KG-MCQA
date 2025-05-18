@@ -195,26 +195,20 @@ class KB:
         Parameters
         ----------
         mapping: dict[str, str]
-            Mapping of node labels to their linked entities.
+            Mapping of node labels to their linked entities, ex. titles of Wikipedia pages.
         """
+        # Apply entity linking to the head and tail of each relation
         rels = [
-            (
-                {"head": mapping[r["head"]], "type": r["type"], "tail": mapping[r["tail"]]}
-                if r["head"] in mapping and r["tail"] in mapping
-                else (
-                    {"head": mapping[r["head"]], "type": r["type"], "tail": r["tail"]}
-                    if r["head"] in mapping
-                    else (
-                        {"head": r["head"], "type": r["type"], "tail": mapping[r["tail"]]}
-                        if r["tail"] in mapping
-                        else r
-                    )
-                )
-            )
+            {"head": mapping[r["head"]], "type": r["type"], "tail": r["tail"]} if r["head"] in mapping else r
             for r in self.relations
         ]
-        unique_rels = [dict(t) for t in set(tuple(r.items()) for r in rels)]  # remove duplicates
-        self.relations = unique_rels
+        rels = [
+            {"head": r["head"], "type": r["type"], "tail": mapping[r["tail"]]} if r["tail"] in mapping else r
+            for r in rels
+        ]
+
+        # remove duplicates
+        self.relations = [dict(t) for t in set(tuple(r.items()) for r in rels)]
 
     def copy(self) -> "KB":
         """
