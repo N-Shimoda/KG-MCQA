@@ -122,7 +122,7 @@ def create_PGs(
     torch.cuda.empty_cache()
 
 
-def download_wiki_articles(pg_top_dir: str, wiki_dir: str, batch_size: int = 32):
+def download_wiki_articles(pg_top_dir: str, wiki_dir: str, batch_size: int = 32, cache_ttl_days: int = 3):
     """
     Download Wikipedia articles for all PGs stored in the specified top-level directory.
     This function saves the titles of related Wikipedia articles in the PG dot files.
@@ -136,6 +136,9 @@ def download_wiki_articles(pg_top_dir: str, wiki_dir: str, batch_size: int = 32)
     batch_size : int (optional)
         Batch size for processing (default: 32).
         You can adjust this value for optimal performance.
+    cache_ttl_days : int (optional)
+        Cache TTL in days for the downloaded Wikipedia articles (default: 3).
+        If the article is already downloaded and not expired, it won't be downloaded again.
     """
     # Collect all PG directories across all categories
     cat_dirs = os.listdir(pg_top_dir)
@@ -161,7 +164,7 @@ def download_wiki_articles(pg_top_dir: str, wiki_dir: str, batch_size: int = 32)
         targets = list(set(word for node in PG_nodes_li for word in node))
 
         # Download the Wikipedia articles for all targets in the batch
-        titles, urls = download_wiki_pages(targets, out_dir=wiki_dir)
+        titles, urls = download_wiki_pages(targets, wiki_dir, cache_ttl_days)
         titles = [titles[i] if urls[i] is not None else None for i in range(len(titles))]
         mapping = dict(zip(targets, titles))
 

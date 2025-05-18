@@ -100,7 +100,7 @@ def get_wiki_titles(targets: list[str]) -> list[str]:
     return asyncio.run(titles_main())
 
 
-def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 1) -> tuple[list[str], list[str]]:
+def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 3) -> tuple[list[str], list[str]]:
     """
     Download Wikipedia pages and save them as JSON files (async version).
 
