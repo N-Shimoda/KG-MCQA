@@ -5,12 +5,12 @@
                 "0": {
                     "choice": "Bill Gates",
                     "edge_score": 0.2,
-                    "node_score": 0.9415066480636597,
+                    "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Tesla",
                             "type": "product or material produced",
-                            "tail": "electric vehicles"
+                            "tail": "Electric vehicle"
                         },
                         {
                             "head": "Elon Musk",
@@ -21,13 +21,18 @@
                 },
                 "1": {
                     "choice": "Elon Musk",
-                    "edge_score": 0.375,
+                    "edge_score": 0.875,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "SpaceX",
+                            "type": "owned by",
+                            "tail": "Elon Musk"
+                        },
+                        {
                             "head": "Tesla",
                             "type": "product or material produced",
-                            "tail": "electric vehicles"
+                            "tail": "Electric vehicle"
                         },
                         {
                             "head": "SpaceX",
@@ -36,7 +41,22 @@
                         },
                         {
                             "head": "Elon Musk",
+                            "type": "owner of",
+                            "tail": "Tesla"
+                        },
+                        {
+                            "head": "Elon Musk",
                             "type": "employer",
+                            "tail": "SpaceX"
+                        },
+                        {
+                            "head": "Tesla",
+                            "type": "owned by",
+                            "tail": "Elon Musk"
+                        },
+                        {
+                            "head": "Elon Musk",
+                            "type": "owner of",
                             "tail": "SpaceX"
                         }
                     ]
@@ -49,7 +69,7 @@
                         {
                             "head": "Tesla",
                             "type": "product or material produced",
-                            "tail": "electric vehicles"
+                            "tail": "Electric vehicle"
                         },
                         {
                             "head": "Elon Musk",
@@ -61,12 +81,12 @@
                 "3": {
                     "choice": "Mark Zuckerberg",
                     "edge_score": 0.2,
-                    "node_score": 0.982874083518982,
+                    "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Tesla",
                             "type": "product or material produced",
-                            "tail": "electric vehicles"
+                            "tail": "Electric vehicle"
                         },
                         {
                             "head": "Elon Musk",
@@ -82,25 +102,25 @@
                 "0": {
                     "choice": "Greta Thunberg",
                     "edge_score": 0.0,
-                    "node_score": 0.8815377553304037,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Emma Gonzalez",
                     "edge_score": 0.0,
-                    "node_score": 0.8894561529159546,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Malala Yousafzai",
                     "edge_score": 0.0,
-                    "node_score": 0.9419929186503092,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Amal Clooney",
                     "edge_score": 0.0,
-                    "node_score": 0.8894561727841696,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -122,7 +142,7 @@
                 "2": {
                     "choice": "Tim Cook",
                     "edge_score": 0.0,
-                    "node_score": 0.9280845522880554,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "3": {
@@ -131,14 +151,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Microsoft",
-                            "type": "founded by",
-                            "tail": "Bill Gates"
-                        },
-                        {
                             "head": "Bill Gates",
                             "type": "owner of",
                             "tail": "Microsoft"
+                        },
+                        {
+                            "head": "Microsoft",
+                            "type": "founded by",
+                            "tail": "Bill Gates"
                         }
                     ]
                 },
@@ -149,7 +169,7 @@
                 "0": {
                     "choice": "Ed Sheeran",
                     "edge_score": 0.0,
-                    "node_score": 0.9654959589242935,
+                    "node_score": 0.9654959738254547,
                     "verified_edges": []
                 },
                 "1": {
@@ -160,20 +180,20 @@
                         {
                             "head": "Coldplay",
                             "type": "instance of",
-                            "tail": "band"
+                            "tail": "Band"
                         }
                     ]
                 },
                 "2": {
                     "choice": "Harry Styles",
                     "edge_score": 0.0,
-                    "node_score": 0.9634914547204971,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Adele",
                     "edge_score": 0.0,
-                    "node_score": 1.0000000298023224,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "answer": 1,
@@ -182,32 +202,52 @@
             "cf-4": {
                 "0": {
                     "choice": "Joe Biden",
-                    "edge_score": 0.14285714285714285,
-                    "node_score": 0.9999999850988388,
+                    "edge_score": 0.42857142857142855,
+                    "node_score": 1.0,
                     "verified_edges": [
+                        {
+                            "head": "Joe Biden",
+                            "type": "position held",
+                            "tail": "President of the United States"
+                        },
                         {
                             "head": "Barack Obama",
                             "type": "position held",
-                            "tail": "Vice President"
+                            "tail": "President of the United States"
+                        },
+                        {
+                            "head": "Barack Obama",
+                            "type": "position held",
+                            "tail": "Vice president"
                         }
                     ]
                 },
                 "1": {
                     "choice": "Donald Trump",
-                    "edge_score": 0.14285714285714285,
-                    "node_score": 0.9906590580940247,
+                    "edge_score": 0.42857142857142855,
+                    "node_score": 1.0,
                     "verified_edges": [
+                        {
+                            "head": "Donald Trump",
+                            "type": "position held",
+                            "tail": "President of the United States"
+                        },
                         {
                             "head": "Barack Obama",
                             "type": "position held",
                             "tail": "President of the United States"
+                        },
+                        {
+                            "head": "President of the United States",
+                            "type": "officeholder",
+                            "tail": "Donald Trump"
                         }
                     ]
                 },
                 "2": {
                     "choice": "Bernie Sanders",
                     "edge_score": 0.14285714285714285,
-                    "node_score": 0.9677214175462723,
+                    "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Barack Obama",
@@ -219,7 +259,7 @@
                 "3": {
                     "choice": "Kamala Harris",
                     "edge_score": 0.14285714285714285,
-                    "node_score": 0.9695260226726532,
+                    "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Barack Obama",
@@ -228,8 +268,8 @@
                         }
                     ]
                 },
-                "answer": 0,
-                "correct": true
+                "answer": -1,
+                "correct": false
             },
             "cf-5": {
                 "0": {
@@ -240,7 +280,7 @@
                         {
                             "head": "Alibaba Group",
                             "type": "industry",
-                            "tail": "e-commerce"
+                            "tail": "E-commerce"
                         },
                         {
                             "head": "Alibaba Group",
@@ -252,24 +292,24 @@
                 "1": {
                     "choice": "Richard Liu",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 0.9331419865290324,
+                    "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Alibaba Group",
                             "type": "industry",
-                            "tail": "e-commerce"
+                            "tail": "E-commerce"
                         }
                     ]
                 },
                 "2": {
                     "choice": "Pony Ma",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 0.842349092165629,
+                    "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Alibaba Group",
                             "type": "industry",
-                            "tail": "e-commerce"
+                            "tail": "E-commerce"
                         }
                     ]
                 },
@@ -281,7 +321,7 @@
                         {
                             "head": "Alibaba Group",
                             "type": "industry",
-                            "tail": "e-commerce"
+                            "tail": "E-commerce"
                         }
                     ]
                 },
@@ -292,7 +332,7 @@
                 "0": {
                     "choice": "Justin Bieber",
                     "edge_score": 0.0,
-                    "node_score": 0.968842605749766,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "1": {
@@ -326,119 +366,132 @@
                 "0": {
                     "choice": "Emmanuel Macron",
                     "edge_score": 0.0,
-                    "node_score": 0.9187872807184855,
+                    "node_score": 0.9336232344309489,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Angela Merkel",
-                    "edge_score": 0.0,
-                    "node_score": 0.944776733716329,
-                    "verified_edges": []
+                    "edge_score": 0.5,
+                    "node_score": 1.0,
+                    "verified_edges": [
+                        {
+                            "head": "Angela Merkel",
+                            "type": "position held",
+                            "tail": "Chancellor of Germany"
+                        },
+                        {
+                            "head": "Chancellor of Germany",
+                            "type": "officeholder",
+                            "tail": "Angela Merkel"
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Boris Johnson",
                     "edge_score": 0.0,
-                    "node_score": 0.9304462671279907,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Justin Trudeau",
                     "edge_score": 0.0,
-                    "node_score": 0.9624739686648051,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
-                "answer": -1,
-                "correct": false
+                "answer": 1,
+                "correct": true
             },
             "cf-8": {
                 "0": {
                     "choice": "Emma Stone",
                     "edge_score": 0.0,
-                    "node_score": 0.8572154492139816,
+                    "node_score": 0.8556905388832092,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Jennifer Lawrence",
-                    "edge_score": 0.0,
+                    "edge_score": 0.14285714285714285,
                     "node_score": 1.0,
-                    "verified_edges": []
+                    "verified_edges": [
+                        {
+                            "head": "Jennifer Lawrence",
+                            "type": "country of citizenship",
+                            "tail": "American"
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Scarlett Johansson",
                     "edge_score": 0.0,
-                    "node_score": 0.8808082193136215,
+                    "node_score": 0.9066115617752075,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Margot Robbie",
                     "edge_score": 0.0,
-                    "node_score": 0.8902969360351562,
+                    "node_score": 0.9066115468740463,
                     "verified_edges": []
                 },
-                "answer": -1,
-                "correct": false
+                "answer": 1,
+                "correct": true
             },
             "cf-9": {
                 "0": {
                     "choice": "Kei Nishikori",
-                    "edge_score": 0.3333333333333333,
+                    "edge_score": 0.2,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Kei Nishikori",
                             "type": "sport",
-                            "tail": "tennis player"
-                        },
-                        {
-                            "head": "Kei Nishikori",
-                            "type": "sport",
-                            "tail": "tennis"
+                            "tail": "Tennis"
                         }
                     ]
                 },
                 "1": {
                     "choice": "Naomi Osaka",
-                    "edge_score": 0.3333333333333333,
+                    "edge_score": 0.2,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Naomi Osaka",
                             "type": "sport",
-                            "tail": "tennis player"
-                        },
-                        {
-                            "head": "Naomi Osaka",
-                            "type": "sport",
-                            "tail": "tennis"
+                            "tail": "Tennis"
                         }
                     ]
                 },
                 "2": {
                     "choice": "Rafael Nadal",
-                    "edge_score": 0.16666666666666666,
-                    "node_score": 0.9684928258260092,
+                    "edge_score": 0.2,
+                    "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Rafael Nadal",
                             "type": "sport",
-                            "tail": "tennis"
+                            "tail": "Tennis"
                         }
                     ]
                 },
                 "3": {
                     "choice": "Serena Williams",
-                    "edge_score": 0.0,
-                    "node_score": 0.9684928258260092,
-                    "verified_edges": []
+                    "edge_score": 0.2,
+                    "node_score": 1.0,
+                    "verified_edges": [
+                        {
+                            "head": "Serena Williams",
+                            "type": "sport",
+                            "tail": "Tennis"
+                        }
+                    ]
                 },
                 "answer": -1,
                 "correct": false
             }
         },
         "stats": {
-            "correct": 6,
+            "correct": 7,
             "fail": 0,
-            "unselectable": 4,
+            "unselectable": 3,
             "total": 10
         }
     },
@@ -448,25 +501,25 @@
                 "0": {
                     "choice": "Nelson Mandela",
                     "edge_score": 0.0,
-                    "node_score": 0.8739288449287415,
+                    "node_score": 0.8951888680458069,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Rosa Parks",
                     "edge_score": 0.2,
-                    "node_score": 0.8330965489149094,
+                    "node_score": 0.8951888680458069,
                     "verified_edges": [
                         {
                             "head": "Rosa Parks",
                             "type": "movement",
-                            "tail": "American civil rights movement"
+                            "tail": "Civil rights movement"
                         }
                     ]
                 },
                 "2": {
                     "choice": "Martin Luther King Jr.",
                     "edge_score": 0.4,
-                    "node_score": 0.8841653764247894,
+                    "node_score": 0.8951888680458069,
                     "verified_edges": [
                         {
                             "head": "I Have a Dream",
@@ -476,14 +529,14 @@
                         {
                             "head": "Martin Luther King Jr.",
                             "type": "movement",
-                            "tail": "American civil rights movement"
+                            "tail": "Civil rights movement"
                         }
                     ]
                 },
                 "3": {
                     "choice": "Malcolm X",
                     "edge_score": 0.0,
-                    "node_score": 0.8841653913259506,
+                    "node_score": 0.8951888680458069,
                     "verified_edges": []
                 },
                 "answer": 2,
@@ -493,7 +546,7 @@
                 "0": {
                     "choice": "Rosalind Franklin",
                     "edge_score": 0.0,
-                    "node_score": 0.9595651030540466,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "1": {
@@ -559,16 +612,21 @@
             "hf-3": {
                 "0": {
                     "choice": "Napoleon Bonaparte",
-                    "edge_score": 0.6666666666666666,
+                    "edge_score": 1.0,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "French Revolution",
                             "type": "participant",
-                            "tail": "Napoleon Bonaparte"
+                            "tail": "Napoleon"
                         },
                         {
-                            "head": "Napoleon Bonaparte",
+                            "head": "Napoleon",
+                            "type": "position held",
+                            "tail": "Emperor of the French"
+                        },
+                        {
+                            "head": "Napoleon",
                             "type": "participant in",
                             "tail": "French Revolution"
                         }
@@ -583,14 +641,20 @@
                 "2": {
                     "choice": "Charles de Gaulle",
                     "edge_score": 0.0,
-                    "node_score": 0.9486417174339294,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Maximilien Robespierre",
-                    "edge_score": 0.0,
+                    "edge_score": 0.3333333333333333,
                     "node_score": 1.0,
-                    "verified_edges": []
+                    "verified_edges": [
+                        {
+                            "head": "Maximilien Robespierre",
+                            "type": "participant in",
+                            "tail": "French Revolution"
+                        }
+                    ]
                 },
                 "answer": 0,
                 "correct": true
@@ -599,22 +663,22 @@
                 "0": {
                     "choice": "Jawaharlal Nehru",
                     "edge_score": 0.0,
-                    "node_score": 0.8685296773910522,
+                    "node_score": 0.8703373074531555,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Mahatma Gandhi",
                     "edge_score": 0.0,
-                    "node_score": 0.820392444729805,
+                    "node_score": 0.8527492433786392,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Subhas Chandra Bose",
                     "edge_score": 0.2,
-                    "node_score": 0.8772213608026505,
+                    "node_score": 0.8703373074531555,
                     "verified_edges": [
                         {
-                            "head": "struggle for independence",
+                            "head": "Struggle for independence",
                             "type": "country",
                             "tail": "India"
                         }
@@ -623,7 +687,7 @@
                 "3": {
                     "choice": "Sardar Patel",
                     "edge_score": 0.0,
-                    "node_score": 0.8153771758079529,
+                    "node_score": 0.8703373223543167,
                     "verified_edges": []
                 },
                 "answer": 2,
@@ -633,7 +697,7 @@
                 "0": {
                     "choice": "Charles Dickens",
                     "edge_score": 0.25,
-                    "node_score": 0.9829398393630981,
+                    "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "English",
@@ -644,9 +708,14 @@
                 },
                 "1": {
                     "choice": "William Shakespeare",
-                    "edge_score": 0.25,
+                    "edge_score": 0.5,
                     "node_score": 1.0,
                     "verified_edges": [
+                        {
+                            "head": "William Shakespeare",
+                            "type": "field of work",
+                            "tail": "English language"
+                        },
                         {
                             "head": "English",
                             "type": "language used",
@@ -678,20 +747,20 @@
                         }
                     ]
                 },
-                "answer": -1,
-                "correct": false
+                "answer": 1,
+                "correct": true
             },
             "hf-6": {
                 "0": {
                     "choice": "Max Planck",
                     "edge_score": 0.0,
-                    "node_score": 0.788155992825826,
+                    "node_score": 0.7881559828917185,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Isaac Newton",
                     "edge_score": 0.0,
-                    "node_score": 0.7820572853088379,
+                    "node_score": 0.7854339083035787,
                     "verified_edges": []
                 },
                 "2": {
@@ -700,21 +769,21 @@
                     "node_score": 0.9990824262301127,
                     "verified_edges": [
                         {
-                            "head": "theory of relativity",
-                            "type": "discoverer or inventor",
-                            "tail": "Albert Einstein"
-                        },
-                        {
                             "head": "Albert Einstein",
                             "type": "notable work",
-                            "tail": "theory of relativity"
+                            "tail": "Theory of relativity"
+                        },
+                        {
+                            "head": "Theory of relativity",
+                            "type": "discoverer or inventor",
+                            "tail": "Albert Einstein"
                         }
                     ]
                 },
                 "3": {
                     "choice": "Werner Heisenberg",
                     "edge_score": 0.0,
-                    "node_score": 0.7726254860560099,
+                    "node_score": 0.7854339182376862,
                     "verified_edges": []
                 },
                 "answer": 2,
@@ -723,11 +792,16 @@
             "hf-7": {
                 "0": {
                     "choice": "Hatshepsut",
-                    "edge_score": 0.125,
+                    "edge_score": 0.25,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Mark Antony",
+                            "type": "time period",
+                            "tail": "Roman Republic"
+                        },
+                        {
+                            "head": "Julius Caesar",
                             "type": "time period",
                             "tail": "Roman Republic"
                         }
@@ -735,11 +809,16 @@
                 },
                 "1": {
                     "choice": "Nefertiti",
-                    "edge_score": 0.125,
+                    "edge_score": 0.25,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Mark Antony",
+                            "type": "time period",
+                            "tail": "Roman Republic"
+                        },
+                        {
+                            "head": "Julius Caesar",
                             "type": "time period",
                             "tail": "Roman Republic"
                         }
@@ -747,11 +826,16 @@
                 },
                 "2": {
                     "choice": "Cleopatra",
-                    "edge_score": 0.125,
+                    "edge_score": 0.25,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Mark Antony",
+                            "type": "time period",
+                            "tail": "Roman Republic"
+                        },
+                        {
+                            "head": "Julius Caesar",
                             "type": "time period",
                             "tail": "Roman Republic"
                         }
@@ -759,11 +843,16 @@
                 },
                 "3": {
                     "choice": "Ankhesenamun",
-                    "edge_score": 0.125,
+                    "edge_score": 0.25,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Mark Antony",
+                            "type": "time period",
+                            "tail": "Roman Republic"
+                        },
+                        {
+                            "head": "Julius Caesar",
                             "type": "time period",
                             "tail": "Roman Republic"
                         }
@@ -776,19 +865,19 @@
                 "0": {
                     "choice": "Bessie Coleman",
                     "edge_score": 0.0,
-                    "node_score": 0.885932132601738,
+                    "node_score": 0.8830107748508453,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Amelia Earhart",
                     "edge_score": 0.0,
-                    "node_score": 0.988825649023056,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Jacqueline Cochran",
                     "edge_score": 0.0,
-                    "node_score": 0.9312703609466553,
+                    "node_score": 0.9283490031957626,
                     "verified_edges": []
                 },
                 "3": {
@@ -819,24 +908,24 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "The Art of War",
-                            "type": "main subject",
-                            "tail": "military strategy"
-                        },
-                        {
-                            "head": "The Art of War",
-                            "type": "author",
-                            "tail": "Sun Tzu"
-                        },
-                        {
                             "head": "Sun Tzu",
                             "type": "field of work",
-                            "tail": "military strategy"
+                            "tail": "Military strategy"
+                        },
+                        {
+                            "head": "The Art of War",
+                            "type": "main subject",
+                            "tail": "Military strategy"
                         },
                         {
                             "head": "Sun Tzu",
                             "type": "notable work",
                             "tail": "The Art of War"
+                        },
+                        {
+                            "head": "The Art of War",
+                            "type": "author",
+                            "tail": "Sun Tzu"
                         }
                     ]
                 },
@@ -851,9 +940,9 @@
             }
         },
         "stats": {
-            "correct": 5,
+            "correct": 6,
             "fail": 1,
-            "unselectable": 4,
+            "unselectable": 3,
             "total": 10
         }
     }

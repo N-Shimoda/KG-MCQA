@@ -1,17 +1,31 @@
 #!/bin/bash
 
+log_file="exp-mcqa.log"
+if [ -f "$log_file" ]; then
+    rm "$log_file"
+fi
+
 for MODEL in rebel unirel
 do
-    for ds in KR-200s KR-200m
+    for ds in KR-200m KR-200s
     do
         ds_path="./dataset/${ds}.json"
-        echo "Running MCQA on $ds_path (model: $MODEL)"
-        python mcqa.py $ds_path $MODEL
-        if [ $? -ne 0 ]; then
-            echo "Error: MCQA failed on $ds_path (model: $MODEL)" >&2
-            echo "$(date '+%Y-%m-%d %H:%M:%S') [ERROR] $ds_path ($MODEL)" >> log.txt
-        else
-            echo "$(date '+%Y-%m-%d %H:%M:%S') [SUCCESS] $ds_path ($MODEL)" >> log.txt
-        fi
+        for EL_FLAG in "--el" ""
+        do
+            if [ "$EL_FLAG" = "--el" ]; then
+                EL_DESC="with --el"
+            else
+                EL_DESC="without --el"
+            fi
+            echo "Running MCQA on $ds_path (model: $MODEL) $EL_DESC"
+            echo "$(date '+%Y-%m-%d %H:%M:%S') [START] $ds_path ($MODEL) $EL_DESC" >> $log_file
+            python mcqa.py $ds_path --model=$MODEL $EL_FLAG
+            if [ $? -ne 0 ]; then
+                echo "Error: MCQA failed on $ds_path (model: $MODEL) $EL_DESC" >&2
+                echo "$(date '+%Y-%m-%d %H:%M:%S') [ERROR] $ds_path ($MODEL) $EL_DESC" >> $log_file
+            else
+                echo "$(date '+%Y-%m-%d %H:%M:%S') [SUCCESS] $ds_path ($MODEL) $EL_DESC" >> $log_file
+            fi
+        done
     done
 done

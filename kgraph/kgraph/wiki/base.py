@@ -1,8 +1,10 @@
+import asyncio
 import json
+import logging
 import os
 from datetime import datetime
 
-import requests
+import aiohttp
 
 
 def assign_file_path(title: str) -> tuple[str, str]:
@@ -35,7 +37,7 @@ def assign_file_path(title: str) -> tuple[str, str]:
 
 def get_wiki_titles(targets: list[str]) -> list[str]:
     """
-    Get Wikipedia page titles for the given targets.
+    Get Wikipedia page titles for the given targets using asynchronous requests.
     The output titles are normalized and redirected if happens.
 
     Parameters
@@ -51,31 +53,56 @@ def get_wiki_titles(targets: list[str]) -> list[str]:
     if len(targets) == 0:
         return []
 
-    # send request to Wikipedia API
-    url = "https://en.wikipedia.org/w/api.php"
-    target_str = "|".join(targets)
-    params = {"action": "query", "prop": "info", "titles": target_str, "redirects": 1, "format": "json"}
+    chunk_size = 50
 
-    response = requests.get(url, params=params)
-    data = response.json()
+    async def fetch_titles(session: aiohttp.ClientSession, chunk: list[str]) -> list[str]:
+        """
+        Fetches the canonical Wikipedia page titles for a given list of titles asynchronously.
 
-    # trace normalization and redirects
-    normalize_map = {item["from"]: item["to"] for item in data["query"]["normalized"]}
-    redirect_map = {item["from"]: item["to"] for item in data["query"]["redirects"]}
+        Parameters
+        ----------
+        session : aiohttp.ClientSession
+            The aiohttp session to use for the request.
+        chunk : list[str]
+            A list of Wikipedia page titles to query.
 
-    normalized = [normalize_map[target] if target in normalize_map else target for target in targets]
-    redirected = [redirect_map[target] if target in redirect_map else target for target in normalized]
+        Returns
+        -------
+        list of str
+            A list of resolved Wikipedia page titles after normalization and redirect resolution.
+        """
+        url = "https://en.wikipedia.org/w/api.php"
+        target_str = "|".join(chunk)
+        params = {"action": "query", "prop": "info", "titles": target_str, "redirects": 1, "format": "json"}
+        async with session.get(url, params=params) as response:
+            data = await response.json()
 
-    # print("targets:", targets)
-    # print("normalized:", normalized)
-    # print("redirected:", redirected)
+        # Log API call to file
+        logging.info(f"Getting titles with {len(chunk)} targets: {target_str}")
 
-    return redirected
+        normalize_map = {item["from"]: item["to"] for item in data["query"].get("normalized", [])}
+        redirect_map = {item["from"]: item["to"] for item in data["query"].get("redirects", [])}
+
+        normalized = [normalize_map.get(target, target) for target in chunk]
+        titles = [redirect_map.get(target, target) for target in normalized]
+        return titles
+
+    async def titles_main() -> list[str]:
+        all_titles = []
+        chunks = [targets[i : i + chunk_size] for i in range(0, len(targets), chunk_size)]
+        async with aiohttp.ClientSession() as session:
+            tasks = [fetch_titles(session, chunk) for chunk in chunks]
+            results = await asyncio.gather(*tasks)
+            for titles in results:
+                all_titles.extend(titles)
+        return all_titles
+
+    return asyncio.run(titles_main())
 
 
-def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 1) -> tuple[list[str], list[str]]:
+def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 3) -> tuple[list[str], list[str]]:
     """
-    Download Wikipedia pages and save them as JSON files.
+    Download Wikipedia pages and save them as JSON files (async version).
 
     Parameters
     ----------
@@ -96,76 +123,90 @@ def download_wiki_pages(targets: list[str], out_dir: str, cache_ttl_days: int = 
     if len(targets) == 0:
         return [], []
 
-    # send request to Wikipedia API
-    url = "https://en.wikipedia.org/w/api.php"
-    target_str = "|".join(targets)
-    params = {
-        "action": "query",
-        "prop": "info|extracts",
-        "inprop": "url",
-        "exintro": 1,  # 冒頭部分のみ
-        "explaintext": 1,  # プレーンテキストで取得
-        "titles": target_str,
-        "redirects": 1,
-        "format": "json",
-    }
-    response = requests.get(url, params=params)
-    response.raise_for_status()
-    data = response.json()
+    chunk_size = 20  # NOTE: API returns at most 20 extracts per request
 
-    # for dev
-    # with open("response.json", "w") as f:
-    #     json.dump(data, f, indent=4, ensure_ascii=False)
-
-    # get titles
-    normalize_map = (
-        {item["from"]: item["to"] for item in data["query"]["normalized"]} if "normalized" in data["query"] else {}
-    )
-    redirect_map = (
-        {item["from"]: item["to"] for item in data["query"]["redirects"]} if "redirects" in data["query"] else {}
-    )
-    normalized = [normalize_map[target] if target in normalize_map else target for target in targets]
-    titles = [redirect_map[target] if target in redirect_map else target for target in normalized]
-
-    # get URLs
-    pages = data["query"]["pages"]
-    url_map = {page["title"]: page["fullurl"] if int(page_id) > 0 else None for page_id, page in pages.items()}
-    urls = [url_map[title] for title in titles]
-
-    # Save articles to JSON files
-    today_date = datetime.now()
-    for page_id, page in pages.items():
-        # skip if page not found
-        if int(page_id) < 0:
-            continue
-
-        data = {
-            "title": page["title"],
-            "fullurl": page["fullurl"],
-            "retrieved-date": today_date.strftime("%Y/%m/%d %H:%M:%S"),
-            "converted": False,
-            "summary": page["extract"],
+    async def fetch_and_save(session: aiohttp.ClientSession, chunk: list[str]) -> tuple[list[str], list[str]]:
+        """
+        Fetch Wikipedia page data for a chunk of titles asynchronously, save each page as a JSON file,
+        and return the list of normalized/redirected titles and their URLs.
+        """
+        url = "https://en.wikipedia.org/w/api.php"
+        target_str = "|".join(chunk)
+        params = {
+            "action": "query",
+            "prop": "info|extracts",
+            "inprop": "url",
+            "exintro": 1,  # Extract only intro part (before the first section)
+            "explaintext": 1,  # Extract plain text
+            "titles": target_str,
+            "redirects": 1,
+            "format": "json",
         }
+        async with session.get(url, params=params) as response:
+            data = await response.json()
 
-        # Create output directory if it doesn't exist
-        subdir, basename = assign_file_path(page["title"])
-        os.makedirs(f"{out_dir}/{subdir}", exist_ok=True)
-        output_path = f"{out_dir}/{subdir}/{basename}"
+        # Log API call to file
+        logging.info(f"Donwloading pages with {len(chunk)} titles: {target_str}")
 
-        # Save article to JSON file
-        save_file = True
-        if os.path.exists(output_path):
-            with open(output_path, "r", encoding="utf-8") as output_file:
-                date_str = json.load(output_file).get("retrieved-date")
-                retriedved_date = datetime.strptime(date_str, "%Y/%m/%d %H:%M:%S")
-                if (today_date - retriedved_date).days < cache_ttl_days:
-                    save_file = False
+        normalize_map = (
+            {item["from"]: item["to"] for item in data["query"]["normalized"]} if "normalized" in data["query"] else {}
+        )
+        redirect_map = (
+            {item["from"]: item["to"] for item in data["query"]["redirects"]} if "redirects" in data["query"] else {}
+        )
+        normalized = [normalize_map[target] if target in normalize_map else target for target in chunk]
+        titles = [redirect_map[target] if target in redirect_map else target for target in normalized]
 
-        if save_file:
-            with open(output_path, "w", encoding="utf-8") as output_file:
-                json.dump(data, output_file, indent=4)
+        # Get URLs for each title
+        pages = data["query"]["pages"]
+        url_map = {page["title"]: page["fullurl"] if int(page_id) > 0 else None for page_id, page in pages.items()}
+        urls = [url_map[title] for title in titles]
 
-    return titles, urls
+        # Save articles to JSON files
+        today_date = datetime.now()
+        for page_id, page in pages.items():
+            if int(page_id) < 0:
+                continue
+
+            data_to_save = {
+                "title": page["title"],
+                "fullurl": page["fullurl"],
+                "retrieved-date": today_date.strftime("%Y/%m/%d %H:%M:%S"),
+                "converted": False,
+                "summary": page["extract"],
+            }
+
+            subdir, basename = assign_file_path(page["title"])
+            os.makedirs(f"{out_dir}/{subdir}", exist_ok=True)
+            output_path = f"{out_dir}/{subdir}/{basename}"
+
+            save_file = True
+            if os.path.exists(output_path):
+                with open(output_path, "r", encoding="utf-8") as output_file:
+                    date_str = json.load(output_file).get("retrieved-date")
+                    retriedved_date = datetime.strptime(date_str, "%Y/%m/%d %H:%M:%S")
+                    if (today_date - retriedved_date).days < cache_ttl_days:
+                        save_file = False
+
+            if save_file:
+                with open(output_path, "w", encoding="utf-8") as output_file:
+                    json.dump(data_to_save, output_file, indent=4)
+
+        return titles, urls
+
+    async def download_main() -> tuple[list[str], list[str]]:
+        all_titles = []
+        all_urls = []
+        chunks = [targets[i : i + chunk_size] for i in range(0, len(targets), chunk_size)]
+        async with aiohttp.ClientSession() as session:
+            tasks = [fetch_and_save(session, chunk) for chunk in chunks]
+            results = await asyncio.gather(*tasks)
+            for titles, urls in results:
+                all_titles.extend(titles)
+                all_urls.extend(urls)
+        return all_titles, all_urls
+
+    return asyncio.run(download_main())
 
 
 if __name__ == "__main__":
@@ -180,6 +221,9 @@ if __name__ == "__main__":
         "Naoki Shimoda",
     ]
     # targets = []
+    titles = get_wiki_titles(targets)
+    print("Wiki titles: ", titles)
+
     titles, urls = download_wiki_pages(targets, out_dir="wikipedia/test")
     print("Wiki titles: ", titles)
     print("URLs: ", urls)
