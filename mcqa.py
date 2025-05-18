@@ -3,6 +3,7 @@ import json
 import logging
 import multiprocessing as mp
 import os
+import time
 from pathlib import Path
 from typing import Literal
 
@@ -171,6 +172,8 @@ def collect_results(result_file: str, mcq_file: str):
 
 
 if __name__ == "__main__":
+    start_time = time.time()  # recored start time
+
     # ---- Validate arguments ----
     args = parse_args()
 
@@ -232,3 +235,7 @@ if __name__ == "__main__":
     # Step 4. Count correct answers
     print("\nStep 4. Counting correct answers")
     collect_results(RES_FILE, mcq_file=MCQ_FILE)
+
+    # show elapsed time
+    elapsed = time.time() - start_time
+    print(f"\nCompleted in: {elapsed:.2f} seconds")
