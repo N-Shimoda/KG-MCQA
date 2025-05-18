@@ -21,7 +21,7 @@
                 },
                 "1": {
                     "choice": "Elon Musk",
-                    "edge_score": 0.4,
+                    "edge_score": 0.375,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
@@ -33,11 +33,6 @@
                             "head": "SpaceX",
                             "type": "founded by",
                             "tail": "Elon Musk"
-                        },
-                        {
-                            "head": "Elon Musk",
-                            "type": "employer",
-                            "tail": "SpaceX"
                         },
                         {
                             "head": "Tesla",
@@ -66,7 +61,7 @@
                 "3": {
                     "choice": "Mark Zuckerberg",
                     "edge_score": 0.2,
-                    "node_score": 0.982874071598053,
+                    "node_score": 0.982874083518982,
                     "verified_edges": [
                         {
                             "head": "Elon Musk",
@@ -136,14 +131,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Microsoft",
-                            "type": "founded by",
-                            "tail": "Bill Gates"
-                        },
-                        {
                             "head": "Bill Gates",
                             "type": "owner of",
                             "tail": "Microsoft"
+                        },
+                        {
+                            "head": "Microsoft",
+                            "type": "founded by",
+                            "tail": "Bill Gates"
                         }
                     ]
                 },
@@ -336,20 +331,9 @@
                 },
                 "1": {
                     "choice": "Angela Merkel",
-                    "edge_score": 0.5,
+                    "edge_score": 0.0,
                     "node_score": 0.944776733716329,
-                    "verified_edges": [
-                        {
-                            "head": "German Chancellor",
-                            "type": "officeholder",
-                            "tail": "Angela Merkel"
-                        },
-                        {
-                            "head": "Angela Merkel",
-                            "type": "position held",
-                            "tail": "German Chancellor"
-                        }
-                    ]
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Boris Johnson",
@@ -363,8 +347,8 @@
                     "node_score": 0.9624739686648051,
                     "verified_edges": []
                 },
-                "answer": 1,
-                "correct": true
+                "answer": -1,
+                "correct": false
             },
             "cf-8": {
                 "0": {
@@ -403,12 +387,12 @@
                         {
                             "head": "Kei Nishikori",
                             "type": "sport",
-                            "tail": "tennis"
+                            "tail": "tennis player"
                         },
                         {
                             "head": "Kei Nishikori",
                             "type": "sport",
-                            "tail": "tennis player"
+                            "tail": "tennis"
                         }
                     ]
                 },
@@ -420,19 +404,19 @@
                         {
                             "head": "Naomi Osaka",
                             "type": "sport",
-                            "tail": "tennis"
+                            "tail": "tennis player"
                         },
                         {
                             "head": "Naomi Osaka",
                             "type": "sport",
-                            "tail": "tennis player"
+                            "tail": "tennis"
                         }
                     ]
                 },
                 "2": {
                     "choice": "Rafael Nadal",
                     "edge_score": 0.16666666666666666,
-                    "node_score": 0.9684928357601166,
+                    "node_score": 0.9684928258260092,
                     "verified_edges": [
                         {
                             "head": "Rafael Nadal",
@@ -452,9 +436,9 @@
             }
         },
         "stats": {
-            "correct": 7,
+            "correct": 6,
             "fail": 0,
-            "unselectable": 3,
+            "unselectable": 4,
             "total": 10
         }
     },
@@ -485,14 +469,14 @@
                     "node_score": 0.8841653764247894,
                     "verified_edges": [
                         {
-                            "head": "I Have a Dream",
-                            "type": "author",
-                            "tail": "Martin Luther King Jr."
-                        },
-                        {
                             "head": "Martin Luther King Jr.",
                             "type": "movement",
                             "tail": "American civil rights movement"
+                        },
+                        {
+                            "head": "I Have a Dream",
+                            "type": "author",
+                            "tail": "Martin Luther King Jr."
                         }
                     ]
                 },
@@ -546,14 +530,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Plato",
-                            "type": "student of",
-                            "tail": "Socrates"
-                        },
-                        {
                             "head": "Socrates",
                             "type": "student",
                             "tail": "Plato"
+                        },
+                        {
+                            "head": "Plato",
+                            "type": "student of",
+                            "tail": "Socrates"
                         }
                     ]
                 },
@@ -707,7 +691,7 @@
                 "1": {
                     "choice": "Isaac Newton",
                     "edge_score": 0.0,
-                    "node_score": 0.7820573051770529,
+                    "node_score": 0.7820572853088379,
                     "verified_edges": []
                 },
                 "2": {
@@ -835,9 +819,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "The Art of War",
-                            "type": "author",
-                            "tail": "Sun Tzu"
+                            "head": "Sun Tzu",
+                            "type": "field of work",
+                            "tail": "military strategy"
                         },
                         {
                             "head": "Sun Tzu",
@@ -850,9 +834,9 @@
                             "tail": "military strategy"
                         },
                         {
-                            "head": "Sun Tzu",
-                            "type": "field of work",
-                            "tail": "military strategy"
+                            "head": "The Art of War",
+                            "type": "author",
+                            "tail": "Sun Tzu"
                         }
                     ]
                 },

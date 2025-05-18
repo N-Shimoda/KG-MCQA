@@ -1623,8 +1623,13 @@
                         },
                         {
                             "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Osaka Prefecture"
+                            "type": "/location/country/capital",
+                            "tail": "Tokyo"
+                        },
+                        {
+                            "head": "Tokyo",
+                            "type": "/location/administrative_division/country",
+                            "tail": "Japan"
                         },
                         {
                             "head": "Japan",
@@ -1638,13 +1643,8 @@
                         },
                         {
                             "head": "Japan",
-                            "type": "/location/country/capital",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Tokyo",
-                            "type": "/location/administrative_division/country",
-                            "tail": "Japan"
+                            "type": "/location/location/contains",
+                            "tail": "Osaka Prefecture"
                         }
                     ]
                 },
@@ -1660,6 +1660,16 @@
                         },
                         {
                             "head": "Japan",
+                            "type": "/location/country/capital",
+                            "tail": "Tokyo"
+                        },
+                        {
+                            "head": "Tokyo",
+                            "type": "/location/administrative_division/country",
+                            "tail": "Japan"
+                        },
+                        {
+                            "head": "Japan",
                             "type": "/location/location/contains",
                             "tail": "Kyoto Prefecture"
                         },
@@ -1672,16 +1682,6 @@
                             "head": "Japan",
                             "type": "/location/location/contains",
                             "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/country/capital",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Tokyo",
-                            "type": "/location/administrative_division/country",
-                            "tail": "Japan"
                         }
                     ]
                 },
@@ -1697,16 +1697,6 @@
                         },
                         {
                             "head": "Japan",
-                            "type": "/location/country/administrative_divisions",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
                             "type": "/location/country/capital",
                             "tail": "Tokyo"
                         },
@@ -1714,6 +1704,16 @@
                             "head": "Tokyo",
                             "type": "/location/administrative_division/country",
                             "tail": "Japan"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/country/administrative_divisions",
+                            "tail": "Tokyo"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/location/contains",
+                            "tail": "Tokyo"
                         }
                     ]
                 },
@@ -1729,16 +1729,6 @@
                         },
                         {
                             "head": "Japan",
-                            "type": "/location/country/administrative_divisions",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
                             "type": "/location/country/capital",
                             "tail": "Tokyo"
                         },
@@ -1746,6 +1736,16 @@
                             "head": "Tokyo",
                             "type": "/location/administrative_division/country",
                             "tail": "Japan"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/country/administrative_divisions",
+                            "tail": "Tokyo"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/location/contains",
+                            "tail": "Tokyo"
                         }
                     ]
                 },
@@ -6104,14 +6104,14 @@
                     "node_score": 0.7669662634531657,
                     "verified_edges": [
                         {
-                            "head": "Mark Zuckerberg",
-                            "type": "/business/person/company",
-                            "tail": "World Wide Web"
-                        },
-                        {
                             "head": "World Wide Web",
                             "type": "/business/company/founders",
                             "tail": "Mark Zuckerberg"
+                        },
+                        {
+                            "head": "Mark Zuckerberg",
+                            "type": "/business/person/company",
+                            "tail": "World Wide Web"
                         }
                     ]
                 },
