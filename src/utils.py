@@ -77,17 +77,23 @@ def plot_bar_chart(categories: list[str], scores: dict[str, list[int]], title: s
                     f"{height:.1f}",
                     ha="center",
                     va="center",
-                    fontsize=12,
+                    fontsize=14,
                 )
 
+    # x axis
+    plt.xlabel("Categories", fontdict={"fontsize": 14})
     ax.set_xticks(index)
-    ax.set_xticklabels(categories, rotation=20)
-    ax.set_ylabel("Percentile (%)")
+    ax.set_xticklabels(categories, rotation=20, fontdict={"fontsize": 14})
+
+    # y axis
+    ax.set_ylabel("Percentile (%)", fontdict={"fontsize": 14})
     ax.set_ylim(0, 105)
-    ax.legend()
+    ax.tick_params(axis="y", labelsize=14)
     ax.grid(True, axis="y", linestyle="--", alpha=0.5)
 
-    plt.title(title)
+    # overall
+    ax.legend(fontsize=14)
+    plt.title(title, fontdict={"fontsize": 16})
     plt.tight_layout()
     plt.savefig(output_file, format="svg")
 
@@ -102,7 +108,7 @@ if __name__ == "__main__":
         "C": [10, 30, 10, 50],
     }
     title = "Stacked Bar Chart of Percentages (Test Data)"
-    output_file = "test_bar_chart.svg"
+    output_file = "chart_sample.svg"
 
     plot_bar_chart(categories, scores, title, output_file)
     print(f"Chart saved to {output_file}.")
