@@ -7,11 +7,9 @@ import time
 from pathlib import Path
 from typing import Literal
 
-import numpy as np
-from matplotlib import pyplot as plt
-
 from src.kg_creator import create_KG_cache, create_tailored_KGs
 from src.pg_creator import create_PGs, download_wiki_articles
+from src.utils import plot_bar_chart
 from src.verification import verify_PGs
 
 
@@ -44,74 +42,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--el", action="store_true", help="Enable entity linking (merge nodes for same entity)")
 
     return parser.parse_args()
-
-
-def plot_bar_chart(categories: list[str], scores: dict[str, list[int]], title: str, output_file: str):
-    if not output_file.endswith(".svg"):
-        raise ValueError("Output file should be in SVG format for article quality.")
-
-    # define data
-    scores = {
-        "Correct": [scores[cat][0] / scores[cat][3] * 100 for cat in categories],
-        "Incorrect": [scores[cat][1] / scores[cat][3] * 100 for cat in categories],
-        "Unselectable": [scores[cat][2] / scores[cat][3] * 100 for cat in categories],
-    }
-
-    colors = {
-        "Correct": "royalblue",
-        "Incorrect": "lightgray",
-        "Unselectable": "lightblue",
-    }
-
-    hatch_styles = {
-        "Correct": "//",  # define hatch style for correct answers
-        "Incorrect": "",
-        "Unselectable": "",
-    }
-
-    # graph settings
-    n_categories = len(categories)
-    n_labels = len(scores)
-    bar_width = 0.15
-    index = np.arange(n_categories)
-
-    _, ax = plt.subplots(figsize=(12, 6))
-
-    for i, (label, values) in enumerate(scores.items()):
-        offset = (i - n_labels / 2) * bar_width + bar_width / 2
-        bars = ax.bar(
-            index + offset,
-            values,
-            bar_width,
-            label=label,
-            color=colors[label],
-            hatch=hatch_styles[label],
-            edgecolor="black",
-        )
-
-        # plot values
-        for bar in bars:
-            height = bar.get_height()
-            ax.text(
-                bar.get_x() + bar.get_width() / 2.0,
-                height + 0.5,
-                f"{height:.1f}",
-                ha="center",
-                va="bottom",
-                fontsize=8,
-            )
-
-    # axies and legend settings
-    ax.set_xticks(index)
-    ax.set_xticklabels(categories, rotation=20)
-    ax.set_ylabel("Number of Samples / Percentile (%)")
-    ax.set_ylim(0, 105)
-    ax.legend()
-    ax.grid(True, axis="y", linestyle="--", alpha=0.5)
-
-    plt.title(title)
-    plt.tight_layout()
-    plt.savefig(output_file, format="svg")
 
 
 def collect_results(result_file: str, mcq_file: str):
@@ -228,7 +158,7 @@ if __name__ == "__main__":
     verify_PGs(
         pg_top_dir=PG_TOP_DIR,
         kg_top_dir=KG_TOP_DIR,
-        output_file=f"{OUT_DIR}/results.json",
+        output_file=RES_FILE,
         num_workers=os.cpu_count(),
     )
 

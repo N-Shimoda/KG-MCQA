@@ -165,11 +165,19 @@ def verify_PGs(pg_top_dir: str, kg_top_dir: str, output_file: str, num_workers: 
             }
 
         # Save chosen answer
-        result[cat]["questions"][mcq_id]["answer"] = select_best_answer(scores)
+        best_id, probs = select_best_answer(scores)
+        result[cat]["questions"][mcq_id]["answer"] = best_id
+        result[cat]["questions"][mcq_id]["probs"] = probs
 
-        # Save the result to a JSON file
-        with open(output_file, "w") as f:
-            json.dump(result, f, indent=4)
+    # Sort by the numeric part of mcq_id in ascending order
+    for cat in result:
+        questions = result[cat]["questions"]
+        sorted_questions = dict(sorted(questions.items(), key=lambda x: int(x[0].split("-")[1])))
+        result[cat]["questions"] = sorted_questions
+
+    # Save the result to a JSON file
+    with open(output_file, "w") as f:
+        json.dump(result, f, indent=4)
 
     # clean up GPU memory
     torch.cuda.empty_cache()
