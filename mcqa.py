@@ -41,6 +41,9 @@ def parse_args() -> argparse.Namespace:
     # Optional argument: --el (True if specified)
     parser.add_argument("--el", action="store_true", help="Enable entity linking (merge nodes for same entity)")
 
+    # Optional argument: --api_log
+    parser.add_argument("--api-log-file", type=str, default="wiki_api.log", help="Log file for Wikipedia API")
+
     return parser.parse_args()
 
 
@@ -110,6 +113,7 @@ if __name__ == "__main__":
     MCQ_FILE: Path = args.dataset_path  # Path to the MCQ dataset
     MODEL: Literal["rebel", "unirel"] = args.model  # "rebel" or "unirel"
     EL: bool = args.el  # True or False
+    API_LOG_FILE: str = args.api_log_file  # Log file for Wikipedia API
 
     if MCQ_FILE.suffix != ".json":
         raise ValueError("MCQ file should be in JSON format.")
@@ -128,12 +132,12 @@ if __name__ == "__main__":
 
     # ---- Start experiment ----
     # Set up logging to file (at the top of the file)
-    logging.basicConfig(filename="wiki_api.log", level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+    logging.basicConfig(filename=API_LOG_FILE, level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
     print("MCQ dataset: {}".format(MCQ_FILE))
 
     # Step 1-1. Create PGs
     print("\nStep 1-1. Creating PGs")
-    create_PGs(MCQ_FILE, PG_TOP_DIR, MODEL, el_enabled=EL)  # TODO: Add EL option
+    create_PGs(MCQ_FILE, PG_TOP_DIR, MODEL, el_enabled=EL)
 
     # Step 1-2. Download Wikipedia articles for each PG
     print("\nStep 1-2. Downloading Wikipedia articles")
@@ -150,7 +154,7 @@ if __name__ == "__main__":
         kg_top_dir=KG_TOP_DIR,
         KG_cache_dir=KG_CHACHE_DIR,
         el_enabled=EL,
-    )  # TODO: Add EL option
+    )
 
     # Step 2 & 3. Node matching + Verification
     print("\nStep 2 & 3. Node matching + Verification")
