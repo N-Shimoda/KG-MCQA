@@ -1,9 +1,10 @@
 import json
 
-model = "rebel"
-filename = f"exp-mcqa/{model}/KR-200m/results.json"
-# filename = "exp-mcqa/unirel/KR-200s/results.json"
-# filename = "exp-mcqa/unirel/FPAI-100/results.json"
+model = ["rebel", "unirel"][0]
+dataset = ["KR-200m", "KR-200s", "FPAI-100", "FPAI-20"][0]
+el = True
+filename = f"exp-mcqa/{model}{'_el' if el else ''}/{dataset}/results.json"
+
 with open(filename, "r") as f:
     data = json.load(f)
 
