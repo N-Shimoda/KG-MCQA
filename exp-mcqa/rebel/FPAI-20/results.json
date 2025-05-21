@@ -8,14 +8,14 @@
                     "node_score": 0.9415066480636597,
                     "verified_edges": [
                         {
-                            "head": "Elon Musk",
-                            "type": "employer",
-                            "tail": "SpaceX"
-                        },
-                        {
                             "head": "Tesla",
                             "type": "product or material produced",
                             "tail": "electric vehicles"
+                        },
+                        {
+                            "head": "Elon Musk",
+                            "type": "employer",
+                            "tail": "SpaceX"
                         }
                     ]
                 },
@@ -25,6 +25,11 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Tesla",
+                            "type": "product or material produced",
+                            "tail": "electric vehicles"
+                        },
+                        {
                             "head": "SpaceX",
                             "type": "founded by",
                             "tail": "Elon Musk"
@@ -33,11 +38,6 @@
                             "head": "Elon Musk",
                             "type": "employer",
                             "tail": "SpaceX"
-                        },
-                        {
-                            "head": "Tesla",
-                            "type": "product or material produced",
-                            "tail": "electric vehicles"
                         }
                     ]
                 },
@@ -47,14 +47,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Elon Musk",
-                            "type": "employer",
-                            "tail": "SpaceX"
-                        },
-                        {
                             "head": "Tesla",
                             "type": "product or material produced",
                             "tail": "electric vehicles"
+                        },
+                        {
+                            "head": "Elon Musk",
+                            "type": "employer",
+                            "tail": "SpaceX"
                         }
                     ]
                 },
@@ -373,20 +373,9 @@
                 },
                 "1": {
                     "choice": "Angela Merkel",
-                    "edge_score": 0.5,
+                    "edge_score": 0.0,
                     "node_score": 0.944776733716329,
-                    "verified_edges": [
-                        {
-                            "head": "German Chancellor",
-                            "type": "officeholder",
-                            "tail": "Angela Merkel"
-                        },
-                        {
-                            "head": "Angela Merkel",
-                            "type": "position held",
-                            "tail": "German Chancellor"
-                        }
-                    ]
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Boris Johnson",
@@ -400,14 +389,14 @@
                     "node_score": 0.9624739686648051,
                     "verified_edges": []
                 },
-                "answer": 1,
+                "answer": -1,
                 "probs": [
-                    0.0,
-                    1.0,
-                    0.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
-                "correct": true
+                "correct": false
             },
             "cf-8": {
                 "0": {
@@ -481,7 +470,7 @@
                 "2": {
                     "choice": "Rafael Nadal",
                     "edge_score": 0.16666666666666666,
-                    "node_score": 0.9684928258260092,
+                    "node_score": 0.9684928357601166,
                     "verified_edges": [
                         {
                             "head": "Rafael Nadal",
@@ -507,9 +496,9 @@
             }
         },
         "stats": {
-            "correct": 7,
+            "correct": 6,
             "fail": 0,
-            "unselectable": 3,
+            "unselectable": 4,
             "total": 10
         }
     },
@@ -807,14 +796,14 @@
                     "node_score": 0.9990824262301127,
                     "verified_edges": [
                         {
-                            "head": "theory of relativity",
-                            "type": "discoverer or inventor",
-                            "tail": "Albert Einstein"
-                        },
-                        {
                             "head": "Albert Einstein",
                             "type": "notable work",
                             "tail": "theory of relativity"
+                        },
+                        {
+                            "head": "theory of relativity",
+                            "type": "discoverer or inventor",
+                            "tail": "Albert Einstein"
                         }
                     ]
                 },
@@ -949,6 +938,11 @@
                             "tail": "Sun Tzu"
                         },
                         {
+                            "head": "Sun Tzu",
+                            "type": "field of work",
+                            "tail": "military strategy"
+                        },
+                        {
                             "head": "The Art of War",
                             "type": "main subject",
                             "tail": "military strategy"
@@ -957,11 +951,6 @@
                             "head": "Sun Tzu",
                             "type": "notable work",
                             "tail": "The Art of War"
-                        },
-                        {
-                            "head": "Sun Tzu",
-                            "type": "field of work",
-                            "tail": "military strategy"
                         }
                     ]
                 },
