@@ -1,8 +1,13 @@
 #!/bin/bash
 
-log_file="exp-mcqa.log"
+log_file="exp-mcqa/exp-mcqa.log"
 if [ -f "$log_file" ]; then
     rm "$log_file"
+fi
+
+api_log_file="wiki_api.log"
+if [ -f "$api_log_file" ]; then
+    rm "$api_log_file"
 fi
 
 for MODEL in rebel unirel
@@ -17,7 +22,6 @@ do
             else
                 EL_DESC="without --el"
             fi
-            echo "Running MCQA on $ds_path (model: $MODEL) $EL_DESC"
             echo "$(date '+%Y-%m-%d %H:%M:%S') [START] $ds_path ($MODEL) $EL_DESC" >> $log_file
             python mcqa.py $ds_path --model=$MODEL $EL_FLAG
             if [ $? -ne 0 ]; then
