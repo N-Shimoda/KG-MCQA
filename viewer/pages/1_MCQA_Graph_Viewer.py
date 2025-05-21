@@ -46,17 +46,6 @@ class MCQAGraphViewer:
         -----
         This method configures the Streamlit page layout and adds a title to the app.
         """
-        st.set_page_config(layout="wide")
-        st.markdown(
-            """
-            <style>
-                .block-container {
-                    padding-bottom: 1rem;
-                }
-            </style>
-            """,
-            unsafe_allow_html=True,
-        )
         st.title("MCQA Graph Viewer")
 
     def get_models_and_datasets(self) -> None:
