@@ -25,6 +25,5 @@ class MainPage:
 
 
 if __name__ == "__main__":
-
     main = MainPage()
     main.display()

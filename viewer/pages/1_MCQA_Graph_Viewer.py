@@ -9,7 +9,7 @@ from kgraph import KB
 
 
 class MCQAGraphViewer:
-    def __init__(self, base_dir: str = "exp-mcqa", dataset_dir: str = "dataset", result_dir: str = "exp-mcqa") -> None:
+    def __init__(self, base_dir: str = "exp-mcqa", dataset_dir: str = "dataset", result_dir: str = "exp-mcqa"):
         """
         Initializes the MCQAGraphViewer with default paths and variables.
         """
@@ -42,7 +42,7 @@ class MCQAGraphViewer:
             for model in self.models
         }
 
-    def run(self) -> None:
+    def run(self):
         """
         Executes the main workflow of the MCQAGraphViewer.
 
@@ -52,10 +52,14 @@ class MCQAGraphViewer:
         """
         st.set_page_config(layout="wide")
         st.title("MCQA Graph Viewer")
+
+        # create widgets
         self.create_selectboxes()
+        self.display_accuracy()
+        self.display_question()
         self.display_graphs()
 
-    def create_selectboxes(self) -> None:
+    def create_selectboxes(self):
         """
         Displays dropdowns for selecting RE model, dataset, category, problem ID, and option in the UI.
         """
@@ -110,7 +114,7 @@ class MCQAGraphViewer:
             # get correct option id
             correct_opt_id = self.dataset[self.selected_cat]["questions"][self.selected_q_id]["answer"]
             # get result (correct or not)
-            corrected: bool = self.results[self.selected_cat]["questions"][self.selected_q_id]["correct"]
+            self.corrected: bool = self.results[self.selected_cat]["questions"][self.selected_q_id]["correct"]
             chosen_opt_id: int = self.results[self.selected_cat]["questions"][self.selected_q_id]["answer"]
 
         # options
@@ -136,6 +140,10 @@ class MCQAGraphViewer:
             )
             self.file_suffix = f"{opt_labels[self.selected_option]}.dot"
 
+    def display_accuracy(self):
+        """
+        Displays the overall accuracy of the selected model and dataset.
+        """
         with st.expander("Overall Accuracy", icon="📊"):
             st.image(
                 self.result_dir / self.selected_model / self.selected_dataset / "accuracy.svg",
@@ -143,11 +151,14 @@ class MCQAGraphViewer:
                 caption="Accuracy for each category",
             )
 
-        # display question sentence
+    def display_question(self):
+        """
+        Displays the question sentence for the selected problem ID with result status.
+        """
         sentence = self.dataset[self.selected_cat]["questions"][self.selected_q_id]["sentence"]
-        st.info(sentence.replace("{}", "____"), icon="✅" if corrected else "❌")
+        st.info(sentence.replace("{}", "____"), icon="✅" if self.corrected else "❌")
 
-    def display_graphs(self) -> None:
+    def display_graphs(self):
         """
         Renders and displays the Propositional Graph (PG) and Knowledge Graph (KG) in the UI.
 
@@ -228,7 +239,7 @@ class MCQAGraphViewer:
         net.save_graph(str(html_path))
         return html_path
 
-    def _cleanup_temp_files(self) -> None:
+    def _cleanup_temp_files(self):
         """
         Function to clean up temporary HTML files.
 
@@ -247,5 +258,4 @@ class MCQAGraphViewer:
 
 if __name__ == "__main__":
     viewer = MCQAGraphViewer()
-    viewer.run()
     viewer.run()
