@@ -23,7 +23,14 @@ class MCQAGraphViewer:
         self.html_output_dir.mkdir(exist_ok=True)
         atexit.register(self._cleanup_temp_files)
 
-        # intermediate data (dictionary)
+        # get models and datasets
+        self.models = sorted([d.name for d in self.base_dir.iterdir() if d.is_dir() and d.name != "temp_html"])
+        self.model_to_datasets = {
+            model: sorted([ds.name for ds in (self.base_dir / model).iterdir() if ds.is_dir()])
+            for model in self.models
+        }
+
+        # dataset and results (from json)
         self.dataset: dict[str, dict] = None
         self.results: dict[str, dict] = None
 
@@ -34,13 +41,6 @@ class MCQAGraphViewer:
         self.selected_q_id: str = None
         self.selected_option: str = None
         self.file_suffix: str = None
-
-        # get models and datasets
-        self.models = sorted([d.name for d in self.base_dir.iterdir() if d.is_dir() and d.name != "temp_html"])
-        self.model_to_datasets = {
-            model: sorted([ds.name for ds in (self.base_dir / model).iterdir() if ds.is_dir()])
-            for model in self.models
-        }
 
     def run(self):
         """
@@ -64,7 +64,7 @@ class MCQAGraphViewer:
         Displays dropdowns for selecting RE model, dataset, category, problem ID, and option in the UI.
         """
         # define columns
-        col_model, col_dataset, col_cat, col_qid, col_opt = st.columns([1, 1, 1, 1, 1])
+        col_model, col_dataset, col_cat, col_qid, col_opt = st.columns(5)
 
         # model
         with col_model:
@@ -145,11 +145,32 @@ class MCQAGraphViewer:
         Displays the overall accuracy of the selected model and dataset.
         """
         with st.expander("Overall Accuracy", icon="📊"):
-            st.image(
-                self.result_dir / self.selected_model / self.selected_dataset / "accuracy.svg",
-                width=720,
-                caption="Accuracy for each category",
-            )
+            col1, col2 = st.columns([2.2, 1], vertical_alignment="center")
+            with col1:
+                st.image(
+                    self.result_dir / self.selected_model / self.selected_dataset / "accuracy.svg",
+                    use_container_width=True,
+                    caption="Accuracy for each category",
+                )
+            with col2:
+                correct, incorrect, unselectable = 0, 0, 0
+                for cat in self.results:
+                    stats = self.results[cat]["stats"]
+                    correct += stats["correct"]
+                    incorrect += stats["fail"]
+                    unselectable += stats["unselectable"]
+                total = correct + incorrect + unselectable
+                st.table(
+                    {
+                        "Type": [":blue[**Correct**]", "Incorrect", "Unselectable"],
+                        "Count": [f":blue[**{correct}**]", incorrect, unselectable],
+                        "Percentage": [
+                            f"**{correct / total :.2%}**",
+                            f"{incorrect / total :.2%}",
+                            f"{unselectable / total :.2%}",
+                        ],
+                    }
+                )
 
     def display_question(self):
         """
