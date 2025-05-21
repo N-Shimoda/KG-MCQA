@@ -15,7 +15,7 @@ do
             if [ "$EL_FLAG" = "--el" ]; then
                 EL_DESC="with --el"
             else
-                EL_DESC="without --el"
+                EL_DESC=""
             fi
             echo "Running MCQA on $ds_path (model: $MODEL) $EL_DESC"
             echo "$(date '+%Y-%m-%d %H:%M:%S') [START] $ds_path ($MODEL) $EL_DESC" >> $log_file
