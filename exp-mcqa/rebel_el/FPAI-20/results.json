@@ -8,14 +8,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Tesla",
-                            "type": "product or material produced",
-                            "tail": "Electric vehicle"
-                        },
-                        {
                             "head": "Elon Musk",
                             "type": "employer",
                             "tail": "SpaceX"
+                        },
+                        {
+                            "head": "Tesla",
+                            "type": "product or material produced",
+                            "tail": "Electric vehicle"
                         }
                     ]
                 },
@@ -24,6 +24,21 @@
                     "edge_score": 0.875,
                     "node_score": 1.0,
                     "verified_edges": [
+                        {
+                            "head": "Tesla",
+                            "type": "owned by",
+                            "tail": "Elon Musk"
+                        },
+                        {
+                            "head": "Elon Musk",
+                            "type": "employer",
+                            "tail": "SpaceX"
+                        },
+                        {
+                            "head": "Elon Musk",
+                            "type": "owner of",
+                            "tail": "Tesla"
+                        },
                         {
                             "head": "SpaceX",
                             "type": "owned by",
@@ -35,29 +50,14 @@
                             "tail": "Elon Musk"
                         },
                         {
-                            "head": "Tesla",
-                            "type": "product or material produced",
-                            "tail": "Electric vehicle"
-                        },
-                        {
                             "head": "Elon Musk",
                             "type": "owner of",
-                            "tail": "SpaceX"
-                        },
-                        {
-                            "head": "Elon Musk",
-                            "type": "owner of",
-                            "tail": "Tesla"
-                        },
-                        {
-                            "head": "Elon Musk",
-                            "type": "employer",
                             "tail": "SpaceX"
                         },
                         {
                             "head": "Tesla",
-                            "type": "owned by",
-                            "tail": "Elon Musk"
+                            "type": "product or material produced",
+                            "tail": "Electric vehicle"
                         }
                     ]
                 },
@@ -67,14 +67,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Tesla",
-                            "type": "product or material produced",
-                            "tail": "Electric vehicle"
-                        },
-                        {
                             "head": "Elon Musk",
                             "type": "employer",
                             "tail": "SpaceX"
+                        },
+                        {
+                            "head": "Tesla",
+                            "type": "product or material produced",
+                            "tail": "Electric vehicle"
                         }
                     ]
                 },
@@ -84,14 +84,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Tesla",
-                            "type": "product or material produced",
-                            "tail": "Electric vehicle"
-                        },
-                        {
                             "head": "Elon Musk",
                             "type": "employer",
                             "tail": "SpaceX"
+                        },
+                        {
+                            "head": "Tesla",
+                            "type": "product or material produced",
+                            "tail": "Electric vehicle"
                         }
                     ]
                 },
@@ -232,17 +232,17 @@
                         {
                             "head": "Barack Obama",
                             "type": "position held",
-                            "tail": "Vice president"
-                        },
-                        {
-                            "head": "Barack Obama",
-                            "type": "position held",
                             "tail": "President of the United States"
                         },
                         {
                             "head": "Joe Biden",
                             "type": "position held",
                             "tail": "President of the United States"
+                        },
+                        {
+                            "head": "Barack Obama",
+                            "type": "position held",
+                            "tail": "Vice president"
                         }
                     ]
                 },
@@ -252,11 +252,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "President of the United States",
-                            "type": "officeholder",
-                            "tail": "Donald Trump"
-                        },
-                        {
                             "head": "Donald Trump",
                             "type": "position held",
                             "tail": "President of the United States"
@@ -265,6 +260,11 @@
                             "head": "Barack Obama",
                             "type": "position held",
                             "tail": "President of the United States"
+                        },
+                        {
+                            "head": "President of the United States",
+                            "type": "officeholder",
+                            "tail": "Donald Trump"
                         }
                     ]
                 },
@@ -309,13 +309,13 @@
                     "verified_edges": [
                         {
                             "head": "Alibaba Group",
-                            "type": "founded by",
-                            "tail": "Jack Ma"
+                            "type": "industry",
+                            "tail": "E-commerce"
                         },
                         {
                             "head": "Alibaba Group",
-                            "type": "industry",
-                            "tail": "E-commerce"
+                            "type": "founded by",
+                            "tail": "Jack Ma"
                         }
                     ]
                 },
@@ -417,14 +417,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Angela Merkel",
-                            "type": "position held",
-                            "tail": "Chancellor of Germany"
-                        },
-                        {
                             "head": "Chancellor of Germany",
                             "type": "officeholder",
                             "tail": "Angela Merkel"
+                        },
+                        {
+                            "head": "Angela Merkel",
+                            "type": "position held",
+                            "tail": "Chancellor of Germany"
                         }
                     ]
                 },
@@ -582,14 +582,14 @@
                     "node_score": 0.8951888680458069,
                     "verified_edges": [
                         {
-                            "head": "I Have a Dream",
-                            "type": "author",
-                            "tail": "Martin Luther King Jr."
-                        },
-                        {
                             "head": "Martin Luther King Jr.",
                             "type": "movement",
                             "tail": "Civil rights movement"
+                        },
+                        {
+                            "head": "I Have a Dream",
+                            "type": "author",
+                            "tail": "Martin Luther King Jr."
                         }
                     ]
                 },
@@ -655,14 +655,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Socrates",
-                            "type": "student",
-                            "tail": "Plato"
-                        },
-                        {
                             "head": "Plato",
                             "type": "student of",
                             "tail": "Socrates"
+                        },
+                        {
+                            "head": "Socrates",
+                            "type": "student",
+                            "tail": "Plato"
                         }
                     ]
                 },
@@ -759,7 +759,7 @@
                 "2": {
                     "choice": "Subhas Chandra Bose",
                     "edge_score": 0.2,
-                    "node_score": 0.8703373074531555,
+                    "node_score": 0.8703373372554779,
                     "verified_edges": [
                         {
                             "head": "Struggle for independence",
@@ -865,14 +865,14 @@
                     "node_score": 0.9990824262301127,
                     "verified_edges": [
                         {
-                            "head": "Albert Einstein",
-                            "type": "notable work",
-                            "tail": "Theory of relativity"
-                        },
-                        {
                             "head": "Theory of relativity",
                             "type": "discoverer or inventor",
                             "tail": "Albert Einstein"
+                        },
+                        {
+                            "head": "Albert Einstein",
+                            "type": "notable work",
+                            "tail": "Theory of relativity"
                         }
                     ]
                 },
@@ -1022,9 +1022,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "The Art of War",
-                            "type": "author",
-                            "tail": "Sun Tzu"
+                            "head": "Sun Tzu",
+                            "type": "field of work",
+                            "tail": "Military strategy"
                         },
                         {
                             "head": "Sun Tzu",
@@ -1032,14 +1032,14 @@
                             "tail": "The Art of War"
                         },
                         {
-                            "head": "Sun Tzu",
-                            "type": "field of work",
+                            "head": "The Art of War",
+                            "type": "main subject",
                             "tail": "Military strategy"
                         },
                         {
                             "head": "The Art of War",
-                            "type": "main subject",
-                            "tail": "Military strategy"
+                            "type": "author",
+                            "tail": "Sun Tzu"
                         }
                     ]
                 },

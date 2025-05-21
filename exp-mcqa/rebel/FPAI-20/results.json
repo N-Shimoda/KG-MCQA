@@ -25,6 +25,11 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "SpaceX",
+                            "type": "founded by",
+                            "tail": "Elon Musk"
+                        },
+                        {
                             "head": "Elon Musk",
                             "type": "employer",
                             "tail": "SpaceX"
@@ -33,11 +38,6 @@
                             "head": "Tesla",
                             "type": "product or material produced",
                             "tail": "electric vehicles"
-                        },
-                        {
-                            "head": "SpaceX",
-                            "type": "founded by",
-                            "tail": "Elon Musk"
                         }
                     ]
                 },
@@ -143,14 +143,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Microsoft",
-                            "type": "founded by",
-                            "tail": "Bill Gates"
-                        },
-                        {
                             "head": "Bill Gates",
                             "type": "owner of",
                             "tail": "Microsoft"
+                        },
+                        {
+                            "head": "Microsoft",
+                            "type": "founded by",
+                            "tail": "Bill Gates"
                         }
                     ]
                 },
@@ -373,9 +373,20 @@
                 },
                 "1": {
                     "choice": "Angela Merkel",
-                    "edge_score": 0.0,
+                    "edge_score": 0.5,
                     "node_score": 0.944776733716329,
-                    "verified_edges": []
+                    "verified_edges": [
+                        {
+                            "head": "German Chancellor",
+                            "type": "officeholder",
+                            "tail": "Angela Merkel"
+                        },
+                        {
+                            "head": "Angela Merkel",
+                            "type": "position held",
+                            "tail": "German Chancellor"
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Boris Johnson",
@@ -389,14 +400,14 @@
                     "node_score": 0.9624739686648051,
                     "verified_edges": []
                 },
-                "answer": -1,
+                "answer": 1,
                 "probs": [
-                    0.25,
-                    0.25,
-                    0.25,
-                    0.25
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0
                 ],
-                "correct": false
+                "correct": true
             },
             "cf-8": {
                 "0": {
@@ -441,12 +452,12 @@
                         {
                             "head": "Kei Nishikori",
                             "type": "sport",
-                            "tail": "tennis player"
+                            "tail": "tennis"
                         },
                         {
                             "head": "Kei Nishikori",
                             "type": "sport",
-                            "tail": "tennis"
+                            "tail": "tennis player"
                         }
                     ]
                 },
@@ -470,7 +481,7 @@
                 "2": {
                     "choice": "Rafael Nadal",
                     "edge_score": 0.16666666666666666,
-                    "node_score": 0.9684928357601166,
+                    "node_score": 0.9684928258260092,
                     "verified_edges": [
                         {
                             "head": "Rafael Nadal",
@@ -482,7 +493,7 @@
                 "3": {
                     "choice": "Serena Williams",
                     "edge_score": 0.0,
-                    "node_score": 0.9684928357601166,
+                    "node_score": 0.9684928258260092,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -496,9 +507,9 @@
             }
         },
         "stats": {
-            "correct": 6,
+            "correct": 7,
             "fail": 0,
-            "unselectable": 4,
+            "unselectable": 3,
             "total": 10
         }
     },
@@ -602,14 +613,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Socrates",
-                            "type": "student",
-                            "tail": "Plato"
-                        },
-                        {
                             "head": "Plato",
                             "type": "student of",
                             "tail": "Socrates"
+                        },
+                        {
+                            "head": "Socrates",
+                            "type": "student",
+                            "tail": "Plato"
                         }
                     ]
                 },
@@ -641,14 +652,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "French Revolution",
-                            "type": "participant",
-                            "tail": "Napoleon Bonaparte"
-                        },
-                        {
                             "head": "Napoleon Bonaparte",
                             "type": "participant in",
                             "tail": "French Revolution"
+                        },
+                        {
+                            "head": "French Revolution",
+                            "type": "participant",
+                            "tail": "Napoleon Bonaparte"
                         }
                     ]
                 },
@@ -689,7 +700,7 @@
                 "1": {
                     "choice": "Mahatma Gandhi",
                     "edge_score": 0.0,
-                    "node_score": 0.8203924745321274,
+                    "node_score": 0.820392444729805,
                     "verified_edges": []
                 },
                 "2": {
@@ -884,7 +895,7 @@
                 "0": {
                     "choice": "Bessie Coleman",
                     "edge_score": 0.0,
-                    "node_score": 0.885932132601738,
+                    "node_score": 0.8859321177005768,
                     "verified_edges": []
                 },
                 "1": {
@@ -933,11 +944,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Sun Tzu",
-                            "type": "field of work",
-                            "tail": "military strategy"
-                        },
-                        {
                             "head": "The Art of War",
                             "type": "author",
                             "tail": "Sun Tzu"
@@ -951,6 +957,11 @@
                             "head": "Sun Tzu",
                             "type": "notable work",
                             "tail": "The Art of War"
+                        },
+                        {
+                            "head": "Sun Tzu",
+                            "type": "field of work",
+                            "tail": "military strategy"
                         }
                     ]
                 },

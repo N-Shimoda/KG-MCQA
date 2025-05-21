@@ -594,12 +594,12 @@
                     "node_score": 0.9530150294303894,
                     "verified_edges": [
                         {
-                            "head": "Catherine de'Medici",
+                            "head": "Marie Antoinette",
                             "type": "/people/person/nationality",
                             "tail": "France"
                         },
                         {
-                            "head": "Marie Antoinette",
+                            "head": "Catherine de'Medici",
                             "type": "/people/person/nationality",
                             "tail": "France"
                         }
@@ -731,12 +731,12 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Mustafa Kemal Atat\u00fcrk",
+                            "head": "Erdo\u011fan",
                             "type": "/people/person/nationality",
                             "tail": "Turkey"
                         },
                         {
-                            "head": "Erdo\u011fan",
+                            "head": "Mustafa Kemal Atat\u00fcrk",
                             "type": "/people/person/nationality",
                             "tail": "Turkey"
                         }
@@ -772,12 +772,12 @@
                     "node_score": 0.9368016521135966,
                     "verified_edges": [
                         {
-                            "head": "Turgut \u00d6zal",
+                            "head": "Erdo\u011fan",
                             "type": "/people/person/nationality",
                             "tail": "Turkey"
                         },
                         {
-                            "head": "Erdo\u011fan",
+                            "head": "Turgut \u00d6zal",
                             "type": "/people/person/nationality",
                             "tail": "Turkey"
                         }
@@ -2688,14 +2688,14 @@
                     "node_score": 0.9052799344062805,
                     "verified_edges": [
                         {
-                            "head": "Apple Inc.",
-                            "type": "/business/company/founders",
-                            "tail": "Steve Jobs"
-                        },
-                        {
                             "head": "Steve Jobs",
                             "type": "/business/person/company",
                             "tail": "Apple Inc."
+                        },
+                        {
+                            "head": "Apple Inc.",
+                            "type": "/business/company/founders",
+                            "tail": "Steve Jobs"
                         }
                     ]
                 },
@@ -3189,13 +3189,8 @@
                     "node_score": 0.49870820343494415,
                     "verified_edges": [
                         {
-                            "head": "Amazon. com",
-                            "type": "/business/company/founders",
-                            "tail": "Larry Page"
-                        },
-                        {
                             "head": "Larry Page",
-                            "type": "/business/company_shareholder/major_shareholder_of",
+                            "type": "/business/person/company",
                             "tail": "Amazon. com"
                         },
                         {
@@ -3204,8 +3199,13 @@
                             "tail": "Larry Page"
                         },
                         {
+                            "head": "Amazon. com",
+                            "type": "/business/company/founders",
+                            "tail": "Larry Page"
+                        },
+                        {
                             "head": "Larry Page",
-                            "type": "/business/person/company",
+                            "type": "/business/company_shareholder/major_shareholder_of",
                             "tail": "Amazon. com"
                         }
                     ]
@@ -3217,12 +3217,12 @@
                     "verified_edges": [
                         {
                             "head": "Warren Buffett",
-                            "type": "/business/person/company",
+                            "type": "/business/company_shareholder/major_shareholder_of",
                             "tail": "Amazon. com"
                         },
                         {
                             "head": "Warren Buffett",
-                            "type": "/business/company_shareholder/major_shareholder_of",
+                            "type": "/business/person/company",
                             "tail": "Amazon. com"
                         },
                         {

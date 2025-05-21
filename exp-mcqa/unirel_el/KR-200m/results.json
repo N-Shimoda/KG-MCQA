@@ -1472,14 +1472,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Brazil",
-                            "type": "/location/location/contains",
-                            "tail": "Bras\u00edlia"
-                        },
-                        {
                             "head": "South America",
                             "type": "/location/location/contains",
                             "tail": "Brazil"
+                        },
+                        {
+                            "head": "Brazil",
+                            "type": "/location/location/contains",
+                            "tail": "Bras\u00edlia"
                         }
                     ]
                 },
@@ -1843,12 +1843,12 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Europe",
+                            "head": "Asia",
                             "type": "/location/location/contains",
                             "tail": "Greece"
                         },
                         {
-                            "head": "Asia",
+                            "head": "Europe",
                             "type": "/location/location/contains",
                             "tail": "Greece"
                         }
@@ -2266,24 +2266,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Tokyo",
-                            "type": "/location/administrative_division/country",
-                            "tail": "Japan"
-                        },
-                        {
                             "head": "Japan",
                             "type": "/location/location/contains",
                             "tail": "Osaka Prefecture"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/country/administrative_divisions",
-                            "tail": "Tokyo"
                         },
                         {
                             "head": "Japan",
@@ -2294,6 +2279,21 @@
                             "head": "Japan",
                             "type": "/location/country/capital",
                             "tail": "Tokyo"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/country/administrative_divisions",
+                            "tail": "Tokyo"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/location/contains",
+                            "tail": "Tokyo"
+                        },
+                        {
+                            "head": "Tokyo",
+                            "type": "/location/administrative_division/country",
+                            "tail": "Japan"
                         }
                     ]
                 },
@@ -2303,9 +2303,19 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Tokyo",
-                            "type": "/location/administrative_division/country",
-                            "tail": "Japan"
+                            "head": "Japan",
+                            "type": "/location/location/contains",
+                            "tail": "Kyoto Prefecture"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/location/contains",
+                            "tail": "Kyoto"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/country/capital",
+                            "tail": "Tokyo"
                         },
                         {
                             "head": "Japan",
@@ -2318,19 +2328,9 @@
                             "tail": "Tokyo"
                         },
                         {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Kyoto"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Kyoto Prefecture"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/country/capital",
-                            "tail": "Tokyo"
+                            "head": "Tokyo",
+                            "type": "/location/administrative_division/country",
+                            "tail": "Japan"
                         }
                     ]
                 },
@@ -2340,9 +2340,19 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Japan",
+                            "type": "/location/location/contains",
+                            "tail": "Kyoto"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/country/capital",
+                            "tail": "Tokyo"
+                        },
+                        {
                             "head": "Tokyo",
-                            "type": "/location/administrative_division/country",
-                            "tail": "Japan"
+                            "type": "/location/location/contains",
+                            "tail": "Kyoto"
                         },
                         {
                             "head": "Japan",
@@ -2355,19 +2365,9 @@
                             "tail": "Tokyo"
                         },
                         {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Kyoto"
-                        },
-                        {
                             "head": "Tokyo",
-                            "type": "/location/location/contains",
-                            "tail": "Kyoto"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/country/capital",
-                            "tail": "Tokyo"
+                            "type": "/location/administrative_division/country",
+                            "tail": "Japan"
                         }
                     ]
                 },
@@ -2377,9 +2377,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Tokyo",
-                            "type": "/location/administrative_division/country",
-                            "tail": "Japan"
+                            "head": "Japan",
+                            "type": "/location/location/contains",
+                            "tail": "Kyoto"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/country/capital",
+                            "tail": "Tokyo"
                         },
                         {
                             "head": "Japan",
@@ -2392,14 +2397,9 @@
                             "tail": "Tokyo"
                         },
                         {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Kyoto"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/country/capital",
-                            "tail": "Tokyo"
+                            "head": "Tokyo",
+                            "type": "/location/administrative_division/country",
+                            "tail": "Japan"
                         }
                     ]
                 },
@@ -2618,12 +2618,12 @@
                     "verified_edges": [
                         {
                             "head": "Germany",
-                            "type": "/location/country/administrative_divisions",
+                            "type": "/location/country/capital",
                             "tail": "Berlin"
                         },
                         {
                             "head": "Germany",
-                            "type": "/location/country/capital",
+                            "type": "/location/country/administrative_divisions",
                             "tail": "Berlin"
                         }
                     ]
@@ -2635,12 +2635,12 @@
                     "verified_edges": [
                         {
                             "head": "Germany",
-                            "type": "/location/country/administrative_divisions",
+                            "type": "/location/country/capital",
                             "tail": "Berlin"
                         },
                         {
                             "head": "Germany",
-                            "type": "/location/country/capital",
+                            "type": "/location/country/administrative_divisions",
                             "tail": "Berlin"
                         }
                     ]
@@ -2652,12 +2652,12 @@
                     "verified_edges": [
                         {
                             "head": "Germany",
-                            "type": "/location/country/administrative_divisions",
+                            "type": "/location/country/capital",
                             "tail": "Berlin"
                         },
                         {
                             "head": "Germany",
-                            "type": "/location/country/capital",
+                            "type": "/location/country/administrative_divisions",
                             "tail": "Berlin"
                         }
                     ]
@@ -2669,12 +2669,12 @@
                     "verified_edges": [
                         {
                             "head": "Germany",
-                            "type": "/location/country/administrative_divisions",
+                            "type": "/location/country/capital",
                             "tail": "Berlin"
                         },
                         {
                             "head": "Germany",
-                            "type": "/location/country/capital",
+                            "type": "/location/country/administrative_divisions",
                             "tail": "Berlin"
                         }
                     ]
