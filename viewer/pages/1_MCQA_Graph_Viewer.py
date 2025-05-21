@@ -154,12 +154,12 @@ class MCQAGraphViewer:
                 total = correct + incorrect + unselectable
                 st.table(
                     {
-                        "Type": [":blue[**Correct**]", "Incorrect", "Unselectable"],
+                        "Label": [":blue[**Correct**]", "Incorrect", "Unselectable"],
                         "Count": [f":blue[**{correct}**]", incorrect, unselectable],
-                        "Percentage": [
-                            f"**{correct / total :.2%}**",
-                            f"{incorrect / total :.2%}",
-                            f"{unselectable / total :.2%}",
+                        "Accuracy": [
+                            f":blue[**{correct / total :.1%}**]",
+                            f"{incorrect / total :.1%}",
+                            f"{unselectable / total :.1%}",
                         ],
                     }
                 )
@@ -193,12 +193,12 @@ class MCQAGraphViewer:
         # display HTML files
         col1, col2 = st.columns([1.3, 3])
         with col1:
-            st.subheader("Propositional Graph (PG)")
+            st.subheader("Propositional Graph")
             with open(pg_html, "r", encoding="utf-8") as f:
                 html_content = f.read()
             st.components.v1.html(html_content, height=730, scrolling=True)
         with col2:
-            st.subheader("Knowledge Graph (KG)")
+            st.subheader("Knowledge Graph")
             with open(kg_html, "r", encoding="utf-8") as f:
                 html_content = f.read()
             st.components.v1.html(html_content, height=730, scrolling=True)
