@@ -23,7 +23,6 @@ def plot_bar_chart(categories: list[str], scores: dict[str, list[int]], title: s
     ValueError
         If output_file does not end with ".svg".
     """
-
     if not output_file.endswith(".svg"):
         raise ValueError("Output file should be in SVG format for article quality.")
 
@@ -31,18 +30,6 @@ def plot_bar_chart(categories: list[str], scores: dict[str, list[int]], title: s
     correct = [scores[cat][0] / scores[cat][3] * 100 for cat in categories]
     incorrect = [scores[cat][1] / scores[cat][3] * 100 for cat in categories]
     unselectable = [scores[cat][2] / scores[cat][3] * 100 for cat in categories]
-
-    # Bar colors and hatch styles
-    colors = {
-        "Correct": "royalblue",
-        "Incorrect": "lightgray",
-        "Unselectable": "lightblue",
-    }
-    hatch_styles = {
-        "Correct": "//",
-        "Incorrect": "",
-        "Unselectable": "",
-    }
 
     # Create the bar chart
     n_categories = len(categories)
@@ -56,8 +43,8 @@ def plot_bar_chart(categories: list[str], scores: dict[str, list[int]], title: s
         correct,
         bar_width,
         label="Correct",
-        color=colors["Correct"],
-        hatch=hatch_styles["Correct"],
+        color="royalblue",
+        # hatch="//",
         edgecolor="black",
     )
     bars_incorrect = ax.bar(
@@ -66,8 +53,7 @@ def plot_bar_chart(categories: list[str], scores: dict[str, list[int]], title: s
         bar_width,
         bottom=correct,
         label="Incorrect",
-        color=colors["Incorrect"],
-        hatch=hatch_styles["Incorrect"],
+        color="lightgray",
         edgecolor="black",
     )
     bars_unselectable = ax.bar(
@@ -76,8 +62,7 @@ def plot_bar_chart(categories: list[str], scores: dict[str, list[int]], title: s
         bar_width,
         bottom=[c + i for c, i in zip(correct, incorrect)],
         label="Unselectable",
-        color=colors["Unselectable"],
-        hatch=hatch_styles["Unselectable"],
+        color="lightblue",
         edgecolor="black",
     )
 
@@ -92,7 +77,7 @@ def plot_bar_chart(categories: list[str], scores: dict[str, list[int]], title: s
                     f"{height:.1f}",
                     ha="center",
                     va="center",
-                    fontsize=8,
+                    fontsize=12,
                 )
 
     ax.set_xticks(index)
