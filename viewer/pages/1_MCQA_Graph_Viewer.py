@@ -61,75 +61,85 @@ class MCQAGraphViewer:
 
     def create_selectboxes(self):
         """
-        Displays dropdowns for selecting RE model, dataset, category, problem ID, and option in the sidebar UI.
+        Displays dropdowns for selecting RE model, dataset, category, problem ID, and option in columns.
         """
-        # model
+        col_model, col_dataset, col_cat, col_qid, col_opt = st.columns(5)
+
+        # --- model ---
         model_mapping = {
             "rebel": "REBEL",
             "unirel": "UniRel",
             "rebel_el": "REBEL (EL)",
             "unirel_el": "UniRel (EL)",
         }
-        self.selected_model = st.sidebar.selectbox(
-            "Relation Extraction Model",
-            self.models,
-            format_func=lambda x: model_mapping[x] if x in model_mapping else x,
-        )
+        with col_model:
+            self.selected_model = st.selectbox(
+                "Relation Extraction Model",
+                self.models,
+                format_func=lambda x: model_mapping[x] if x in model_mapping else x,
+                key="model",
+            )
 
-        # dataset
-        self.selected_dataset = st.sidebar.selectbox("Dataset", self.model_to_datasets[self.selected_model])
+        # --- dataset ---
+        with col_dataset:
+            self.selected_dataset = st.selectbox("Dataset", self.model_to_datasets[self.selected_model], key="dataset")
+
         # load dataset
         ds_file = self.dataset_dir / f"{self.selected_dataset}.json"
         with open(ds_file, "r", encoding="utf-8") as f:
             self.dataset = json.load(f)
+
         # load results
         res_file = self.result_dir / self.selected_model / self.selected_dataset / "results.json"
         with open(res_file, "r", encoding="utf-8") as f:
             self.results = json.load(f)
 
-        # category
+        # --- category ---
         root_path = self.base_dir / self.selected_model / self.selected_dataset
         categories = sorted([d.name for d in (root_path / "PGs").iterdir() if d.is_dir()])
-        self.selected_cat = st.sidebar.selectbox("Category", categories, key="category")
+        with col_cat:
+            self.selected_cat = st.selectbox("Category", categories, key="category")
 
-        # problem id
+        # --- question id ---
         cat_dir = root_path / "PGs" / self.selected_cat
         q_ids = sorted([d.name for d in cat_dir.iterdir() if d.is_dir()], key=lambda x: int(x.split("-")[1]))
-        self.selected_q_id = st.sidebar.selectbox(
-            "Problem ID",
-            q_ids,
-            format_func=lambda q_id: (
-                f"{q_id} *" if self.results[self.selected_cat]["questions"][q_id]["correct"] else q_id
-            ),
-            key="problem",
-            help="\* marks correctly answered problems.",  # noqa: W605
-        )
+        with col_qid:
+            self.selected_q_id = st.selectbox(
+                "Question ID",
+                q_ids,
+                format_func=lambda q_id: (
+                    f"{q_id} *" if self.results[self.selected_cat]["questions"][q_id]["correct"] else q_id
+                ),
+                key="problem",
+                help="\* marks correctly answered problems.",  # noqa: W605
+            )
         # get correct option id
         correct_opt_id = self.dataset[self.selected_cat]["questions"][self.selected_q_id]["answer"]
         # get result (correct or not)
         self.corrected: bool = self.results[self.selected_cat]["questions"][self.selected_q_id]["correct"]
         chosen_opt_id: int = self.results[self.selected_cat]["questions"][self.selected_q_id]["answer"]
 
-        # options
+        # --- options ---
         problem_pg_dir = root_path / "PGs" / self.selected_cat / self.selected_q_id
         opt_files = sorted([f.name for f in problem_pg_dir.glob("*.dot")])
         opt_labels = [f.split("_", 1)[1].replace(".dot", "") for f in opt_files]
-        self.selected_option = st.sidebar.selectbox(
-            "Option",
-            [i for i in range(len(opt_labels))],
-            format_func=lambda x: (
-                f"{opt_labels[x]} [*]"
-                if x == correct_opt_id == chosen_opt_id
-                else (
-                    f"{opt_labels[x]} *"
-                    if x == correct_opt_id
-                    else f"{opt_labels[x]} []" if x == chosen_opt_id else opt_labels[x]
-                )
-            ),
-            index=correct_opt_id,
-            key="option",
-            help="\* and [] mark the correct and chosen options, respectively.",  # noqa: W605"
-        )
+        with col_opt:
+            self.selected_option = st.selectbox(
+                "Option",
+                [i for i in range(len(opt_labels))],
+                format_func=lambda x: (
+                    f"{opt_labels[x]} [*]"
+                    if x == correct_opt_id == chosen_opt_id
+                    else (
+                        f"{opt_labels[x]} *"
+                        if x == correct_opt_id
+                        else f"{opt_labels[x]} []" if x == chosen_opt_id else opt_labels[x]
+                    )
+                ),
+                index=correct_opt_id,
+                key="option",
+                help="\* and [] mark the correct and chosen options, respectively.",  # noqa: W605"
+            )
         self.file_suffix = f"{opt_labels[self.selected_option]}.dot"
 
     def display_accuracy(self):
@@ -142,7 +152,6 @@ class MCQAGraphViewer:
                 st.image(
                     self.result_dir / self.selected_model / self.selected_dataset / "accuracy.svg",
                     use_container_width=True,
-                    caption="Accuracy for each category",
                 )
             with col2:
                 correct, incorrect, unselectable = 0, 0, 0
