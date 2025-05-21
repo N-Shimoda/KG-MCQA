@@ -1,7 +1,6 @@
 import atexit
 import json
 from pathlib import Path
-from typing import Dict, List
 
 import streamlit as st
 from pyvis.network import Network
@@ -25,12 +24,10 @@ class MCQAGraphViewer:
         atexit.register(self._cleanup_temp_files)
 
         # intermediate data (dictionary)
-        self.dataset: Dict[str, Dict] = None
-        self.results: Dict[str, Dict] = None
+        self.dataset: dict[str, dict] = None
+        self.results: dict[str, dict] = None
 
         # selected options
-        self.models: List[str] = []
-        self.model_to_datasets: Dict[str, List[str]] = {}
         self.selected_model: str = None
         self.selected_dataset: str = None
         self.selected_cat: str = None
@@ -38,118 +35,25 @@ class MCQAGraphViewer:
         self.selected_option: str = None
         self.file_suffix: str = None
 
-    def setup_ui(self) -> None:
-        """
-        Sets up the Streamlit UI layout and title.
-
-        Notes
-        -----
-        This method configures the Streamlit page layout and adds a title to the app.
-        """
-        st.title("MCQA Graph Viewer")
-
-    def get_models_and_datasets(self) -> None:
-        """
-        Retrieves available models and their corresponding datasets from the base directory.
-
-        Notes
-        -----
-        This method populates the `self.models` and `self.model_to_datasets` attributes
-        based on the directory structure under `self.base_dir`.
-        """
+        # get models and datasets
         self.models = sorted([d.name for d in self.base_dir.iterdir() if d.is_dir() and d.name != "temp_html"])
         self.model_to_datasets = {
             model: sorted([ds.name for ds in (self.base_dir / model).iterdir() if ds.is_dir()])
             for model in self.models
         }
 
-    def get_categories(self, base_path: Path) -> List[str]:
+    def run(self) -> None:
         """
-        Retrieves the list of categories from the given base path.
+        Executes the main workflow of the MCQAGraphViewer.
 
-        Parameters
-        ----------
-        base_path : Path
-            The base path to search for categories.
-
-        Returns
-        -------
-        List[str]
-            A sorted list of category names.
+        Notes
+        -----
+        This method orchestrates the UI setup, user input handling, and graph rendering.
         """
-        return sorted([d.name for d in (base_path / "PGs").iterdir() if d.is_dir()])
-
-    def get_q_ids(self, cat_dir: Path) -> List[str]:
-        """
-        Retrieves the list of problem IDs from the given category directory.
-
-        Parameters
-        ----------
-        cat_dir : Path
-            The directory containing problem IDs.
-
-        Returns
-        -------
-        List[str]
-            A sorted list of problem IDs.
-        """
-        return sorted([d.name for d in cat_dir.iterdir() if d.is_dir()], key=lambda x: int(x.split("-")[1]))
-
-    def get_opt_files(self, problem_dir: Path) -> List[str]:
-        """
-        Retrieves the list of option files from the given problem directory.
-
-        Parameters
-        ----------
-        problem_dir : Path
-            The directory containing option files.
-
-        Returns
-        -------
-        List[str]
-            A sorted list of option file names.
-        """
-        return sorted([f.name for f in problem_dir.glob("*.dot")])
-
-    def render_dot_to_html(self, dot_path: Path, graph_type: str) -> Path:
-        """
-        Converts a DOT file to an HTML file using PyVis.
-
-        Parameters
-        ----------
-        dot_path : Path
-            The path to the DOT file.
-        graph_type : str
-            The type of graph (e.g., "pg" or "kg").
-
-        Returns
-        -------
-        Path
-            The path to the generated HTML file.
-        """
-        net = Network(height="720px", width="100%", notebook=False, directed=True)
-        kb = KB.from_dot_file(str(dot_path))
-        for e in kb.get_nodes():
-            if "color" in kb.nodes[e] and kb.nodes[e]["wiki_title"] is not None:
-                net.add_node(e, size=10, color=kb.nodes[e]["color"], title=kb.nodes[e]["wiki_title"])
-            elif "color" in kb.nodes[e]:
-                net.add_node(e, size=10, color=kb.nodes[e]["color"])
-            else:
-                net.add_node(e, size=10)
-        for r in kb.relations:
-            if "verified" in r and r["verified"]:
-                net.add_edge(r["head"], r["tail"], label=r["type"], color="orange")
-            else:
-                net.add_edge(r["head"], r["tail"], label=r["type"], color="#97c2fc")
-
-        # setting
-        net.repulsion(node_distance=100, central_gravity=0.2, spring_length=120, spring_strength=0.05)
-        net.set_edge_smooth("dynamic")
-
-        # save to html
-        html_path = self.html_output_dir / f"{graph_type}_{dot_path.stem}.html"
-        net.save_graph(str(html_path))
-        return html_path
+        st.set_page_config(layout="wide")
+        st.title("MCQA Graph Viewer")
+        self.create_selectboxes()
+        self.display_graphs()
 
     def create_selectboxes(self) -> None:
         """
@@ -186,13 +90,13 @@ class MCQAGraphViewer:
 
         # category
         root_path = self.base_dir / self.selected_model / self.selected_dataset
-        categories = self.get_categories(root_path)
+        categories = sorted([d.name for d in (root_path / "PGs").iterdir() if d.is_dir()])
         with col_cat:
             self.selected_cat = st.selectbox("Category", categories, key="category")
 
         # problem id
         cat_dir = root_path / "PGs" / self.selected_cat
-        q_ids = self.get_q_ids(cat_dir)
+        q_ids = sorted([d.name for d in cat_dir.iterdir() if d.is_dir()], key=lambda x: int(x.split("-")[1]))
         with col_qid:
             self.selected_q_id = st.selectbox(
                 "Problem ID",
@@ -211,7 +115,7 @@ class MCQAGraphViewer:
 
         # options
         problem_pg_dir = root_path / "PGs" / self.selected_cat / self.selected_q_id
-        opt_files = self.get_opt_files(problem_pg_dir)
+        opt_files = sorted([f.name for f in problem_pg_dir.glob("*.dot")])
         opt_labels = [f.split("_", 1)[1].replace(".dot", "") for f in opt_files]
         with col_opt:
             self.selected_option = st.selectbox(
@@ -284,6 +188,46 @@ class MCQAGraphViewer:
         )
         st.caption(caption, unsafe_allow_html=True)
 
+    def render_dot_to_html(self, dot_path: Path, graph_type: str) -> Path:
+        """
+        Converts a DOT file to an HTML file using PyVis.
+
+        Parameters
+        ----------
+        dot_path : Path
+            The path to the DOT file.
+        graph_type : str
+            The type of graph (e.g., "pg" or "kg").
+
+        Returns
+        -------
+        Path
+            The path to the generated HTML file.
+        """
+        net = Network(height="720px", width="100%", notebook=False, directed=True)
+        kb = KB.from_dot_file(str(dot_path))
+        for e in kb.get_nodes():
+            if "color" in kb.nodes[e] and kb.nodes[e]["wiki_title"] is not None:
+                net.add_node(e, size=10, color=kb.nodes[e]["color"], title=kb.nodes[e]["wiki_title"])
+            elif "color" in kb.nodes[e]:
+                net.add_node(e, size=10, color=kb.nodes[e]["color"])
+            else:
+                net.add_node(e, size=10)
+        for r in kb.relations:
+            if "verified" in r and r["verified"]:
+                net.add_edge(r["head"], r["tail"], label=r["type"], color="orange")
+            else:
+                net.add_edge(r["head"], r["tail"], label=r["type"], color="#97c2fc")
+
+        # setting
+        net.repulsion(node_distance=100, central_gravity=0.2, spring_length=120, spring_strength=0.05)
+        net.set_edge_smooth("dynamic")
+
+        # save to html
+        html_path = self.html_output_dir / f"{graph_type}_{dot_path.stem}.html"
+        net.save_graph(str(html_path))
+        return html_path
+
     def _cleanup_temp_files(self) -> None:
         """
         Function to clean up temporary HTML files.
@@ -300,20 +244,8 @@ class MCQAGraphViewer:
             except Exception as e:
                 st.error(f"Failed to clean up temporary files: {e}")
 
-    def run(self) -> None:
-        """
-        Executes the main workflow of the MCQAGraphViewer.
-
-        Notes
-        -----
-        This method orchestrates the UI setup, user input handling, and graph rendering.
-        """
-        self.setup_ui()
-        self.get_models_and_datasets()
-        self.create_selectboxes()
-        self.display_graphs()
-
 
 if __name__ == "__main__":
     viewer = MCQAGraphViewer()
+    viewer.run()
     viewer.run()
