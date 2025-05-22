@@ -17,7 +17,7 @@ class DatasetPage:
 
     def _get_dataset_paths(self):
         json_files = [f for f in os.listdir(self.dataset_dir) if f.endswith(".json")]
-        return {f: os.path.join(self.dataset_dir, f) for f in json_files}
+        return {f: os.path.join(self.dataset_dir, f) for f in sorted(json_files)}
 
     @st.cache_data
     def load_data(filename):
