@@ -11,7 +11,7 @@ from kgraph.wiki import assign_file_path, get_wiki_titles
 
 
 def create_KG_cache(
-    wiki_dir: str, KG_dir: str, model: Literal["unirel", "rebel"], force: bool = False, batch_size: int = 64
+    wiki_dir: str, KG_dir: str, model: Literal["rebel", "mrebel", "unirel"], force: bool = False, batch_size: int = 64
 ):
     """
     Create KGs for every Wikipedia article in the specified directory.
@@ -24,15 +24,13 @@ def create_KG_cache(
     KG_dir : str
         Directory to save the generated KGs.
     model : Literal["unirel", "rebel"]
-        The model to use for relation extraction. Options are "unirel" or "rebel".
+        The model to use for relation extraction. Options are "rebel", "mrebel" or "unirel".
     force : bool, optional
         If True, force the conversion of all articles, even if they have already been converted.
         Defaults to False.
     batch_size : int, optional
         The number of articles to process in each batch. Defaults to 32.
     """
-    assert model in ["unirel", "rebel"], "Invalid model specified. Choose 'unirel' or 'rebel'."
-
     subdirs = os.listdir(wiki_dir)
 
     # Collect all (subdir, file) pairs for JSON files

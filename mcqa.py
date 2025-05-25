@@ -24,7 +24,7 @@ def parse_args() -> argparse.Namespace:
         - dataset_path : Path
             Path to the dataset JSON file (positional argument).
         - model : str
-            Model to use, must be either "rebel" or "unirel" (required option).
+            Model to use, must be either "rebel", "mrebel" or "unirel" (required option).
         - el : bool
             Flag indicating whether to enable entity linking (optional, defaults to False).
     """
@@ -35,7 +35,11 @@ def parse_args() -> argparse.Namespace:
 
     # Required option argument: --model
     parser.add_argument(
-        "--model", type=str, choices=["rebel", "unirel"], required=True, help='Model to use: "rebel" or "unirel"'
+        "--model",
+        type=str,
+        choices=["rebel", "mrebel", "unirel"],
+        required=True,
+        help='Model to use: "rebel", "mrebel" or "unirel"',
     )
 
     # Optional argument: --el (True if specified)
@@ -111,7 +115,7 @@ if __name__ == "__main__":
     args = parse_args()
 
     MCQ_FILE: Path = args.dataset_path  # Path to the MCQ dataset
-    MODEL: Literal["rebel", "unirel"] = args.model  # "rebel" or "unirel"
+    MODEL: Literal["rebel", "mrebel", "unirel"] = args.model  # Relation extraction model
     EL: bool = args.el  # True or False
     API_LOG_FILE: str = args.api_log_file  # Log file for Wikipedia API
 
