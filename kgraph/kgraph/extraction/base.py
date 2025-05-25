@@ -5,6 +5,7 @@ from nltk.tokenize import sent_tokenize
 
 try:
     from ..core import KB
+    from .mrebel import extract_triples_mrebel
     from .rebel import extract_triples_rebel
     from .unirel import extract_triples_unirel
 except ImportError:
@@ -12,13 +13,12 @@ except ImportError:
 
     sys.path.append("..")
     from kgraph.core import KB
+    from kgraph.extraction.mrebel import extract_triples_mrebel
     from kgraph.extraction.rebel import extract_triples_rebel
     from kgraph.extraction.unirel import extract_triples_unirel
 
 
-def extract_triples(
-    texts: list[str], method: Literal["rebel", "unirel"], batch_size: int = 64
-) -> list[KB]:
+def extract_triples(texts: list[str], method: Literal["rebel", "mrebel", "unirel"], batch_size: int = 64) -> list[KB]:
     """
     Apply relation extraction on the given batch of texts, using the specified method.
 
@@ -27,8 +27,8 @@ def extract_triples(
     ----------
     texts : list[str]
         List of input texts for relation extraction.
-    method : Literal["rebel", "unirel"]
-        The method to use for relation extraction. Can be either "rebel" or "unirel".
+    method : Literal["rebel", "mrebel", "unirel"]
+        The method to use for relation extraction. Can be either "rebel", "mrebel", "unirel".
     batch_size : int
         The size of each batch for processing. Default is 32.
 
@@ -37,9 +37,7 @@ def extract_triples(
     kb_list : list[KB]
         A list of knowledge bases (KB) containing the extracted relations.
     """
-    assert isinstance(texts, list) and isinstance(
-        texts[0], str
-    ), "Input texts should be a list of strings."
+    assert isinstance(texts, list) and isinstance(texts[0], str), "Input texts should be a list of strings."
 
     # divide each text into sentences
     try:
@@ -57,22 +55,18 @@ def extract_triples(
         match method:
             case "rebel":
                 rels = extract_triples_rebel(batch)
+            case "mrebel":
+                rels = extract_triples_mrebel(batch)
             case "unirel":
                 rels = extract_triples_unirel(batch)
             case _:
-                raise ValueError(
-                    f"Expected relation extraction methods are 'rebel' or 'unirel'. Got {method}."
-                )
+                raise ValueError(f"Expected relation extraction methods are 'rebel' or 'unirel'. Got {method}.")
         rels_by_sents.extend(rels)
 
     # group the relations by text
-    rels_li = [
-        [rel for _ in range(len(sents)) for rel in rels_by_sents.pop(0)] for sents in sents_li
-    ]
+    rels_li = [[rel for _ in range(len(sents)) for rel in rels_by_sents.pop(0)] for sents in sents_li]
 
-    assert len(rels_li) == len(
-        texts
-    ), "Number of relation lists does not match the number of texts."
+    assert len(rels_li) == len(texts), "Number of relation lists does not match the number of texts."
     return [KB(rels) for rels in rels_li]
 
 
@@ -111,7 +105,7 @@ if __name__ == "__main__":
 
     print("sents: ", sentences)
 
-    kb_list = extract_triples(sentences, "rebel")
+    kb_list = extract_triples(sentences, "mrebel")
     print(f"Number of sents: {len(kb_list)}")
     for i, kb in enumerate(kb_list):
         print(f"{i}: {kb.__repr__()}")
