@@ -69,10 +69,12 @@ class MCQAGraphViewer:
         model_mapping = {
             "rebel": "REBEL",
             "mrebel": "mREBEL",
+            "mrebel-32": "mREBEL_32",
             "unirel": "UniRel",
             "rebel_el": "REBEL (EL)",
             "mrebel_el": "mREBEL (EL)",
             "unirel_el": "UniRel (EL)",
+            "mrebel-32_el": "mREBEL_32 (EL)",
         }
         with col_model:
             self.selected_model = st.selectbox(
