@@ -29,7 +29,7 @@ class ComparisonPage:
 
         col1, col2 = st.columns(2)
         with col1:
-            st.subheader("Model 1")
+            st.subheader("Model 1 (baseline)")
             self.model1 = st.selectbox("Choose model to compare results.", self.model_paths, key="model1_selection")
             with open(self.result_dir / self.model1 / self.ds_name / "results.json", "r") as f:
                 self.results1 = json.load(f)
@@ -48,14 +48,20 @@ class ComparisonPage:
                     self.result_dir / self.model1 / self.ds_name.split(".")[0] / "accuracy.svg",
                     use_container_width=True,
                 )
-                self.create_table(self.results1)
+                a1, e1, u1 = self.create_table(self.results1)
 
             with col2:
                 st.image(
                     self.result_dir / self.model2 / self.ds_name.split(".")[0] / "accuracy.svg",
                     use_container_width=True,
                 )
-                self.create_table(self.results2)
+                a2, e2, u2 = self.create_table(self.results2)
+
+        # display metrics
+        a, b, c = st.columns(3)
+        a.metric("Accuracy", f"{a2:.1%}", delta=f"{a2 - a1:.1%}", border=True)
+        b.metric("Incorrect", f"{e2:.1%}", delta=f"{e2 - e1:.1%}", border=True)
+        c.metric("Unselectable", f"{u2:.1%}", delta=f"{u2 - u1:.1%}", border=True)
 
     def _get_dataset_paths(self):
         json_files = sorted([f for f in self.dataset_dir.iterdir() if f.suffix == ".json"])
@@ -81,6 +87,8 @@ class ComparisonPage:
                 ],
             }
         )
+
+        return correct / total, incorrect / total, unselectable / total
 
 
 if __name__ == "__main__":
