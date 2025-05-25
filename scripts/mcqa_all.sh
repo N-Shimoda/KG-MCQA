@@ -10,7 +10,7 @@ if [ -f "$api_log_file" ]; then
     rm "$api_log_file"
 fi
 
-for MODEL in rebel unirel
+for MODEL in rebel mrebel unirel
 do
     for ds in KR-200m KR-200s FPAI-100 FPAI-20 dev
     do

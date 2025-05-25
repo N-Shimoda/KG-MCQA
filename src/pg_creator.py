@@ -11,7 +11,11 @@ from kgraph.utils import swap_label_with_symbol
 from kgraph.wiki import download_wiki_pages, get_wiki_titles
 
 
-def create_PG_temps(questions: list[str], choice_li: list[list[str]], model: Literal["unirel", "rebel"]) -> list[KB]:
+def create_PG_temps(
+    questions: list[str],
+    choice_li: list[list[str]],
+    model: Literal["rebel", "mrebel", "unirel"],
+) -> list[KB]:
     """
     Create PG templates for MCQs.
 
@@ -21,7 +25,7 @@ def create_PG_temps(questions: list[str], choice_li: list[list[str]], model: Lit
         List of questions.
     choice_li : list[list[str]]
         List of choices for each question.
-    model : Literal["unirel", "rebel"]
+    model : Literal["rebel", "mrebel", "unirel"]
         Model name for extracting triples.
 
     Returns
@@ -29,8 +33,6 @@ def create_PG_temps(questions: list[str], choice_li: list[list[str]], model: Lit
     list[KB]
         List of PG templates.
     """
-    assert model in ["unirel", "rebel"], "model should be either 'unirel' or 'rebel'."
-
     sents_li = [[question.format(c) for c in choice] for question, choice in zip(questions, choice_li)]
     all_sents = [s for sentences in sents_li for s in sentences]
     PGs = extract_triples(all_sents, method=model)
@@ -47,7 +49,11 @@ def create_PG_temps(questions: list[str], choice_li: list[list[str]], model: Lit
 
 
 def create_PGs(
-    filename: str, pg_top_dir: str, model: Literal["unirel", "rebel"], batch_size: int = 32, el_enabled: bool = False
+    filename: str,
+    pg_top_dir: str,
+    model: Literal["rebel", "mrebel", "unirel"],
+    batch_size: int = 32,
+    el_enabled: bool = False,
 ):
     """
     Create PGs from given MCQ dataset.\n
@@ -60,15 +66,13 @@ def create_PGs(
         Path to the MCQ dataset file (JSON).
     pg_top_dir : str
         Top-level directory to save the generated PGs.
-    model : Literal["unirel", "rebel"]
+    model : Literal["rebel", "mrebel", "unirel"]
         Model name for extracting triples.
     batch_size : int (optional)
         Batch size (number of questions) for processing at once.
     el_enabled : bool (optional)
         Flag to enable entity linking (default: False).
     """
-    assert model in ["unirel", "rebel"], "model should be either 'unirel' or 'rebel'."
-
     with open(filename, "r") as f:
         mcqs = json.load(f)
     print("Categories: {}".format(list(mcqs.keys())))
