@@ -1,3 +1,5 @@
+from typing import Literal
+
 import torch
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from transformers.models.bart.modeling_bart import BartForConditionalGeneration
@@ -76,7 +78,9 @@ def parse_preds_mrebel(text):
     return rev_triples
 
 
-def extract_triples_mrebel(texts: list[str]) -> list[list[dict[str, str]]]:
+def extract_triples_mrebel(
+    texts: list[str], model_name: Literal["mrebel-large", "mrebel-large-32"]
+) -> list[list[dict[str, str]]]:
     """
     Extracts triplets from a list of text strings using MREBEL.
 
@@ -97,14 +101,19 @@ def extract_triples_mrebel(texts: list[str]) -> list[list[dict[str, str]]]:
         - 'type': The relation of the triplet.
         - 'tail': The object of the triplet.
     """
+    assert model_name in [
+        "mrebel-large",
+        "mrebel-large-32",
+    ], "Invalid model name. Choose 'mrebel-large' or 'mrebel-large-32'."
+
     # Load model and tokenizer
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    tokenizer = AutoTokenizer.from_pretrained(
-        "Babelscape/mrebel-large", src_lang="en_XX", tgt_lang="tp_XX", clean_up_tokenization_spaces=False
-    )
-    model: BartForConditionalGeneration = AutoModelForSeq2SeqLM.from_pretrained("Babelscape/mrebel-large").to(device)
     if device != "cuda":
         print("Using {} instead of GPU.".format(device))
+    tokenizer = AutoTokenizer.from_pretrained(
+        f"Babelscape/{model_name}", src_lang="en_XX", tgt_lang="tp_XX", clean_up_tokenization_spaces=False
+    )
+    model: BartForConditionalGeneration = AutoModelForSeq2SeqLM.from_pretrained(f"Babelscape/{model_name}").to(device)
 
     # Tokenize
     # NOTE: `model_inputs` is a kind of dictionary with two keys (`input_ids` and `attention_mask`)
@@ -160,6 +169,7 @@ if __name__ == "__main__":
         '"I Have a Dream" speech.',
     ]
 
-    outputs = extract_triples_mrebel(texts)
+    outputs = extract_triples_mrebel(texts, model_name="mrebel-large-32")
     for i, triples in enumerate(outputs):
+        print("{}: {}".format(i, triples))
         print("{}: {}".format(i, triples))

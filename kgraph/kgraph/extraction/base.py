@@ -18,7 +18,9 @@ except ImportError:
     from kgraph.extraction.unirel import extract_triples_unirel
 
 
-def extract_triples(texts: list[str], method: Literal["rebel", "mrebel", "unirel"], batch_size: int = 64) -> list[KB]:
+def extract_triples(
+    texts: list[str], method: Literal["rebel", "mrebel", "mrebel-32", "unirel"], batch_size: int = 64
+) -> list[KB]:
     """
     Apply relation extraction on the given batch of texts, using the specified method.
 
@@ -27,7 +29,7 @@ def extract_triples(texts: list[str], method: Literal["rebel", "mrebel", "unirel
     ----------
     texts : list[str]
         List of input texts for relation extraction.
-    method : Literal["rebel", "mrebel", "unirel"]
+    method : Literal["rebel", "mrebel", "mrebel-32", "unirel"]
         The method to use for relation extraction. Can be either "rebel", "mrebel", "unirel".
     batch_size : int
         The size of each batch for processing. Default is 32.
@@ -56,7 +58,9 @@ def extract_triples(texts: list[str], method: Literal["rebel", "mrebel", "unirel
             case "rebel":
                 rels = extract_triples_rebel(batch)
             case "mrebel":
-                rels = extract_triples_mrebel(batch)
+                rels = extract_triples_mrebel(batch, model_name="mrebel-large")
+            case "mrebel-32":
+                rels = extract_triples_mrebel(batch, model_name="mrebel-large-32")
             case "unirel":
                 rels = extract_triples_unirel(batch)
             case _:
@@ -105,7 +109,7 @@ if __name__ == "__main__":
 
     print("sents: ", sentences)
 
-    kb_list = extract_triples(sentences, "mrebel")
+    kb_list = extract_triples(sentences, "mrebel-32")
     print(f"Number of sents: {len(kb_list)}")
     for i, kb in enumerate(kb_list):
         print(f"{i}: {kb.__repr__()}")
