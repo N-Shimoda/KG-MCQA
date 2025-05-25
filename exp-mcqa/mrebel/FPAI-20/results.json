@@ -14,14 +14,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "SpaceX",
-                            "type": "founded by",
-                            "tail": "Elon Musk"
-                        },
-                        {
                             "head": "Elon Musk",
                             "type": "employer",
                             "tail": "SpaceX"
+                        },
+                        {
+                            "head": "SpaceX",
+                            "type": "founded by",
+                            "tail": "Elon Musk"
                         }
                     ]
                 },
@@ -44,7 +44,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-1": {
                 "0": {
@@ -84,7 +85,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-2": {
                 "0": {
@@ -124,7 +126,8 @@
                     0.0,
                     1.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-3": {
                 "0": {
@@ -182,7 +185,8 @@
                     0.0,
                     0.5
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.5
             },
             "cf-4": {
                 "0": {
@@ -218,7 +222,7 @@
                 "3": {
                     "choice": "Kamala Harris",
                     "edge_score": 0.25,
-                    "node_score": 0.9695260375738144,
+                    "node_score": 0.969526007771492,
                     "verified_edges": [
                         {
                             "head": "Barack Obama",
@@ -234,7 +238,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.0
             },
             "cf-5": {
                 "0": {
@@ -252,7 +257,7 @@
                 "1": {
                     "choice": "Richard Liu",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 0.9053083062171936,
+                    "node_score": 0.9053083260854086,
                     "verified_edges": [
                         {
                             "head": "Alibaba Group",
@@ -302,7 +307,8 @@
                     1.0,
                     0.0
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.0
             },
             "cf-6": {
                 "0": {
@@ -342,7 +348,8 @@
                     1.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-7": {
                 "0": {
@@ -376,7 +383,8 @@
                     0.25,
                     0.25
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "cf-8": {
                 "0": {
@@ -406,7 +414,7 @@
                 "3": {
                     "choice": "Margot Robbie",
                     "edge_score": 0.0,
-                    "node_score": 0.9270368069410324,
+                    "node_score": 0.92703677713871,
                     "verified_edges": []
                 },
                 "answer": 0,
@@ -416,7 +424,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.0
             },
             "cf-9": {
                 "0": {
@@ -426,13 +435,13 @@
                     "verified_edges": [
                         {
                             "head": "Kei Nishikori",
-                            "type": "country of citizenship",
-                            "tail": "Japan"
+                            "type": "sport",
+                            "tail": "tennis"
                         },
                         {
                             "head": "Kei Nishikori",
-                            "type": "sport",
-                            "tail": "tennis"
+                            "type": "country of citizenship",
+                            "tail": "Japan"
                         }
                     ]
                 },
@@ -478,14 +487,16 @@
                     0.5,
                     0.0
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.0
             }
         },
         "stats": {
             "correct": 4,
             "fail": 3,
             "unselectable": 3,
-            "total": 10
+            "total": 10,
+            "stochastic_accuracy": 0.475
         }
     },
     "hf": {
@@ -534,7 +545,8 @@
                     0.5,
                     0.5
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.5
             },
             "hf-1": {
                 "0": {
@@ -568,7 +580,8 @@
                     0.25,
                     0.25
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "hf-2": {
                 "0": {
@@ -595,6 +608,11 @@
                     "verified_edges": [
                         {
                             "head": "Socrates",
+                            "type": "student",
+                            "tail": "Plato"
+                        },
+                        {
+                            "head": "Socrates",
                             "type": "occupation",
                             "tail": "philosopher"
                         },
@@ -602,11 +620,6 @@
                             "head": "Plato",
                             "type": "occupation",
                             "tail": "philosopher"
-                        },
-                        {
-                            "head": "Socrates",
-                            "type": "student",
-                            "tail": "Plato"
                         }
                     ]
                 },
@@ -641,7 +654,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "hf-3": {
                 "0": {
@@ -681,7 +695,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "hf-4": {
                 "0": {
@@ -703,12 +718,12 @@
                     "verified_edges": [
                         {
                             "head": "Mahatma Gandhi",
-                            "type": "residence",
+                            "type": "country of citizenship",
                             "tail": "India"
                         },
                         {
                             "head": "Mahatma Gandhi",
-                            "type": "country of citizenship",
+                            "type": "residence",
                             "tail": "India"
                         }
                     ]
@@ -732,7 +747,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "hf-5": {
                 "0": {
@@ -783,7 +799,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "hf-6": {
                 "0": {
@@ -828,7 +845,8 @@
                     1.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "hf-7": {
                 "0": {
@@ -862,7 +880,8 @@
                     0.25,
                     0.25
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "hf-8": {
                 "0": {
@@ -896,7 +915,8 @@
                     0.25,
                     0.25
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "hf-9": {
                 "0": {
@@ -917,11 +937,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Sun Tzu",
-                            "type": "occupation",
-                            "tail": "philosopher"
-                        },
-                        {
                             "head": "The Art of War",
                             "type": "author",
                             "tail": "Sun Tzu"
@@ -930,6 +945,11 @@
                             "head": "Sun Tzu",
                             "type": "notable work",
                             "tail": "The Art of War"
+                        },
+                        {
+                            "head": "Sun Tzu",
+                            "type": "occupation",
+                            "tail": "philosopher"
                         }
                     ]
                 },
@@ -952,14 +972,16 @@
                     1.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             }
         },
         "stats": {
             "correct": 6,
             "fail": 0,
             "unselectable": 4,
-            "total": 10
+            "total": 10,
+            "stochastic_accuracy": 0.725
         }
     }
 }
