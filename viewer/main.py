@@ -157,20 +157,25 @@ class MCQAGraphViewer:
                 )
             with col2:
                 correct, incorrect, unselectable = 0, 0, 0
+                stoc_count = 0
                 for cat in self.results:
                     stats = self.results[cat]["stats"]
                     correct += stats["correct"]
                     incorrect += stats["fail"]
                     unselectable += stats["unselectable"]
+                    stoc_count += stats["stochastic_accuracy"] * stats["total"]
+
                 total = correct + incorrect + unselectable
+
                 st.table(
                     {
-                        "Label": [":blue[**Correct**]", "Incorrect", "Unselectable"],
-                        "Count": [f":blue[**{correct}**]", incorrect, unselectable],
+                        "Label": [":blue[**Correct**]", "Incorrect", "Unselectable", ":orange[(w/ Stochastic)]"],
+                        "Count": [f":blue[**{correct}**]", incorrect, unselectable, f":orange[{stoc_count}]"],
                         "Accuracy": [
                             f":blue[**{correct / total :.1%}**]",
                             f"{incorrect / total :.1%}",
                             f"{unselectable / total :.1%}",
+                            f":orange[{stoc_count / total :.1%}]",
                         ],
                     }
                 )
