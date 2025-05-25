@@ -6,17 +6,15 @@ from typing import Literal
 from datasets import Dataset, load_dataset
 from tqdm import tqdm
 
-from kgraph.kgraph import KB, join
-from kgraph.kgraph.extraction import extract_triples
-from kgraph.kgraph.wiki import assign_file_path, download_wiki_pages
-from src.kg_creator import create_KG_cache  # noqa: F401
+from kgraph import KB, join
+from kgraph.extraction import extract_triples
+from kgraph.wiki import assign_file_path, download_wiki_pages
+from src.kg_creator import create_KG_cache
 from src.verification import process_pg
 
 
 def create_fever_PGs(
-    split: Literal[
-        "labelled_dev", "paper_dev", "paper_test", "train", "unlabelled_dev", "unlabelled_test"
-    ],
+    split: Literal["labelled_dev", "paper_dev", "paper_test", "train", "unlabelled_dev", "unlabelled_test"],
     wiki_dir: str,
     batch_size: int = 64,
 ) -> Dataset:
@@ -131,9 +129,7 @@ def create_fever_tailored_KGs(pg_top_dir: str, kg_top_dir: str, KG_cache_dir: st
             KG_combined.write_dot(kg_file_name)
 
 
-def verify_fever_PGs(
-    pg_top_dir: str, kg_top_dir: str, ds_info: dict, output_file: str, num_workers: int = 16
-):
+def verify_fever_PGs(pg_top_dir: str, kg_top_dir: str, ds_info: dict, output_file: str, num_workers: int = 16):
     """
     Verify PGs against KGs and select the best answer.
     This function iterates over each category and each PG, verifies the PG against the KG,
@@ -156,10 +152,7 @@ def verify_fever_PGs(
     subdir_li = list(map(int, os.listdir(pg_top_dir)))
     for subdir in sorted(subdir_li):
         files = os.listdir(f"{pg_top_dir}/{subdir}")
-        args = [
-            (f"{pg_top_dir}/{subdir}/{dot_file}", f"{kg_top_dir}/{subdir}/{dot_file}")
-            for dot_file in files
-        ]
+        args = [(f"{pg_top_dir}/{subdir}/{dot_file}", f"{kg_top_dir}/{subdir}/{dot_file}") for dot_file in files]
 
         with mp.Pool(processes=num_workers) as pool:
             result_data = pool.map(process_pg, args)

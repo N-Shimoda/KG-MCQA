@@ -25,9 +25,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "SpaceX",
-                            "type": "owned by",
-                            "tail": "Elon Musk"
+                            "head": "Elon Musk",
+                            "type": "owner of",
+                            "tail": "Tesla"
+                        },
+                        {
+                            "head": "Elon Musk",
+                            "type": "owner of",
+                            "tail": "SpaceX"
                         },
                         {
                             "head": "Tesla",
@@ -36,13 +41,8 @@
                         },
                         {
                             "head": "SpaceX",
-                            "type": "founded by",
+                            "type": "owned by",
                             "tail": "Elon Musk"
-                        },
-                        {
-                            "head": "Elon Musk",
-                            "type": "owner of",
-                            "tail": "Tesla"
                         },
                         {
                             "head": "Elon Musk",
@@ -55,9 +55,9 @@
                             "tail": "Elon Musk"
                         },
                         {
-                            "head": "Elon Musk",
-                            "type": "owner of",
-                            "tail": "SpaceX"
+                            "head": "SpaceX",
+                            "type": "founded by",
+                            "tail": "Elon Musk"
                         }
                     ]
                 },
@@ -96,6 +96,12 @@
                     ]
                 },
                 "answer": 1,
+                "probs": [
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0
+                ],
                 "correct": true
             },
             "cf-1": {
@@ -124,6 +130,12 @@
                     "verified_edges": []
                 },
                 "answer": -1,
+                "probs": [
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
+                ],
                 "correct": false
             },
             "cf-2": {
@@ -163,6 +175,12 @@
                     ]
                 },
                 "answer": 3,
+                "probs": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
                 "correct": true
             },
             "cf-3": {
@@ -197,6 +215,12 @@
                     "verified_edges": []
                 },
                 "answer": 1,
+                "probs": [
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0
+                ],
                 "correct": true
             },
             "cf-4": {
@@ -206,19 +230,19 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Joe Biden",
-                            "type": "position held",
-                            "tail": "President of the United States"
-                        },
-                        {
-                            "head": "Barack Obama",
-                            "type": "position held",
-                            "tail": "President of the United States"
-                        },
-                        {
                             "head": "Barack Obama",
                             "type": "position held",
                             "tail": "Vice president"
+                        },
+                        {
+                            "head": "Barack Obama",
+                            "type": "position held",
+                            "tail": "President of the United States"
+                        },
+                        {
+                            "head": "Joe Biden",
+                            "type": "position held",
+                            "tail": "President of the United States"
                         }
                     ]
                 },
@@ -228,12 +252,12 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Donald Trump",
+                            "head": "Barack Obama",
                             "type": "position held",
                             "tail": "President of the United States"
                         },
                         {
-                            "head": "Barack Obama",
+                            "head": "Donald Trump",
                             "type": "position held",
                             "tail": "President of the United States"
                         },
@@ -269,6 +293,12 @@
                     ]
                 },
                 "answer": -1,
+                "probs": [
+                    0.5,
+                    0.5,
+                    0.0,
+                    0.0
+                ],
                 "correct": false
             },
             "cf-5": {
@@ -326,6 +356,12 @@
                     ]
                 },
                 "answer": 0,
+                "probs": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0
+                ],
                 "correct": true
             },
             "cf-6": {
@@ -360,6 +396,12 @@
                     "verified_edges": []
                 },
                 "answer": 2,
+                "probs": [
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0
+                ],
                 "correct": true
             },
             "cf-7": {
@@ -375,14 +417,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Angela Merkel",
-                            "type": "position held",
-                            "tail": "Chancellor of Germany"
-                        },
-                        {
                             "head": "Chancellor of Germany",
                             "type": "officeholder",
                             "tail": "Angela Merkel"
+                        },
+                        {
+                            "head": "Angela Merkel",
+                            "type": "position held",
+                            "tail": "Chancellor of Germany"
                         }
                     ]
                 },
@@ -399,6 +441,12 @@
                     "verified_edges": []
                 },
                 "answer": 1,
+                "probs": [
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0
+                ],
                 "correct": true
             },
             "cf-8": {
@@ -423,7 +471,7 @@
                 "2": {
                     "choice": "Scarlett Johansson",
                     "edge_score": 0.0,
-                    "node_score": 0.9066115617752075,
+                    "node_score": 0.9066115468740463,
                     "verified_edges": []
                 },
                 "3": {
@@ -433,6 +481,12 @@
                     "verified_edges": []
                 },
                 "answer": 1,
+                "probs": [
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0
+                ],
                 "correct": true
             },
             "cf-9": {
@@ -485,6 +539,12 @@
                     ]
                 },
                 "answer": -1,
+                "probs": [
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
+                ],
                 "correct": false
             }
         },
@@ -540,6 +600,12 @@
                     "verified_edges": []
                 },
                 "answer": 2,
+                "probs": [
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0
+                ],
                 "correct": true
             },
             "hf-1": {
@@ -568,6 +634,12 @@
                     "verified_edges": []
                 },
                 "answer": -1,
+                "probs": [
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
+                ],
                 "correct": false
             },
             "hf-2": {
@@ -583,14 +655,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Plato",
-                            "type": "student of",
-                            "tail": "Socrates"
-                        },
-                        {
                             "head": "Socrates",
                             "type": "student",
                             "tail": "Plato"
+                        },
+                        {
+                            "head": "Plato",
+                            "type": "student of",
+                            "tail": "Socrates"
                         }
                     ]
                 },
@@ -607,6 +679,12 @@
                     "verified_edges": []
                 },
                 "answer": 1,
+                "probs": [
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0
+                ],
                 "correct": true
             },
             "hf-3": {
@@ -616,14 +694,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "French Revolution",
-                            "type": "participant",
-                            "tail": "Napoleon"
-                        },
-                        {
                             "head": "Napoleon",
                             "type": "position held",
                             "tail": "Emperor of the French"
+                        },
+                        {
+                            "head": "French Revolution",
+                            "type": "participant",
+                            "tail": "Napoleon"
                         },
                         {
                             "head": "Napoleon",
@@ -657,6 +735,12 @@
                     ]
                 },
                 "answer": 0,
+                "probs": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0
+                ],
                 "correct": true
             },
             "hf-4": {
@@ -675,7 +759,7 @@
                 "2": {
                     "choice": "Subhas Chandra Bose",
                     "edge_score": 0.2,
-                    "node_score": 0.8703373074531555,
+                    "node_score": 0.8703373372554779,
                     "verified_edges": [
                         {
                             "head": "Struggle for independence",
@@ -691,6 +775,12 @@
                     "verified_edges": []
                 },
                 "answer": 2,
+                "probs": [
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0
+                ],
                 "correct": false
             },
             "hf-5": {
@@ -712,13 +802,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "William Shakespeare",
-                            "type": "field of work",
+                            "head": "English",
+                            "type": "language used",
                             "tail": "English language"
                         },
                         {
-                            "head": "English",
-                            "type": "language used",
+                            "head": "William Shakespeare",
+                            "type": "field of work",
                             "tail": "English language"
                         }
                     ]
@@ -748,6 +838,12 @@
                     ]
                 },
                 "answer": 1,
+                "probs": [
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0
+                ],
                 "correct": true
             },
             "hf-6": {
@@ -787,6 +883,12 @@
                     "verified_edges": []
                 },
                 "answer": 2,
+                "probs": [
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0
+                ],
                 "correct": true
             },
             "hf-7": {
@@ -859,6 +961,12 @@
                     ]
                 },
                 "answer": -1,
+                "probs": [
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
+                ],
                 "correct": false
             },
             "hf-8": {
@@ -887,6 +995,12 @@
                     "verified_edges": []
                 },
                 "answer": -1,
+                "probs": [
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
+                ],
                 "correct": false
             },
             "hf-9": {
@@ -908,14 +1022,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Sun Tzu",
-                            "type": "field of work",
+                            "head": "The Art of War",
+                            "type": "main subject",
                             "tail": "Military strategy"
                         },
                         {
                             "head": "The Art of War",
-                            "type": "main subject",
-                            "tail": "Military strategy"
+                            "type": "author",
+                            "tail": "Sun Tzu"
                         },
                         {
                             "head": "Sun Tzu",
@@ -923,9 +1037,9 @@
                             "tail": "The Art of War"
                         },
                         {
-                            "head": "The Art of War",
-                            "type": "author",
-                            "tail": "Sun Tzu"
+                            "head": "Sun Tzu",
+                            "type": "field of work",
+                            "tail": "Military strategy"
                         }
                     ]
                 },
@@ -936,6 +1050,12 @@
                     "verified_edges": []
                 },
                 "answer": 2,
+                "probs": [
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0
+                ],
                 "correct": true
             }
         },

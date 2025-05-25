@@ -1,13 +1,18 @@
 #!/bin/bash
 
-log_file="exp-mcqa.log"
+log_file="exp-mcqa/mcqa.log"
 if [ -f "$log_file" ]; then
     rm "$log_file"
 fi
 
+api_log_file="exp-mcqa/wiki_api.log"
+if [ -f "$api_log_file" ]; then
+    rm "$api_log_file"
+fi
+
 for MODEL in rebel unirel
 do
-    for ds in KR-200m KR-200s FPAI-20 FPAI-100
+    for ds in KR-200m KR-200s FPAI-100 FPAI-20 dev
     do
         ds_path="./dataset/${ds}.json"
         for EL_FLAG in "--el" ""
@@ -15,11 +20,10 @@ do
             if [ "$EL_FLAG" = "--el" ]; then
                 EL_DESC="with --el"
             else
-                EL_DESC="without --el"
+                EL_DESC=""
             fi
-            echo "Running MCQA on $ds_path (model: $MODEL) $EL_DESC"
             echo "$(date '+%Y-%m-%d %H:%M:%S') [START] $ds_path ($MODEL) $EL_DESC" >> $log_file
-            python mcqa.py $ds_path --model=$MODEL $EL_FLAG
+            python mcqa.py $ds_path --model=$MODEL $EL_FLAG --api-log-file=$api_log_file
             if [ $? -ne 0 ]; then
                 echo "Error: MCQA failed on $ds_path (model: $MODEL) $EL_DESC" >&2
                 echo "$(date '+%Y-%m-%d %H:%M:%S') [ERROR] $ds_path ($MODEL) $EL_DESC" >> $log_file
