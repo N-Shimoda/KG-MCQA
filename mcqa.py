@@ -46,7 +46,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--el", action="store_true", help="Enable entity linking (merge nodes for same entity)")
 
     # Optional argument: --api_log
-    parser.add_argument("--api-log-file", type=str, default="wiki_api.log", help="Log file for Wikipedia API")
+    parser.add_argument("--api-log-file", type=str, default="exp-mcqa/wiki_api.log", help="Log file for Wikipedia API")
 
     return parser.parse_args()
 
