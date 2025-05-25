@@ -68,8 +68,10 @@ class MCQAGraphViewer:
         # --- model ---
         model_mapping = {
             "rebel": "REBEL",
+            "mrebel": "mREBEL",
             "unirel": "UniRel",
             "rebel_el": "REBEL (EL)",
+            "mrebel_el": "mREBEL (EL)",
             "unirel_el": "UniRel (EL)",
         }
         with col_model:
