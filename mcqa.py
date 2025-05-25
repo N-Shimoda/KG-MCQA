@@ -37,9 +37,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--model",
         type=str,
-        choices=["rebel", "mrebel", "unirel"],
+        choices=["rebel", "mrebel", "mrebel-32", "unirel"],
         required=True,
-        help='Model to use: "rebel", "mrebel" or "unirel"',
+        help='Model to use: "rebel", "mrebel", "mrebel-32" or "unirel"',
     )
 
     # Optional argument: --el (True if specified)
