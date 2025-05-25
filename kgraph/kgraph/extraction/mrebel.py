@@ -172,4 +172,3 @@ if __name__ == "__main__":
     outputs = extract_triples_mrebel(texts, model_name="mrebel-large-32")
     for i, triples in enumerate(outputs):
         print("{}: {}".format(i, triples))
-        print("{}: {}".format(i, triples))
