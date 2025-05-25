@@ -12,7 +12,7 @@ fi
 
 for MODEL in rebel mrebel unirel
 do
-    for ds in KR-200m KR-200s FPAI-100 FPAI-20 dev
+    for ds in KR-200m KR-200s FPAI-100 FPAI-20
     do
         ds_path="./dataset/${ds}.json"
         for EL_FLAG in "--el" ""

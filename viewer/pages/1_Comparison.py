@@ -29,7 +29,7 @@ class ComparisonPage:
 
         col1, col2 = st.columns(2)
         with col1:
-            st.subheader("Model 1")
+            st.subheader("Model 1 (baseline)")
             self.model1 = st.selectbox("Choose model to compare results.", self.model_paths, key="model1_selection")
             with open(self.result_dir / self.model1 / self.ds_name / "results.json", "r") as f:
                 self.results1 = json.load(f)
@@ -48,39 +48,52 @@ class ComparisonPage:
                     self.result_dir / self.model1 / self.ds_name.split(".")[0] / "accuracy.svg",
                     use_container_width=True,
                 )
-                self.create_table(self.results1)
+                a1, e1, u1, sa1 = self.create_table(self.results1)
 
             with col2:
                 st.image(
                     self.result_dir / self.model2 / self.ds_name.split(".")[0] / "accuracy.svg",
                     use_container_width=True,
                 )
-                self.create_table(self.results2)
+                a2, e2, u2, sa2 = self.create_table(self.results2)
+
+        # display metrics
+        a, b = st.columns(2)
+        a.metric("Accuracy", f"{a2:.1%}", delta=f"{a2 - a1:.1%}", border=True)
+        # b.metric("Incorrect", f"{e2:.1%}", delta=f"{e2 - e1:.1%}", border=True)
+        # c.metric("Unselectable", f"{u2:.1%}", delta=f"{u2 - u1:.1%}", border=True)
+        b.metric("Stochastic Accuracy", f"{sa2:.1%}", delta=f"{sa2 - sa1:.1%}", border=True)
 
     def _get_dataset_paths(self):
         json_files = sorted([f for f in self.dataset_dir.iterdir() if f.suffix == ".json"])
         return {f.name.split(".")[0]: str(f) for f in json_files}
 
-    def create_table(self, results):
+    def create_table(self, results) -> tuple[int, int, int, int]:
         correct, incorrect, unselectable = 0, 0, 0
+        stoc_count = 0
         for cat in results:
             stats = results[cat]["stats"]
             correct += stats["correct"]
             incorrect += stats["fail"]
             unselectable += stats["unselectable"]
+            stoc_count += stats["stochastic_accuracy"] * stats["total"]
+
         total = correct + incorrect + unselectable
 
         st.table(
             {
-                "Label": [":blue[**Correct**]", "Incorrect", "Unselectable"],
-                "Count": [f":blue[**{correct}**]", incorrect, unselectable],
+                "Label": [":blue[**Correct**]", "Incorrect", "Unselectable", ":orange[(w/ Stochastic)]"],
+                "Count": [f":blue[**{correct}**]", incorrect, unselectable, f":orange[{stoc_count:.2f}]"],
                 "Accuracy": [
                     f":blue[**{correct / total :.1%}**]",
                     f"{incorrect / total :.1%}",
                     f"{unselectable / total :.1%}",
+                    f":orange[{stoc_count / total :.1%}]",
                 ],
             }
         )
+
+        return correct / total, incorrect / total, unselectable / total, stoc_count / total
 
 
 if __name__ == "__main__":

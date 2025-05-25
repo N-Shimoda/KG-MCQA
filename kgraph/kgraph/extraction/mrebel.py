@@ -76,57 +76,6 @@ def parse_preds_mrebel(text):
     return rev_triples
 
 
-# def parse_preds(preds: str) -> list[tuple[str, str, str]]:
-#     """
-#     Extracts triplets from a given preds string.
-
-#     The function parses a specially formatted preds to extract triplets in the form of
-#     (subject, relation, object). The preds is expected to contain specific markers
-#     such as `<triplet>`, `<subj>`, and `<obj>` to denote the structure of the triplets.
-
-#     Parameters
-#     ----------
-#     preds : str
-#         The input preds containing triplet information with specific markers.
-
-#     Returns
-#     -------
-#     list[tuple[str, str, str]]
-#         A list of tuples where each tuple represents a triplet with the following structure:
-#         (subject, relation, object)
-#     """
-#     triplets = []
-#     relation, subject, relation, object_ = "", "", "", ""
-#     preds = preds.strip()
-#     current = "x"
-#     for token in preds.replace("<s>", "").replace("<pad>", "").replace("</s>", "").split():
-#         if token == "<triplet>":
-#             current = "t"
-#             if relation != "":
-#                 triplets.append((subject.strip(), relation.strip(), object_.strip()))
-#                 relation = ""
-#             subject = ""
-#         elif token == "<subj>":
-#             current = "s"
-#             if relation != "":
-#                 triplets.append((subject.strip(), relation.strip(), object_.strip()))
-#             object_ = ""
-#         elif token == "<obj>":
-#             current = "o"
-#             relation = ""
-#         else:
-#             if current == "t":
-#                 subject += " " + token
-#             elif current == "s":
-#                 object_ += " " + token
-#             elif current == "o":
-#                 relation += " " + token
-#     if subject != "" and relation != "" and object_ != "":
-#         triplets.append((subject.strip(), relation.strip(), object_.strip()))
-
-#     return triplets
-
-
 def extract_triples_mrebel(texts: list[str]) -> list[list[dict[str, str]]]:
     """
     Extracts triplets from a list of text strings using MREBEL.

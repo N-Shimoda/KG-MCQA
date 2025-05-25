@@ -25,14 +25,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Tesla",
-                            "type": "product or material produced",
-                            "tail": "electric vehicles"
-                        },
-                        {
                             "head": "SpaceX",
                             "type": "founded by",
                             "tail": "Elon Musk"
+                        },
+                        {
+                            "head": "Tesla",
+                            "type": "product or material produced",
+                            "tail": "electric vehicles"
                         },
                         {
                             "head": "Elon Musk",
@@ -64,14 +64,14 @@
                     "node_score": 0.982874083518982,
                     "verified_edges": [
                         {
-                            "head": "Elon Musk",
-                            "type": "employer",
-                            "tail": "SpaceX"
-                        },
-                        {
                             "head": "Tesla",
                             "type": "product or material produced",
                             "tail": "electric vehicles"
+                        },
+                        {
+                            "head": "Elon Musk",
+                            "type": "employer",
+                            "tail": "SpaceX"
                         }
                     ]
                 },
@@ -82,7 +82,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-1": {
                 "0": {
@@ -116,7 +117,8 @@
                     0.25,
                     0.25
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "cf-2": {
                 "0": {
@@ -161,7 +163,8 @@
                     0.0,
                     1.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-3": {
                 "0": {
@@ -201,7 +204,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-4": {
                 "0": {
@@ -219,7 +223,7 @@
                 "1": {
                     "choice": "Donald Trump",
                     "edge_score": 0.14285714285714285,
-                    "node_score": 0.9906590580940247,
+                    "node_score": 0.990659087896347,
                     "verified_edges": [
                         {
                             "head": "Barack Obama",
@@ -259,7 +263,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-5": {
                 "0": {
@@ -322,7 +327,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-6": {
                 "0": {
@@ -362,7 +368,8 @@
                     1.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-7": {
                 "0": {
@@ -396,7 +403,8 @@
                     0.25,
                     0.25
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "cf-8": {
                 "0": {
@@ -430,7 +438,8 @@
                     0.25,
                     0.25
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "cf-9": {
                 "0": {
@@ -441,12 +450,12 @@
                         {
                             "head": "Kei Nishikori",
                             "type": "sport",
-                            "tail": "tennis"
+                            "tail": "tennis player"
                         },
                         {
                             "head": "Kei Nishikori",
                             "type": "sport",
-                            "tail": "tennis player"
+                            "tail": "tennis"
                         }
                     ]
                 },
@@ -470,7 +479,7 @@
                 "2": {
                     "choice": "Rafael Nadal",
                     "edge_score": 0.16666666666666666,
-                    "node_score": 0.9684928357601166,
+                    "node_score": 0.9684928258260092,
                     "verified_edges": [
                         {
                             "head": "Rafael Nadal",
@@ -492,14 +501,16 @@
                     0.0,
                     0.0
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.5
             }
         },
         "stats": {
             "correct": 6,
             "fail": 0,
             "unselectable": 4,
-            "total": 10
+            "total": 10,
+            "stochastic_accuracy": 0.725
         }
     },
     "hf": {
@@ -514,7 +525,7 @@
                 "1": {
                     "choice": "Rosa Parks",
                     "edge_score": 0.2,
-                    "node_score": 0.8330965489149094,
+                    "node_score": 0.8330965340137482,
                     "verified_edges": [
                         {
                             "head": "Rosa Parks",
@@ -525,18 +536,13 @@
                 },
                 "2": {
                     "choice": "Martin Luther King Jr.",
-                    "edge_score": 0.4,
+                    "edge_score": 0.2,
                     "node_score": 0.8841653764247894,
                     "verified_edges": [
                         {
                             "head": "I Have a Dream",
                             "type": "author",
                             "tail": "Martin Luther King Jr."
-                        },
-                        {
-                            "head": "Martin Luther King Jr.",
-                            "type": "movement",
-                            "tail": "American civil rights movement"
                         }
                     ]
                 },
@@ -553,7 +559,8 @@
                     1.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "hf-1": {
                 "0": {
@@ -587,7 +594,8 @@
                     0.25,
                     0.25
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "hf-2": {
                 "0": {
@@ -632,7 +640,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "hf-3": {
                 "0": {
@@ -677,7 +686,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "hf-4": {
                 "0": {
@@ -717,7 +727,8 @@
                     1.0,
                     0.0
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.0
             },
             "hf-5": {
                 "0": {
@@ -775,7 +786,8 @@
                     0.3333333333333333,
                     0.3333333333333333
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.3333333333333333
             },
             "hf-6": {
                 "0": {
@@ -796,14 +808,14 @@
                     "node_score": 0.9990824262301127,
                     "verified_edges": [
                         {
-                            "head": "Albert Einstein",
-                            "type": "notable work",
-                            "tail": "theory of relativity"
-                        },
-                        {
                             "head": "theory of relativity",
                             "type": "discoverer or inventor",
                             "tail": "Albert Einstein"
+                        },
+                        {
+                            "head": "Albert Einstein",
+                            "type": "notable work",
+                            "tail": "theory of relativity"
                         }
                     ]
                 },
@@ -820,7 +832,8 @@
                     1.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "hf-7": {
                 "0": {
@@ -878,13 +891,14 @@
                     0.25,
                     0.25
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "hf-8": {
                 "0": {
                     "choice": "Bessie Coleman",
                     "edge_score": 0.0,
-                    "node_score": 0.8859321177005768,
+                    "node_score": 0.885932132601738,
                     "verified_edges": []
                 },
                 "1": {
@@ -912,7 +926,8 @@
                     0.25,
                     0.25
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "hf-9": {
                 "0": {
@@ -943,14 +958,14 @@
                             "tail": "military strategy"
                         },
                         {
-                            "head": "The Art of War",
-                            "type": "main subject",
-                            "tail": "military strategy"
-                        },
-                        {
                             "head": "Sun Tzu",
                             "type": "notable work",
                             "tail": "The Art of War"
+                        },
+                        {
+                            "head": "The Art of War",
+                            "type": "main subject",
+                            "tail": "military strategy"
                         }
                     ]
                 },
@@ -967,14 +982,16 @@
                     1.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             }
         },
         "stats": {
             "correct": 5,
             "fail": 1,
             "unselectable": 4,
-            "total": 10
+            "total": 10,
+            "stochastic_accuracy": 0.6083333333333334
         }
     }
 }

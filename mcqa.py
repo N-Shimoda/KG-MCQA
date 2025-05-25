@@ -72,9 +72,11 @@ def collect_results(result_file: str, mcq_file: str):
     # Iterate over each category
     for cat in result.keys():
         counts = [0, 0, 0]  # [correct, incorrect, not_answered]
+        stoc_count = 0  # correct count with stochastic answering
         ans_data = result[cat]["questions"]
 
         for mcq_id in ans_data:
+            # deterministic answer (i.e. labels are correct, incorrect or unselectable)
             chosen_opt = ans_data[mcq_id]["answer"]
             correct_opt = mcqs[cat]["questions"][mcq_id]["answer"]
 
@@ -88,6 +90,11 @@ def collect_results(result_file: str, mcq_file: str):
                 ans_data[mcq_id]["correct"] = False
                 counts[1] += 1
 
+            # stochastic answer (i.e. choose one of the options randomly for 'unselectable' questions)
+            probs = ans_data[mcq_id]["probs"]
+            ans_data[mcq_id]["stochastic_score"] = probs[correct_opt]
+            stoc_count += probs[correct_opt]
+
         # save the count of correct answers for each category
         result[cat]["stats"] = dict()
         (
@@ -96,6 +103,7 @@ def collect_results(result_file: str, mcq_file: str):
             result[cat]["stats"]["unselectable"],
         ) = counts
         result[cat]["stats"]["total"] = len(ans_data.keys())
+        result[cat]["stats"]["stochastic_accuracy"] = stoc_count / len(ans_data)
 
     # save the result to a JSON file
     with open(result_file, "w") as f:
@@ -103,7 +111,7 @@ def collect_results(result_file: str, mcq_file: str):
 
     # create bar chart
     categories = result.keys()
-    scores = {cat: list(result[cat]["stats"].values()) for cat in categories}
+    scores = {cat: result[cat]["stats"] for cat in categories}
     ds_name = os.path.basename(mcq_file).split(".")[0]
     plot_bar_chart(categories, scores, title=ds_name, output_file=f"{os.path.dirname(result_file)}/accuracy.svg")
 

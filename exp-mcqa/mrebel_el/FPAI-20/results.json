@@ -16,17 +16,17 @@
                         {
                             "head": "Elon Musk",
                             "type": "employer",
+                            "tail": "Tesla"
+                        },
+                        {
+                            "head": "Elon Musk",
+                            "type": "employer",
                             "tail": "SpaceX"
                         },
                         {
                             "head": "SpaceX",
                             "type": "founded by",
                             "tail": "Elon Musk"
-                        },
-                        {
-                            "head": "Elon Musk",
-                            "type": "employer",
-                            "tail": "Tesla"
                         }
                     ]
                 },
@@ -49,7 +49,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-1": {
                 "0": {
@@ -89,7 +90,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-2": {
                 "0": {
@@ -129,7 +131,8 @@
                     0.0,
                     1.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-3": {
                 "0": {
@@ -187,7 +190,8 @@
                     0.25,
                     0.25
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "cf-4": {
                 "0": {
@@ -196,14 +200,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Barack Obama",
-                            "type": "position held",
-                            "tail": "President of the United States"
-                        },
-                        {
                             "head": "Joe Biden",
                             "type": "position held",
                             "tail": "Vice president"
+                        },
+                        {
+                            "head": "Barack Obama",
+                            "type": "position held",
+                            "tail": "President of the United States"
                         }
                     ]
                 },
@@ -255,7 +259,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.5
             },
             "cf-5": {
                 "0": {
@@ -295,7 +300,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-6": {
                 "0": {
@@ -335,7 +341,8 @@
                     1.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-7": {
                 "0": {
@@ -375,7 +382,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-8": {
                 "0": {
@@ -421,7 +429,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.5
             },
             "cf-9": {
                 "0": {
@@ -431,13 +440,13 @@
                     "verified_edges": [
                         {
                             "head": "Kei Nishikori",
-                            "type": "country of citizenship",
-                            "tail": "Japan"
+                            "type": "sport",
+                            "tail": "Tennis"
                         },
                         {
                             "head": "Kei Nishikori",
-                            "type": "sport",
-                            "tail": "Tennis"
+                            "type": "country of citizenship",
+                            "tail": "Japan"
                         }
                     ]
                 },
@@ -459,14 +468,14 @@
                     "node_score": 0.9516164575304303,
                     "verified_edges": [
                         {
-                            "head": "Rafael Nadal",
-                            "type": "sport",
-                            "tail": "Tennis"
-                        },
-                        {
                             "head": "Singles",
                             "type": "event interval",
                             "tail": "1"
+                        },
+                        {
+                            "head": "Rafael Nadal",
+                            "type": "sport",
+                            "tail": "Tennis"
                         }
                     ]
                 },
@@ -489,14 +498,16 @@
                     1.0,
                     0.0
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.0
             }
         },
         "stats": {
             "correct": 6,
             "fail": 1,
             "unselectable": 3,
-            "total": 10
+            "total": 10,
+            "stochastic_accuracy": 0.725
         }
     },
     "hf": {
@@ -545,7 +556,8 @@
                     0.5,
                     0.5
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.5
             },
             "hf-1": {
                 "0": {
@@ -579,7 +591,8 @@
                     0.25,
                     0.25
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "hf-2": {
                 "0": {
@@ -605,11 +618,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Socrates",
-                            "type": "occupation",
-                            "tail": "Philosophy"
-                        },
-                        {
                             "head": "Plato",
                             "type": "occupation",
                             "tail": "Philosophy"
@@ -618,6 +626,11 @@
                             "head": "Socrates",
                             "type": "student",
                             "tail": "Plato"
+                        },
+                        {
+                            "head": "Socrates",
+                            "type": "occupation",
+                            "tail": "Philosophy"
                         }
                     ]
                 },
@@ -652,7 +665,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "hf-3": {
                 "0": {
@@ -662,13 +676,13 @@
                     "verified_edges": [
                         {
                             "head": "Napoleon",
-                            "type": "position held",
-                            "tail": "Emperor of the French"
+                            "type": "conflict",
+                            "tail": "French Revolution"
                         },
                         {
                             "head": "Napoleon",
-                            "type": "conflict",
-                            "tail": "French Revolution"
+                            "type": "position held",
+                            "tail": "Emperor of the French"
                         }
                     ]
                 },
@@ -703,7 +717,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "hf-4": {
                 "0": {
@@ -713,20 +728,20 @@
                     "verified_edges": [
                         {
                             "head": "Jawaharlal Nehru",
-                            "type": "country of citizenship",
-                            "tail": "India"
+                            "type": "position held",
+                            "tail": "Indian leader"
                         },
                         {
                             "head": "Jawaharlal Nehru",
-                            "type": "position held",
-                            "tail": "Indian leader"
+                            "type": "country of citizenship",
+                            "tail": "India"
                         }
                     ]
                 },
                 "1": {
                     "choice": "Mahatma Gandhi",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 0.908109188079834,
+                    "node_score": 0.9081092029809952,
                     "verified_edges": [
                         {
                             "head": "Mahatma Gandhi",
@@ -759,7 +774,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.0
             },
             "hf-5": {
                 "0": {
@@ -775,7 +791,7 @@
                     "verified_edges": [
                         {
                             "head": "William Shakespeare",
-                            "type": "native language",
+                            "type": "languages spoken, written or signed",
                             "tail": "English language"
                         },
                         {
@@ -785,7 +801,7 @@
                         },
                         {
                             "head": "William Shakespeare",
-                            "type": "languages spoken, written or signed",
+                            "type": "native language",
                             "tail": "English language"
                         },
                         {
@@ -820,7 +836,8 @@
                     0.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "hf-6": {
                 "0": {
@@ -841,12 +858,12 @@
                     "node_score": 0.89259272813797,
                     "verified_edges": [
                         {
-                            "head": "Theory of relativity",
+                            "head": "Mass\u2013energy equivalence",
                             "type": "discoverer or inventor",
                             "tail": "Albert Einstein"
                         },
                         {
-                            "head": "Mass\u2013energy equivalence",
+                            "head": "Theory of relativity",
                             "type": "discoverer or inventor",
                             "tail": "Albert Einstein"
                         },
@@ -870,7 +887,8 @@
                     1.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "hf-7": {
                 "0": {
@@ -904,7 +922,8 @@
                     0.25,
                     0.25
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "hf-8": {
                 "0": {
@@ -938,7 +957,8 @@
                     0.25,
                     0.25
                 ],
-                "correct": false
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "hf-9": {
                 "0": {
@@ -959,9 +979,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "The Art of War",
-                            "type": "author",
-                            "tail": "Sun Tzu"
+                            "head": "Sun Tzu",
+                            "type": "notable work",
+                            "tail": "The Art of War"
                         },
                         {
                             "head": "Sun Tzu",
@@ -969,9 +989,9 @@
                             "tail": "Philosophy"
                         },
                         {
-                            "head": "Sun Tzu",
-                            "type": "notable work",
-                            "tail": "The Art of War"
+                            "head": "The Art of War",
+                            "type": "author",
+                            "tail": "Sun Tzu"
                         }
                     ]
                 },
@@ -994,14 +1014,16 @@
                     1.0,
                     0.0
                 ],
-                "correct": true
+                "correct": true,
+                "stochastic_score": 1.0
             }
         },
         "stats": {
             "correct": 5,
             "fail": 1,
             "unselectable": 4,
-            "total": 10
+            "total": 10,
+            "stochastic_accuracy": 0.625
         }
     }
 }

@@ -18,6 +18,11 @@ def plot_stats(stats: dict[str, dict], ds_name: str):
     # boxplot
     plt.figure(figsize=(5, 6) if len(categories) < 3 else (10, 6))
     plt.boxplot(word_counts, tick_labels=categories, showmeans=True, patch_artist=True)
+
+    # 平均値を計算してプロット上に数字で表示
+    for i, wc in enumerate(word_counts, 1):
+        mean_val = sum(wc) / len(wc) if wc else 0
+        plt.text(i, mean_val + 1, f"{mean_val:.1f}", ha="left", va="bottom", fontsize=10, color="orange")
     plt.ylim(0, 30)
 
     # graph settings
