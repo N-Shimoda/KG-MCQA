@@ -170,7 +170,7 @@ class MCQAGraphViewer:
                 st.table(
                     {
                         "Label": [":blue[**Correct**]", "Incorrect", "Unselectable", ":orange[(w/ Stochastic)]"],
-                        "Count": [f":blue[**{correct}**]", incorrect, unselectable, f":orange[{stoc_count}]"],
+                        "Count": [f":blue[**{correct}**]", incorrect, unselectable, f":orange[{stoc_count:.2f}]"],
                         "Accuracy": [
                             f":blue[**{correct / total :.1%}**]",
                             f"{incorrect / total :.1%}",

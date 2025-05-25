@@ -58,11 +58,11 @@ class ComparisonPage:
                 a2, e2, u2, sa2 = self.create_table(self.results2)
 
         # display metrics
-        a, b, c, d = st.columns(4)
+        a, b = st.columns(2)
         a.metric("Accuracy", f"{a2:.1%}", delta=f"{a2 - a1:.1%}", border=True)
-        b.metric("Incorrect", f"{e2:.1%}", delta=f"{e2 - e1:.1%}", border=True)
-        c.metric("Unselectable", f"{u2:.1%}", delta=f"{u2 - u1:.1%}", border=True)
-        d.metric("Stochastic Accuracy", f"{sa2:.1%}", delta=f"{sa2 - sa1:.1%}", border=True)
+        # b.metric("Incorrect", f"{e2:.1%}", delta=f"{e2 - e1:.1%}", border=True)
+        # c.metric("Unselectable", f"{u2:.1%}", delta=f"{u2 - u1:.1%}", border=True)
+        b.metric("Stochastic Accuracy", f"{sa2:.1%}", delta=f"{sa2 - sa1:.1%}", border=True)
 
     def _get_dataset_paths(self):
         json_files = sorted([f for f in self.dataset_dir.iterdir() if f.suffix == ".json"])
@@ -83,7 +83,7 @@ class ComparisonPage:
         st.table(
             {
                 "Label": [":blue[**Correct**]", "Incorrect", "Unselectable", ":orange[(w/ Stochastic)]"],
-                "Count": [f":blue[**{correct}**]", incorrect, unselectable, f":orange[{stoc_count}]"],
+                "Count": [f":blue[**{correct}**]", incorrect, unselectable, f":orange[{stoc_count:.2f}]"],
                 "Accuracy": [
                     f":blue[**{correct / total :.1%}**]",
                     f"{incorrect / total :.1%}",
