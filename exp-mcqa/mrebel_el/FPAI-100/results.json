@@ -119,14 +119,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Albert Einstein",
-                            "type": "notable work",
-                            "tail": "General relativity"
-                        },
-                        {
                             "head": "General relativity",
                             "type": "discoverer or inventor",
                             "tail": "Albert Einstein"
+                        },
+                        {
+                            "head": "Albert Einstein",
+                            "type": "notable work",
+                            "tail": "General relativity"
                         }
                     ]
                 },
@@ -172,12 +172,12 @@
                     "verified_edges": [
                         {
                             "head": "Mahatma Gandhi",
-                            "type": "residence",
+                            "type": "country of citizenship",
                             "tail": "India"
                         },
                         {
                             "head": "Mahatma Gandhi",
-                            "type": "country of citizenship",
+                            "type": "residence",
                             "tail": "India"
                         }
                     ]
@@ -218,8 +218,8 @@
                     "verified_edges": [
                         {
                             "head": "Aristotle",
-                            "type": "student",
-                            "tail": "Plato"
+                            "type": "occupation",
+                            "tail": "Philosophy"
                         },
                         {
                             "head": "Plato",
@@ -228,8 +228,8 @@
                         },
                         {
                             "head": "Aristotle",
-                            "type": "occupation",
-                            "tail": "Philosophy"
+                            "type": "student",
+                            "tail": "Plato"
                         },
                         {
                             "head": "Plato",
@@ -245,8 +245,18 @@
                     "verified_edges": [
                         {
                             "head": "Socrates",
+                            "type": "occupation",
+                            "tail": "Philosophy"
+                        },
+                        {
+                            "head": "Plato",
                             "type": "student",
-                            "tail": "Plato"
+                            "tail": "Socrates"
+                        },
+                        {
+                            "head": "Plato",
+                            "type": "occupation",
+                            "tail": "Philosophy"
                         },
                         {
                             "head": "Socrates",
@@ -254,24 +264,14 @@
                             "tail": "Western philosophy"
                         },
                         {
-                            "head": "Plato",
-                            "type": "student",
-                            "tail": "Socrates"
-                        },
-                        {
                             "head": "Socrates",
-                            "type": "occupation",
-                            "tail": "Philosophy"
+                            "type": "student",
+                            "tail": "Plato"
                         },
                         {
                             "head": "Plato",
                             "type": "influenced by",
                             "tail": "Socrates"
-                        },
-                        {
-                            "head": "Plato",
-                            "type": "occupation",
-                            "tail": "Philosophy"
                         }
                     ]
                 },
@@ -299,13 +299,13 @@
                         },
                         {
                             "head": "Plato",
-                            "type": "occupation",
-                            "tail": "Philosophy"
+                            "type": "influenced by",
+                            "tail": "Pythagoras"
                         },
                         {
                             "head": "Plato",
-                            "type": "influenced by",
-                            "tail": "Pythagoras"
+                            "type": "occupation",
+                            "tail": "Philosophy"
                         }
                     ]
                 },
@@ -379,11 +379,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Mona Lisa",
-                            "type": "creator",
-                            "tail": "Leonardo da Vinci"
-                        },
-                        {
                             "head": "Leonardo da Vinci",
                             "type": "occupation",
                             "tail": "Polymath"
@@ -392,6 +387,11 @@
                             "head": "Leonardo da Vinci",
                             "type": "notable work",
                             "tail": "Mona Lisa"
+                        },
+                        {
+                            "head": "Mona Lisa",
+                            "type": "creator",
+                            "tail": "Leonardo da Vinci"
                         }
                     ]
                 },
@@ -553,8 +553,8 @@
                         },
                         {
                             "head": "William Shakespeare",
-                            "type": "native language",
-                            "tail": "English language"
+                            "type": "occupation",
+                            "tail": "Poet"
                         },
                         {
                             "head": "William Shakespeare",
@@ -563,8 +563,8 @@
                         },
                         {
                             "head": "William Shakespeare",
-                            "type": "occupation",
-                            "tail": "Poet"
+                            "type": "native language",
+                            "tail": "English language"
                         }
                     ]
                 },
@@ -697,14 +697,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Natural selection",
-                            "type": "discoverer or inventor",
-                            "tail": "Charles Darwin"
-                        },
-                        {
                             "head": "Charles Darwin",
                             "type": "field of work",
                             "tail": "Natural history"
+                        },
+                        {
+                            "head": "Natural selection",
+                            "type": "discoverer or inventor",
+                            "tail": "Charles Darwin"
                         }
                     ]
                 },
@@ -946,7 +946,7 @@
                 "2": {
                     "choice": "Roger Penrose",
                     "edge_score": 0.0,
-                    "node_score": 0.913552188873291,
+                    "node_score": 0.913552212715149,
                     "verified_edges": []
                 },
                 "3": {
@@ -1110,13 +1110,13 @@
                             "tail": "Dictator"
                         },
                         {
-                            "head": "National Fascist Party",
-                            "type": "country",
-                            "tail": "Italy"
+                            "head": "Benito Mussolini",
+                            "type": "member of political party",
+                            "tail": "National Fascist Party"
                         },
                         {
-                            "head": "Benito Mussolini",
-                            "type": "country of citizenship",
+                            "head": "National Fascist Party",
+                            "type": "country",
                             "tail": "Italy"
                         },
                         {
@@ -1126,8 +1126,8 @@
                         },
                         {
                             "head": "Benito Mussolini",
-                            "type": "member of political party",
-                            "tail": "National Fascist Party"
+                            "type": "country of citizenship",
+                            "tail": "Italy"
                         }
                     ]
                 },
@@ -1185,6 +1185,11 @@
                     "verified_edges": [
                         {
                             "head": "Ludwig van Beethoven",
+                            "type": "occupation",
+                            "tail": "Composer"
+                        },
+                        {
+                            "head": "Ludwig van Beethoven",
                             "type": "country of citizenship",
                             "tail": "German"
                         },
@@ -1192,11 +1197,6 @@
                             "head": "Ludwig van Beethoven",
                             "type": "occupation",
                             "tail": "Pianist"
-                        },
-                        {
-                            "head": "Ludwig van Beethoven",
-                            "type": "occupation",
-                            "tail": "Composer"
                         }
                     ]
                 },
@@ -1254,13 +1254,13 @@
                     "verified_edges": [
                         {
                             "head": "Zeus",
-                            "type": "worshipped by",
-                            "tail": "Greek mythology"
+                            "type": "instance of",
+                            "tail": "God"
                         },
                         {
                             "head": "Zeus",
-                            "type": "instance of",
-                            "tail": "God"
+                            "type": "worshipped by",
+                            "tail": "Greek mythology"
                         }
                     ]
                 },
@@ -1370,16 +1370,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Qin Shi Huang",
-                            "type": "family",
-                            "tail": "Qin dynasty"
-                        },
-                        {
-                            "head": "Qin Shi Huang",
-                            "type": "position held",
-                            "tail": "Emperor of China"
-                        },
-                        {
                             "head": "Qin dynasty",
                             "type": "founded by",
                             "tail": "Qin Shi Huang"
@@ -1388,6 +1378,16 @@
                             "head": "Qin Shi Huang",
                             "type": "country of citizenship",
                             "tail": "Qin dynasty"
+                        },
+                        {
+                            "head": "Qin Shi Huang",
+                            "type": "family",
+                            "tail": "Qin dynasty"
+                        },
+                        {
+                            "head": "Qin Shi Huang",
+                            "type": "position held",
+                            "tail": "Emperor of China"
                         }
                     ]
                 },
@@ -1597,7 +1597,7 @@
                 "0": {
                     "choice": "Coco Chanel",
                     "edge_score": 0.0,
-                    "node_score": 0.9269526451826096,
+                    "node_score": 0.9269526153802872,
                     "verified_edges": []
                 },
                 "1": {
@@ -1729,14 +1729,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Psychoanalysis",
-                            "type": "author",
-                            "tail": "Sigmund Freud"
-                        },
-                        {
                             "head": "Sigmund Freud",
                             "type": "field of work",
                             "tail": "Psychoanalysis"
+                        },
+                        {
+                            "head": "Psychoanalysis",
+                            "type": "author",
+                            "tail": "Sigmund Freud"
                         }
                     ]
                 },
@@ -1886,13 +1886,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Napoleon",
-                            "type": "conflict",
+                            "head": "Reign of Terror",
+                            "type": "part of",
                             "tail": "French Revolution"
                         },
                         {
-                            "head": "Reign of Terror",
-                            "type": "part of",
+                            "head": "Napoleon",
+                            "type": "conflict",
                             "tail": "French Revolution"
                         }
                     ]
@@ -1915,13 +1915,13 @@
                     "verified_edges": [
                         {
                             "head": "October Revolution",
-                            "type": "country",
-                            "tail": "Soviet Union"
+                            "type": "participant",
+                            "tail": "Vladimir Lenin"
                         },
                         {
                             "head": "October Revolution",
-                            "type": "participant",
-                            "tail": "Vladimir Lenin"
+                            "type": "country",
+                            "tail": "Soviet Union"
                         }
                     ]
                 },
@@ -1931,13 +1931,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "October Revolution",
-                            "type": "country",
+                            "head": "Joseph Stalin",
+                            "type": "country of citizenship",
                             "tail": "Soviet Union"
                         },
                         {
-                            "head": "Joseph Stalin",
-                            "type": "country of citizenship",
+                            "head": "October Revolution",
+                            "type": "country",
                             "tail": "Soviet Union"
                         }
                     ]
@@ -1948,13 +1948,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "October Revolution",
-                            "type": "country",
+                            "head": "Leon Trotsky",
+                            "type": "country of citizenship",
                             "tail": "Soviet Union"
                         },
                         {
-                            "head": "Leon Trotsky",
-                            "type": "country of citizenship",
+                            "head": "October Revolution",
+                            "type": "country",
                             "tail": "Soviet Union"
                         }
                     ]
@@ -1965,13 +1965,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "October Revolution",
-                            "type": "country",
+                            "head": "Mikhail Gorbachev",
+                            "type": "country of citizenship",
                             "tail": "Soviet Union"
                         },
                         {
-                            "head": "Mikhail Gorbachev",
-                            "type": "country of citizenship",
+                            "head": "October Revolution",
+                            "type": "country",
                             "tail": "Soviet Union"
                         }
                     ]
@@ -2002,7 +2002,7 @@
                 "1": {
                     "choice": "Galileo Galilei",
                     "edge_score": 0.16666666666666666,
-                    "node_score": 0.9391412734985352,
+                    "node_score": 0.9391412436962128,
                     "verified_edges": [
                         {
                             "head": "Galileo Galilei",
@@ -2040,6 +2040,11 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Odysseus",
+                            "type": "conflict",
+                            "tail": "Trojan War"
+                        },
+                        {
                             "head": "Odyssey",
                             "type": "characters",
                             "tail": "Odysseus"
@@ -2048,11 +2053,6 @@
                             "head": "Trojan War",
                             "type": "part of",
                             "tail": "Greek mythology"
-                        },
-                        {
-                            "head": "Odysseus",
-                            "type": "conflict",
-                            "tail": "Trojan War"
                         }
                     ]
                 },
@@ -2079,14 +2079,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Trojan War",
-                            "type": "part of",
-                            "tail": "Greek mythology"
-                        },
-                        {
                             "head": "Agamemnon",
                             "type": "conflict",
                             "tail": "Trojan War"
+                        },
+                        {
+                            "head": "Trojan War",
+                            "type": "part of",
+                            "tail": "Greek mythology"
                         }
                     ]
                 },
@@ -2096,14 +2096,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Trojan War",
-                            "type": "part of",
-                            "tail": "Greek mythology"
-                        },
-                        {
                             "head": "Hector",
                             "type": "conflict",
                             "tail": "Trojan War"
+                        },
+                        {
+                            "head": "Trojan War",
+                            "type": "part of",
+                            "tail": "Greek mythology"
                         }
                     ]
                 },
@@ -2124,18 +2124,18 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "World War II",
-                            "type": "has cause",
-                            "tail": "Adolf Hitler"
-                        },
-                        {
                             "head": "Adolf Hitler",
-                            "type": "country of citizenship",
-                            "tail": "Nazi Germany"
+                            "type": "conflict",
+                            "tail": "World War II"
                         },
                         {
                             "head": "Nazi Germany",
                             "type": "head of state",
+                            "tail": "Adolf Hitler"
+                        },
+                        {
+                            "head": "World War II",
+                            "type": "has cause",
                             "tail": "Adolf Hitler"
                         },
                         {
@@ -2145,8 +2145,8 @@
                         },
                         {
                             "head": "Adolf Hitler",
-                            "type": "conflict",
-                            "tail": "World War II"
+                            "type": "country of citizenship",
+                            "tail": "Nazi Germany"
                         }
                     ]
                 },
@@ -2157,13 +2157,13 @@
                     "verified_edges": [
                         {
                             "head": "Benito Mussolini",
-                            "type": "position held",
-                            "tail": "Dictator"
+                            "type": "conflict",
+                            "tail": "World War II"
                         },
                         {
                             "head": "Benito Mussolini",
-                            "type": "conflict",
-                            "tail": "World War II"
+                            "type": "position held",
+                            "tail": "Dictator"
                         },
                         {
                             "head": "World War II",
@@ -2190,9 +2190,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Hermann G\u00f6ring",
-                            "type": "country of citizenship",
-                            "tail": "Nazi Germany"
+                            "head": "Nazi Germany",
+                            "type": "head of state",
+                            "tail": "Hermann G\u00f6ring"
                         },
                         {
                             "head": "World War II",
@@ -2200,9 +2200,9 @@
                             "tail": "Nazi Germany"
                         },
                         {
-                            "head": "Nazi Germany",
-                            "type": "head of state",
-                            "tail": "Hermann G\u00f6ring"
+                            "head": "Hermann G\u00f6ring",
+                            "type": "country of citizenship",
+                            "tail": "Nazi Germany"
                         }
                     ]
                 },
@@ -2287,7 +2287,7 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Sistine Chapel",
+                            "head": "Sistine Chapel ceiling",
                             "type": "creator",
                             "tail": "Michelangelo"
                         },
@@ -2297,7 +2297,7 @@
                             "tail": "Sistine Chapel ceiling"
                         },
                         {
-                            "head": "Sistine Chapel ceiling",
+                            "head": "Sistine Chapel",
                             "type": "creator",
                             "tail": "Michelangelo"
                         }
@@ -2374,8 +2374,8 @@
                     "verified_edges": [
                         {
                             "head": "Julius Caesar",
-                            "type": "occupation",
-                            "tail": "Statesman"
+                            "type": "allegiance",
+                            "tail": "Roman"
                         },
                         {
                             "head": "Julius Caesar",
@@ -2384,8 +2384,8 @@
                         },
                         {
                             "head": "Julius Caesar",
-                            "type": "allegiance",
-                            "tail": "Roman"
+                            "type": "occupation",
+                            "tail": "Statesman"
                         }
                     ]
                 },
@@ -2437,12 +2437,12 @@
                     "verified_edges": [
                         {
                             "head": "Confucianism",
-                            "type": "founded by",
+                            "type": "named after",
                             "tail": "Confucius"
                         },
                         {
                             "head": "Confucianism",
-                            "type": "named after",
+                            "type": "founded by",
                             "tail": "Confucius"
                         }
                     ]
@@ -2552,13 +2552,13 @@
                         },
                         {
                             "head": "Friedrich Nietzsche",
-                            "type": "movement",
-                            "tail": "Existentialism"
+                            "type": "occupation",
+                            "tail": "Philosophy"
                         },
                         {
                             "head": "Friedrich Nietzsche",
-                            "type": "occupation",
-                            "tail": "Philosophy"
+                            "type": "movement",
+                            "tail": "Existentialism"
                         }
                     ]
                 },
@@ -2593,13 +2593,13 @@
                     "verified_edges": [
                         {
                             "head": "Arthur Schopenhauer",
-                            "type": "occupation",
-                            "tail": "Philosophy"
+                            "type": "country of citizenship",
+                            "tail": "German"
                         },
                         {
                             "head": "Arthur Schopenhauer",
-                            "type": "country of citizenship",
-                            "tail": "German"
+                            "type": "occupation",
+                            "tail": "Philosophy"
                         }
                     ]
                 },
@@ -2620,12 +2620,12 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Sense and Sensibility",
+                            "head": "Pride and Prejudice",
                             "type": "author",
                             "tail": "Jane Austen"
                         },
                         {
-                            "head": "Pride and Prejudice",
+                            "head": "Sense and Sensibility",
                             "type": "author",
                             "tail": "Jane Austen"
                         }
@@ -2675,7 +2675,7 @@
                 "2": {
                     "choice": "Ferdinand Magellan",
                     "edge_score": 0.0,
-                    "node_score": 0.9660425186157227,
+                    "node_score": 0.9660425335168839,
                     "verified_edges": []
                 },
                 "3": {
@@ -2701,6 +2701,11 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Islam",
+                            "type": "founded by",
+                            "tail": "Muhammad"
+                        },
+                        {
                             "head": "Muhammad",
                             "type": "religion",
                             "tail": "Islam"
@@ -2709,11 +2714,6 @@
                             "head": "Muhammad",
                             "type": "occupation",
                             "tail": "Prophet"
-                        },
-                        {
-                            "head": "Islam",
-                            "type": "founded by",
-                            "tail": "Muhammad"
                         }
                     ]
                 },
@@ -2758,14 +2758,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Buddhism",
-                            "type": "founded by",
-                            "tail": "The Buddha"
-                        },
-                        {
                             "head": "The Buddha",
                             "type": "part of",
                             "tail": "Buddhism"
+                        },
+                        {
+                            "head": "Buddhism",
+                            "type": "founded by",
+                            "tail": "The Buddha"
                         }
                     ]
                 },
@@ -2863,9 +2863,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Pyotr Ilyich Tchaikovsky",
-                            "type": "notable work",
-                            "tail": "The Nutcracker"
+                            "head": "The Nutcracker",
+                            "type": "composer",
+                            "tail": "Pyotr Ilyich Tchaikovsky"
                         },
                         {
                             "head": "Pyotr Ilyich Tchaikovsky",
@@ -2873,9 +2873,9 @@
                             "tail": "Composer"
                         },
                         {
-                            "head": "The Nutcracker",
-                            "type": "composer",
-                            "tail": "Pyotr Ilyich Tchaikovsky"
+                            "head": "Pyotr Ilyich Tchaikovsky",
+                            "type": "notable work",
+                            "tail": "The Nutcracker"
                         }
                     ]
                 },
@@ -3021,12 +3021,12 @@
                     "verified_edges": [
                         {
                             "head": "Morse code",
-                            "type": "discoverer or inventor",
+                            "type": "named after",
                             "tail": "Samuel Morse"
                         },
                         {
                             "head": "Morse code",
-                            "type": "named after",
+                            "type": "discoverer or inventor",
                             "tail": "Samuel Morse"
                         },
                         {
@@ -3118,9 +3118,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Psychoanalysis",
-                            "type": "author",
-                            "tail": "Sigmund Freud"
+                            "head": "Sigmund Freud",
+                            "type": "field of work",
+                            "tail": "Psychoanalysis"
                         },
                         {
                             "head": "Sigmund Freud",
@@ -3128,9 +3128,9 @@
                             "tail": "Austria"
                         },
                         {
-                            "head": "Sigmund Freud",
-                            "type": "field of work",
-                            "tail": "Psychoanalysis"
+                            "head": "Psychoanalysis",
+                            "type": "author",
+                            "tail": "Sigmund Freud"
                         }
                     ]
                 },
@@ -3141,13 +3141,13 @@
                     "verified_edges": [
                         {
                             "head": "Carl Jung",
-                            "type": "occupation",
-                            "tail": "Psychiatrist"
+                            "type": "field of work",
+                            "tail": "Psychoanalysis"
                         },
                         {
                             "head": "Carl Jung",
-                            "type": "field of work",
-                            "tail": "Psychoanalysis"
+                            "type": "occupation",
+                            "tail": "Psychiatrist"
                         }
                     ]
                 },
@@ -3249,9 +3249,9 @@
                             "tail": "President of South Africa"
                         },
                         {
-                            "head": "Nelson Mandela",
-                            "type": "country of citizenship",
-                            "tail": "South Africa"
+                            "head": "South Africa",
+                            "type": "office held by head of state",
+                            "tail": "President of South Africa"
                         },
                         {
                             "head": "President of South Africa",
@@ -3259,9 +3259,9 @@
                             "tail": "South Africa"
                         },
                         {
-                            "head": "South Africa",
-                            "type": "office held by head of state",
-                            "tail": "President of South Africa"
+                            "head": "Nelson Mandela",
+                            "type": "country of citizenship",
+                            "tail": "South Africa"
                         },
                         {
                             "head": "South Africa",
@@ -3276,14 +3276,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "President of South Africa",
-                            "type": "country",
-                            "tail": "South Africa"
-                        },
-                        {
                             "head": "South Africa",
                             "type": "office held by head of state",
                             "tail": "President of South Africa"
+                        },
+                        {
+                            "head": "President of South Africa",
+                            "type": "country",
+                            "tail": "South Africa"
                         }
                     ]
                 },
@@ -3298,14 +3298,14 @@
                             "tail": "South Africa"
                         },
                         {
-                            "head": "President of South Africa",
-                            "type": "country",
-                            "tail": "South Africa"
-                        },
-                        {
                             "head": "South Africa",
                             "type": "office held by head of state",
                             "tail": "President of South Africa"
+                        },
+                        {
+                            "head": "President of South Africa",
+                            "type": "country",
+                            "tail": "South Africa"
                         }
                     ]
                 },
@@ -3315,24 +3315,24 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "South Africa",
+                            "type": "office held by head of state",
+                            "tail": "President of South Africa"
+                        },
+                        {
                             "head": "President of South Africa",
                             "type": "country",
                             "tail": "South Africa"
                         },
                         {
                             "head": "Jacob Zuma",
-                            "type": "position held",
-                            "tail": "President of South Africa"
-                        },
-                        {
-                            "head": "South Africa",
-                            "type": "office held by head of state",
-                            "tail": "President of South Africa"
+                            "type": "country of citizenship",
+                            "tail": "South Africa"
                         },
                         {
                             "head": "Jacob Zuma",
-                            "type": "country of citizenship",
-                            "tail": "South Africa"
+                            "type": "position held",
+                            "tail": "President of South Africa"
                         }
                     ]
                 },
@@ -3421,7 +3421,7 @@
                 "2": {
                     "choice": "Zhou Enlai",
                     "edge_score": 0.0,
-                    "node_score": 0.8526880815625191,
+                    "node_score": 0.8526880890130997,
                     "verified_edges": []
                 },
                 "3": {
@@ -3546,14 +3546,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "X-ray",
-                            "type": "discoverer or inventor",
-                            "tail": "Wilhelm R\u00f6ntgen"
-                        },
-                        {
                             "head": "Wilhelm R\u00f6ntgen",
                             "type": "occupation",
                             "tail": "Physicist"
+                        },
+                        {
+                            "head": "X-ray",
+                            "type": "discoverer or inventor",
+                            "tail": "Wilhelm R\u00f6ntgen"
                         },
                         {
                             "head": "Wilhelm R\u00f6ntgen",
@@ -3666,9 +3666,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Samurai",
-                            "type": "country",
-                            "tail": "Japan"
+                            "head": "Oda Nobunaga",
+                            "type": "position held",
+                            "tail": "Daimyo"
                         },
                         {
                             "head": "Daimyo",
@@ -3676,9 +3676,9 @@
                             "tail": "Japan"
                         },
                         {
-                            "head": "Oda Nobunaga",
-                            "type": "position held",
-                            "tail": "Daimyo"
+                            "head": "Samurai",
+                            "type": "country",
+                            "tail": "Japan"
                         },
                         {
                             "head": "Oda Nobunaga",
@@ -3693,9 +3693,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Toyotomi Hideyoshi",
-                            "type": "position held",
-                            "tail": "Daimyo"
+                            "head": "Daimyo",
+                            "type": "country",
+                            "tail": "Japan"
                         },
                         {
                             "head": "Samurai",
@@ -3703,14 +3703,14 @@
                             "tail": "Japan"
                         },
                         {
-                            "head": "Daimyo",
-                            "type": "country",
-                            "tail": "Japan"
-                        },
-                        {
                             "head": "Toyotomi Hideyoshi",
                             "type": "occupation",
                             "tail": "Samurai"
+                        },
+                        {
+                            "head": "Toyotomi Hideyoshi",
+                            "type": "position held",
+                            "tail": "Daimyo"
                         }
                     ]
                 },
@@ -3720,11 +3720,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Tokugawa Ieyasu",
-                            "type": "country of citizenship",
-                            "tail": "Japan"
-                        },
-                        {
                             "head": "Samurai",
                             "type": "country",
                             "tail": "Japan"
@@ -3733,6 +3728,11 @@
                             "head": "Tokugawa Ieyasu",
                             "type": "position held",
                             "tail": "Daimyo"
+                        },
+                        {
+                            "head": "Tokugawa Ieyasu",
+                            "type": "country of citizenship",
+                            "tail": "Japan"
                         }
                     ]
                 },
@@ -3812,9 +3812,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Virgil",
-                            "type": "occupation",
-                            "tail": "Poet"
+                            "head": "Aeneid",
+                            "type": "author",
+                            "tail": "Virgil"
                         },
                         {
                             "head": "Virgil",
@@ -3823,13 +3823,13 @@
                         },
                         {
                             "head": "Virgil",
-                            "type": "country of citizenship",
-                            "tail": "Roman"
+                            "type": "occupation",
+                            "tail": "Poet"
                         },
                         {
-                            "head": "Aeneid",
-                            "type": "author",
-                            "tail": "Virgil"
+                            "head": "Virgil",
+                            "type": "country of citizenship",
+                            "tail": "Roman"
                         }
                     ]
                 },
@@ -3840,13 +3840,13 @@
                     "verified_edges": [
                         {
                             "head": "Ovid",
-                            "type": "country of citizenship",
-                            "tail": "Roman"
+                            "type": "occupation",
+                            "tail": "Poet"
                         },
                         {
                             "head": "Ovid",
-                            "type": "occupation",
-                            "tail": "Poet"
+                            "type": "country of citizenship",
+                            "tail": "Roman"
                         }
                     ]
                 },
@@ -3995,8 +3995,8 @@
                     "verified_edges": [
                         {
                             "head": "Ludwig van Beethoven",
-                            "type": "genre",
-                            "tail": "Symphony"
+                            "type": "occupation",
+                            "tail": "Composer"
                         },
                         {
                             "head": "Ludwig van Beethoven",
@@ -4005,13 +4005,13 @@
                         },
                         {
                             "head": "Ludwig van Beethoven",
-                            "type": "occupation",
-                            "tail": "Pianist"
+                            "type": "genre",
+                            "tail": "Symphony"
                         },
                         {
                             "head": "Ludwig van Beethoven",
                             "type": "occupation",
-                            "tail": "Composer"
+                            "tail": "Pianist"
                         }
                     ]
                 },
@@ -4116,8 +4116,8 @@
                     "verified_edges": [
                         {
                             "head": "Aristotle",
-                            "type": "student",
-                            "tail": "Plato"
+                            "type": "occupation",
+                            "tail": "Philosophy"
                         },
                         {
                             "head": "Plato",
@@ -4126,8 +4126,8 @@
                         },
                         {
                             "head": "Aristotle",
-                            "type": "occupation",
-                            "tail": "Philosophy"
+                            "type": "student",
+                            "tail": "Plato"
                         },
                         {
                             "head": "Plato",
@@ -4143,8 +4143,8 @@
                     "verified_edges": [
                         {
                             "head": "Socrates",
-                            "type": "student",
-                            "tail": "Plato"
+                            "type": "occupation",
+                            "tail": "Philosophy"
                         },
                         {
                             "head": "Plato",
@@ -4152,14 +4152,14 @@
                             "tail": "Socrates"
                         },
                         {
-                            "head": "Socrates",
+                            "head": "Plato",
                             "type": "occupation",
                             "tail": "Philosophy"
                         },
                         {
-                            "head": "Plato",
-                            "type": "occupation",
-                            "tail": "Philosophy"
+                            "head": "Socrates",
+                            "type": "student",
+                            "tail": "Plato"
                         }
                     ]
                 },
@@ -4210,13 +4210,13 @@
                     "verified_edges": [
                         {
                             "head": "Claude Monet",
-                            "type": "notable work",
-                            "tail": "Impression, Sunrise"
-                        },
-                        {
-                            "head": "Claude Monet",
                             "type": "movement",
                             "tail": "Impressionism"
+                        },
+                        {
+                            "head": "Impressionism",
+                            "type": "discoverer or inventor",
+                            "tail": "Claude Monet"
                         },
                         {
                             "head": "Impression, Sunrise",
@@ -4224,9 +4224,9 @@
                             "tail": "Claude Monet"
                         },
                         {
-                            "head": "Impressionism",
-                            "type": "discoverer or inventor",
-                            "tail": "Claude Monet"
+                            "head": "Claude Monet",
+                            "type": "notable work",
+                            "tail": "Impression, Sunrise"
                         }
                     ]
                 },
@@ -4325,6 +4325,11 @@
                     "verified_edges": [
                         {
                             "head": "Napoleon",
+                            "type": "conflict",
+                            "tail": "Napoleonic Wars"
+                        },
+                        {
+                            "head": "Napoleon",
                             "type": "position held",
                             "tail": "Emperor of the French"
                         },
@@ -4332,11 +4337,6 @@
                             "head": "Napoleonic Wars",
                             "type": "named after",
                             "tail": "Napoleon"
-                        },
-                        {
-                            "head": "Napoleon",
-                            "type": "conflict",
-                            "tail": "Napoleonic Wars"
                         }
                     ]
                 },
@@ -4417,13 +4417,13 @@
                     "verified_edges": [
                         {
                             "head": "Charles Darwin",
-                            "type": "occupation",
-                            "tail": "Biologist"
+                            "type": "field of work",
+                            "tail": "Natural history"
                         },
                         {
                             "head": "Charles Darwin",
-                            "type": "field of work",
-                            "tail": "Natural history"
+                            "type": "occupation",
+                            "tail": "Biologist"
                         }
                     ]
                 },
@@ -4586,13 +4586,13 @@
                     "verified_edges": [
                         {
                             "head": "Marie Curie",
-                            "type": "occupation",
-                            "tail": "Chemist"
+                            "type": "country of citizenship",
+                            "tail": "French"
                         },
                         {
                             "head": "Marie Curie",
-                            "type": "country of citizenship",
-                            "tail": "French"
+                            "type": "occupation",
+                            "tail": "Chemist"
                         }
                     ]
                 },
@@ -4854,14 +4854,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Eine kleine Nachtmusik",
+                            "head": "The Magic Flute",
                             "type": "composer",
                             "tail": "Wolfgang Amadeus Mozart"
-                        },
-                        {
-                            "head": "Wolfgang Amadeus Mozart",
-                            "type": "occupation",
-                            "tail": "Composer"
                         },
                         {
                             "head": "Wolfgang Amadeus Mozart",
@@ -4869,9 +4864,14 @@
                             "tail": "Opera"
                         },
                         {
-                            "head": "The Magic Flute",
+                            "head": "Eine kleine Nachtmusik",
                             "type": "composer",
                             "tail": "Wolfgang Amadeus Mozart"
+                        },
+                        {
+                            "head": "The Magic Flute",
+                            "type": "instance of",
+                            "tail": "Opera"
                         },
                         {
                             "head": "Wolfgang Amadeus Mozart",
@@ -4879,9 +4879,9 @@
                             "tail": "The Magic Flute"
                         },
                         {
-                            "head": "The Magic Flute",
-                            "type": "instance of",
-                            "tail": "Opera"
+                            "head": "Wolfgang Amadeus Mozart",
+                            "type": "occupation",
+                            "tail": "Composer"
                         }
                     ]
                 },
@@ -4891,9 +4891,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Ludwig van Beethoven",
-                            "type": "occupation",
-                            "tail": "Composer"
+                            "head": "The Magic Flute",
+                            "type": "instance of",
+                            "tail": "Opera"
                         },
                         {
                             "head": "Ludwig van Beethoven",
@@ -4901,9 +4901,9 @@
                             "tail": "Symphony"
                         },
                         {
-                            "head": "The Magic Flute",
-                            "type": "instance of",
-                            "tail": "Opera"
+                            "head": "Ludwig van Beethoven",
+                            "type": "occupation",
+                            "tail": "Composer"
                         }
                     ]
                 },
@@ -4913,14 +4913,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Joseph Haydn",
-                            "type": "occupation",
-                            "tail": "Composer"
-                        },
-                        {
                             "head": "The Magic Flute",
                             "type": "instance of",
                             "tail": "Opera"
+                        },
+                        {
+                            "head": "Joseph Haydn",
+                            "type": "occupation",
+                            "tail": "Composer"
                         }
                     ]
                 },
@@ -4930,14 +4930,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Franz Schubert",
-                            "type": "occupation",
-                            "tail": "Composer"
-                        },
-                        {
                             "head": "The Magic Flute",
                             "type": "instance of",
                             "tail": "Opera"
+                        },
+                        {
+                            "head": "Franz Schubert",
+                            "type": "occupation",
+                            "tail": "Composer"
                         }
                     ]
                 },
@@ -5010,14 +5010,14 @@
                     "node_score": 0.8959751307964325,
                     "verified_edges": [
                         {
-                            "head": "Theory of relativity",
-                            "type": "discoverer or inventor",
-                            "tail": "Albert Einstein"
-                        },
-                        {
                             "head": "Albert Einstein",
                             "type": "notable work",
                             "tail": "Theory of relativity"
+                        },
+                        {
+                            "head": "Theory of relativity",
+                            "type": "discoverer or inventor",
+                            "tail": "Albert Einstein"
                         }
                     ]
                 },
@@ -5036,7 +5036,7 @@
                 "2": {
                     "choice": "Isaac Newton",
                     "edge_score": 0.0,
-                    "node_score": 0.7972770988941192,
+                    "node_score": 0.7972770810127259,
                     "verified_edges": []
                 },
                 "3": {
@@ -5110,12 +5110,12 @@
                     "verified_edges": [
                         {
                             "head": "Mahatma Gandhi",
-                            "type": "residence",
+                            "type": "country of citizenship",
                             "tail": "India"
                         },
                         {
                             "head": "Mahatma Gandhi",
-                            "type": "country of citizenship",
+                            "type": "residence",
                             "tail": "India"
                         }
                     ]
@@ -5260,14 +5260,14 @@
                     "node_score": 0.9720927953720093,
                     "verified_edges": [
                         {
-                            "head": "Vincent van Gogh",
-                            "type": "movement",
-                            "tail": "Post-Impressionism"
-                        },
-                        {
                             "head": "The Starry Night",
                             "type": "creator",
                             "tail": "Vincent van Gogh"
+                        },
+                        {
+                            "head": "Vincent van Gogh",
+                            "type": "movement",
+                            "tail": "Post-Impressionism"
                         }
                     ]
                 },
@@ -5311,14 +5311,14 @@
                             "tail": "Theoretical physics"
                         },
                         {
-                            "head": "Theory of relativity",
-                            "type": "discoverer or inventor",
-                            "tail": "Albert Einstein"
-                        },
-                        {
                             "head": "Albert Einstein",
                             "type": "notable work",
                             "tail": "Theory of relativity"
+                        },
+                        {
+                            "head": "Theory of relativity",
+                            "type": "discoverer or inventor",
+                            "tail": "Albert Einstein"
                         }
                     ]
                 },
@@ -5382,12 +5382,12 @@
                         {
                             "head": "Galileo Galilei",
                             "type": "occupation",
-                            "tail": "Physicist"
+                            "tail": "Astronomer"
                         },
                         {
                             "head": "Galileo Galilei",
                             "type": "occupation",
-                            "tail": "Astronomer"
+                            "tail": "Physicist"
                         }
                     ]
                 },
