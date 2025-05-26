@@ -33,7 +33,7 @@ def plot_bar_chart(
     ValueError
         If output_file does not end with ".svg".
     """
-    if not output_file.endswith(".svg"):
+    if not output_file.endswith(".svg") and not output_file.endswith(".eps"):
         raise ValueError("Output file should be in SVG format for article quality.")
 
     # Percentage data
@@ -73,7 +73,7 @@ def plot_bar_chart(
         index + (bar_width + gap) / 2,
         stoch_accuracy,
         bar_width,
-        label="Stochastic Accuracy",
+        label="Stochastic",
         color="orange",
         alpha=0.7,
     )
@@ -105,81 +105,11 @@ def plot_bar_chart(
 
     # overall
     ax.legend(fontsize=14)
+    # legend = ax.legend(fontsize=14)
+    # legend.get_frame().set_alpha(0.5)  # Set legend background more opaque (0=transparent, 1=opaque)
     plt.title(title, fontdict={"fontsize": 16})
     plt.tight_layout()
     plt.savefig(output_file, format="svg")
-
-
-# def plot_barchart_stochastic(
-#     categories: list[str], scores: dict[str, dict[str, int | float]], title: str, output_file: str
-# ):
-#     """
-#     Draws a stacked bar chart showing the percentage of Correct, Incorrect, and Unselectable for each category,
-#     including stochastic accuracy.
-
-#     Parameters
-#     ----------
-#     categories : list[str]
-#         List of category names to be shown on the x-axis.
-#     scores : dict[str, dict[str, int | float]]
-#         Dictionary where each key is a category name and the value is a dictionary with keys:
-#         - "correct": number of correct answers
-#         - "fail": number of incorrect answers
-#         - "unselectable": number of unselectable answers
-#         - "total": total number of samples
-#         - "stochastic_accuracy": stochastic accuracy as a float (0-1)
-#     title : str
-#         Title of the chart.
-#     output_file : str
-#         Output file path (must end with .svg).
-#     """
-#     if not output_file.endswith(".svg"):
-#         raise ValueError("Output file should be in SVG format for article quality.")
-
-#     # Calculate percentages for stacked bars
-#     stoch_accuracy = [scores[cat]["stochastic_accuracy"] * 100 for cat in categories]
-
-#     n_categories = len(categories)
-#     index = np.arange(n_categories)
-#     bar_width = 0.6
-
-#     _, ax = plt.subplots(figsize=(12, 6))
-
-#     # Stacked bars
-#     bars_stoc_accuracy = ax.bar(
-#         index, stoch_accuracy, bar_width, label="Stochastic Accuracy", color="orange", alpha=0.7
-#     )
-
-#     # Display values
-#     for bars in [bars_stoc_accuracy]:
-#         for bar in bars:
-#             height = bar.get_height()
-#             if height > 0:
-#                 ax.text(
-#                     bar.get_x() + bar.get_width() / 2.0,
-#                     bar.get_y() + height / 2.0,
-#                     f"{height:.1f}",
-#                     ha="center",
-#                     va="center",
-#                     fontsize=14,
-#                 )
-
-#     # x axis
-#     plt.xlabel("Categories", fontdict={"fontsize": 14})
-#     ax.set_xticks(index)
-#     ax.set_xticklabels(categories, rotation=20, fontdict={"fontsize": 14})
-
-#     # y axis
-#     ax.set_ylabel("Percentile (%)", fontdict={"fontsize": 14})
-#     ax.set_ylim(0, 105)
-#     ax.tick_params(axis="y", labelsize=14)
-#     ax.grid(True, axis="y", linestyle="--", alpha=0.5)
-
-#     # overall
-#     ax.legend(fontsize=14)
-#     plt.title(title, fontdict={"fontsize": 16})
-#     plt.tight_layout()
-#     plt.savefig(output_file, format="svg")
 
 
 if __name__ == "__main__":
@@ -196,7 +126,3 @@ if __name__ == "__main__":
 
     plot_bar_chart(categories, scores, title, output_file)
     print(f"Chart saved to {output_file}.")
-
-    # stoc_output_file = "chart_stochastic_sample.svg"
-    # plot_barchart_stochastic(categories, scores, title, stoc_output_file)
-    # print(f"Stochastic chart saved to {stoc_output_file}.")
