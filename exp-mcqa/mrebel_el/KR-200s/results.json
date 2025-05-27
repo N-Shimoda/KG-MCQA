@@ -149,14 +149,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Symphony",
-                            "type": "composer",
-                            "tail": "Ludwig van Beethoven"
-                        },
-                        {
                             "head": "Symphony No. 5",
                             "type": "number of parts of this work",
                             "tail": "5"
+                        },
+                        {
+                            "head": "Symphony",
+                            "type": "composer",
+                            "tail": "Ludwig van Beethoven"
                         }
                     ]
                 },
@@ -189,17 +189,17 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Blue",
-                            "type": "instance of",
-                            "tail": "Color"
-                        },
-                        {
                             "head": "Red",
                             "type": "instance of",
                             "tail": "Color"
                         },
                         {
                             "head": "Orange",
+                            "type": "instance of",
+                            "tail": "Color"
+                        },
+                        {
+                            "head": "Blue",
                             "type": "instance of",
                             "tail": "Color"
                         }
@@ -211,17 +211,17 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Red",
+                            "type": "instance of",
+                            "tail": "Color"
+                        },
+                        {
                             "head": "Green",
                             "type": "instance of",
                             "tail": "Color"
                         },
                         {
                             "head": "Blue",
-                            "type": "instance of",
-                            "tail": "Color"
-                        },
-                        {
-                            "head": "Red",
                             "type": "instance of",
                             "tail": "Color"
                         }
@@ -233,17 +233,17 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Blue",
-                            "type": "instance of",
-                            "tail": "Color"
-                        },
-                        {
                             "head": "Red",
                             "type": "instance of",
                             "tail": "Color"
                         },
                         {
                             "head": "Purple",
+                            "type": "instance of",
+                            "tail": "Color"
+                        },
+                        {
+                            "head": "Blue",
                             "type": "instance of",
                             "tail": "Color"
                         }
@@ -260,12 +260,12 @@
                             "tail": "Color"
                         },
                         {
-                            "head": "Blue",
+                            "head": "Red",
                             "type": "instance of",
                             "tail": "Color"
                         },
                         {
-                            "head": "Red",
+                            "head": "Blue",
                             "type": "instance of",
                             "tail": "Color"
                         }
@@ -499,12 +499,12 @@
                     "verified_edges": [
                         {
                             "head": "Sonata",
-                            "type": "instance of",
+                            "type": "subclass of",
                             "tail": "Music"
                         },
                         {
                             "head": "Sonata",
-                            "type": "subclass of",
+                            "type": "instance of",
                             "tail": "Music"
                         }
                     ]
@@ -714,12 +714,12 @@
                         {
                             "head": "Red",
                             "type": "instance of",
-                            "tail": "Color"
+                            "tail": "Primary color"
                         },
                         {
                             "head": "Red",
                             "type": "instance of",
-                            "tail": "Primary color"
+                            "tail": "Color"
                         }
                     ]
                 },
@@ -743,7 +743,7 @@
                 "1": {
                     "choice": "Opera",
                     "edge_score": 0.0,
-                    "node_score": 0.8620976805686951,
+                    "node_score": 0.8620976954698563,
                     "verified_edges": []
                 },
                 "2": {
@@ -962,6 +962,11 @@
                     "verified_edges": [
                         {
                             "head": "Earth",
+                            "type": "part of",
+                            "tail": "Solar System"
+                        },
+                        {
+                            "head": "Earth",
                             "type": "location",
                             "tail": "Solar System"
                         },
@@ -969,11 +974,6 @@
                             "head": "Planet",
                             "type": "model item",
                             "tail": "Earth"
-                        },
-                        {
-                            "head": "Earth",
-                            "type": "part of",
-                            "tail": "Solar System"
                         }
                     ]
                 },
@@ -1007,14 +1007,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Planet",
-                            "type": "model item",
-                            "tail": "Jupiter"
-                        },
-                        {
                             "head": "Jupiter",
                             "type": "part of",
                             "tail": "Solar System"
+                        },
+                        {
+                            "head": "Planet",
+                            "type": "model item",
+                            "tail": "Jupiter"
                         }
                     ]
                 },
@@ -1081,14 +1081,14 @@
                     "node_score": 0.890083114306132,
                     "verified_edges": [
                         {
-                            "head": "Thursday",
-                            "type": "follows",
-                            "tail": "Friday"
-                        },
-                        {
                             "head": "Friday",
                             "type": "follows",
                             "tail": "Thursday"
+                        },
+                        {
+                            "head": "Thursday",
+                            "type": "follows",
+                            "tail": "Friday"
                         },
                         {
                             "head": "Thursday comes after Friday",
@@ -1258,7 +1258,7 @@
                 "3": {
                     "choice": "Southern",
                     "edge_score": 0.0,
-                    "node_score": 0.918659245967865,
+                    "node_score": 0.9186592102050781,
                     "verified_edges": []
                 },
                 "answer": 2,
@@ -1816,14 +1816,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Rice",
-                            "type": "part of",
-                            "tail": "Sushi"
-                        },
-                        {
                             "head": "Sushi",
                             "type": "made from material",
                             "tail": "Rice"
+                        },
+                        {
+                            "head": "Rice",
+                            "type": "part of",
+                            "tail": "Sushi"
                         }
                     ]
                 },
@@ -1938,6 +1938,11 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Brazil",
+                            "type": "capital",
+                            "tail": "Bras\u00edlia"
+                        },
+                        {
                             "head": "Bras\u00edlia",
                             "type": "instance of",
                             "tail": "Capital"
@@ -1946,11 +1951,6 @@
                             "head": "Bras\u00edlia",
                             "type": "country",
                             "tail": "Brazil"
-                        },
-                        {
-                            "head": "Brazil",
-                            "type": "capital",
-                            "tail": "Bras\u00edlia"
                         }
                     ]
                 },
@@ -1992,7 +1992,7 @@
                 "0": {
                     "choice": "Sahara Desert",
                     "edge_score": 0.2,
-                    "node_score": 0.8646618723869324,
+                    "node_score": 0.8646618922551473,
                     "verified_edges": [
                         {
                             "head": "Sahara",
@@ -2007,12 +2007,12 @@
                     "node_score": 0.9617898464202881,
                     "verified_edges": [
                         {
-                            "head": "Gobi Desert",
+                            "head": "Sahara",
                             "type": "instance of",
                             "tail": "Desert"
                         },
                         {
-                            "head": "Sahara",
+                            "head": "Gobi Desert",
                             "type": "instance of",
                             "tail": "Desert"
                         }
@@ -2033,13 +2033,8 @@
                 "3": {
                     "choice": "Atacama Desert",
                     "edge_score": 0.5,
-                    "node_score": 0.8646618723869324,
+                    "node_score": 0.8646618922551473,
                     "verified_edges": [
-                        {
-                            "head": "Sahara",
-                            "type": "instance of",
-                            "tail": "Desert"
-                        },
                         {
                             "head": "Atacama Desert",
                             "type": "instance of",
@@ -2049,6 +2044,11 @@
                             "head": "Atacama Desert",
                             "type": "instance of",
                             "tail": "Largest desert in the world"
+                        },
+                        {
+                            "head": "Sahara",
+                            "type": "instance of",
+                            "tail": "Desert"
                         }
                     ]
                 },
@@ -2103,9 +2103,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Nepal",
+                            "head": "Bhutan",
                             "type": "diplomatic relation",
-                            "tail": "Bhutan"
+                            "tail": "Nepal"
                         },
                         {
                             "head": "Nepal",
@@ -2113,9 +2113,9 @@
                             "tail": "Mount Everest"
                         },
                         {
-                            "head": "Bhutan",
+                            "head": "Nepal",
                             "type": "diplomatic relation",
-                            "tail": "Nepal"
+                            "tail": "Bhutan"
                         },
                         {
                             "head": "Mount Everest",
@@ -2194,14 +2194,14 @@
                     "node_score": 0.8953732311725616,
                     "verified_edges": [
                         {
-                            "head": "Mississippi River",
-                            "type": "located in the administrative territorial entity",
-                            "tail": "Mississippi"
-                        },
-                        {
                             "head": "Longest in the world",
                             "type": "is a list of",
                             "tail": "River"
+                        },
+                        {
+                            "head": "Mississippi River",
+                            "type": "located in the administrative territorial entity",
+                            "tail": "Mississippi"
                         },
                         {
                             "head": "Mississippi",
@@ -2439,6 +2439,11 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "India",
+                            "type": "diplomatic relation",
+                            "tail": "Sri Lanka"
+                        },
+                        {
                             "head": "Sri Lanka",
                             "type": "diplomatic relation",
                             "tail": "India"
@@ -2447,11 +2452,6 @@
                             "head": "Sri Lanka",
                             "type": "instance of",
                             "tail": "Island country"
-                        },
-                        {
-                            "head": "India",
-                            "type": "diplomatic relation",
-                            "tail": "Sri Lanka"
                         }
                     ]
                 },
@@ -2497,13 +2497,13 @@
                     "verified_edges": [
                         {
                             "head": "Istanbul",
-                            "type": "instance of",
-                            "tail": "City"
+                            "type": "country",
+                            "tail": "Turkey"
                         },
                         {
                             "head": "Istanbul",
-                            "type": "country",
-                            "tail": "Turkey"
+                            "type": "instance of",
+                            "tail": "City"
                         }
                     ]
                 },
@@ -2514,13 +2514,13 @@
                     "verified_edges": [
                         {
                             "head": "Istanbul",
-                            "type": "instance of",
-                            "tail": "City"
+                            "type": "country",
+                            "tail": "Turkey"
                         },
                         {
                             "head": "Istanbul",
-                            "type": "country",
-                            "tail": "Turkey"
+                            "type": "instance of",
+                            "tail": "City"
                         }
                     ]
                 },
@@ -2669,14 +2669,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Europe",
-                            "type": "shares border with",
-                            "tail": "Asia"
-                        },
-                        {
                             "head": "Asia",
                             "type": "shares border with",
                             "tail": "Europe"
+                        },
+                        {
+                            "head": "Europe",
+                            "type": "shares border with",
+                            "tail": "Asia"
                         },
                         {
                             "head": "Ural Mountains",
@@ -2838,13 +2838,13 @@
                     "verified_edges": [
                         {
                             "head": "Atlantic Ocean",
-                            "type": "part of",
-                            "tail": "Atlantic Ocean"
+                            "type": "instance of",
+                            "tail": "Ocean"
                         },
                         {
                             "head": "Atlantic Ocean",
-                            "type": "instance of",
-                            "tail": "Ocean"
+                            "type": "part of",
+                            "tail": "Atlantic Ocean"
                         }
                     ]
                 },
@@ -2884,13 +2884,13 @@
                     "verified_edges": [
                         {
                             "head": "Pacific Ocean",
-                            "type": "instance of",
-                            "tail": "Ocean"
+                            "type": "part of",
+                            "tail": "Pacific Ocean"
                         },
                         {
                             "head": "Pacific Ocean",
-                            "type": "part of",
-                            "tail": "Pacific Ocean"
+                            "type": "instance of",
+                            "tail": "Ocean"
                         }
                     ]
                 },
@@ -2917,14 +2917,14 @@
                     "node_score": 0.8807848691940308,
                     "verified_edges": [
                         {
-                            "head": "Germany",
-                            "type": "diplomatic relation",
-                            "tail": "Austria"
-                        },
-                        {
                             "head": "Austria",
                             "type": "diplomatic relation",
                             "tail": "Germany"
+                        },
+                        {
+                            "head": "Germany",
+                            "type": "diplomatic relation",
+                            "tail": "Austria"
                         }
                     ]
                 },
@@ -2975,13 +2975,13 @@
                     "verified_edges": [
                         {
                             "head": "South Africa",
-                            "type": "instance of",
-                            "tail": "Country"
+                            "type": "continent",
+                            "tail": "Africa"
                         },
                         {
                             "head": "South Africa",
-                            "type": "continent",
-                            "tail": "Africa"
+                            "type": "instance of",
+                            "tail": "Country"
                         }
                     ]
                 },
@@ -2992,13 +2992,13 @@
                     "verified_edges": [
                         {
                             "head": "Nigeria",
-                            "type": "instance of",
-                            "tail": "Country"
+                            "type": "continent",
+                            "tail": "Africa"
                         },
                         {
                             "head": "Nigeria",
-                            "type": "continent",
-                            "tail": "Africa"
+                            "type": "instance of",
+                            "tail": "Country"
                         }
                     ]
                 },
@@ -3037,14 +3037,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Kyoto Prefecture",
-                            "type": "capital",
-                            "tail": "Kyoto"
-                        },
-                        {
                             "head": "Kyoto",
                             "type": "located in the administrative territorial entity",
                             "tail": "Kyoto Prefecture"
+                        },
+                        {
+                            "head": "Kyoto Prefecture",
+                            "type": "capital",
+                            "tail": "Kyoto"
                         }
                     ]
                 },
@@ -3215,7 +3215,7 @@
                 "3": {
                     "choice": "Indian invasions",
                     "edge_score": 0.09090909090909091,
-                    "node_score": 0.9331686894098917,
+                    "node_score": 0.9331686993439993,
                     "verified_edges": [
                         {
                             "head": "Great Wall of China",
@@ -3422,8 +3422,8 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Adolf Hitler",
-                            "type": "conflict",
+                            "head": "Nazi Germany",
+                            "type": "significant event",
                             "tail": "World War II"
                         },
                         {
@@ -3433,17 +3433,17 @@
                         },
                         {
                             "head": "Adolf Hitler",
-                            "type": "country of citizenship",
-                            "tail": "Nazi Germany"
-                        },
-                        {
-                            "head": "Nazi Germany",
-                            "type": "significant event",
+                            "type": "conflict",
                             "tail": "World War II"
                         },
                         {
                             "head": "World War II",
                             "type": "participant",
+                            "tail": "Nazi Germany"
+                        },
+                        {
+                            "head": "Adolf Hitler",
+                            "type": "country of citizenship",
                             "tail": "Nazi Germany"
                         }
                     ]
@@ -3476,13 +3476,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Nazi Germany",
-                            "type": "significant event",
+                            "head": "Winston Churchill",
+                            "type": "conflict",
                             "tail": "World War II"
                         },
                         {
-                            "head": "Winston Churchill",
-                            "type": "conflict",
+                            "head": "Nazi Germany",
+                            "type": "significant event",
                             "tail": "World War II"
                         },
                         {
@@ -3655,11 +3655,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Cold War",
-                            "type": "participant",
-                            "tail": "Soviet Union"
-                        },
-                        {
                             "head": "United States",
                             "type": "diplomatic relation",
                             "tail": "Soviet Union"
@@ -3668,6 +3663,11 @@
                             "head": "Cold War",
                             "type": "participant",
                             "tail": "United States"
+                        },
+                        {
+                            "head": "Cold War",
+                            "type": "participant",
+                            "tail": "Soviet Union"
                         }
                     ]
                 },
@@ -3682,13 +3682,13 @@
                             "tail": "China"
                         },
                         {
-                            "head": "China",
-                            "type": "diplomatic relation",
+                            "head": "Cold War",
+                            "type": "participant",
                             "tail": "United States"
                         },
                         {
-                            "head": "Cold War",
-                            "type": "participant",
+                            "head": "China",
+                            "type": "diplomatic relation",
                             "tail": "United States"
                         }
                     ]
@@ -4199,17 +4199,17 @@
                     "node_score": 0.9522359669208527,
                     "verified_edges": [
                         {
-                            "head": "To be, or not to be",
-                            "type": "author",
-                            "tail": "William Shakespeare"
-                        },
-                        {
                             "head": "William Shakespeare",
                             "type": "notable work",
                             "tail": "Hamlet"
                         },
                         {
                             "head": "Hamlet",
+                            "type": "author",
+                            "tail": "William Shakespeare"
+                        },
+                        {
+                            "head": "To be, or not to be",
                             "type": "author",
                             "tail": "William Shakespeare"
                         }
@@ -4226,14 +4226,14 @@
                             "tail": "William Shakespeare"
                         },
                         {
-                            "head": "William Shakespeare",
-                            "type": "notable work",
-                            "tail": "Othello"
-                        },
-                        {
                             "head": "Othello",
                             "type": "author",
                             "tail": "William Shakespeare"
+                        },
+                        {
+                            "head": "William Shakespeare",
+                            "type": "notable work",
+                            "tail": "Othello"
                         }
                     ]
                 },
@@ -4282,14 +4282,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Pride and Prejudice",
-                            "type": "author",
-                            "tail": "Jane Austen"
-                        },
-                        {
                             "head": "Jane Austen",
                             "type": "notable work",
                             "tail": "Pride and Prejudice"
+                        },
+                        {
+                            "head": "Pride and Prejudice",
+                            "type": "author",
+                            "tail": "Jane Austen"
                         }
                     ]
                 },
@@ -4726,12 +4726,12 @@
                     "verified_edges": [
                         {
                             "head": "English",
-                            "type": "part of",
+                            "type": "subclass of",
                             "tail": "Germanic languages"
                         },
                         {
                             "head": "English",
-                            "type": "subclass of",
+                            "type": "part of",
                             "tail": "Germanic languages"
                         }
                     ]
@@ -4907,13 +4907,13 @@
                     "verified_edges": [
                         {
                             "head": "Sherlock Holmes",
-                            "type": "occupation",
-                            "tail": "Detective"
+                            "type": "creator",
+                            "tail": "Arthur Conan Doyle"
                         },
                         {
                             "head": "Sherlock Holmes",
-                            "type": "creator",
-                            "tail": "Arthur Conan Doyle"
+                            "type": "occupation",
+                            "tail": "Detective"
                         }
                     ]
                 },
@@ -4965,12 +4965,12 @@
                     "verified_edges": [
                         {
                             "head": "Comma",
-                            "type": "subclass of",
+                            "type": "instance of",
                             "tail": "Punctuation"
                         },
                         {
                             "head": "Comma",
-                            "type": "instance of",
+                            "type": "subclass of",
                             "tail": "Punctuation"
                         }
                     ]
@@ -5616,14 +5616,14 @@
                     "node_score": 0.9032076239585877,
                     "verified_edges": [
                         {
-                            "head": "2",
-                            "type": "follows",
-                            "tail": "2"
-                        },
-                        {
                             "head": "Slope",
                             "type": "part of",
                             "tail": "Line"
+                        },
+                        {
+                            "head": "2",
+                            "type": "follows",
+                            "tail": "2"
                         }
                     ]
                 },
@@ -5797,13 +5797,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Pentagon",
-                            "type": "subclass of",
+                            "head": "Side",
+                            "type": "part of",
                             "tail": "Polygon"
                         },
                         {
-                            "head": "Side",
-                            "type": "part of",
+                            "head": "Pentagon",
+                            "type": "subclass of",
                             "tail": "Polygon"
                         }
                     ]
@@ -5819,13 +5819,13 @@
                             "tail": "Polygon"
                         },
                         {
-                            "head": "Side",
-                            "type": "part of",
+                            "head": "Hexagon",
+                            "type": "subclass of",
                             "tail": "Polygon"
                         },
                         {
-                            "head": "Hexagon",
-                            "type": "subclass of",
+                            "head": "Side",
+                            "type": "part of",
                             "tail": "Polygon"
                         }
                     ]
@@ -5836,13 +5836,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Heptagon",
-                            "type": "subclass of",
+                            "head": "Side",
+                            "type": "part of",
                             "tail": "Polygon"
                         },
                         {
-                            "head": "Side",
-                            "type": "part of",
+                            "head": "Heptagon",
+                            "type": "subclass of",
                             "tail": "Polygon"
                         }
                     ]
@@ -5878,7 +5878,7 @@
                 "0": {
                     "choice": "0.25",
                     "edge_score": 0.2,
-                    "node_score": 0.8891900877157847,
+                    "node_score": 0.8891900976498922,
                     "verified_edges": [
                         {
                             "head": "Head",
@@ -5890,7 +5890,7 @@
                 "1": {
                     "choice": "0.5",
                     "edge_score": 0.2,
-                    "node_score": 0.8891900877157847,
+                    "node_score": 0.8891900976498922,
                     "verified_edges": [
                         {
                             "head": "Head",
@@ -5902,7 +5902,7 @@
                 "2": {
                     "choice": "0.75",
                     "edge_score": 0.2,
-                    "node_score": 0.8891900877157847,
+                    "node_score": 0.8891900976498922,
                     "verified_edges": [
                         {
                             "head": "Head",
@@ -5914,7 +5914,7 @@
                 "3": {
                     "choice": "1.0",
                     "edge_score": 0.2,
-                    "node_score": 0.8891900877157847,
+                    "node_score": 0.8891900976498922,
                     "verified_edges": [
                         {
                             "head": "Head",
@@ -6519,13 +6519,13 @@
                         },
                         {
                             "head": "Modal logic",
-                            "type": "instance of",
-                            "tail": "If...then"
+                            "type": "studies",
+                            "tail": "'if...then' statements"
                         },
                         {
                             "head": "Modal logic",
-                            "type": "studies",
-                            "tail": "'if...then' statements"
+                            "type": "instance of",
+                            "tail": "If...then"
                         }
                     ]
                 },
@@ -7024,13 +7024,13 @@
                     "verified_edges": [
                         {
                             "head": "Iron Man",
-                            "type": "from narrative universe",
-                            "tail": "Marvel Cinematic Universe"
+                            "type": "performer",
+                            "tail": "Robert Downey Jr."
                         },
                         {
                             "head": "Iron Man",
-                            "type": "performer",
-                            "tail": "Robert Downey Jr."
+                            "type": "from narrative universe",
+                            "tail": "Marvel Cinematic Universe"
                         }
                     ]
                 },
@@ -7217,13 +7217,13 @@
                     "verified_edges": [
                         {
                             "head": "Pikachu",
-                            "type": "media franchise",
-                            "tail": "Pok\u00e9mon"
+                            "type": "instance of",
+                            "tail": "Electric type"
                         },
                         {
                             "head": "Pikachu",
-                            "type": "instance of",
-                            "tail": "Electric type"
+                            "type": "media franchise",
+                            "tail": "Pok\u00e9mon"
                         }
                     ]
                 },
@@ -7849,12 +7849,12 @@
                         {
                             "head": "Bone",
                             "type": "part of",
-                            "tail": "Adult body"
+                            "tail": "Human adult body"
                         },
                         {
                             "head": "Bone",
                             "type": "part of",
-                            "tail": "Human adult body"
+                            "tail": "Adult body"
                         }
                     ]
                 },
@@ -7866,12 +7866,12 @@
                         {
                             "head": "Bone",
                             "type": "part of",
-                            "tail": "Adult body"
+                            "tail": "Human adult body"
                         },
                         {
                             "head": "Bone",
                             "type": "part of",
-                            "tail": "Human adult body"
+                            "tail": "Adult body"
                         }
                     ]
                 },
@@ -7883,12 +7883,12 @@
                         {
                             "head": "Bone",
                             "type": "part of",
-                            "tail": "Adult body"
+                            "tail": "Human adult body"
                         },
                         {
                             "head": "Bone",
                             "type": "part of",
-                            "tail": "Human adult body"
+                            "tail": "Adult body"
                         }
                     ]
                 },
@@ -7900,12 +7900,12 @@
                         {
                             "head": "Bone",
                             "type": "part of",
-                            "tail": "Adult body"
+                            "tail": "Human adult body"
                         },
                         {
                             "head": "Bone",
                             "type": "part of",
-                            "tail": "Human adult body"
+                            "tail": "Adult body"
                         }
                     ]
                 },
@@ -7950,14 +7950,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Organ (biology)",
-                            "type": "part of",
-                            "tail": "Human body"
-                        },
-                        {
                             "head": "Lung",
                             "type": "subclass of",
                             "tail": "Organ (biology)"
+                        },
+                        {
+                            "head": "Organ (biology)",
+                            "type": "part of",
+                            "tail": "Human body"
                         }
                     ]
                 },
@@ -8104,11 +8104,6 @@
                     "verified_edges": [
                         {
                             "head": "Argon",
-                            "type": "part of",
-                            "tail": "Noble gas"
-                        },
-                        {
-                            "head": "Argon",
                             "type": "subclass of",
                             "tail": "Noble gas"
                         },
@@ -8116,6 +8111,11 @@
                             "head": "Argon",
                             "type": "instance of",
                             "tail": "Gas"
+                        },
+                        {
+                            "head": "Argon",
+                            "type": "part of",
+                            "tail": "Noble gas"
                         },
                         {
                             "head": "Argon",
@@ -8170,12 +8170,12 @@
                         },
                         {
                             "head": "Vitamin C",
-                            "type": "subject has role",
+                            "type": "subclass of",
                             "tail": "Vitamin"
                         },
                         {
                             "head": "Vitamin C",
-                            "type": "subclass of",
+                            "type": "subject has role",
                             "tail": "Vitamin"
                         }
                     ]
@@ -8223,7 +8223,7 @@
                 "1": {
                     "choice": "Nitrogen",
                     "edge_score": 0.16666666666666666,
-                    "node_score": 0.6890575985113779,
+                    "node_score": 0.6890575885772705,
                     "verified_edges": [
                         {
                             "head": "Nitrogen",
@@ -8245,13 +8245,13 @@
                     "verified_edges": [
                         {
                             "head": "Helium",
-                            "type": "part of",
-                            "tail": "Gas humans"
+                            "type": "instance of",
+                            "tail": "Gas"
                         },
                         {
                             "head": "Helium",
-                            "type": "instance of",
-                            "tail": "Gas"
+                            "type": "part of",
+                            "tail": "Gas humans"
                         }
                     ]
                 },
@@ -8319,14 +8319,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Theory of relativity",
-                            "type": "discoverer or inventor",
-                            "tail": "Albert Einstein"
-                        },
-                        {
                             "head": "Albert Einstein",
                             "type": "notable work",
                             "tail": "Theory of relativity"
+                        },
+                        {
+                            "head": "Theory of relativity",
+                            "type": "discoverer or inventor",
+                            "tail": "Albert Einstein"
                         }
                     ]
                 },
@@ -8380,7 +8380,7 @@
                 "3": {
                     "choice": "Molecule",
                     "edge_score": 0.0,
-                    "node_score": 0.6698847353458405,
+                    "node_score": 0.6698847413063049,
                     "verified_edges": []
                 },
                 "answer": 1,
@@ -8414,7 +8414,7 @@
                 "1": {
                     "choice": "Gold",
                     "edge_score": 0.25,
-                    "node_score": 0.6331447660923004,
+                    "node_score": 0.633144756158193,
                     "verified_edges": [
                         {
                             "head": "Gold",
@@ -8431,12 +8431,12 @@
                         {
                             "head": "Iron",
                             "type": "instance of",
-                            "tail": "Natural substance"
+                            "tail": "Hardest natural substance"
                         },
                         {
                             "head": "Iron",
                             "type": "instance of",
-                            "tail": "Hardest natural substance"
+                            "tail": "Natural substance"
                         }
                     ]
                 },
@@ -8722,13 +8722,13 @@
                     "verified_edges": [
                         {
                             "head": "Solid",
-                            "type": "instance of",
-                            "tail": "State of matter"
+                            "type": "subclass of",
+                            "tail": "Matter"
                         },
                         {
                             "head": "Solid",
-                            "type": "subclass of",
-                            "tail": "Matter"
+                            "type": "instance of",
+                            "tail": "State of matter"
                         }
                     ]
                 },
@@ -8796,13 +8796,13 @@
                     "verified_edges": [
                         {
                             "head": "HTML",
-                            "type": "instance of",
-                            "tail": "Markup language"
+                            "type": "subclass of",
+                            "tail": "HighText Machine"
                         },
                         {
                             "head": "HTML",
-                            "type": "subclass of",
-                            "tail": "HighText Machine"
+                            "type": "instance of",
+                            "tail": "Markup language"
                         }
                     ]
                 },
@@ -8813,13 +8813,13 @@
                     "verified_edges": [
                         {
                             "head": "HTML",
-                            "type": "instance of",
-                            "tail": "Markup language"
+                            "type": "subclass of",
+                            "tail": "HighText Machine"
                         },
                         {
                             "head": "HTML",
-                            "type": "subclass of",
-                            "tail": "HighText Machine"
+                            "type": "instance of",
+                            "tail": "Markup language"
                         }
                     ]
                 },
@@ -8830,13 +8830,13 @@
                     "verified_edges": [
                         {
                             "head": "HTML",
-                            "type": "instance of",
-                            "tail": "Markup language"
+                            "type": "subclass of",
+                            "tail": "HighText Machine"
                         },
                         {
                             "head": "HTML",
-                            "type": "subclass of",
-                            "tail": "HighText Machine"
+                            "type": "instance of",
+                            "tail": "Markup language"
                         }
                     ]
                 },
@@ -8847,13 +8847,13 @@
                     "verified_edges": [
                         {
                             "head": "HTML",
-                            "type": "instance of",
-                            "tail": "Markup language"
+                            "type": "subclass of",
+                            "tail": "HighText Machine"
                         },
                         {
                             "head": "HTML",
-                            "type": "subclass of",
-                            "tail": "HighText Machine"
+                            "type": "instance of",
+                            "tail": "Markup language"
                         }
                     ]
                 },
@@ -8911,13 +8911,13 @@
                     "verified_edges": [
                         {
                             "head": "Android",
-                            "type": "developer",
-                            "tail": "Google"
+                            "type": "instance of",
+                            "tail": "Operating system"
                         },
                         {
                             "head": "Android",
-                            "type": "instance of",
-                            "tail": "Operating system"
+                            "type": "developer",
+                            "tail": "Google"
                         }
                     ]
                 },
@@ -9056,12 +9056,12 @@
                     "verified_edges": [
                         {
                             "head": "Linux",
-                            "type": "subclass of",
+                            "type": "instance of",
                             "tail": "Operating system"
                         },
                         {
                             "head": "Linux",
-                            "type": "instance of",
+                            "type": "subclass of",
                             "tail": "Operating system"
                         }
                     ]
@@ -9090,12 +9090,12 @@
                     "node_score": 0.8443880875905355,
                     "verified_edges": [
                         {
-                            "head": "MacOS",
+                            "head": "MacOS is not an operating system",
                             "type": "instance of",
                             "tail": "Operating system"
                         },
                         {
-                            "head": "MacOS is not an operating system",
+                            "head": "MacOS",
                             "type": "instance of",
                             "tail": "Operating system"
                         }
