@@ -1,16 +1,21 @@
 #!/bin/bash
 
-log_file="exp-mcqa/mcqa.log"
+log_dir="log"
+if [ ! -d "$log_dir" ]; then
+    mkdir -p "$log_dir"
+fi
+
+log_file="${log_dir}/mcqa.log"
 if [ -f "$log_file" ]; then
     rm "$log_file"
 fi
 
-api_log_file="exp-mcqa/wiki_api.log"
+api_log_file="${log_dir}/wiki_api.log"
 if [ -f "$api_log_file" ]; then
     rm "$api_log_file"
 fi
 
-for MODEL in rebel mrebel unirel
+for MODEL in rebel mrebel mrebel-32 unirel
 do
     for ds in KR-200m KR-200s
     do
