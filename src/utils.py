@@ -33,7 +33,8 @@ def plot_bar_chart(
     ValueError
         If output_file does not end with ".svg".
     """
-    if not output_file.endswith(".svg") and not output_file.endswith(".eps"):
+    suffix = output_file.split(".")[-1]
+    if suffix not in ["svg", "eps", "pdf"]:
         raise ValueError("Output file should be in SVG format for article quality.")
 
     # Percentage data
@@ -47,10 +48,16 @@ def plot_bar_chart(
     bar_width = 0.3
     gap = 0.05  # gap between stacked bar and stochastic bar
 
-    _, ax = plt.subplots(figsize=(12, 6))
+    _, ax = plt.subplots(figsize=(14, 6))
 
     # Stacked bars
-    bars_correct = ax.bar(index - (bar_width + gap) / 2, correct, bar_width, label="Correct", color="royalblue")
+    bars_correct = ax.bar(
+        index - (bar_width + gap) / 2,
+        correct,
+        bar_width,
+        label="Correct",
+        color="royalblue",
+    )
     bars_incorrect = ax.bar(
         index - (bar_width + gap) / 2,
         incorrect,
@@ -58,6 +65,7 @@ def plot_bar_chart(
         bottom=correct,
         label="Incorrect",
         color="lightgray",
+        hatch="//",
     )
     bars_unselectable = ax.bar(
         index - (bar_width + gap) / 2,
@@ -75,11 +83,11 @@ def plot_bar_chart(
         bar_width,
         label="Stochastic",
         color="orange",
-        alpha=0.7,
+        # alpha=0.7,
     )
 
     # Display values
-    for bars in [bars_correct, bars_incorrect, bars_unselectable, bars_stoc_accuracy]:
+    for bars in [bars_correct, bars_incorrect, bars_unselectable]:
         for bar in bars:
             height = bar.get_height()
             if height > 0:
@@ -91,38 +99,54 @@ def plot_bar_chart(
                     va="center",
                     fontsize=14,
                 )
+    # For stochastic accuracy bars, display value above the bar
+    for bar in bars_stoc_accuracy:
+        height = bar.get_height()
+        if height > 0:
+            ax.text(
+                bar.get_x() + bar.get_width() / 2.0,
+                bar.get_y() + height,  # 2 is a small offset above the bar
+                f"{height:.1f}",
+                ha="center",
+                va="bottom",
+                fontsize=14,
+            )
 
     # x axis
-    plt.xlabel("Categories", fontdict={"fontsize": 14})
+    plt.xlabel("Categories", fontdict={"fontsize": 16})
     ax.set_xticks(index)
     ax.set_xticklabels(categories, rotation=20, fontdict={"fontsize": 14})
 
     # y axis
-    ax.set_ylabel("Percentile (%)", fontdict={"fontsize": 14})
+    ax.set_ylabel("Percentile (%)", fontdict={"fontsize": 16})
     ax.set_ylim(0, 105)
     ax.tick_params(axis="y", labelsize=14)
     ax.grid(True, axis="y", linestyle="--", alpha=0.5)
 
-    # overall
+    # settings
     ax.legend(fontsize=14)
-    # legend = ax.legend(fontsize=14)
-    # legend.get_frame().set_alpha(0.5)  # Set legend background more opaque (0=transparent, 1=opaque)
-    plt.title(title, fontdict={"fontsize": 16})
+    plt.rcParams["svg.fonttype"] = "none"
     plt.tight_layout()
-    plt.savefig(output_file, format="svg")
+    plt.savefig(output_file, format=suffix)
 
 
 if __name__ == "__main__":
     # Test categories and scores
-    categories = ["A", "B", "C"]
-    # scores[category] = [#Correct, #Incorrect, #Unselectable, #Total]
+    categories = [f"Cat{i}" for i in range(10)]
     scores = {
-        "A": {"correct": 30, "fail": 10, "unselectable": 10, "total": 50, "stochastic_accuracy": 0.7},
-        "B": {"correct": 20, "fail": 20, "unselectable": 10, "total": 50, "stochastic_accuracy": 0.5},
-        "C": {"correct": 10, "fail": 30, "unselectable": 10, "total": 50, "stochastic_accuracy": 0.3},
+        "Cat0": {"correct": 35, "fail": 10, "unselectable": 5, "total": 50, "stochastic_accuracy": 0.65},
+        "Cat1": {"correct": 28, "fail": 15, "unselectable": 7, "total": 50, "stochastic_accuracy": 0.55},
+        "Cat2": {"correct": 40, "fail": 5, "unselectable": 5, "total": 50, "stochastic_accuracy": 0.75},
+        "Cat3": {"correct": 22, "fail": 20, "unselectable": 8, "total": 50, "stochastic_accuracy": 0.45},
+        "Cat4": {"correct": 15, "fail": 30, "unselectable": 5, "total": 50, "stochastic_accuracy": 0.35},
+        "Cat5": {"correct": 25, "fail": 15, "unselectable": 10, "total": 50, "stochastic_accuracy": 0.50},
+        "Cat6": {"correct": 30, "fail": 10, "unselectable": 10, "total": 50, "stochastic_accuracy": 0.60},
+        "Cat7": {"correct": 18, "fail": 25, "unselectable": 7, "total": 50, "stochastic_accuracy": 0.40},
+        "Cat8": {"correct": 12, "fail": 32, "unselectable": 6, "total": 50, "stochastic_accuracy": 0.30},
+        "Cat9": {"correct": 38, "fail": 8, "unselectable": 4, "total": 50, "stochastic_accuracy": 0.70},
     }
     title = "Stacked Bar Chart of Percentages (Test Data)"
-    output_file = "chart_sample.svg"
+    output_file = "chart_sample.pdf"
 
     plot_bar_chart(categories, scores, title, output_file)
     print(f"Chart saved to {output_file}.")
