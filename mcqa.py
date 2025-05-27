@@ -46,7 +46,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--el", action="store_true", help="Enable entity linking (merge nodes for same entity)")
 
     # Optional argument: --api_log
-    parser.add_argument("--api-log-file", type=str, default="exp-mcqa/wiki_api.log", help="Log file for Wikipedia API")
+    parser.add_argument("--api-log-file", type=str, default="log/wiki_api.log", help="Log file for Wikipedia API")
 
     return parser.parse_args()
 
@@ -113,7 +113,7 @@ def collect_results(result_file: str, mcq_file: str):
     categories = result.keys()
     scores = {cat: result[cat]["stats"] for cat in categories}
     ds_name = os.path.basename(mcq_file).split(".")[0]
-    plot_bar_chart(categories, scores, title=ds_name, output_file=f"{os.path.dirname(result_file)}/accuracy.svg")
+    plot_bar_chart(categories, scores, title=ds_name, output_file=f"{os.path.dirname(result_file)}/accuracy.pdf")
 
 
 if __name__ == "__main__":
@@ -145,7 +145,7 @@ if __name__ == "__main__":
     # ---- Start experiment ----
     # Set up logging to file (at the top of the file)
     logging.basicConfig(filename=API_LOG_FILE, level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-    print("MCQ dataset: {}".format(MCQ_FILE))
+    print(f"Starting {DS_NAME} by {MODEL}{' (w/ EL)' if EL else ' (w/o EL)'}")
 
     # Step 1-1. Create PGs
     print("\nStep 1-1. Creating PGs")

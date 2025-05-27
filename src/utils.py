@@ -11,6 +11,7 @@ def plot_bar_chart(
     """
     Draws a stacked bar chart showing the percentage of Correct, Incorrect, and Unselectable answers for each category,
     and overlays the stochastic accuracy as an orange bar next to each stacked bar.
+    This function automatically saves the chart in SVG in addition to the specified output file format.
 
     Parameters
     ----------
@@ -115,7 +116,7 @@ def plot_bar_chart(
     # x axis
     plt.xlabel("Categories", fontdict={"fontsize": 16})
     ax.set_xticks(index)
-    ax.set_xticklabels(categories, rotation=20, fontdict={"fontsize": 14})
+    ax.set_xticklabels(categories, rotation=20, fontdict={"fontsize": 16})
 
     # y axis
     ax.set_ylabel("Percentile (%)", fontdict={"fontsize": 16})
@@ -123,11 +124,14 @@ def plot_bar_chart(
     ax.tick_params(axis="y", labelsize=14)
     ax.grid(True, axis="y", linestyle="--", alpha=0.5)
 
+    # legend
+    ax.legend(fontsize=16, loc="upper right")
+
     # settings
-    ax.legend(fontsize=14)
-    plt.rcParams["svg.fonttype"] = "none"
     plt.tight_layout()
+    plt.rcParams["svg.fonttype"] = "none"
     plt.savefig(output_file, format=suffix)
+    plt.savefig(output_file.split(".")[0] + ".svg", format="svg")
 
 
 if __name__ == "__main__":
