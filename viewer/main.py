@@ -209,8 +209,21 @@ class MCQAGraphViewer:
         pg_html = self.render_dot_to_html(pg_dot_path, graph_type="pg")
         kg_html = self.render_dot_to_html(kg_dot_path, graph_type="kg")
 
+        # Set the width ratio in the sidebar
+        with st.sidebar:
+            st.markdown("### Display Settings")
+            kg_ratio = st.slider(
+                "Width Ratio for Graph Display",
+                min_value=0.1,
+                max_value=10.0,
+                value=2.0,
+                step=0.1,
+                key="kg_ratio",
+            )
+            st.write("PG : KG = 1.0 : {:.1f}".format(kg_ratio))
+
         # display HTML files
-        col1, col2 = st.columns([3, 3])
+        col1, col2 = st.columns([1, kg_ratio])
         with col1:
             st.subheader("Propositional Graph")
             with open(pg_html, "r", encoding="utf-8") as f:
