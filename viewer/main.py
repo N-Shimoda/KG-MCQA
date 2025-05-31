@@ -1,6 +1,7 @@
 import atexit
 import json
 from pathlib import Path
+from typing import Literal
 
 import streamlit as st
 from pyvis.network import Network
@@ -209,7 +210,7 @@ class MCQAGraphViewer:
         kg_html = self.render_dot_to_html(kg_dot_path, graph_type="kg")
 
         # display HTML files
-        col1, col2 = st.columns([1.3, 3])
+        col1, col2 = st.columns([3, 3])
         with col1:
             st.subheader("Propositional Graph")
             with open(pg_html, "r", encoding="utf-8") as f:
@@ -230,7 +231,7 @@ class MCQAGraphViewer:
         )
         st.caption(caption, unsafe_allow_html=True)
 
-    def render_dot_to_html(self, dot_path: Path, graph_type: str) -> Path:
+    def render_dot_to_html(self, dot_path: Path, graph_type: Literal["pg", "kg"]) -> Path:
         """
         Converts a DOT file to an HTML file using PyVis.
 
@@ -238,7 +239,7 @@ class MCQAGraphViewer:
         ----------
         dot_path : Path
             The path to the DOT file.
-        graph_type : str
+        graph_type : Literal["pg", "kg"]
             The type of graph (e.g., "pg" or "kg").
 
         Returns
@@ -248,6 +249,7 @@ class MCQAGraphViewer:
         """
         net = Network(height="720px", width="100%", notebook=False, directed=True)
         kb = KB.from_dot_file(str(dot_path))
+        # add nodes
         for e in kb.get_nodes():
             if "color" in kb.nodes[e] and kb.nodes[e]["wiki_title"] is not None:
                 net.add_node(e, size=10, color=kb.nodes[e]["color"], title=kb.nodes[e]["wiki_title"])
@@ -255,11 +257,18 @@ class MCQAGraphViewer:
                 net.add_node(e, size=10, color=kb.nodes[e]["color"])
             else:
                 net.add_node(e, size=10)
+        # add edges
         for r in kb.relations:
             if "verified" in r and r["verified"]:
                 net.add_edge(r["head"], r["tail"], label=r["type"], color="orange")
             else:
-                net.add_edge(r["head"], r["tail"], label=r["type"], color="#97c2fc")
+                match graph_type:
+                    case "pg":
+                        net.add_edge(r["head"], r["tail"], label=r["type"], color="gray", dashes=True)
+                    case "kg":
+                        net.add_edge(r["head"], r["tail"], label=r["type"], color="#97c2fc")
+                    case _:
+                        raise ValueError(f"Unknown graph type: {graph_type}")
 
         # setting
         net.repulsion(node_distance=100, central_gravity=0.2, spring_length=120, spring_strength=0.05)
