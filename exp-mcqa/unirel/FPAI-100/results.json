@@ -5,7 +5,7 @@
                 "0": {
                     "choice": "George Washington",
                     "edge_score": 0.0,
-                    "node_score": 0.8313795030117035,
+                    "node_score": 0.6293143033981323,
                     "verified_edges": []
                 },
                 "1": {
@@ -17,7 +17,7 @@
                 "2": {
                     "choice": "John Adams",
                     "edge_score": 0.0,
-                    "node_score": 0.8249526023864746,
+                    "node_score": 0.660471111536026,
                     "verified_edges": []
                 },
                 "3": {
@@ -610,12 +610,12 @@
                     "node_score": 0.9530150294303894,
                     "verified_edges": [
                         {
-                            "head": "Marie Antoinette",
+                            "head": "Catherine de'Medici",
                             "type": "/people/person/nationality",
                             "tail": "France"
                         },
                         {
-                            "head": "Catherine de'Medici",
+                            "head": "Marie Antoinette",
                             "type": "/people/person/nationality",
                             "tail": "France"
                         }
@@ -791,12 +791,12 @@
                     "node_score": 0.9368016521135966,
                     "verified_edges": [
                         {
-                            "head": "Turgut \u00d6zal",
+                            "head": "Erdo\u011fan",
                             "type": "/people/person/nationality",
                             "tail": "Turkey"
                         },
                         {
-                            "head": "Erdo\u011fan",
+                            "head": "Turgut \u00d6zal",
                             "type": "/people/person/nationality",
                             "tail": "Turkey"
                         }
@@ -885,9 +885,15 @@
             "hun-22": {
                 "0": {
                     "choice": "Benito Mussolini",
-                    "edge_score": 0.0,
-                    "node_score": 0.7658049464225769,
-                    "verified_edges": []
+                    "edge_score": 1.0,
+                    "node_score": 0.8116734325885773,
+                    "verified_edges": [
+                        {
+                            "head": "Benito Mussolini",
+                            "type": "/people/person/nationality",
+                            "tail": "Italy"
+                        }
+                    ]
                 },
                 "1": {
                     "choice": "Francois Duvalier",
@@ -907,15 +913,15 @@
                     "node_score": 0.9439682960510254,
                     "verified_edges": []
                 },
-                "answer": -1,
+                "answer": 0,
                 "probs": [
-                    0.25,
-                    0.25,
-                    0.25,
-                    0.25
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0
                 ],
-                "correct": false,
-                "stochastic_score": 0.25
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "hun-23": {
                 "0": {
@@ -1298,14 +1304,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Microsoft",
-                            "type": "/business/company/founders",
-                            "tail": "Bill Gates"
-                        },
-                        {
                             "head": "Bill Gates",
                             "type": "/business/person/company",
                             "tail": "Microsoft"
+                        },
+                        {
+                            "head": "Microsoft",
+                            "type": "/business/company/founders",
+                            "tail": "Bill Gates"
                         }
                     ]
                 },
@@ -1575,7 +1581,7 @@
                 "1": {
                     "choice": "Benito Mussolini",
                     "edge_score": 0.0,
-                    "node_score": 0.7658049464225769,
+                    "node_score": 0.8116734623908997,
                     "verified_edges": []
                 },
                 "2": {
@@ -2429,7 +2435,7 @@
                 "3": {
                     "choice": "Sun Yat-sen",
                     "edge_score": 0.5,
-                    "node_score": 0.8763182163238525,
+                    "node_score": 0.8763182361920675,
                     "verified_edges": [
                         {
                             "head": "Sun Yat - sen",
@@ -2772,9 +2778,20 @@
                 },
                 "1": {
                     "choice": "Bill Gates",
-                    "edge_score": 0.0,
-                    "node_score": 0.750614583492279,
-                    "verified_edges": []
+                    "edge_score": 1.0,
+                    "node_score": 0.7137405276298523,
+                    "verified_edges": [
+                        {
+                            "head": "Apple Inc.",
+                            "type": "/business/company/founders",
+                            "tail": "Bill Gates"
+                        },
+                        {
+                            "head": "Bill Gates",
+                            "type": "/business/person/company",
+                            "tail": "Apple Inc."
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Mark Zuckerberg",
@@ -3258,7 +3275,7 @@
                 "1": {
                     "choice": "Elon Musk",
                     "edge_score": 0.25,
-                    "node_score": 0.5756800174713135,
+                    "node_score": 0.5756800025701523,
                     "verified_edges": [
                         {
                             "head": "Amazon. com",
@@ -3279,7 +3296,7 @@
                         },
                         {
                             "head": "Larry Page",
-                            "type": "/business/person/company",
+                            "type": "/business/company_shareholder/major_shareholder_of",
                             "tail": "Amazon. com"
                         },
                         {
@@ -3289,7 +3306,7 @@
                         },
                         {
                             "head": "Larry Page",
-                            "type": "/business/company_shareholder/major_shareholder_of",
+                            "type": "/business/person/company",
                             "tail": "Amazon. com"
                         }
                     ]
@@ -3305,14 +3322,14 @@
                             "tail": "Amazon. com"
                         },
                         {
-                            "head": "Amazon. com",
-                            "type": "/business/company/major_shareholders",
-                            "tail": "Warren Buffett"
-                        },
-                        {
                             "head": "Warren Buffett",
                             "type": "/business/person/company",
                             "tail": "Amazon. com"
+                        },
+                        {
+                            "head": "Amazon. com",
+                            "type": "/business/company/major_shareholders",
+                            "tail": "Warren Buffett"
                         }
                     ]
                 },
@@ -3883,11 +3900,11 @@
             }
         },
         "stats": {
-            "correct": 12,
+            "correct": 13,
             "fail": 15,
-            "unselectable": 73,
+            "unselectable": 72,
             "total": 100,
-            "stochastic_accuracy": 0.29833333333333334
+            "stochastic_accuracy": 0.30583333333333335
         }
     }
 }

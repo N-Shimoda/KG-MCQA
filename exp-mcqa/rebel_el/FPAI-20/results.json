@@ -21,27 +21,12 @@
                 },
                 "1": {
                     "choice": "Elon Musk",
-                    "edge_score": 0.875,
+                    "edge_score": 0.375,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "SpaceX",
-                            "type": "founded by",
-                            "tail": "Elon Musk"
-                        },
-                        {
-                            "head": "Tesla",
-                            "type": "owned by",
-                            "tail": "Elon Musk"
-                        },
-                        {
                             "head": "Elon Musk",
                             "type": "employer",
-                            "tail": "SpaceX"
-                        },
-                        {
-                            "head": "Elon Musk",
-                            "type": "owner of",
                             "tail": "SpaceX"
                         },
                         {
@@ -51,13 +36,8 @@
                         },
                         {
                             "head": "SpaceX",
-                            "type": "owned by",
+                            "type": "founded by",
                             "tail": "Elon Musk"
-                        },
-                        {
-                            "head": "Elon Musk",
-                            "type": "owner of",
-                            "tail": "Tesla"
                         }
                     ]
                 },
@@ -165,14 +145,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Bill Gates",
-                            "type": "owner of",
-                            "tail": "Microsoft"
-                        },
-                        {
                             "head": "Microsoft",
                             "type": "founded by",
                             "tail": "Bill Gates"
+                        },
+                        {
+                            "head": "Bill Gates",
+                            "type": "owner of",
+                            "tail": "Microsoft"
                         }
                     ]
                 },
@@ -234,12 +214,12 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Joe Biden",
+                            "head": "Barack Obama",
                             "type": "position held",
                             "tail": "President of the United States"
                         },
                         {
-                            "head": "Barack Obama",
+                            "head": "Joe Biden",
                             "type": "position held",
                             "tail": "President of the United States"
                         },
@@ -256,11 +236,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "President of the United States",
-                            "type": "officeholder",
-                            "tail": "Donald Trump"
-                        },
-                        {
                             "head": "Barack Obama",
                             "type": "position held",
                             "tail": "President of the United States"
@@ -269,6 +244,11 @@
                             "head": "Donald Trump",
                             "type": "position held",
                             "tail": "President of the United States"
+                        },
+                        {
+                            "head": "President of the United States",
+                            "type": "officeholder",
+                            "tail": "Donald Trump"
                         }
                     ]
                 },
@@ -485,7 +465,7 @@
                 "3": {
                     "choice": "Margot Robbie",
                     "edge_score": 0.0,
-                    "node_score": 0.9066115468740463,
+                    "node_score": 0.9066115617752075,
                     "verified_edges": []
                 },
                 "answer": 1,
@@ -663,14 +643,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Plato",
-                            "type": "student of",
-                            "tail": "Socrates"
-                        },
-                        {
                             "head": "Socrates",
                             "type": "student",
                             "tail": "Plato"
+                        },
+                        {
+                            "head": "Plato",
+                            "type": "student of",
+                            "tail": "Socrates"
                         }
                     ]
                 },
@@ -704,11 +684,6 @@
                     "verified_edges": [
                         {
                             "head": "Napoleon",
-                            "type": "position held",
-                            "tail": "Emperor of the French"
-                        },
-                        {
-                            "head": "Napoleon",
                             "type": "participant in",
                             "tail": "French Revolution"
                         },
@@ -716,6 +691,11 @@
                             "head": "French Revolution",
                             "type": "participant",
                             "tail": "Napoleon"
+                        },
+                        {
+                            "head": "Napoleon",
+                            "type": "position held",
+                            "tail": "Emperor of the French"
                         }
                     ]
                 },
@@ -763,13 +743,13 @@
                 "1": {
                     "choice": "Mahatma Gandhi",
                     "edge_score": 0.0,
-                    "node_score": 0.8527492433786392,
+                    "node_score": 0.8608429133892059,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Subhas Chandra Bose",
                     "edge_score": 0.2,
-                    "node_score": 0.8703373372554779,
+                    "node_score": 0.8703373074531555,
                     "verified_edges": [
                         {
                             "head": "Struggle for independence",
@@ -877,14 +857,14 @@
                     "node_score": 0.9990824262301127,
                     "verified_edges": [
                         {
-                            "head": "Theory of relativity",
-                            "type": "discoverer or inventor",
-                            "tail": "Albert Einstein"
-                        },
-                        {
                             "head": "Albert Einstein",
                             "type": "notable work",
                             "tail": "Theory of relativity"
+                        },
+                        {
+                            "head": "Theory of relativity",
+                            "type": "discoverer or inventor",
+                            "tail": "Albert Einstein"
                         }
                     ]
                 },
@@ -1033,13 +1013,13 @@
                 },
                 "2": {
                     "choice": "Sun Tzu",
-                    "edge_score": 1.0,
+                    "edge_score": 0.75,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "The Art of War",
-                            "type": "main subject",
-                            "tail": "Military strategy"
+                            "type": "author",
+                            "tail": "Sun Tzu"
                         },
                         {
                             "head": "Sun Tzu",
@@ -1050,11 +1030,6 @@
                             "head": "Sun Tzu",
                             "type": "notable work",
                             "tail": "The Art of War"
-                        },
-                        {
-                            "head": "The Art of War",
-                            "type": "author",
-                            "tail": "Sun Tzu"
                         }
                     ]
                 },

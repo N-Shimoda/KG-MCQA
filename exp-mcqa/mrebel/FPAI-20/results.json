@@ -5,7 +5,7 @@
                 "0": {
                     "choice": "Bill Gates",
                     "edge_score": 0.0,
-                    "node_score": 0.8360328276952108,
+                    "node_score": 0.8360328674316406,
                     "verified_edges": []
                 },
                 "1": {
@@ -157,7 +157,7 @@
                 "2": {
                     "choice": "Harry Styles",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 0.9513219396273295,
+                    "node_score": 0.9513219197591146,
                     "verified_edges": [
                         {
                             "head": "Coldplay",
@@ -222,7 +222,7 @@
                 "3": {
                     "choice": "Kamala Harris",
                     "edge_score": 0.25,
-                    "node_score": 0.9695260524749756,
+                    "node_score": 0.9695260375738144,
                     "verified_edges": [
                         {
                             "head": "Barack Obama",
@@ -257,7 +257,7 @@
                 "1": {
                     "choice": "Richard Liu",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 0.9053083062171936,
+                    "node_score": 0.9053083260854086,
                     "verified_edges": [
                         {
                             "head": "Alibaba Group",
@@ -272,6 +272,11 @@
                     "node_score": 0.7978788614273071,
                     "verified_edges": [
                         {
+                            "head": "Alibaba Group",
+                            "type": "industry",
+                            "tail": "e-commerce"
+                        },
+                        {
                             "head": "Pony Ma",
                             "type": "employer",
                             "tail": "Alibaba Group"
@@ -280,11 +285,6 @@
                             "head": "Alibaba Group",
                             "type": "founded by",
                             "tail": "Pony Ma"
-                        },
-                        {
-                            "head": "Alibaba Group",
-                            "type": "industry",
-                            "tail": "e-commerce"
                         }
                     ]
                 },
@@ -414,7 +414,7 @@
                 "3": {
                     "choice": "Margot Robbie",
                     "edge_score": 0.0,
-                    "node_score": 0.92703677713871,
+                    "node_score": 0.9270368069410324,
                     "verified_edges": []
                 },
                 "answer": 0,
@@ -447,9 +447,14 @@
                 },
                 "1": {
                     "choice": "Naomi Osaka",
-                    "edge_score": 0.16666666666666666,
+                    "edge_score": 0.3333333333333333,
                     "node_score": 0.9583741128444672,
                     "verified_edges": [
+                        {
+                            "head": "1 in singles",
+                            "type": "event interval",
+                            "tail": "1"
+                        },
                         {
                             "head": "Naomi Osaka",
                             "type": "sport",
@@ -477,26 +482,26 @@
                 "3": {
                     "choice": "Serena Williams",
                     "edge_score": 0.0,
-                    "node_score": 0.9583741128444672,
+                    "node_score": 0.9583741053938866,
                     "verified_edges": []
                 },
-                "answer": -1,
+                "answer": 1,
                 "probs": [
-                    0.5,
                     0.0,
-                    0.5,
+                    1.0,
+                    0.0,
                     0.0
                 ],
-                "correct": false,
-                "stochastic_score": 0.0
+                "correct": true,
+                "stochastic_score": 1.0
             }
         },
         "stats": {
-            "correct": 4,
+            "correct": 5,
             "fail": 3,
-            "unselectable": 3,
+            "unselectable": 2,
             "total": 10,
-            "stochastic_accuracy": 0.475
+            "stochastic_accuracy": 0.575
         }
     },
     "hf": {
@@ -608,8 +613,8 @@
                     "verified_edges": [
                         {
                             "head": "Socrates",
-                            "type": "occupation",
-                            "tail": "philosopher"
+                            "type": "student",
+                            "tail": "Plato"
                         },
                         {
                             "head": "Plato",
@@ -618,8 +623,8 @@
                         },
                         {
                             "head": "Socrates",
-                            "type": "student",
-                            "tail": "Plato"
+                            "type": "occupation",
+                            "tail": "philosopher"
                         }
                     ]
                 },
@@ -660,9 +665,14 @@
             "hf-3": {
                 "0": {
                     "choice": "Napoleon Bonaparte",
-                    "edge_score": 0.3333333333333333,
+                    "edge_score": 0.6666666666666666,
                     "node_score": 1.0,
                     "verified_edges": [
+                        {
+                            "head": "French Revolution",
+                            "type": "participant",
+                            "tail": "Napoleon Bonaparte"
+                        },
                         {
                             "head": "Napoleon Bonaparte",
                             "type": "conflict",
@@ -718,12 +728,12 @@
                     "verified_edges": [
                         {
                             "head": "Mahatma Gandhi",
-                            "type": "country of citizenship",
+                            "type": "residence",
                             "tail": "India"
                         },
                         {
                             "head": "Mahatma Gandhi",
-                            "type": "residence",
+                            "type": "country of citizenship",
                             "tail": "India"
                         }
                     ]
@@ -765,12 +775,12 @@
                         {
                             "head": "William Shakespeare",
                             "type": "occupation",
-                            "tail": "playwright"
+                            "tail": "poet"
                         },
                         {
                             "head": "William Shakespeare",
                             "type": "occupation",
-                            "tail": "poet"
+                            "tail": "playwright"
                         }
                     ]
                 },
@@ -812,7 +822,7 @@
                 "1": {
                     "choice": "Isaac Newton",
                     "edge_score": 0.0,
-                    "node_score": 0.8124803304672241,
+                    "node_score": 0.8124803066253662,
                     "verified_edges": []
                 },
                 "2": {
@@ -821,14 +831,14 @@
                     "node_score": 0.868777060508728,
                     "verified_edges": [
                         {
-                            "head": "Albert Einstein",
-                            "type": "notable work",
-                            "tail": "theory of relativity"
-                        },
-                        {
                             "head": "theory of relativity",
                             "type": "discoverer or inventor",
                             "tail": "Albert Einstein"
+                        },
+                        {
+                            "head": "Albert Einstein",
+                            "type": "notable work",
+                            "tail": "theory of relativity"
                         }
                     ]
                 },
@@ -893,7 +903,7 @@
                 "1": {
                     "choice": "Amelia Earhart",
                     "edge_score": 0.0,
-                    "node_score": 0.9776512980461121,
+                    "node_score": 0.9776512384414673,
                     "verified_edges": []
                 },
                 "2": {
@@ -937,9 +947,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "The Art of War",
-                            "type": "author",
-                            "tail": "Sun Tzu"
+                            "head": "Sun Tzu",
+                            "type": "occupation",
+                            "tail": "philosopher"
                         },
                         {
                             "head": "Sun Tzu",
@@ -947,9 +957,9 @@
                             "tail": "The Art of War"
                         },
                         {
-                            "head": "Sun Tzu",
-                            "type": "occupation",
-                            "tail": "philosopher"
+                            "head": "The Art of War",
+                            "type": "author",
+                            "tail": "Sun Tzu"
                         }
                     ]
                 },

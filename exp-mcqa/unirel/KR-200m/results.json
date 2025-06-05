@@ -1371,7 +1371,7 @@
                 "1": {
                     "choice": "Plants",
                     "edge_score": 1.0,
-                    "node_score": 0.6858552545309067,
+                    "node_score": 0.6858552247285843,
                     "verified_edges": [
                         {
                             "head": "Earth",
@@ -1383,7 +1383,7 @@
                 "2": {
                     "choice": "Fossils",
                     "edge_score": 1.0,
-                    "node_score": 0.6777539402246475,
+                    "node_score": 0.6777539253234863,
                     "verified_edges": [
                         {
                             "head": "Earth",
@@ -1395,7 +1395,7 @@
                 "3": {
                     "choice": "Fish",
                     "edge_score": 1.0,
-                    "node_score": 0.6680870354175568,
+                    "node_score": 0.668087050318718,
                     "verified_edges": [
                         {
                             "head": "Earth",
@@ -2322,6 +2322,16 @@
                     "verified_edges": [
                         {
                             "head": "Japan",
+                            "type": "/location/country/administrative_divisions",
+                            "tail": "Tokyo"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/location/contains",
+                            "tail": "Kyoto"
+                        },
+                        {
+                            "head": "Japan",
                             "type": "/location/location/contains",
                             "tail": "Osaka Prefecture"
                         },
@@ -2331,24 +2341,14 @@
                             "tail": "Tokyo"
                         },
                         {
-                            "head": "Japan",
-                            "type": "/location/country/administrative_divisions",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Kyoto"
-                        },
-                        {
                             "head": "Tokyo",
                             "type": "/location/administrative_division/country",
                             "tail": "Japan"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/location/contains",
+                            "tail": "Tokyo"
                         }
                     ]
                 },
@@ -2359,8 +2359,8 @@
                     "verified_edges": [
                         {
                             "head": "Japan",
-                            "type": "/location/country/capital",
-                            "tail": "Tokyo"
+                            "type": "/location/location/contains",
+                            "tail": "Kyoto Prefecture"
                         },
                         {
                             "head": "Japan",
@@ -2370,22 +2370,22 @@
                         {
                             "head": "Japan",
                             "type": "/location/location/contains",
-                            "tail": "Kyoto Prefecture"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
                             "tail": "Kyoto"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/country/capital",
+                            "tail": "Tokyo"
                         },
                         {
                             "head": "Tokyo",
                             "type": "/location/administrative_division/country",
                             "tail": "Japan"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/location/contains",
+                            "tail": "Tokyo"
                         }
                     ]
                 },
@@ -2396,17 +2396,7 @@
                     "verified_edges": [
                         {
                             "head": "Japan",
-                            "type": "/location/country/capital",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
                             "type": "/location/country/administrative_divisions",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
                             "tail": "Tokyo"
                         },
                         {
@@ -2415,9 +2405,19 @@
                             "tail": "Kyoto"
                         },
                         {
+                            "head": "Japan",
+                            "type": "/location/country/capital",
+                            "tail": "Tokyo"
+                        },
+                        {
                             "head": "Tokyo",
                             "type": "/location/administrative_division/country",
                             "tail": "Japan"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/location/contains",
+                            "tail": "Tokyo"
                         }
                     ]
                 },
@@ -2428,17 +2428,7 @@
                     "verified_edges": [
                         {
                             "head": "Japan",
-                            "type": "/location/country/capital",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
                             "type": "/location/country/administrative_divisions",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
                             "tail": "Tokyo"
                         },
                         {
@@ -2447,9 +2437,19 @@
                             "tail": "Kyoto"
                         },
                         {
+                            "head": "Japan",
+                            "type": "/location/country/capital",
+                            "tail": "Tokyo"
+                        },
+                        {
                             "head": "Tokyo",
                             "type": "/location/administrative_division/country",
                             "tail": "Japan"
+                        },
+                        {
+                            "head": "Japan",
+                            "type": "/location/location/contains",
+                            "tail": "Tokyo"
                         }
                     ]
                 },
@@ -2478,7 +2478,7 @@
                 "0": {
                     "choice": "Abraham Lincoln",
                     "edge_score": 0.0,
-                    "node_score": 0.8728350698947906,
+                    "node_score": 0.8596864342689514,
                     "verified_edges": []
                 },
                 "1": {
@@ -2490,13 +2490,13 @@
                 "2": {
                     "choice": "George Washington",
                     "edge_score": 0.0,
-                    "node_score": 0.8313795030117035,
+                    "node_score": 0.6293143033981323,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "John Adams",
                     "edge_score": 0.0,
-                    "node_score": 0.8249526023864746,
+                    "node_score": 0.660471111536026,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -2548,25 +2548,25 @@
                 "0": {
                     "choice": "Japanese pirates",
                     "edge_score": 0.0,
-                    "node_score": 0.6238124221563339,
+                    "node_score": 0.6238124147057533,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Mongol invasions",
                     "edge_score": 0.0,
-                    "node_score": 0.6238124221563339,
+                    "node_score": 0.6238124147057533,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Russian attacks",
                     "edge_score": 0.0,
-                    "node_score": 0.6238124221563339,
+                    "node_score": 0.6238124147057533,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Indian invasions",
                     "edge_score": 0.0,
-                    "node_score": 0.6238124221563339,
+                    "node_score": 0.6238124147057533,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -2762,7 +2762,7 @@
                 "2": {
                     "choice": "Mussolini",
                     "edge_score": 0.0,
-                    "node_score": 0.7770554423332214,
+                    "node_score": 0.8371399641036987,
                     "verified_edges": []
                 },
                 "3": {
@@ -2838,7 +2838,7 @@
                 "3": {
                     "choice": "Europe",
                     "edge_score": 1.0,
-                    "node_score": 0.7184856981039047,
+                    "node_score": 0.7184856832027435,
                     "verified_edges": [
                         {
                             "head": "Europe",
@@ -6034,7 +6034,7 @@
                 "0": {
                     "choice": "Chris Pratt",
                     "edge_score": 0.0,
-                    "node_score": 0.4802597612142563,
+                    "node_score": 0.35461559891700745,
                     "verified_edges": []
                 },
                 "1": {
@@ -6659,7 +6659,7 @@
                 "3": {
                     "choice": "Diamond",
                     "edge_score": 1.0,
-                    "node_score": 0.710933580994606,
+                    "node_score": 0.7109335660934448,
                     "verified_edges": [
                         {
                             "head": "Earth",
@@ -7083,9 +7083,15 @@
             "tech-4": {
                 "0": {
                     "choice": "Bill Gates",
-                    "edge_score": 0.0,
-                    "node_score": 0.6958281397819519,
-                    "verified_edges": []
+                    "edge_score": 0.25,
+                    "node_score": 0.6633144021034241,
+                    "verified_edges": [
+                        {
+                            "head": "Bill Gates",
+                            "type": "/business/person/company",
+                            "tail": "World Wide Web"
+                        }
+                    ]
                 },
                 "1": {
                     "choice": "Tim Berners-Lee",
