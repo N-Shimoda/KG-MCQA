@@ -220,7 +220,7 @@ class MCQAGraphViewer:
                 step=0.1,
                 key="kg_ratio",
             )
-            st.write("PG : KG = 1.0 : {:.1f}".format(kg_ratio))
+            st.write("PG : KG = 1.0 : :red[{:.1f}]".format(kg_ratio))
 
         # display HTML files
         col1, col2 = st.columns([1, kg_ratio])
