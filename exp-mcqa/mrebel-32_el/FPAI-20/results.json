@@ -10,16 +10,11 @@
                 },
                 "1": {
                     "choice": "Elon Musk",
-                    "edge_score": 0.4,
+                    "edge_score": 0.2,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "SpaceX",
-                            "type": "founded by",
-                            "tail": "Elon Musk"
-                        },
-                        {
-                            "head": "Tesla",
                             "type": "founded by",
                             "tail": "Elon Musk"
                         }
@@ -62,15 +57,9 @@
             "cf-1": {
                 "0": {
                     "choice": "Greta Thunberg",
-                    "edge_score": 0.25,
+                    "edge_score": 0.0,
                     "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Greta Thunberg",
-                            "type": "country of citizenship",
-                            "tail": "Swedish"
-                        }
-                    ]
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "Emma Gonzalez",
@@ -90,15 +79,15 @@
                     "node_score": 1.0,
                     "verified_edges": []
                 },
-                "answer": 0,
+                "answer": -1,
                 "probs": [
-                    1.0,
-                    0.0,
-                    0.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
-                "correct": true,
-                "stochastic_score": 1.0
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "cf-2": {
                 "0": {
@@ -108,8 +97,8 @@
                     "verified_edges": [
                         {
                             "head": "Warren Buffett",
-                            "type": "country of citizenship",
-                            "tail": "American"
+                            "type": "occupation",
+                            "tail": "Investor"
                         },
                         {
                             "head": "Microsoft",
@@ -118,8 +107,8 @@
                         },
                         {
                             "head": "Warren Buffett",
-                            "type": "occupation",
-                            "tail": "Investor"
+                            "type": "country of citizenship",
+                            "tail": "American"
                         }
                     ]
                 },
@@ -153,6 +142,11 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Microsoft",
+                            "type": "country",
+                            "tail": "American"
+                        },
+                        {
                             "head": "Bill Gates",
                             "type": "country of citizenship",
                             "tail": "American"
@@ -161,11 +155,6 @@
                             "head": "Microsoft",
                             "type": "founded by",
                             "tail": "Bill Gates"
-                        },
-                        {
-                            "head": "Microsoft",
-                            "type": "country",
-                            "tail": "American"
                         }
                     ]
                 },
@@ -251,13 +240,13 @@
                     "node_score": 0.9652773652757917,
                     "verified_edges": [
                         {
-                            "head": "Donald Trump",
-                            "type": "country of citizenship",
+                            "head": "President",
+                            "type": "country",
                             "tail": "United States"
                         },
                         {
-                            "head": "President",
-                            "type": "country",
+                            "head": "Donald Trump",
+                            "type": "country of citizenship",
                             "tail": "United States"
                         }
                     ]
@@ -296,13 +285,13 @@
                             "tail": "Jack Ma"
                         },
                         {
-                            "head": "Alibaba Group",
-                            "type": "country",
+                            "head": "Jack Ma",
+                            "type": "country of citizenship",
                             "tail": "Chinese"
                         },
                         {
-                            "head": "Jack Ma",
-                            "type": "country of citizenship",
+                            "head": "Alibaba Group",
+                            "type": "country",
                             "tail": "Chinese"
                         }
                     ]
@@ -313,13 +302,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Alibaba Group",
-                            "type": "country",
+                            "head": "Liu Qiangdong",
+                            "type": "country of citizenship",
                             "tail": "Chinese"
                         },
                         {
-                            "head": "Liu Qiangdong",
-                            "type": "country of citizenship",
+                            "head": "Alibaba Group",
+                            "type": "country",
                             "tail": "Chinese"
                         }
                     ]
@@ -522,20 +511,20 @@
                     "verified_edges": [
                         {
                             "head": "Kei Nishikori",
-                            "type": "country of citizenship",
-                            "tail": "Japan"
+                            "type": "sport",
+                            "tail": "Tennis"
                         },
                         {
                             "head": "Kei Nishikori",
-                            "type": "sport",
-                            "tail": "Tennis"
+                            "type": "country of citizenship",
+                            "tail": "Japan"
                         }
                     ]
                 },
                 "1": {
                     "choice": "Naomi Osaka",
                     "edge_score": 0.4,
-                    "node_score": 0.9630791544914246,
+                    "node_score": 0.9630791459764753,
                     "verified_edges": [
                         {
                             "head": "Naomi Osaka",
@@ -567,34 +556,34 @@
                     "node_score": 0.9630791459764753,
                     "verified_edges": [
                         {
-                            "head": "Serena Williams",
-                            "type": "sport",
-                            "tail": "Tennis"
-                        },
-                        {
                             "head": "1",
                             "type": "instance of",
                             "tail": "Singles"
+                        },
+                        {
+                            "head": "Serena Williams",
+                            "type": "sport",
+                            "tail": "Tennis"
                         }
                     ]
                 },
-                "answer": 1,
+                "answer": -1,
                 "probs": [
                     0.0,
-                    1.0,
+                    0.5,
                     0.0,
-                    0.0
+                    0.5
                 ],
-                "correct": true,
-                "stochastic_score": 1.0
+                "correct": false,
+                "stochastic_score": 0.5
             }
         },
         "stats": {
-            "correct": 6,
+            "correct": 4,
             "fail": 1,
-            "unselectable": 3,
+            "unselectable": 5,
             "total": 10,
-            "stochastic_accuracy": 0.6833333333333333
+            "stochastic_accuracy": 0.5583333333333333
         }
     },
     "hf": {
@@ -608,17 +597,12 @@
                 },
                 "1": {
                     "choice": "Rosa Parks",
-                    "edge_score": 0.4,
+                    "edge_score": 0.2,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Rosa Parks",
                             "type": "country of citizenship",
-                            "tail": "American"
-                        },
-                        {
-                            "head": "Civil rights movement",
-                            "type": "country",
                             "tail": "American"
                         }
                     ]
@@ -641,15 +625,15 @@
                     "node_score": 1.0,
                     "verified_edges": []
                 },
-                "answer": 1,
+                "answer": -1,
                 "probs": [
                     0.0,
-                    1.0,
-                    0.0,
+                    0.5,
+                    0.5,
                     0.0
                 ],
                 "correct": false,
-                "stochastic_score": 0.0
+                "stochastic_score": 0.5
             },
             "hf-1": {
                 "0": {
@@ -699,16 +683,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Aristotle",
-                            "type": "country of citizenship",
-                            "tail": "Ancient Greek"
-                        },
-                        {
-                            "head": "Aristotle",
-                            "type": "occupation",
-                            "tail": "Philosophy"
-                        },
-                        {
                             "head": "Socrates",
                             "type": "occupation",
                             "tail": "Philosophy"
@@ -716,6 +690,16 @@
                         {
                             "head": "Western philosophy",
                             "type": "instance of",
+                            "tail": "Philosophy"
+                        },
+                        {
+                            "head": "Aristotle",
+                            "type": "country of citizenship",
+                            "tail": "Ancient Greek"
+                        },
+                        {
+                            "head": "Aristotle",
+                            "type": "occupation",
                             "tail": "Philosophy"
                         }
                     ]
@@ -727,13 +711,8 @@
                     "verified_edges": [
                         {
                             "head": "Plato",
-                            "type": "occupation",
-                            "tail": "Philosophy"
-                        },
-                        {
-                            "head": "Western philosophy",
-                            "type": "instance of",
-                            "tail": "Philosophy"
+                            "type": "country of citizenship",
+                            "tail": "Ancient Greek"
                         },
                         {
                             "head": "Socrates",
@@ -742,8 +721,13 @@
                         },
                         {
                             "head": "Plato",
-                            "type": "country of citizenship",
-                            "tail": "Ancient Greek"
+                            "type": "occupation",
+                            "tail": "Philosophy"
+                        },
+                        {
+                            "head": "Western philosophy",
+                            "type": "instance of",
+                            "tail": "Philosophy"
                         }
                     ]
                 },
@@ -770,13 +754,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Socrates",
-                            "type": "occupation",
+                            "head": "Western philosophy",
+                            "type": "instance of",
                             "tail": "Philosophy"
                         },
                         {
-                            "head": "Western philosophy",
-                            "type": "instance of",
+                            "head": "Socrates",
+                            "type": "occupation",
                             "tail": "Philosophy"
                         }
                     ]
@@ -794,9 +778,14 @@
             "hf-3": {
                 "0": {
                     "choice": "Napoleon Bonaparte",
-                    "edge_score": 0.25,
+                    "edge_score": 0.5,
                     "node_score": 1.0,
                     "verified_edges": [
+                        {
+                            "head": "Napoleon",
+                            "type": "country of citizenship",
+                            "tail": "French"
+                        },
                         {
                             "head": "French Revolution",
                             "type": "participant",
@@ -822,8 +811,8 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Maximilien Robespierre",
-                            "type": "country of citizenship",
+                            "head": "French Revolution",
+                            "type": "country",
                             "tail": "French"
                         },
                         {
@@ -832,8 +821,8 @@
                             "tail": "Maximilien Robespierre"
                         },
                         {
-                            "head": "French Revolution",
-                            "type": "country",
+                            "head": "Maximilien Robespierre",
+                            "type": "country of citizenship",
                             "tail": "French"
                         }
                     ]
@@ -855,13 +844,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Indian",
-                            "type": "country",
+                            "head": "Jawaharlal Nehru",
+                            "type": "country of citizenship",
                             "tail": "India"
                         },
                         {
-                            "head": "Jawaharlal Nehru",
-                            "type": "country of citizenship",
+                            "head": "Indian",
+                            "type": "country",
                             "tail": "India"
                         }
                     ]
@@ -872,6 +861,11 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Mahatma Gandhi",
+                            "type": "country of citizenship",
+                            "tail": "India"
+                        },
+                        {
                             "head": "Indian",
                             "type": "country",
                             "tail": "India"
@@ -880,11 +874,6 @@
                             "head": "India",
                             "type": "replaces",
                             "tail": "British Raj"
-                        },
-                        {
-                            "head": "Mahatma Gandhi",
-                            "type": "country of citizenship",
-                            "tail": "India"
                         }
                     ]
                 },
@@ -894,13 +883,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Indian",
-                            "type": "country",
+                            "head": "Subhas Chandra Bose",
+                            "type": "country of citizenship",
                             "tail": "India"
                         },
                         {
-                            "head": "Subhas Chandra Bose",
-                            "type": "country of citizenship",
+                            "head": "Indian",
+                            "type": "country",
                             "tail": "India"
                         }
                     ]
@@ -942,12 +931,12 @@
                         {
                             "head": "William Shakespeare",
                             "type": "occupation",
-                            "tail": "Playwright"
+                            "tail": "Poet"
                         },
                         {
                             "head": "William Shakespeare",
                             "type": "occupation",
-                            "tail": "Poet"
+                            "tail": "Playwright"
                         }
                     ]
                 },
@@ -1087,15 +1076,9 @@
                 },
                 "1": {
                     "choice": "Amelia Earhart",
-                    "edge_score": 0.3333333333333333,
+                    "edge_score": 0.0,
                     "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Amelia Earhart",
-                            "type": "occupation",
-                            "tail": "Aviation"
-                        }
-                    ]
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Jacqueline Cochran",
@@ -1109,15 +1092,15 @@
                     "node_score": 1.0,
                     "verified_edges": []
                 },
-                "answer": 1,
+                "answer": -1,
                 "probs": [
-                    0.0,
-                    1.0,
-                    0.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
-                "correct": true,
-                "stochastic_score": 1.0
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "hf-9": {
                 "0": {
@@ -1145,13 +1128,13 @@
                     "verified_edges": [
                         {
                             "head": "Sun Tzu",
-                            "type": "notable work",
-                            "tail": "The Art of War"
+                            "type": "occupation",
+                            "tail": "Philosophy"
                         },
                         {
                             "head": "Sun Tzu",
-                            "type": "occupation",
-                            "tail": "Philosophy"
+                            "type": "notable work",
+                            "tail": "The Art of War"
                         },
                         {
                             "head": "The Art of War",
@@ -1184,11 +1167,11 @@
             }
         },
         "stats": {
-            "correct": 6,
-            "fail": 3,
-            "unselectable": 1,
+            "correct": 5,
+            "fail": 2,
+            "unselectable": 3,
             "total": 10,
-            "stochastic_accuracy": 0.65
+            "stochastic_accuracy": 0.625
         }
     }
 }

@@ -1,6 +1,7 @@
 import atexit
 import json
 from pathlib import Path
+from typing import Literal
 
 import streamlit as st
 from pyvis.network import Network
@@ -42,6 +43,10 @@ class MCQAGraphViewer:
         self.selected_option: str = None
         self.file_suffix: str = None
 
+        # settings for graph display
+        self.kg_ratio = 2
+        self.height = 720
+
     def run(self):
         """
         Executes the main workflow of the MCQAGraphViewer.
@@ -50,7 +55,6 @@ class MCQAGraphViewer:
         -----
         This method orchestrates the UI setup, user input handling, and graph rendering.
         """
-        st.set_page_config(layout="wide")
         st.title("MCQA Graph Viewer")
 
         # create widgets
@@ -197,6 +201,10 @@ class MCQAGraphViewer:
         -----
         This method generates HTML files for the graphs and embeds them in the Streamlit app.
         """
+        # show display settings in sidebar
+        with st.sidebar:
+            self.create_sidebar()
+
         # load DOT files to create HTML.
         root_path = self.base_dir / self.selected_model / self.selected_dataset
         pg_dot_path = (
@@ -209,17 +217,17 @@ class MCQAGraphViewer:
         kg_html = self.render_dot_to_html(kg_dot_path, graph_type="kg")
 
         # display HTML files
-        col1, col2 = st.columns([1.3, 3])
+        col1, col2 = st.columns([1, self.kg_ratio])
         with col1:
             st.subheader("Propositional Graph")
             with open(pg_html, "r", encoding="utf-8") as f:
                 html_content = f.read()
-            st.components.v1.html(html_content, height=730, scrolling=True)
+            st.components.v1.html(html_content, height=self.height + 10, scrolling=True)
         with col2:
             st.subheader("Knowledge Graph")
             with open(kg_html, "r", encoding="utf-8") as f:
                 html_content = f.read()
-            st.components.v1.html(html_content, height=730, scrolling=True)
+            st.components.v1.html(html_content, height=self.height + 10, scrolling=True)
 
         # display wikipedia titles with links
         PG = KB.from_dot_file(str(pg_dot_path))
@@ -230,7 +238,28 @@ class MCQAGraphViewer:
         )
         st.caption(caption, unsafe_allow_html=True)
 
-    def render_dot_to_html(self, dot_path: Path, graph_type: str) -> Path:
+    def create_sidebar(self):
+        st.write("## Display Settings")
+        st.write("### Width Ratio")
+        self.kg_ratio = st.number_input(
+            "PG : KG = 1.0 : :red[{:.1f}]".format(self.kg_ratio),
+            min_value=0.1,
+            max_value=10.0,
+            value=2.0,
+            step=0.1,
+            key="kg_ratio",
+        )
+
+        st.write("### Height")
+        self.height = st.number_input(
+            "Height of the graph display (px)",
+            min_value=400,
+            value=self.height,
+            step=20,
+            key="height",
+        )
+
+    def render_dot_to_html(self, dot_path: Path, graph_type: Literal["pg", "kg"]) -> Path:
         """
         Converts a DOT file to an HTML file using PyVis.
 
@@ -238,7 +267,7 @@ class MCQAGraphViewer:
         ----------
         dot_path : Path
             The path to the DOT file.
-        graph_type : str
+        graph_type : Literal["pg", "kg"]
             The type of graph (e.g., "pg" or "kg").
 
         Returns
@@ -246,8 +275,9 @@ class MCQAGraphViewer:
         Path
             The path to the generated HTML file.
         """
-        net = Network(height="720px", width="100%", notebook=False, directed=True)
+        net = Network(height=f"{self.height}px", width="100%", notebook=False, directed=True)
         kb = KB.from_dot_file(str(dot_path))
+        # add nodes
         for e in kb.get_nodes():
             if "color" in kb.nodes[e] and kb.nodes[e]["wiki_title"] is not None:
                 net.add_node(e, size=10, color=kb.nodes[e]["color"], title=kb.nodes[e]["wiki_title"])
@@ -255,11 +285,18 @@ class MCQAGraphViewer:
                 net.add_node(e, size=10, color=kb.nodes[e]["color"])
             else:
                 net.add_node(e, size=10)
+        # add edges
         for r in kb.relations:
             if "verified" in r and r["verified"]:
                 net.add_edge(r["head"], r["tail"], label=r["type"], color="orange")
             else:
-                net.add_edge(r["head"], r["tail"], label=r["type"], color="#97c2fc")
+                match graph_type:
+                    case "pg":
+                        net.add_edge(r["head"], r["tail"], label=r["type"], color="gray", dashes=True)
+                    case "kg":
+                        net.add_edge(r["head"], r["tail"], label=r["type"], color="#97c2fc")
+                    case _:
+                        raise ValueError(f"Unknown graph type: {graph_type}")
 
         # setting
         net.repulsion(node_distance=100, central_gravity=0.2, spring_length=120, spring_strength=0.05)
@@ -288,5 +325,6 @@ class MCQAGraphViewer:
 
 
 if __name__ == "__main__":
+    st.set_page_config(layout="wide")
     viewer = MCQAGraphViewer()
     viewer.run()

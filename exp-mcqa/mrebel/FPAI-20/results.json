@@ -5,7 +5,7 @@
                 "0": {
                     "choice": "Bill Gates",
                     "edge_score": 0.0,
-                    "node_score": 0.8360328276952108,
+                    "node_score": 0.8360328674316406,
                     "verified_edges": []
                 },
                 "1": {
@@ -14,21 +14,21 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "SpaceX",
-                            "type": "founded by",
-                            "tail": "Elon Musk"
-                        },
-                        {
                             "head": "Elon Musk",
                             "type": "employer",
                             "tail": "SpaceX"
+                        },
+                        {
+                            "head": "SpaceX",
+                            "type": "founded by",
+                            "tail": "Elon Musk"
                         }
                     ]
                 },
                 "2": {
                     "choice": "Jeff Bezos",
                     "edge_score": 0.0,
-                    "node_score": 0.8890109658241272,
+                    "node_score": 0.8890109856923422,
                     "verified_edges": []
                 },
                 "3": {
@@ -50,15 +50,9 @@
             "cf-1": {
                 "0": {
                     "choice": "Greta Thunberg",
-                    "edge_score": 0.25,
+                    "edge_score": 0.0,
                     "node_score": 0.9111533164978027,
-                    "verified_edges": [
-                        {
-                            "head": "Greta Thunberg",
-                            "type": "country of citizenship",
-                            "tail": "Swedish"
-                        }
-                    ]
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "Emma Gonzalez",
@@ -78,15 +72,15 @@
                     "node_score": 0.9170921146869659,
                     "verified_edges": []
                 },
-                "answer": 0,
+                "answer": -1,
                 "probs": [
-                    1.0,
-                    0.0,
-                    0.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
-                "correct": true,
-                "stochastic_score": 1.0
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "cf-2": {
                 "0": {
@@ -157,7 +151,7 @@
                 "2": {
                     "choice": "Harry Styles",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 0.9513219396273295,
+                    "node_score": 0.9513219197591146,
                     "verified_edges": [
                         {
                             "head": "Coldplay",
@@ -191,9 +185,15 @@
             "cf-4": {
                 "0": {
                     "choice": "Joe Biden",
-                    "edge_score": 0.0,
-                    "node_score": 0.9999999850988388,
-                    "verified_edges": []
+                    "edge_score": 0.25,
+                    "node_score": 0.9906591027975082,
+                    "verified_edges": [
+                        {
+                            "head": "Barack Obama",
+                            "type": "position held",
+                            "tail": "President of the United States"
+                        }
+                    ]
                 },
                 "1": {
                     "choice": "Donald Trump",
@@ -222,7 +222,7 @@
                 "3": {
                     "choice": "Kamala Harris",
                     "edge_score": 0.25,
-                    "node_score": 0.9695260524749756,
+                    "node_score": 0.969526007771492,
                     "verified_edges": [
                         {
                             "head": "Barack Obama",
@@ -231,21 +231,21 @@
                         }
                     ]
                 },
-                "answer": 1,
+                "answer": 0,
                 "probs": [
-                    0.0,
                     1.0,
+                    0.0,
                     0.0,
                     0.0
                 ],
-                "correct": false,
-                "stochastic_score": 0.0
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-5": {
                 "0": {
                     "choice": "Jack Ma",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 0.9153480927149454,
+                    "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Alibaba Group",
@@ -355,7 +355,7 @@
                 "0": {
                     "choice": "Emmanuel Macron",
                     "edge_score": 0.0,
-                    "node_score": 0.9226206541061401,
+                    "node_score": 0.9226206690073013,
                     "verified_edges": []
                 },
                 "1": {
@@ -414,7 +414,7 @@
                 "3": {
                     "choice": "Margot Robbie",
                     "edge_score": 0.0,
-                    "node_score": 0.92703677713871,
+                    "node_score": 0.9270368069410324,
                     "verified_edges": []
                 },
                 "answer": 0,
@@ -435,25 +435,30 @@
                     "verified_edges": [
                         {
                             "head": "Kei Nishikori",
-                            "type": "sport",
-                            "tail": "tennis"
+                            "type": "country of citizenship",
+                            "tail": "Japan"
                         },
                         {
                             "head": "Kei Nishikori",
-                            "type": "country of citizenship",
-                            "tail": "Japan"
+                            "type": "sport",
+                            "tail": "tennis"
                         }
                     ]
                 },
                 "1": {
                     "choice": "Naomi Osaka",
-                    "edge_score": 0.16666666666666666,
+                    "edge_score": 0.3333333333333333,
                     "node_score": 0.9583741128444672,
                     "verified_edges": [
                         {
                             "head": "Naomi Osaka",
                             "type": "sport",
                             "tail": "tennis"
+                        },
+                        {
+                            "head": "1 in singles",
+                            "type": "event interval",
+                            "tail": "1"
                         }
                     ]
                 },
@@ -477,26 +482,26 @@
                 "3": {
                     "choice": "Serena Williams",
                     "edge_score": 0.0,
-                    "node_score": 0.9583741128444672,
+                    "node_score": 0.9583741053938866,
                     "verified_edges": []
                 },
-                "answer": -1,
+                "answer": 1,
                 "probs": [
-                    0.5,
                     0.0,
-                    0.5,
+                    1.0,
+                    0.0,
                     0.0
                 ],
-                "correct": false,
-                "stochastic_score": 0.0
+                "correct": true,
+                "stochastic_score": 1.0
             }
         },
         "stats": {
-            "correct": 4,
-            "fail": 3,
+            "correct": 5,
+            "fail": 2,
             "unselectable": 3,
             "total": 10,
-            "stochastic_accuracy": 0.475
+            "stochastic_accuracy": 0.6
         }
     },
     "hf": {
@@ -590,12 +595,12 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Aristotle",
+                            "head": "Socrates",
                             "type": "occupation",
                             "tail": "philosopher"
                         },
                         {
-                            "head": "Socrates",
+                            "head": "Aristotle",
                             "type": "occupation",
                             "tail": "philosopher"
                         }
@@ -607,12 +612,12 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Socrates",
+                            "head": "Plato",
                             "type": "occupation",
                             "tail": "philosopher"
                         },
                         {
-                            "head": "Plato",
+                            "head": "Socrates",
                             "type": "occupation",
                             "tail": "philosopher"
                         },
@@ -660,9 +665,14 @@
             "hf-3": {
                 "0": {
                     "choice": "Napoleon Bonaparte",
-                    "edge_score": 0.3333333333333333,
+                    "edge_score": 0.6666666666666666,
                     "node_score": 1.0,
                     "verified_edges": [
+                        {
+                            "head": "French Revolution",
+                            "type": "participant",
+                            "tail": "Napoleon Bonaparte"
+                        },
                         {
                             "head": "Napoleon Bonaparte",
                             "type": "conflict",
@@ -754,7 +764,7 @@
                 "0": {
                     "choice": "Charles Dickens",
                     "edge_score": 0.0,
-                    "node_score": 0.953163206577301,
+                    "node_score": 0.9531632214784622,
                     "verified_edges": []
                 },
                 "1": {
@@ -765,12 +775,12 @@
                         {
                             "head": "William Shakespeare",
                             "type": "occupation",
-                            "tail": "playwright"
+                            "tail": "poet"
                         },
                         {
                             "head": "William Shakespeare",
                             "type": "occupation",
-                            "tail": "poet"
+                            "tail": "playwright"
                         }
                     ]
                 },
@@ -812,7 +822,7 @@
                 "1": {
                     "choice": "Isaac Newton",
                     "edge_score": 0.0,
-                    "node_score": 0.8124803304672241,
+                    "node_score": 0.8124803066253662,
                     "verified_edges": []
                 },
                 "2": {
@@ -821,14 +831,14 @@
                     "node_score": 0.868777060508728,
                     "verified_edges": [
                         {
-                            "head": "Albert Einstein",
-                            "type": "notable work",
-                            "tail": "theory of relativity"
-                        },
-                        {
                             "head": "theory of relativity",
                             "type": "discoverer or inventor",
                             "tail": "Albert Einstein"
+                        },
+                        {
+                            "head": "Albert Einstein",
+                            "type": "notable work",
+                            "tail": "theory of relativity"
                         }
                     ]
                 },
@@ -937,9 +947,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "The Art of War",
-                            "type": "author",
-                            "tail": "Sun Tzu"
+                            "head": "Sun Tzu",
+                            "type": "occupation",
+                            "tail": "philosopher"
                         },
                         {
                             "head": "Sun Tzu",
@@ -947,9 +957,9 @@
                             "tail": "The Art of War"
                         },
                         {
-                            "head": "Sun Tzu",
-                            "type": "occupation",
-                            "tail": "philosopher"
+                            "head": "The Art of War",
+                            "type": "author",
+                            "tail": "Sun Tzu"
                         }
                     ]
                 },

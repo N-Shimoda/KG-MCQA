@@ -23,7 +23,6 @@ class UniRel:
             "bert-base-cased",
             additional_special_tokens=added_token,
             do_basic_tokenize=False,
-            # clean_up_tokenization_spaces=False,
         )
         self.max_length = max_length
         self.max_length = max_length
@@ -236,6 +235,8 @@ def extract_triples_unirel(texts: list[str]) -> list[list[dict[str, str]]]:
     ----------
     texts : list of str
         A list of input text. Each text should be a single sentence.
+    model_path : str
+        Path to the UniRel model checkpoint.
 
     Returns
     -------
@@ -246,7 +247,7 @@ def extract_triples_unirel(texts: list[str]) -> list[list[dict[str, str]]]:
         - 'tail': The object of the triplet.
     """
     model_path = "kgraph/kgraph/extraction/nyt-checkpoint-final"
-    unirel = UniRel(model_path, dataset_name="nyt")
+    unirel = UniRel(model_path, dataset_name="webnlg")
     output_li = unirel.predict(texts)
     return [[{"head": t[0], "type": t[1], "tail": t[2]} for t in outputs] for outputs in output_li]
 
@@ -254,19 +255,19 @@ def extract_triples_unirel(texts: list[str]) -> list[list[dict[str, str]]]:
 if __name__ == "__main__":
 
     texts = [
-        # Chiang Mai
+        # 0: Chiang Mai
         "In perhaps the most ambitious Mekong cruise attempt, Impulse Tourism, an operator based in Chiang Mai, "
         "Thailand, is organizing an expedition starting in November in Jinghong, a small city in the Yunnan province "
         "in China.",
-        # Adisham Hall
+        # 1: Adisham Hall
         "Adisham Hall in Sri Lanka was constructed between 1927 and 1931 at St Benedicts Monastery , Adisham , "
         "Haputhale , Sri Lanka in the Tudor and Jacobean style of architecture",
-        # Anson
+        # 2: Anson
         "Anson was born in 1979 in Hong Kong.",
-        # Punta Cana
+        # 3: Punta Cana
         "Punta Cana is a resort town in the municipality of Higüey, in La Altagracia Province, "
         "the easternmost province of the Dominican Republic.",
-        # Naoki Shimoda
+        # 4: Naoki Shimoda
         "Naoki Shimoda is a Japanese professional wrestler, better known by his ring name, Adomish.",
     ]
 

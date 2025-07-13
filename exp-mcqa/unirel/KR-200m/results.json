@@ -5,25 +5,25 @@
                 "0": {
                     "choice": "Starry Night",
                     "edge_score": 0.0,
-                    "node_score": 0.7173227071762085,
+                    "node_score": 0.6682837009429932,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "The Persistence of Memory",
                     "edge_score": 0.0,
-                    "node_score": 0.587737612426281,
+                    "node_score": 0.5852700024843216,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Guernica",
                     "edge_score": 0.0,
-                    "node_score": 0.9847890734672546,
+                    "node_score": 0.9847891330718994,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "The Scream",
                     "edge_score": 0.0,
-                    "node_score": 0.6401411294937134,
+                    "node_score": 0.6166815906763077,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -75,25 +75,25 @@
                 "0": {
                     "choice": "The Birth of Venus",
                     "edge_score": 0.0,
-                    "node_score": 0.9454495310783386,
+                    "node_score": 0.3854624032974243,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "The School of Athens",
                     "edge_score": 0.0,
-                    "node_score": 0.9454495310783386,
+                    "node_score": 0.3854624032974243,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "The Creation of Adam",
                     "edge_score": 0.0,
-                    "node_score": 0.9454495310783386,
+                    "node_score": 0.3854624032974243,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "The Last Supper",
                     "edge_score": 0.0,
-                    "node_score": 0.9454495310783386,
+                    "node_score": 0.3854624032974243,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -214,25 +214,25 @@
             "art-6": {
                 "0": {
                     "choice": "Art",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Dance",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Music",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Theatre",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
@@ -285,25 +285,25 @@
                 "0": {
                     "choice": "Surrealism",
                     "edge_score": 0.0,
-                    "node_score": 0.5527227222919464,
+                    "node_score": 0.9625234007835388,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Expressionism",
                     "edge_score": 0.0,
-                    "node_score": 0.642810195684433,
+                    "node_score": 0.6504013389348984,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Cubism",
                     "edge_score": 0.0,
-                    "node_score": 0.64676433801651,
+                    "node_score": 0.7340259552001953,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Impressionism",
                     "edge_score": 0.0,
-                    "node_score": 0.0,
+                    "node_score": 0.9625234603881836,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -389,37 +389,55 @@
             "art-11": {
                 "0": {
                     "choice": "Cubism",
-                    "edge_score": 0.0,
-                    "node_score": 0.9448845386505127,
-                    "verified_edges": []
+                    "edge_score": 0.5,
+                    "node_score": 0.6575206518173218,
+                    "verified_edges": [
+                        {
+                            "head": "Claude Monet",
+                            "type": "influencedBy",
+                            "tail": "Cubism"
+                        }
+                    ]
                 },
                 "1": {
                     "choice": "Impressionism",
-                    "edge_score": 0.0,
+                    "edge_score": 0.5,
                     "node_score": 0.9448845386505127,
-                    "verified_edges": []
+                    "verified_edges": [
+                        {
+                            "head": "Claude Monet",
+                            "type": "influencedBy",
+                            "tail": "Impressionism"
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Surrealism",
-                    "edge_score": 0.0,
-                    "node_score": 0.8508429527282715,
-                    "verified_edges": []
+                    "edge_score": 0.5,
+                    "node_score": 0.6932610869407654,
+                    "verified_edges": [
+                        {
+                            "head": "Claude Monet",
+                            "type": "influencedBy",
+                            "tail": "Surrealism"
+                        }
+                    ]
                 },
                 "3": {
                     "choice": "Dadaism",
                     "edge_score": 0.0,
-                    "node_score": 0.9448845386505127,
+                    "node_score": 0.5874204337596893,
                     "verified_edges": []
                 },
-                "answer": -1,
+                "answer": 1,
                 "probs": [
-                    0.25,
-                    0.25,
-                    0.25,
-                    0.25
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0
                 ],
-                "correct": false,
-                "stochastic_score": 0.25
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "art-12": {
                 "0": {
@@ -494,25 +512,25 @@
             "art-14": {
                 "0": {
                     "choice": "Green",
-                    "edge_score": 0.0,
-                    "node_score": 0.5624104961752892,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Orange",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Purple",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Red",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
@@ -571,19 +589,19 @@
                 "1": {
                     "choice": "Swan Lake",
                     "edge_score": 0.0,
-                    "node_score": 0.6637167632579803,
+                    "node_score": 0.6224245429039001,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "La Boh\u00e8me",
                     "edge_score": 0.0,
-                    "node_score": 0.6728565394878387,
+                    "node_score": 0.6278035640716553,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Giselle",
                     "edge_score": 0.0,
-                    "node_score": 0.6505659967660904,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -669,57 +687,45 @@
             "art-19": {
                 "0": {
                     "choice": "Matsuo Bash\u014d",
-                    "edge_score": 0.5,
-                    "node_score": 0.8594209849834442,
-                    "verified_edges": [
-                        {
-                            "head": "Matsuo Bash\u014d",
-                            "type": "/people/person/nationality",
-                            "tail": "Japanese"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "K\u016bkai",
-                    "edge_score": 0.0,
-                    "node_score": 0.8594210147857666,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Sen no Riky\u016b",
-                    "edge_score": 0.0,
-                    "node_score": 0.7699966430664062,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Katsushika Hokusai",
-                    "edge_score": 0.5,
-                    "node_score": 0.5222902297973633,
-                    "verified_edges": [
-                        {
-                            "head": "Japanese",
-                            "type": "/location/location/contains",
-                            "tail": "Katsushika Hokusai"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
-                "answer": 0,
+                "answer": -1,
                 "probs": [
-                    1.0,
-                    0.0,
-                    0.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
                 "correct": false,
-                "stochastic_score": 0.0
+                "stochastic_score": 0.25
             }
         },
         "stats": {
-            "correct": 0,
-            "fail": 1,
+            "correct": 1,
+            "fail": 0,
             "unselectable": 19,
             "total": 20,
-            "stochastic_accuracy": 0.2375
+            "stochastic_accuracy": 0.2875
         }
     },
     "gen": {
@@ -727,49 +733,37 @@
             "gen-0": {
                 "0": {
                     "choice": "Earth",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Mars",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Earth",
-                            "type": "/location/location/contains",
-                            "tail": "Mars"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Saturn",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Earth",
-                            "type": "/location/location/contains",
-                            "tail": "Saturn"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "Jupiter",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
                 "probs": [
-                    0.0,
-                    0.5,
-                    0.5,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
                 "correct": false,
-                "stochastic_score": 0.0
+                "stochastic_score": 0.25
             },
             "gen-1": {
                 "0": {
@@ -914,51 +908,27 @@
             "gen-5": {
                 "0": {
                     "choice": "Indian",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Earth",
-                            "type": "/location/location/contains",
-                            "tail": "North Pole"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "Arctic",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Earth",
-                            "type": "/location/location/contains",
-                            "tail": "North Pole"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Atlantic",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Earth",
-                            "type": "/location/location/contains",
-                            "tail": "North Pole"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "Southern",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Earth",
-                            "type": "/location/location/contains",
-                            "tail": "North Pole"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "answer": -1,
                 "probs": [
@@ -1183,43 +1153,37 @@
             "gen-12": {
                 "0": {
                     "choice": "Tomato",
-                    "edge_score": 0.0,
-                    "node_score": 0.43319930136203766,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Avocado",
-                    "edge_score": 1.0,
-                    "node_score": 0.8783526718616486,
-                    "verified_edges": [
-                        {
-                            "head": "Mexican",
-                            "type": "/location/location/contains",
-                            "tail": "Avocado"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Cucumber",
-                    "edge_score": 0.0,
-                    "node_score": 0.6708691120147705,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Lime",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
-                "answer": 1,
+                "answer": -1,
                 "probs": [
-                    0.0,
-                    1.0,
-                    0.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
-                "correct": true,
-                "stochastic_score": 1.0
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "gen-13": {
                 "0": {
@@ -1364,55 +1328,37 @@
             "gen-17": {
                 "0": {
                     "choice": "Volcanoes",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Plants",
-                    "edge_score": 1.0,
-                    "node_score": 0.6858552545309067,
-                    "verified_edges": [
-                        {
-                            "head": "Earth",
-                            "type": "/location/location/contains",
-                            "tail": "Plants"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Fossils",
-                    "edge_score": 1.0,
-                    "node_score": 0.6777539402246475,
-                    "verified_edges": [
-                        {
-                            "head": "Earth",
-                            "type": "/location/location/contains",
-                            "tail": "Fossils"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "Fish",
-                    "edge_score": 1.0,
-                    "node_score": 0.6680870354175568,
-                    "verified_edges": [
-                        {
-                            "head": "Earth",
-                            "type": "/location/location/contains",
-                            "tail": "Fish"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
-                "answer": 1,
+                "answer": -1,
                 "probs": [
-                    0.0,
-                    1.0,
-                    0.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
                 "correct": false,
-                "stochastic_score": 0.0
+                "stochastic_score": 0.25
             },
             "gen-18": {
                 "0": {
@@ -1453,44 +1399,50 @@
                 "0": {
                     "choice": "Asia",
                     "edge_score": 0.0,
-                    "node_score": 0.8226974606513977,
+                    "node_score": 0.7175017297267914,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Africa",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
-                    "verified_edges": []
+                    "edge_score": 1.0,
+                    "node_score": 0.820326566696167,
+                    "verified_edges": [
+                        {
+                            "head": "Africa",
+                            "type": "largestCity",
+                            "tail": "Sahara"
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Australia",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "South America",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.6942929625511169,
                     "verified_edges": []
                 },
-                "answer": -1,
+                "answer": 1,
                 "probs": [
-                    0.25,
-                    0.25,
-                    0.25,
-                    0.25
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0
                 ],
-                "correct": false,
-                "stochastic_score": 0.25
+                "correct": true,
+                "stochastic_score": 1.0
             }
         },
         "stats": {
             "correct": 1,
-            "fail": 1,
-            "unselectable": 18,
+            "fail": 0,
+            "unselectable": 19,
             "total": 20,
-            "stochastic_accuracy": 0.2625
+            "stochastic_accuracy": 0.2875
         }
     },
     "geo": {
@@ -1498,15 +1450,9 @@
             "geo-0": {
                 "0": {
                     "choice": "Argentina",
-                    "edge_score": 0.5,
+                    "edge_score": 0.0,
                     "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "South America",
-                            "type": "/location/location/contains",
-                            "tail": "Argentina"
-                        }
-                    ]
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "Brazil",
@@ -1515,39 +1461,22 @@
                     "verified_edges": [
                         {
                             "head": "Brazil",
-                            "type": "/location/location/contains",
+                            "type": "capital",
                             "tail": "Bras\u00edlia"
-                        },
-                        {
-                            "head": "South America",
-                            "type": "/location/location/contains",
-                            "tail": "Brazil"
                         }
                     ]
                 },
                 "2": {
                     "choice": "Chile",
-                    "edge_score": 0.5,
+                    "edge_score": 0.0,
                     "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "South America",
-                            "type": "/location/location/contains",
-                            "tail": "Chile"
-                        }
-                    ]
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "Peru",
-                    "edge_score": 0.5,
+                    "edge_score": 0.0,
                     "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "South America",
-                            "type": "/location/location/contains",
-                            "tail": "Peru"
-                        }
-                    ]
+                    "verified_edges": []
                 },
                 "answer": 1,
                 "probs": [
@@ -1562,92 +1491,62 @@
             "geo-1": {
                 "0": {
                     "choice": "Sahara Desert",
-                    "edge_score": 1.0,
-                    "node_score": 0.9554290771484375,
-                    "verified_edges": [
-                        {
-                            "head": "North Africa",
-                            "type": "/location/location/contains",
-                            "tail": "Sahara Desert"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "Gobi Desert",
-                    "edge_score": 0.0,
-                    "node_score": 0.754833310842514,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Antarctica",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Atacama Desert",
-                    "edge_score": 0.0,
-                    "node_score": 0.7680550813674927,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
-                "answer": 0,
+                "answer": -1,
                 "probs": [
-                    1.0,
-                    0.0,
-                    0.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
-                "correct": true,
-                "stochastic_score": 1.0
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "geo-2": {
                 "0": {
                     "choice": "China",
-                    "edge_score": 0.5,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Nepal",
-                            "type": "/location/location/contains",
-                            "tail": "Mount Everest"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "India",
-                    "edge_score": 0.5,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Nepal",
-                            "type": "/location/location/contains",
-                            "tail": "Mount Everest"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Bhutan",
-                    "edge_score": 0.5,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Nepal",
-                            "type": "/location/location/contains",
-                            "tail": "Mount Everest"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "Pakistan",
-                    "edge_score": 0.5,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Nepal",
-                            "type": "/location/location/contains",
-                            "tail": "Mount Everest"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "answer": -1,
                 "probs": [
@@ -1662,67 +1561,26 @@
             "geo-3": {
                 "0": {
                     "choice": "Amazon",
-                    "edge_score": 0.0,
-                    "node_score": 0.8470391035079956,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Yangtze",
-                    "edge_score": 0.0,
-                    "node_score": 0.8928117752075195,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Nile",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Africa",
-                            "type": "/location/location/contains",
-                            "tail": "Nile River"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "Mississippi",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
-                    "verified_edges": []
-                },
-                "answer": 2,
-                "probs": [
-                    0.0,
-                    0.0,
-                    1.0,
-                    0.0
-                ],
-                "correct": true,
-                "stochastic_score": 1.0
-            },
-            "geo-4": {
-                "0": {
-                    "choice": "India",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
-                    "verified_edges": []
-                },
-                "1": {
-                    "choice": "Australia",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
-                    "verified_edges": []
-                },
-                "2": {
-                    "choice": "Mexico",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
-                    "verified_edges": []
-                },
-                "3": {
-                    "choice": "South Africa",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -1735,29 +1593,70 @@
                 "correct": false,
                 "stochastic_score": 0.25
             },
+            "geo-4": {
+                "0": {
+                    "choice": "India",
+                    "edge_score": 0.0,
+                    "node_score": 0.7141871452331543,
+                    "verified_edges": []
+                },
+                "1": {
+                    "choice": "Australia",
+                    "edge_score": 0.5,
+                    "node_score": 0.7141871750354767,
+                    "verified_edges": [
+                        {
+                            "head": "Great Barrier Reef",
+                            "type": "country",
+                            "tail": "Australia"
+                        }
+                    ]
+                },
+                "2": {
+                    "choice": "Mexico",
+                    "edge_score": 0.0,
+                    "node_score": 0.7417615950107574,
+                    "verified_edges": []
+                },
+                "3": {
+                    "choice": "South Africa",
+                    "edge_score": 0.0,
+                    "node_score": 0.5760786086320877,
+                    "verified_edges": []
+                },
+                "answer": 1,
+                "probs": [
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0
+                ],
+                "correct": true,
+                "stochastic_score": 1.0
+            },
             "geo-5": {
                 "0": {
                     "choice": "Europe",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Asia",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Africa",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "South America",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -1808,67 +1707,61 @@
             "geo-7": {
                 "0": {
                     "choice": "Thailand",
-                    "edge_score": 0.0,
-                    "node_score": 0.8966311812400818,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Austria",
-                    "edge_score": 1.0,
-                    "node_score": 0.8966311812400818,
-                    "verified_edges": [
-                        {
-                            "head": "Central Europe",
-                            "type": "/location/location/contains",
-                            "tail": "Austria"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Vietnam",
-                    "edge_score": 0.0,
-                    "node_score": 0.8966311514377594,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Malaysia",
-                    "edge_score": 0.0,
-                    "node_score": 0.8966311812400818,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
-                "answer": 1,
+                "answer": -1,
                 "probs": [
-                    0.0,
-                    1.0,
-                    0.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
-                "correct": true,
-                "stochastic_score": 1.0
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "geo-8": {
                 "0": {
                     "choice": "Thailand",
-                    "edge_score": 0.0,
-                    "node_score": 0.8456645607948303,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "India",
-                    "edge_score": 0.0,
-                    "node_score": 0.8456645607948303,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Indonesia",
-                    "edge_score": 0.0,
-                    "node_score": 0.8456645806630453,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Pakistan",
-                    "edge_score": 0.0,
-                    "node_score": 0.8456645607948303,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -1884,66 +1777,37 @@
             "geo-9": {
                 "0": {
                     "choice": "Greece",
-                    "edge_score": 0.6666666666666666,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Asia",
-                            "type": "/location/location/contains",
-                            "tail": "Greece"
-                        },
-                        {
-                            "head": "Europe",
-                            "type": "/location/location/contains",
-                            "tail": "Greece"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "Turkey",
-                    "edge_score": 0.3333333333333333,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Turkey",
-                            "type": "/location/location/contains",
-                            "tail": "Istanbul"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Egypt",
-                    "edge_score": 0.3333333333333333,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Asia",
-                            "type": "/location/location/contains",
-                            "tail": "Egypt"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "Italy",
-                    "edge_score": 0.3333333333333333,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Europe",
-                            "type": "/location/location/contains",
-                            "tail": "Italy"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
-                "answer": 0,
+                "answer": -1,
                 "probs": [
-                    1.0,
-                    0.0,
-                    0.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
                 "correct": false,
-                "stochastic_score": 0.0
+                "stochastic_score": 0.25
             },
             "geo-10": {
                 "0": {
@@ -2018,51 +1882,27 @@
             "geo-12": {
                 "0": {
                     "choice": "Asia",
-                    "edge_score": 0.5,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Europe",
-                            "type": "/location/location/contains",
-                            "tail": "Russia"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "Africa",
-                    "edge_score": 0.5,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Europe",
-                            "type": "/location/location/contains",
-                            "tail": "Russia"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Australia",
-                    "edge_score": 0.5,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Europe",
-                            "type": "/location/location/contains",
-                            "tail": "Russia"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "Middle East",
-                    "edge_score": 0.5,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Europe",
-                            "type": "/location/location/contains",
-                            "tail": "Russia"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "answer": -1,
                 "probs": [
@@ -2077,33 +1917,56 @@
             "geo-13": {
                 "0": {
                     "choice": "Spain",
-                    "edge_score": 0.0,
+                    "edge_score": 0.3333333333333333,
                     "node_score": 1.0,
-                    "verified_edges": []
+                    "verified_edges": [
+                        {
+                            "head": "North Africa",
+                            "type": "largestCity",
+                            "tail": "Casablanca"
+                        }
+                    ]
                 },
                 "1": {
                     "choice": "Egypt",
-                    "edge_score": 0.0,
+                    "edge_score": 0.3333333333333333,
                     "node_score": 1.0,
-                    "verified_edges": []
+                    "verified_edges": [
+                        {
+                            "head": "North Africa",
+                            "type": "largestCity",
+                            "tail": "Casablanca"
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Morocco",
-                    "edge_score": 1.0,
+                    "edge_score": 0.6666666666666666,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Morocco",
-                            "type": "/location/location/contains",
+                            "type": "largestCity",
+                            "tail": "Casablanca"
+                        },
+                        {
+                            "head": "North Africa",
+                            "type": "largestCity",
                             "tail": "Casablanca"
                         }
                     ]
                 },
                 "3": {
                     "choice": "Tunisia",
-                    "edge_score": 0.0,
+                    "edge_score": 0.3333333333333333,
                     "node_score": 1.0,
-                    "verified_edges": []
+                    "verified_edges": [
+                        {
+                            "head": "North Africa",
+                            "type": "largestCity",
+                            "tail": "Casablanca"
+                        }
+                    ]
                 },
                 "answer": 2,
                 "probs": [
@@ -2118,26 +1981,26 @@
             "geo-14": {
                 "0": {
                     "choice": "Venice",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Amsterdam",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Bangkok",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Stockholm",
-                    "edge_score": 0.0,
-                    "node_score": 1.0000000596046448,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -2154,48 +2017,48 @@
                 "0": {
                     "choice": "4",
                     "edge_score": 1.0,
-                    "node_score": 0.9693925678730011,
+                    "node_score": 0.791697084903717,
                     "verified_edges": [
                         {
                             "head": "Europe",
-                            "type": "/location/location/contains",
-                            "tail": "Danube River"
+                            "type": "river",
+                            "tail": "Danube"
                         }
                     ]
                 },
                 "1": {
                     "choice": "6",
                     "edge_score": 1.0,
-                    "node_score": 0.9693925678730011,
+                    "node_score": 0.791697084903717,
                     "verified_edges": [
                         {
                             "head": "Europe",
-                            "type": "/location/location/contains",
-                            "tail": "Danube River"
+                            "type": "river",
+                            "tail": "Danube"
                         }
                     ]
                 },
                 "2": {
                     "choice": "10",
                     "edge_score": 1.0,
-                    "node_score": 0.9693925678730011,
+                    "node_score": 0.791697084903717,
                     "verified_edges": [
                         {
                             "head": "Europe",
-                            "type": "/location/location/contains",
-                            "tail": "Danube River"
+                            "type": "river",
+                            "tail": "Danube"
                         }
                     ]
                 },
                 "3": {
                     "choice": "12",
                     "edge_score": 1.0,
-                    "node_score": 0.9693925678730011,
+                    "node_score": 0.791697084903717,
                     "verified_edges": [
                         {
                             "head": "Europe",
-                            "type": "/location/location/contains",
-                            "tail": "Danube River"
+                            "type": "river",
+                            "tail": "Danube"
                         }
                     ]
                 },
@@ -2247,26 +2110,26 @@
             "geo-17": {
                 "0": {
                     "choice": "France",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Austria",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Sweden",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Poland",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -2317,187 +2180,51 @@
             "geo-19": {
                 "0": {
                     "choice": "Osaka Prefecture",
-                    "edge_score": 0.6666666666666666,
+                    "edge_score": 1.0,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Osaka Prefecture"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/country/capital",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/country/administrative_divisions",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
+                            "type": "capital",
                             "tail": "Kyoto"
-                        },
-                        {
-                            "head": "Tokyo",
-                            "type": "/location/administrative_division/country",
-                            "tail": "Japan"
                         }
                     ]
                 },
                 "1": {
                     "choice": "Kyoto Prefecture",
-                    "edge_score": 0.6666666666666666,
+                    "edge_score": 1.0,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Japan",
-                            "type": "/location/country/capital",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/country/administrative_divisions",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Kyoto Prefecture"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
+                            "type": "capital",
                             "tail": "Kyoto"
-                        },
-                        {
-                            "head": "Tokyo",
-                            "type": "/location/administrative_division/country",
-                            "tail": "Japan"
                         }
                     ]
                 },
                 "2": {
                     "choice": "Tokyo Metropolis",
-                    "edge_score": 0.5555555555555556,
-                    "node_score": 0.9286310523748398,
+                    "edge_score": 1.0,
+                    "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Japan",
-                            "type": "/location/country/capital",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/country/administrative_divisions",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
+                            "type": "capital",
                             "tail": "Kyoto"
-                        },
-                        {
-                            "head": "Tokyo",
-                            "type": "/location/administrative_division/country",
-                            "tail": "Japan"
                         }
                     ]
                 },
                 "3": {
                     "choice": "Fukuoka Prefecture",
-                    "edge_score": 0.5555555555555556,
+                    "edge_score": 1.0,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Japan",
-                            "type": "/location/country/capital",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/country/administrative_divisions",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "Tokyo"
-                        },
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
+                            "type": "capital",
                             "tail": "Kyoto"
-                        },
-                        {
-                            "head": "Tokyo",
-                            "type": "/location/administrative_division/country",
-                            "tail": "Japan"
                         }
                     ]
-                },
-                "answer": -1,
-                "probs": [
-                    0.5,
-                    0.5,
-                    0.0,
-                    0.0
-                ],
-                "correct": false,
-                "stochastic_score": 0.5
-            }
-        },
-        "stats": {
-            "correct": 5,
-            "fail": 1,
-            "unselectable": 14,
-            "total": 20,
-            "stochastic_accuracy": 0.4375
-        }
-    },
-    "his": {
-        "questions": {
-            "his-0": {
-                "0": {
-                    "choice": "Abraham Lincoln",
-                    "edge_score": 0.0,
-                    "node_score": 0.8728350698947906,
-                    "verified_edges": []
-                },
-                "1": {
-                    "choice": "Thomas Jefferson",
-                    "edge_score": 0.0,
-                    "node_score": 0.922313928604126,
-                    "verified_edges": []
-                },
-                "2": {
-                    "choice": "George Washington",
-                    "edge_score": 0.0,
-                    "node_score": 0.8313795030117035,
-                    "verified_edges": []
-                },
-                "3": {
-                    "choice": "John Adams",
-                    "edge_score": 0.0,
-                    "node_score": 0.8249526023864746,
-                    "verified_edges": []
                 },
                 "answer": -1,
                 "probs": [
@@ -2508,30 +2235,88 @@
                 ],
                 "correct": false,
                 "stochastic_score": 0.25
+            }
+        },
+        "stats": {
+            "correct": 3,
+            "fail": 0,
+            "unselectable": 17,
+            "total": 20,
+            "stochastic_accuracy": 0.3625
+        }
+    },
+    "his": {
+        "questions": {
+            "his-0": {
+                "0": {
+                    "choice": "Abraham Lincoln",
+                    "edge_score": 1.0,
+                    "node_score": 1.0,
+                    "verified_edges": [
+                        {
+                            "head": "United States",
+                            "type": "leaderName",
+                            "tail": "Abraham Lincoln"
+                        }
+                    ]
+                },
+                "1": {
+                    "choice": "Thomas Jefferson",
+                    "edge_score": 1.0,
+                    "node_score": 0.7082870304584503,
+                    "verified_edges": [
+                        {
+                            "head": "United States",
+                            "type": "leaderName",
+                            "tail": "Thomas Jefferson"
+                        }
+                    ]
+                },
+                "2": {
+                    "choice": "George Washington",
+                    "edge_score": 0.0,
+                    "node_score": 0.8795262575149536,
+                    "verified_edges": []
+                },
+                "3": {
+                    "choice": "John Adams",
+                    "edge_score": 0.0,
+                    "node_score": 0.784694254398346,
+                    "verified_edges": []
+                },
+                "answer": 0,
+                "probs": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "correct": false,
+                "stochastic_score": 0.0
             },
             "his-1": {
                 "0": {
                     "choice": "1943",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "1944",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "1945",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "1946",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -2547,26 +2332,26 @@
             "his-2": {
                 "0": {
                     "choice": "Japanese pirates",
-                    "edge_score": 0.0,
-                    "node_score": 0.6238124221563339,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Mongol invasions",
-                    "edge_score": 0.0,
-                    "node_score": 0.6238124221563339,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Russian attacks",
-                    "edge_score": 0.0,
-                    "node_score": 0.6238124221563339,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Indian invasions",
-                    "edge_score": 0.0,
-                    "node_score": 0.6238124221563339,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -2582,26 +2367,26 @@
             "his-3": {
                 "0": {
                     "choice": "Rome",
-                    "edge_score": 0.0,
-                    "node_score": 0.9491918087005615,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Athens",
-                    "edge_score": 0.0,
-                    "node_score": 0.9491918087005615,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Carthage",
-                    "edge_score": 0.0,
-                    "node_score": 0.9491917788982391,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Alexandria",
-                    "edge_score": 0.0,
-                    "node_score": 0.9491918385028839,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -2617,124 +2402,62 @@
             "his-4": {
                 "0": {
                     "choice": "France",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Europe",
-                            "type": "/location/location/contains",
-                            "tail": "France"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "Italy",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Europe",
-                            "type": "/location/location/contains",
-                            "tail": "Italy"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Germany",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Europe",
-                            "type": "/location/location/contains",
-                            "tail": "Germany"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "England",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
                 "probs": [
-                    0.3333333333333333,
-                    0.3333333333333333,
-                    0.3333333333333333,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
                 "correct": false,
-                "stochastic_score": 0.3333333333333333
+                "stochastic_score": 0.25
             },
             "his-5": {
                 "0": {
                     "choice": "1987",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Germany",
-                            "type": "/location/country/administrative_divisions",
-                            "tail": "Berlin"
-                        },
-                        {
-                            "head": "Germany",
-                            "type": "/location/country/capital",
-                            "tail": "Berlin"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "1988",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Germany",
-                            "type": "/location/country/administrative_divisions",
-                            "tail": "Berlin"
-                        },
-                        {
-                            "head": "Germany",
-                            "type": "/location/country/capital",
-                            "tail": "Berlin"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "1989",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Germany",
-                            "type": "/location/country/administrative_divisions",
-                            "tail": "Berlin"
-                        },
-                        {
-                            "head": "Germany",
-                            "type": "/location/country/capital",
-                            "tail": "Berlin"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "1990",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Germany",
-                            "type": "/location/country/administrative_divisions",
-                            "tail": "Berlin"
-                        },
-                        {
-                            "head": "Germany",
-                            "type": "/location/country/capital",
-                            "tail": "Berlin"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "answer": -1,
                 "probs": [
@@ -2750,60 +2473,107 @@
                 "0": {
                     "choice": "Stalin",
                     "edge_score": 0.0,
-                    "node_score": 0.9059446156024933,
+                    "node_score": 0.903626948595047,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Hitler",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
-                    "verified_edges": []
+                    "edge_score": 1.0,
+                    "node_score": 0.9036269783973694,
+                    "verified_edges": [
+                        {
+                            "head": "Nazi Germany",
+                            "type": "leaderName",
+                            "tail": "Hitler"
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Mussolini",
                     "edge_score": 0.0,
-                    "node_score": 0.7770554423332214,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Churchill",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.9036269783973694,
                     "verified_edges": []
                 },
-                "answer": -1,
+                "answer": 1,
                 "probs": [
-                    0.25,
-                    0.25,
-                    0.25,
-                    0.25
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0
                 ],
-                "correct": false,
-                "stochastic_score": 0.25
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "his-7": {
                 "0": {
                     "choice": "Angela Merkel",
                     "edge_score": 0.0,
-                    "node_score": 0.9516933560371399,
+                    "node_score": 0.6808718939622244,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Hillary Clinton",
                     "edge_score": 0.0,
-                    "node_score": 0.928743451833725,
+                    "node_score": 0.6346869667371114,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Margaret Thatcher",
-                    "edge_score": 0.0,
-                    "node_score": 0.9607547521591187,
-                    "verified_edges": []
+                    "edge_score": 0.5,
+                    "node_score": 0.7304216027259827,
+                    "verified_edges": [
+                        {
+                            "head": "United Kingdom",
+                            "type": "leaderName",
+                            "tail": "Margaret Thatcher"
+                        }
+                    ]
                 },
                 "3": {
                     "choice": "Indira Gandhi",
                     "edge_score": 0.0,
-                    "node_score": 0.9707753658294678,
+                    "node_score": 0.7572940587997437,
+                    "verified_edges": []
+                },
+                "answer": 2,
+                "probs": [
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0
+                ],
+                "correct": true,
+                "stochastic_score": 1.0
+            },
+            "his-8": {
+                "0": {
+                    "choice": "East",
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
+                },
+                "1": {
+                    "choice": "West",
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
+                },
+                "2": {
+                    "choice": "South",
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
+                },
+                "3": {
+                    "choice": "Europe",
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -2816,70 +2586,29 @@
                 "correct": false,
                 "stochastic_score": 0.25
             },
-            "his-8": {
-                "0": {
-                    "choice": "East",
-                    "edge_score": 0.0,
-                    "node_score": 0.3628139942884445,
-                    "verified_edges": []
-                },
-                "1": {
-                    "choice": "West",
-                    "edge_score": 0.0,
-                    "node_score": 0.36823423206806183,
-                    "verified_edges": []
-                },
-                "2": {
-                    "choice": "South",
-                    "edge_score": 0.0,
-                    "node_score": 0.0,
-                    "verified_edges": []
-                },
-                "3": {
-                    "choice": "Europe",
-                    "edge_score": 1.0,
-                    "node_score": 0.7184856981039047,
-                    "verified_edges": [
-                        {
-                            "head": "Europe",
-                            "type": "/location/location/contains",
-                            "tail": "North"
-                        }
-                    ]
-                },
-                "answer": 3,
-                "probs": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "correct": false,
-                "stochastic_score": 0.0
-            },
             "his-9": {
                 "0": {
                     "choice": "Greece",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Italy",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Turkey",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Iran",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -2965,26 +2694,26 @@
             "his-12": {
                 "0": {
                     "choice": "1776",
-                    "edge_score": 0.0,
-                    "node_score": 0.5585682541131973,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "1789",
-                    "edge_score": 0.0,
-                    "node_score": 0.5585682541131973,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "1804",
-                    "edge_score": 0.0,
-                    "node_score": 0.5585682541131973,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "1812",
-                    "edge_score": 0.0,
-                    "node_score": 0.5585682541131973,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -3105,26 +2834,26 @@
             "his-16": {
                 "0": {
                     "choice": "1066",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "1215",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "1415",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "1603",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -3140,26 +2869,26 @@
             "his-17": {
                 "0": {
                     "choice": "Ottoman",
-                    "edge_score": 0.0,
-                    "node_score": 0.6687520146369934,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Roman",
-                    "edge_score": 0.0,
-                    "node_score": 0.8673718571662903,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Mongol",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Persian",
-                    "edge_score": 0.0,
-                    "node_score": 0.7103322446346283,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -3244,11 +2973,11 @@
             }
         },
         "stats": {
-            "correct": 0,
+            "correct": 2,
             "fail": 1,
-            "unselectable": 19,
+            "unselectable": 17,
             "total": 20,
-            "stochastic_accuracy": 0.24166666666666664
+            "stochastic_accuracy": 0.3125
         }
     },
     "lit": {
@@ -3256,26 +2985,26 @@
             "lit-0": {
                 "0": {
                     "choice": "Aldous Huxley",
-                    "edge_score": 0,
+                    "edge_score": 0.0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "George Orwell",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 0.28437483807404834,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Ray Bradbury",
-                    "edge_score": 0,
+                    "edge_score": 0.0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "J.D. Salinger",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 0.4115568498770396,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -3291,25 +3020,25 @@
             "lit-1": {
                 "0": {
                     "choice": "English",
-                    "edge_score": 0,
+                    "edge_score": 0.0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Spanish",
-                    "edge_score": 0,
+                    "edge_score": 0.0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "French",
-                    "edge_score": 0,
+                    "edge_score": 0.0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Italian",
-                    "edge_score": 0,
+                    "edge_score": 0.0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
@@ -3361,37 +3090,49 @@
             "lit-3": {
                 "0": {
                     "choice": "Emily Bront\u00eb",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Jane Austen",
-                    "edge_score": 0,
-                    "node_score": 0.0,
-                    "verified_edges": []
+                    "edge_score": 0.5,
+                    "node_score": 1.0,
+                    "verified_edges": [
+                        {
+                            "head": "Pride and Prejudice",
+                            "type": "author",
+                            "tail": "Jane Austen"
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Mary Shelley",
-                    "edge_score": 0,
-                    "node_score": 0.0,
-                    "verified_edges": []
+                    "edge_score": 0.5,
+                    "node_score": 0.8779902656873068,
+                    "verified_edges": [
+                        {
+                            "head": "Pride and Prejudice",
+                            "type": "author",
+                            "tail": "Mary Shelley"
+                        }
+                    ]
                 },
                 "3": {
                     "choice": "Virginia Woolf",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 0.9596131245295206,
                     "verified_edges": []
                 },
-                "answer": -1,
+                "answer": 1,
                 "probs": [
-                    0.25,
-                    0.25,
-                    0.25,
-                    0.25
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0
                 ],
-                "correct": false,
-                "stochastic_score": 0.25
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "lit-4": {
                 "0": {
@@ -3536,37 +3277,43 @@
             "lit-8": {
                 "0": {
                     "choice": "F. Scott Fitzgerald",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 0.5098020732402802,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "J.D. Salinger",
-                    "edge_score": 0,
-                    "node_score": 0.0,
-                    "verified_edges": []
+                    "edge_score": 1.0,
+                    "node_score": 0.9309890866279602,
+                    "verified_edges": [
+                        {
+                            "head": "The Catcher",
+                            "type": "author",
+                            "tail": "J.D. Salinger"
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Ernest Hemingway",
-                    "edge_score": 0,
+                    "edge_score": 0.0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "John Steinbeck",
-                    "edge_score": 0,
+                    "edge_score": 0.0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
-                "answer": -1,
+                "answer": 1,
                 "probs": [
-                    0.25,
-                    0.25,
-                    0.25,
-                    0.25
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0
                 ],
-                "correct": false,
-                "stochastic_score": 0.25
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "lit-9": {
                 "0": {
@@ -3606,66 +3353,60 @@
             "lit-10": {
                 "0": {
                     "choice": "China",
-                    "edge_score": 0.0,
-                    "node_score": 0.7998449703057607,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Japan",
-                    "edge_score": 0.3333333333333333,
-                    "node_score": 0.7998449703057607,
-                    "verified_edges": [
-                        {
-                            "head": "Japan",
-                            "type": "/location/location/contains",
-                            "tail": "haiku"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Vietnam",
-                    "edge_score": 0.0,
-                    "node_score": 0.7998449603716532,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "India",
-                    "edge_score": 0.0,
-                    "node_score": 0.8031303286552429,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
-                "answer": 1,
+                "answer": -1,
                 "probs": [
-                    0.0,
-                    1.0,
-                    0.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
-                "correct": true,
-                "stochastic_score": 1.0
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "lit-11": {
                 "0": {
                     "choice": "Ernest Hemingway",
-                    "edge_score": 0,
+                    "edge_score": 0.0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "F. Scott Fitzgerald",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 0.5718398094177246,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Mark Twain",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 0.5846713185310364,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "T.S. Eliot",
-                    "edge_score": 0,
+                    "edge_score": 0.0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
@@ -3717,26 +3458,26 @@
             "lit-13": {
                 "0": {
                     "choice": "Romance",
-                    "edge_score": 0.0,
-                    "node_score": 0.7571254968643188,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Germanic",
-                    "edge_score": 0.0,
-                    "node_score": 0.7571254968643188,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Slavic",
-                    "edge_score": 0.0,
-                    "node_score": 0.7571254968643188,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Celtic",
-                    "edge_score": 0.0,
-                    "node_score": 0.7571254968643188,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -3752,43 +3493,37 @@
             "lit-14": {
                 "0": {
                     "choice": "Moby-Dick",
-                    "edge_score": 0.5,
-                    "node_score": 0.5823309520880381,
-                    "verified_edges": [
-                        {
-                            "head": "Moby-Dick",
-                            "type": "/people/person/children",
-                            "tail": "Ishmael"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "The Old Man and the Sea",
-                    "edge_score": 0.0,
-                    "node_score": 0.5295184304316839,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Ulysses",
-                    "edge_score": 0.0,
-                    "node_score": 0.5360811154047648,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Frankenstein",
-                    "edge_score": 0.0,
-                    "node_score": 0.5760671496391296,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
-                "answer": 0,
+                "answer": -1,
                 "probs": [
-                    1.0,
-                    0.0,
-                    0.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
-                "correct": true,
-                "stochastic_score": 1.0
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "lit-15": {
                 "0": {
@@ -3828,27 +3563,51 @@
             "lit-16": {
                 "0": {
                     "choice": "Goblet of Fire",
-                    "edge_score": 0,
-                    "node_score": 0.0,
-                    "verified_edges": []
+                    "edge_score": 1.0,
+                    "node_score": 1.0,
+                    "verified_edges": [
+                        {
+                            "head": "Harry Potter",
+                            "type": "author",
+                            "tail": "J. K. Rowling"
+                        }
+                    ]
                 },
                 "1": {
                     "choice": "Chamber of Secrets",
-                    "edge_score": 0,
-                    "node_score": 0.0,
-                    "verified_edges": []
+                    "edge_score": 1.0,
+                    "node_score": 1.0,
+                    "verified_edges": [
+                        {
+                            "head": "Harry Potter",
+                            "type": "author",
+                            "tail": "J. K. Rowling"
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Philosopher's Stone",
-                    "edge_score": 0,
-                    "node_score": 0.0,
-                    "verified_edges": []
+                    "edge_score": 1.0,
+                    "node_score": 1.0,
+                    "verified_edges": [
+                        {
+                            "head": "Harry Potter",
+                            "type": "author",
+                            "tail": "J. K. Rowling"
+                        }
+                    ]
                 },
                 "3": {
                     "choice": "Half-Blood Prince",
-                    "edge_score": 0,
-                    "node_score": 0.0,
-                    "verified_edges": []
+                    "edge_score": 1.0,
+                    "node_score": 1.0,
+                    "verified_edges": [
+                        {
+                            "head": "Harry Potter",
+                            "type": "author",
+                            "tail": "J. K. Rowling"
+                        }
+                    ]
                 },
                 "answer": -1,
                 "probs": [
@@ -3864,60 +3623,66 @@
                 "0": {
                     "choice": "Agatha Christie",
                     "edge_score": 0.0,
-                    "node_score": 0.8116005659103394,
+                    "node_score": 0.7999859750270844,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Arthur Conan Doyle",
-                    "edge_score": 0.0,
-                    "node_score": 0.703353762626648,
-                    "verified_edges": []
+                    "edge_score": 1.0,
+                    "node_score": 0.9663023948669434,
+                    "verified_edges": [
+                        {
+                            "head": "Sherlock Holmes",
+                            "type": "creator",
+                            "tail": "Arthur Conan Doyle"
+                        }
+                    ]
                 },
                 "2": {
                     "choice": "Edgar Allan Poe",
                     "edge_score": 0.0,
-                    "node_score": 0.8078976273536682,
+                    "node_score": 0.858946681022644,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Raymond Chandler",
                     "edge_score": 0.0,
-                    "node_score": 0.8934765458106995,
+                    "node_score": 0.8597789406776428,
                     "verified_edges": []
                 },
-                "answer": -1,
+                "answer": 1,
                 "probs": [
-                    0.25,
-                    0.25,
-                    0.25,
-                    0.25
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0
                 ],
-                "correct": false,
-                "stochastic_score": 0.25
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "lit-18": {
                 "0": {
                     "choice": "Period",
-                    "edge_score": 0.0,
-                    "node_score": 0.3184564411640167,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Comma",
-                    "edge_score": 0.0,
-                    "node_score": 0.7205056697130203,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Apostrophe",
-                    "edge_score": 0.0,
-                    "node_score": 0.28311891853809357,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Colon",
-                    "edge_score": 0.0,
-                    "node_score": 0.34648773074150085,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -3967,11 +3732,11 @@
             }
         },
         "stats": {
-            "correct": 2,
+            "correct": 3,
             "fail": 0,
-            "unselectable": 18,
+            "unselectable": 17,
             "total": 20,
-            "stochastic_accuracy": 0.325
+            "stochastic_accuracy": 0.3625
         }
     },
     "mat": {
@@ -3979,25 +3744,25 @@
             "mat-0": {
                 "0": {
                     "choice": "2.14",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "3.14",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "4.14",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "5.14",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
@@ -4119,51 +3884,27 @@
             "mat-4": {
                 "0": {
                     "choice": "90",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "geometry",
-                            "type": "/location/location/contains",
-                            "tail": "triangle"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "180",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "geometry",
-                            "type": "/location/location/contains",
-                            "tail": "triangle"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "270",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "geometry",
-                            "type": "/location/location/contains",
-                            "tail": "triangle"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "360",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "geometry",
-                            "type": "/location/location/contains",
-                            "tail": "triangle"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "answer": -1,
                 "probs": [
@@ -4213,25 +3954,25 @@
             "mat-6": {
                 "0": {
                     "choice": "Multiplication",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Summation",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Division",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Subtraction",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
@@ -4283,55 +4024,37 @@
             "mat-8": {
                 "0": {
                     "choice": "Acute",
-                    "edge_score": 0.5,
-                    "node_score": 0.5860061645507812,
-                    "verified_edges": [
-                        {
-                            "head": "geometry",
-                            "type": "/location/location/contains",
-                            "tail": "angle"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "Right",
-                    "edge_score": 0.0,
-                    "node_score": 0.886744499206543,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Obtuse",
-                    "edge_score": 0.5,
-                    "node_score": 0.5955668886502584,
-                    "verified_edges": [
-                        {
-                            "head": "geometry",
-                            "type": "/location/location/contains",
-                            "tail": "angle"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "Reflex",
-                    "edge_score": 0.5,
-                    "node_score": 0.5673666000366211,
-                    "verified_edges": [
-                        {
-                            "head": "geometry",
-                            "type": "/location/location/contains",
-                            "tail": "angle"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
-                "answer": 2,
+                "answer": -1,
                 "probs": [
-                    0.0,
-                    0.0,
-                    1.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
-                "correct": true,
-                "stochastic_score": 1.0
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "mat-9": {
                 "0": {
@@ -4616,49 +4339,37 @@
             "mat-17": {
                 "0": {
                     "choice": "Pentagon",
-                    "edge_score": 0.0,
-                    "node_score": 0.9999999403953552,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Hexagon",
-                    "edge_score": 1.0,
-                    "node_score": 0.6259666830301285,
-                    "verified_edges": [
-                        {
-                            "head": "geometry",
-                            "type": "/location/location/contains",
-                            "tail": "Hexagon"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Heptagon",
-                    "edge_score": 1.0,
-                    "node_score": 0.9999999701976776,
-                    "verified_edges": [
-                        {
-                            "head": "geometry",
-                            "type": "/location/location/contains",
-                            "tail": "Heptagon"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "Octagon",
-                    "edge_score": 0.0,
-                    "node_score": 0.697279080748558,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
-                "answer": 2,
+                "answer": -1,
                 "probs": [
-                    0.0,
-                    0.0,
-                    1.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
                 "correct": false,
-                "stochastic_score": 0.0
+                "stochastic_score": 0.25
             },
             "mat-18": {
                 "0": {
@@ -4732,11 +4443,11 @@
             }
         },
         "stats": {
-            "correct": 1,
-            "fail": 1,
-            "unselectable": 18,
+            "correct": 0,
+            "fail": 0,
+            "unselectable": 20,
             "total": 20,
-            "stochastic_accuracy": 0.275
+            "stochastic_accuracy": 0.25
         }
     },
     "phi": {
@@ -4744,26 +4455,26 @@
             "phi-0": {
                 "0": {
                     "choice": "Plato",
-                    "edge_score": 0.0,
-                    "node_score": 0.46789931505918503,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Socrates",
-                    "edge_score": 0.0,
-                    "node_score": 0.3673800379037857,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Aristotle",
-                    "edge_score": 0.0,
-                    "node_score": 0.6711453497409821,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Descartes",
-                    "edge_score": 0.0,
-                    "node_score": 0.6433349251747131,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -4919,37 +4630,43 @@
             "phi-5": {
                 "0": {
                     "choice": "Heidegger",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 0.227805624405543,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Kierkegaard",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 0.3630114197731018,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Nietzsche",
-                    "edge_score": 0,
-                    "node_score": 0.0,
-                    "verified_edges": []
+                    "edge_score": 0.5,
+                    "node_score": 0.416873832543691,
+                    "verified_edges": [
+                        {
+                            "head": "Thus",
+                            "type": "author",
+                            "tail": "Nietzsche"
+                        }
+                    ]
                 },
                 "3": {
                     "choice": "Hume",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 0.227805624405543,
                     "verified_edges": []
                 },
-                "answer": -1,
+                "answer": 2,
                 "probs": [
-                    0.25,
-                    0.25,
-                    0.25,
-                    0.25
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0
                 ],
-                "correct": false,
-                "stochastic_score": 0.25
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "phi-6": {
                 "0": {
@@ -5024,26 +4741,26 @@
             "phi-8": {
                 "0": {
                     "choice": "Hume",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Descartes",
-                    "edge_score": 0.0,
-                    "node_score": 0.6423386782407761,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Kant",
-                    "edge_score": 0.0,
-                    "node_score": 0.5348829030990601,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Sartre",
-                    "edge_score": 0.0,
-                    "node_score": 0.6446448564529419,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -5095,19 +4812,19 @@
                 "0": {
                     "choice": "Metaphysics",
                     "edge_score": 0.0,
-                    "node_score": 0.16353124007582664,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Ethics",
                     "edge_score": 0.0,
-                    "node_score": 0.0,
+                    "node_score": 0.29410064220428467,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Epistemology",
                     "edge_score": 0.0,
-                    "node_score": 0.18881036341190338,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
@@ -5234,26 +4951,26 @@
             "phi-14": {
                 "0": {
                     "choice": "Epicurus",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Zeno of Citium",
-                    "edge_score": 0.0,
-                    "node_score": 0.8466396927833557,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Plato",
-                    "edge_score": 0.0,
-                    "node_score": 0.8551317155361176,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Marcus Aurelius",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -5339,26 +5056,26 @@
             "phi-17": {
                 "0": {
                     "choice": "Formal",
-                    "edge_score": 0.0,
-                    "node_score": 0.6506892740726471,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Efficient",
-                    "edge_score": 0.0,
-                    "node_score": 0.9364300966262817,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Spiritual",
-                    "edge_score": 0.0,
-                    "node_score": 0.7037495225667953,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Final",
-                    "edge_score": 0.0,
-                    "node_score": 0.6522978842258453,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -5374,25 +5091,25 @@
             "phi-18": {
                 "0": {
                     "choice": "Strawman",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Red Herring",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Ad hominem",
-                    "edge_score": 0.0,
-                    "node_score": 0.11777062714099884,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "False cause",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
@@ -5443,11 +5160,11 @@
             }
         },
         "stats": {
-            "correct": 0,
+            "correct": 1,
             "fail": 0,
-            "unselectable": 20,
+            "unselectable": 19,
             "total": 20,
-            "stochastic_accuracy": 0.25
+            "stochastic_accuracy": 0.2875
         }
     },
     "pop": {
@@ -5455,25 +5172,25 @@
             "pop-0": {
                 "0": {
                     "choice": "Justin Bieber",
-                    "edge_score": 0.0,
-                    "node_score": 0.3269208073616028,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Ed Sheeran",
-                    "edge_score": 0.0,
-                    "node_score": 0.22397373616695404,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Adele",
-                    "edge_score": 0.0,
-                    "node_score": 0.3763730525970459,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Drake",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
@@ -5490,26 +5207,26 @@
             "pop-1": {
                 "0": {
                     "choice": "Superman",
-                    "edge_score": 0.0,
-                    "node_score": 0.8272399604320526,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Batman",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Iron Man",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Spider-Man",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -5560,84 +5277,72 @@
             "pop-3": {
                 "0": {
                     "choice": "Chicago",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Los Angeles",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "New York City",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "New York City",
-                            "type": "/location/location/contains",
-                            "tail": "Manhattan"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "Miami",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
-                "answer": 2,
+                "answer": -1,
                 "probs": [
-                    0.0,
-                    0.0,
-                    1.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
-                "correct": true,
-                "stochastic_score": 1.0
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "pop-4": {
                 "0": {
                     "choice": "Chris Evans",
-                    "edge_score": 0.0,
-                    "node_score": 0.7646554708480835,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Robert Downey Jr.",
-                    "edge_score": 0.0,
-                    "node_score": 0.7279677093029022,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Chris Hemsworth",
-                    "edge_score": 0.5,
-                    "node_score": 0.8848574757575989,
-                    "verified_edges": [
-                        {
-                            "head": "Chris Hemsworth",
-                            "type": "/business/person/company",
-                            "tail": "Marvel Cinematic Universe"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "Mark Ruffalo",
-                    "edge_score": 0.0,
-                    "node_score": 0.48237238824367523,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
-                "answer": 2,
+                "answer": -1,
                 "probs": [
-                    0.0,
-                    0.0,
-                    1.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
                 "correct": false,
-                "stochastic_score": 0.0
+                "stochastic_score": 0.25
             },
             "pop-5": {
                 "0": {
@@ -5748,25 +5453,25 @@
                 "0": {
                     "choice": "Fire",
                     "edge_score": 0.0,
-                    "node_score": 0.7978774011135101,
+                    "node_score": 0.7733575701713562,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Water",
                     "edge_score": 0.0,
-                    "node_score": 0.7978774011135101,
+                    "node_score": 0.7733575701713562,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Electric",
                     "edge_score": 0.0,
-                    "node_score": 0.7978774011135101,
+                    "node_score": 0.7733575701713562,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Grass",
                     "edge_score": 0.0,
-                    "node_score": 0.7978774011135101,
+                    "node_score": 0.7733575701713562,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -5783,25 +5488,25 @@
                 "0": {
                     "choice": "Steven Spielberg",
                     "edge_score": 0.0,
-                    "node_score": 0.7002715468406677,
+                    "node_score": 0.9661895334720612,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "James Cameron",
                     "edge_score": 0.0,
-                    "node_score": 0.40373508632183075,
+                    "node_score": 0.9154032170772552,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Christopher Nolan",
                     "edge_score": 0.0,
-                    "node_score": 0.633179560303688,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Martin Scorsese",
                     "edge_score": 0.0,
-                    "node_score": 0.6632556915283203,
+                    "node_score": 0.763401210308075,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -5852,43 +5557,37 @@
             "pop-11": {
                 "0": {
                     "choice": "The Witcher",
-                    "edge_score": 0.0,
-                    "node_score": 0.2616414626439412,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Stranger Things",
-                    "edge_score": 0.5,
-                    "node_score": 0.7421474655469259,
-                    "verified_edges": [
-                        {
-                            "head": "Stranger Things",
-                            "type": "/business/person/company",
-                            "tail": "Netflix"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Dark",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "The Mandalorian",
-                    "edge_score": 0.0,
-                    "node_score": 0.36957881848017377,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
-                "answer": 1,
+                "answer": -1,
                 "probs": [
-                    0.0,
-                    1.0,
-                    0.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
-                "correct": true,
-                "stochastic_score": 1.0
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "pop-12": {
                 "0": {
@@ -5928,26 +5627,26 @@
             "pop-13": {
                 "0": {
                     "choice": "Emma Stone",
-                    "edge_score": 0.0,
-                    "node_score": 0.8104942440986633,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Jennifer Lawrence",
-                    "edge_score": 0.0,
-                    "node_score": 0.8488278090953827,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Scarlett Johansson",
-                    "edge_score": 0.0,
-                    "node_score": 0.7105587720870972,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Kristen Stewart",
-                    "edge_score": 0.0,
-                    "node_score": 0.6213137954473495,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -6034,25 +5733,25 @@
                 "0": {
                     "choice": "Chris Pratt",
                     "edge_score": 0.0,
-                    "node_score": 0.4802597612142563,
+                    "node_score": 0.8441298604011536,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Tom Holland",
                     "edge_score": 0.0,
-                    "node_score": 0.4610058665275574,
+                    "node_score": 0.6114585101604462,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Ryan Reynolds",
                     "edge_score": 0.0,
-                    "node_score": 0.21948137879371643,
+                    "node_score": 0.8487521409988403,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Jack Black",
                     "edge_score": 0.0,
-                    "node_score": 0.2865110784769058,
+                    "node_score": 0.6515010446310043,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -6068,25 +5767,25 @@
             "pop-17": {
                 "0": {
                     "choice": "1917",
-                    "edge_score": 0,
+                    "edge_score": 0.0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Parasite",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 0.24783319979906082,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Joker",
-                    "edge_score": 0,
+                    "edge_score": 0.0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Ford v Ferrari",
-                    "edge_score": 0,
+                    "edge_score": 0.0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
@@ -6172,11 +5871,11 @@
             }
         },
         "stats": {
-            "correct": 2,
-            "fail": 1,
-            "unselectable": 17,
+            "correct": 0,
+            "fail": 0,
+            "unselectable": 20,
             "total": 20,
-            "stochastic_accuracy": 0.3125
+            "stochastic_accuracy": 0.25
         }
     },
     "sci": {
@@ -6184,51 +5883,27 @@
             "sci-0": {
                 "0": {
                     "choice": "90",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Celsius",
-                            "type": "/location/location/contains",
-                            "tail": "Celsius"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "100",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Celsius",
-                            "type": "/location/location/contains",
-                            "tail": "Celsius"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "110",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Celsius",
-                            "type": "/location/location/contains",
-                            "tail": "Celsius"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "120",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Celsius",
-                            "type": "/location/location/contains",
-                            "tail": "Celsius"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "answer": -1,
                 "probs": [
@@ -6243,26 +5918,26 @@
             "sci-1": {
                 "0": {
                     "choice": "Gd",
-                    "edge_score": 0.0,
-                    "node_score": 0.6827174425125122,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Go",
-                    "edge_score": 0.0,
-                    "node_score": 0.677280843257904,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Au",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Ag",
-                    "edge_score": 0.0,
-                    "node_score": 0.7213964313268661,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -6523,26 +6198,26 @@
             "sci-9": {
                 "0": {
                     "choice": "Mitochondria",
-                    "edge_score": 0.0,
-                    "node_score": 0.6646472364664078,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Nucleus",
-                    "edge_score": 0.0,
-                    "node_score": 0.6646472588181496,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Ribosome",
-                    "edge_score": 0.0,
-                    "node_score": 0.4594868794083595,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Golgi body",
-                    "edge_score": 0.0,
-                    "node_score": 0.4761636517941952,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -6558,26 +6233,26 @@
             "sci-10": {
                 "0": {
                     "choice": "Newton",
-                    "edge_score": 0.0,
-                    "node_score": 0.7203182876110077,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Einstein",
-                    "edge_score": 0.0,
-                    "node_score": 0.809691995382309,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Tesla",
-                    "edge_score": 0.0,
-                    "node_score": 0.7278629541397095,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Galileo",
-                    "edge_score": 0.0,
-                    "node_score": 0.5388884842395782,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -6628,55 +6303,37 @@
             "sci-12": {
                 "0": {
                     "choice": "Quartz",
-                    "edge_score": 1.0,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Earth",
-                            "type": "/location/location/contains",
-                            "tail": "Quartz"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "Gold",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Iron",
-                    "edge_score": 1.0,
-                    "node_score": 0.7079522609710693,
-                    "verified_edges": [
-                        {
-                            "head": "Earth",
-                            "type": "/location/location/contains",
-                            "tail": "Iron"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "Diamond",
-                    "edge_score": 1.0,
-                    "node_score": 0.710933580994606,
-                    "verified_edges": [
-                        {
-                            "head": "Earth",
-                            "type": "/location/location/contains",
-                            "tail": "Diamond"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
-                "answer": 0,
+                "answer": -1,
                 "probs": [
-                    1.0,
-                    0.0,
-                    0.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
                 "correct": false,
-                "stochastic_score": 0.0
+                "stochastic_score": 0.25
             },
             "sci-13": {
                 "0": {
@@ -6891,51 +6548,45 @@
             "sci-19": {
                 "0": {
                     "choice": "Solid",
-                    "edge_score": 1.0,
-                    "node_score": 0.24947363138198853,
-                    "verified_edges": [
-                        {
-                            "head": "gas",
-                            "type": "/location/location/contains",
-                            "tail": "Solid"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "Liquid",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Gas",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Energy",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
-                "answer": 0,
+                "answer": -1,
                 "probs": [
-                    1.0,
-                    0.0,
-                    0.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
                 "correct": false,
-                "stochastic_score": 0.0
+                "stochastic_score": 0.25
             }
         },
         "stats": {
             "correct": 0,
-            "fail": 2,
-            "unselectable": 18,
+            "fail": 0,
+            "unselectable": 20,
             "total": 20,
-            "stochastic_accuracy": 0.225
+            "stochastic_accuracy": 0.25
         }
     },
     "tech": {
@@ -6978,26 +6629,26 @@
             "tech-1": {
                 "0": {
                     "choice": "Apple",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 0.3103543519973755,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Samsung",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 0.7408916056156158,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Microsoft",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 0.7355469018220901,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Google",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 0.7629740834236145,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -7084,47 +6735,36 @@
                 "0": {
                     "choice": "Bill Gates",
                     "edge_score": 0.0,
-                    "node_score": 0.6958281397819519,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Tim Berners-Lee",
                     "edge_score": 0.0,
-                    "node_score": 0.958188533782959,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Steve Jobs",
                     "edge_score": 0.0,
-                    "node_score": 0.6874690850575765,
+                    "node_score": 0.3815530613064766,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Mark Zuckerberg",
-                    "edge_score": 0.5,
-                    "node_score": 0.7669662634531657,
-                    "verified_edges": [
-                        {
-                            "head": "Mark Zuckerberg",
-                            "type": "/business/person/company",
-                            "tail": "World Wide Web"
-                        },
-                        {
-                            "head": "World Wide Web",
-                            "type": "/business/company/founders",
-                            "tail": "Mark Zuckerberg"
-                        }
-                    ]
+                    "edge_score": 0.0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
-                "answer": 3,
+                "answer": -1,
                 "probs": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
                 "correct": false,
-                "stochastic_score": 0.0
+                "stochastic_score": 0.25
             },
             "tech-5": {
                 "0": {
@@ -7339,26 +6979,26 @@
             "tech-11": {
                 "0": {
                     "choice": "Samsung",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Apple",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Sony",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 0.9395607113838196,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Huawei",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 1.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -7409,43 +7049,37 @@
             "tech-13": {
                 "0": {
                     "choice": "Start",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Main",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Home",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Root",
-                    "edge_score": 1.0,
-                    "node_score": 0.32606831192970276,
-                    "verified_edges": [
-                        {
-                            "head": "website",
-                            "type": "/location/location/contains",
-                            "tail": "Root"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
-                "answer": 3,
+                "answer": -1,
                 "probs": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
                 "correct": false,
-                "stochastic_score": 0.0
+                "stochastic_score": 0.25
             },
             "tech-14": {
                 "0": {
@@ -7590,26 +7224,26 @@
             "tech-18": {
                 "0": {
                     "choice": "MongoDB",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Redis",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "MySQL",
-                    "edge_score": 0.0,
-                    "node_score": 0.7040217369794846,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Neo4j",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -7625,25 +7259,25 @@
             "tech-19": {
                 "0": {
                     "choice": "Stack",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Queue",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Tree",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Graph",
-                    "edge_score": 0.0,
+                    "edge_score": 0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
@@ -7660,10 +7294,10 @@
         },
         "stats": {
             "correct": 0,
-            "fail": 2,
-            "unselectable": 18,
+            "fail": 0,
+            "unselectable": 20,
             "total": 20,
-            "stochastic_accuracy": 0.225
+            "stochastic_accuracy": 0.25
         }
     }
 }

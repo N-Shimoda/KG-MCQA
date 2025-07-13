@@ -1,5 +1,8 @@
 # KG-MCQA
 
+Experimental codes for KR 2025, [_KR in the Wild_ track](https://kr.org/KR2025/call_kr_in_the_wild.html) preprint paper, "Applying Relation Extraction to Graph Matching for Answering Multiple Choice Questions".
+![alt text](image.png)
+
 ## Setup
 
 ### Create Environment

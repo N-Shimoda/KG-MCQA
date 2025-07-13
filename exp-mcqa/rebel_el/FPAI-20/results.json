@@ -21,27 +21,12 @@
                 },
                 "1": {
                     "choice": "Elon Musk",
-                    "edge_score": 0.875,
+                    "edge_score": 0.375,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "SpaceX",
-                            "type": "founded by",
-                            "tail": "Elon Musk"
-                        },
-                        {
-                            "head": "Tesla",
-                            "type": "owned by",
-                            "tail": "Elon Musk"
-                        },
-                        {
                             "head": "Elon Musk",
                             "type": "employer",
-                            "tail": "SpaceX"
-                        },
-                        {
-                            "head": "Elon Musk",
-                            "type": "owner of",
                             "tail": "SpaceX"
                         },
                         {
@@ -51,13 +36,8 @@
                         },
                         {
                             "head": "SpaceX",
-                            "type": "owned by",
+                            "type": "founded by",
                             "tail": "Elon Musk"
-                        },
-                        {
-                            "head": "Elon Musk",
-                            "type": "owner of",
-                            "tail": "Tesla"
                         }
                     ]
                 },
@@ -230,7 +210,7 @@
             "cf-4": {
                 "0": {
                     "choice": "Joe Biden",
-                    "edge_score": 0.42857142857142855,
+                    "edge_score": 0.2857142857142857,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
@@ -242,11 +222,6 @@
                             "head": "Barack Obama",
                             "type": "position held",
                             "tail": "President of the United States"
-                        },
-                        {
-                            "head": "Barack Obama",
-                            "type": "position held",
-                            "tail": "Vice president"
                         }
                     ]
                 },
@@ -256,11 +231,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "President of the United States",
-                            "type": "officeholder",
-                            "tail": "Donald Trump"
-                        },
-                        {
                             "head": "Barack Obama",
                             "type": "position held",
                             "tail": "President of the United States"
@@ -269,6 +239,11 @@
                             "head": "Donald Trump",
                             "type": "position held",
                             "tail": "President of the United States"
+                        },
+                        {
+                            "head": "President of the United States",
+                            "type": "officeholder",
+                            "tail": "Donald Trump"
                         }
                     ]
                 },
@@ -296,15 +271,15 @@
                         }
                     ]
                 },
-                "answer": -1,
+                "answer": 1,
                 "probs": [
-                    0.5,
-                    0.5,
+                    0.0,
+                    1.0,
                     0.0,
                     0.0
                 ],
                 "correct": false,
-                "stochastic_score": 0.5
+                "stochastic_score": 0.0
             },
             "cf-5": {
                 "0": {
@@ -424,14 +399,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Angela Merkel",
-                            "type": "position held",
-                            "tail": "Chancellor of Germany"
-                        },
-                        {
                             "head": "Chancellor of Germany",
                             "type": "officeholder",
                             "tail": "Angela Merkel"
+                        },
+                        {
+                            "head": "Angela Merkel",
+                            "type": "position held",
+                            "tail": "Chancellor of Germany"
                         }
                     ]
                 },
@@ -479,7 +454,7 @@
                 "2": {
                     "choice": "Scarlett Johansson",
                     "edge_score": 0.0,
-                    "node_score": 0.9066115617752075,
+                    "node_score": 0.9066115468740463,
                     "verified_edges": []
                 },
                 "3": {
@@ -560,10 +535,10 @@
         },
         "stats": {
             "correct": 7,
-            "fail": 0,
-            "unselectable": 3,
+            "fail": 1,
+            "unselectable": 2,
             "total": 10,
-            "stochastic_accuracy": 0.8
+            "stochastic_accuracy": 0.75
         }
     },
     "hf": {
@@ -577,15 +552,9 @@
                 },
                 "1": {
                     "choice": "Rosa Parks",
-                    "edge_score": 0.2,
+                    "edge_score": 0.0,
                     "node_score": 0.8951888680458069,
-                    "verified_edges": [
-                        {
-                            "head": "Rosa Parks",
-                            "type": "movement",
-                            "tail": "Civil rights movement"
-                        }
-                    ]
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Martin Luther King Jr.",
@@ -605,15 +574,15 @@
                     "node_score": 0.8951888680458069,
                     "verified_edges": []
                 },
-                "answer": -1,
+                "answer": 2,
                 "probs": [
                     0.0,
-                    0.5,
-                    0.5,
+                    0.0,
+                    1.0,
                     0.0
                 ],
-                "correct": false,
-                "stochastic_score": 0.5
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "hf-1": {
                 "0": {
@@ -763,13 +732,13 @@
                 "1": {
                     "choice": "Mahatma Gandhi",
                     "edge_score": 0.0,
-                    "node_score": 0.8527492433786392,
+                    "node_score": 0.8608428835868835,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Subhas Chandra Bose",
                     "edge_score": 0.2,
-                    "node_score": 0.8703373372554779,
+                    "node_score": 0.8703373074531555,
                     "verified_edges": [
                         {
                             "head": "Struggle for independence",
@@ -813,13 +782,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "English",
-                            "type": "language used",
+                            "head": "William Shakespeare",
+                            "type": "field of work",
                             "tail": "English language"
                         },
                         {
-                            "head": "William Shakespeare",
-                            "type": "field of work",
+                            "head": "English",
+                            "type": "language used",
                             "tail": "English language"
                         }
                     ]
@@ -911,12 +880,12 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Julius Caesar",
+                            "head": "Mark Antony",
                             "type": "time period",
                             "tail": "Roman Republic"
                         },
                         {
-                            "head": "Mark Antony",
+                            "head": "Julius Caesar",
                             "type": "time period",
                             "tail": "Roman Republic"
                         }
@@ -928,12 +897,12 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Julius Caesar",
+                            "head": "Mark Antony",
                             "type": "time period",
                             "tail": "Roman Republic"
                         },
                         {
-                            "head": "Mark Antony",
+                            "head": "Julius Caesar",
                             "type": "time period",
                             "tail": "Roman Republic"
                         }
@@ -945,12 +914,12 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Julius Caesar",
+                            "head": "Mark Antony",
                             "type": "time period",
                             "tail": "Roman Republic"
                         },
                         {
-                            "head": "Mark Antony",
+                            "head": "Julius Caesar",
                             "type": "time period",
                             "tail": "Roman Republic"
                         }
@@ -962,12 +931,12 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Julius Caesar",
+                            "head": "Mark Antony",
                             "type": "time period",
                             "tail": "Roman Republic"
                         },
                         {
-                            "head": "Mark Antony",
+                            "head": "Julius Caesar",
                             "type": "time period",
                             "tail": "Roman Republic"
                         }
@@ -987,7 +956,7 @@
                 "0": {
                     "choice": "Bessie Coleman",
                     "edge_score": 0.0,
-                    "node_score": 0.8830107748508453,
+                    "node_score": 0.8830107897520065,
                     "verified_edges": []
                 },
                 "1": {
@@ -1033,13 +1002,13 @@
                 },
                 "2": {
                     "choice": "Sun Tzu",
-                    "edge_score": 1.0,
+                    "edge_score": 0.75,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "The Art of War",
-                            "type": "main subject",
-                            "tail": "Military strategy"
+                            "type": "author",
+                            "tail": "Sun Tzu"
                         },
                         {
                             "head": "Sun Tzu",
@@ -1050,11 +1019,6 @@
                             "head": "Sun Tzu",
                             "type": "notable work",
                             "tail": "The Art of War"
-                        },
-                        {
-                            "head": "The Art of War",
-                            "type": "author",
-                            "tail": "Sun Tzu"
                         }
                     ]
                 },
@@ -1076,11 +1040,11 @@
             }
         },
         "stats": {
-            "correct": 5,
+            "correct": 6,
             "fail": 1,
-            "unselectable": 4,
+            "unselectable": 3,
             "total": 10,
-            "stochastic_accuracy": 0.625
+            "stochastic_accuracy": 0.675
         }
     }
 }

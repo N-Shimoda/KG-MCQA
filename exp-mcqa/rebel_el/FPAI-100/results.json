@@ -52,14 +52,14 @@
                             "tail": "John Adams"
                         },
                         {
-                            "head": "United States",
-                            "type": "office held by head of government",
-                            "tail": "President"
-                        },
-                        {
                             "head": "John Adams",
                             "type": "position held",
                             "tail": "President of the United States"
+                        },
+                        {
+                            "head": "United States",
+                            "type": "office held by head of government",
+                            "tail": "President"
                         }
                     ]
                 },
@@ -98,13 +98,13 @@
                     "verified_edges": [
                         {
                             "head": "Winston Churchill",
-                            "type": "conflict",
-                            "tail": "World War II"
+                            "type": "position held",
+                            "tail": "Prime Minister of the United Kingdom"
                         },
                         {
                             "head": "Winston Churchill",
-                            "type": "position held",
-                            "tail": "Prime Minister of the United Kingdom"
+                            "type": "conflict",
+                            "tail": "World War II"
                         }
                     ]
                 },
@@ -152,36 +152,36 @@
                 "0": {
                     "choice": "Isaac Newton",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.8871973554293314,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Albert Einstein",
                     "edge_score": 0.5,
-                    "node_score": 1.0,
+                    "node_score": 0.8871973355611166,
                     "verified_edges": [
-                        {
-                            "head": "Albert Einstein",
-                            "type": "notable work",
-                            "tail": "General relativity"
-                        },
                         {
                             "head": "General relativity",
                             "type": "discoverer or inventor",
                             "tail": "Albert Einstein"
+                        },
+                        {
+                            "head": "Albert Einstein",
+                            "type": "notable work",
+                            "tail": "General relativity"
                         }
                     ]
                 },
                 "2": {
                     "choice": "Galileo Galilei",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.8871973355611166,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Niels Bohr",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.8871973355611166,
                     "verified_edges": []
                 },
                 "answer": 1,
@@ -253,14 +253,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Plato",
-                            "type": "student of",
-                            "tail": "Aristotle"
-                        },
-                        {
                             "head": "Aristotle",
                             "type": "student",
                             "tail": "Plato"
+                        },
+                        {
+                            "head": "Plato",
+                            "type": "student of",
+                            "tail": "Aristotle"
                         }
                     ]
                 },
@@ -270,14 +270,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Plato",
-                            "type": "influenced by",
-                            "tail": "Socrates"
-                        },
-                        {
                             "head": "Socrates",
                             "type": "student",
                             "tail": "Plato"
+                        },
+                        {
+                            "head": "Plato",
+                            "type": "influenced by",
+                            "tail": "Socrates"
                         },
                         {
                             "head": "Plato",
@@ -356,14 +356,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Leonardo da Vinci",
-                            "type": "notable work",
-                            "tail": "Mona Lisa"
-                        },
-                        {
                             "head": "Mona Lisa",
                             "type": "creator",
                             "tail": "Leonardo da Vinci"
+                        },
+                        {
+                            "head": "Leonardo da Vinci",
+                            "type": "notable work",
+                            "tail": "Mona Lisa"
                         }
                     ]
                 },
@@ -458,7 +458,7 @@
                 "3": {
                     "choice": "Oliver Tambo",
                     "edge_score": 0.16666666666666666,
-                    "node_score": 0.8877572417259216,
+                    "node_score": 0.8877572178840637,
                     "verified_edges": [
                         {
                             "head": "Oliver Tambo",
@@ -519,13 +519,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "English",
-                            "type": "language used",
+                            "head": "William Shakespeare",
+                            "type": "field of work",
                             "tail": "English language"
                         },
                         {
-                            "head": "William Shakespeare",
-                            "type": "field of work",
+                            "head": "English",
+                            "type": "language used",
                             "tail": "English language"
                         }
                     ]
@@ -553,14 +553,14 @@
                             "tail": "English"
                         },
                         {
-                            "head": "English",
-                            "type": "language used",
-                            "tail": "English language"
-                        },
-                        {
                             "head": "Geoffrey Chaucer",
                             "type": "language of work or name",
                             "tail": "English"
+                        },
+                        {
+                            "head": "English",
+                            "type": "language used",
+                            "tail": "English language"
                         }
                     ]
                 },
@@ -590,7 +590,7 @@
                 "0": {
                     "choice": "Martin Luther King Jr.",
                     "edge_score": 0.2,
-                    "node_score": 0.8611447215080261,
+                    "node_score": 0.8611447016398112,
                     "verified_edges": [
                         {
                             "head": "I Have a Dream",
@@ -634,9 +634,19 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Werner Heisenberg",
+                            "type": "notable work",
+                            "tail": "Quantum mechanics"
+                        },
+                        {
                             "head": "Quantum mechanics",
                             "type": "has part",
                             "tail": "Uncertainty principle"
+                        },
+                        {
+                            "head": "Quantum mechanics",
+                            "type": "creator",
+                            "tail": "Werner Heisenberg"
                         },
                         {
                             "head": "Uncertainty principle",
@@ -646,16 +656,6 @@
                         {
                             "head": "Uncertainty principle",
                             "type": "part of",
-                            "tail": "Quantum mechanics"
-                        },
-                        {
-                            "head": "Quantum mechanics",
-                            "type": "creator",
-                            "tail": "Werner Heisenberg"
-                        },
-                        {
-                            "head": "Werner Heisenberg",
-                            "type": "notable work",
                             "tail": "Quantum mechanics"
                         }
                     ]
@@ -667,6 +667,11 @@
                     "verified_edges": [
                         {
                             "head": "Quantum mechanics",
+                            "type": "creator",
+                            "tail": "Erwin Schr\u00f6dinger"
+                        },
+                        {
+                            "head": "Quantum mechanics",
                             "type": "has part",
                             "tail": "Uncertainty principle"
                         },
@@ -674,11 +679,6 @@
                             "head": "Uncertainty principle",
                             "type": "facet of",
                             "tail": "Quantum mechanics"
-                        },
-                        {
-                            "head": "Quantum mechanics",
-                            "type": "creator",
-                            "tail": "Erwin Schr\u00f6dinger"
                         },
                         {
                             "head": "Uncertainty principle",
@@ -754,13 +754,13 @@
                     "verified_edges": [
                         {
                             "head": "Natural selection",
-                            "type": "facet of",
-                            "tail": "Evolution"
+                            "type": "discoverer or inventor",
+                            "tail": "Charles Darwin"
                         },
                         {
                             "head": "Natural selection",
-                            "type": "discoverer or inventor",
-                            "tail": "Charles Darwin"
+                            "type": "facet of",
+                            "tail": "Evolution"
                         }
                     ]
                 },
@@ -770,6 +770,11 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Natural selection",
+                            "type": "discoverer or inventor",
+                            "tail": "Alfred Russel Wallace"
+                        },
+                        {
                             "head": "Alfred Russel Wallace",
                             "type": "field of work",
                             "tail": "Natural history"
@@ -778,11 +783,6 @@
                             "head": "Natural selection",
                             "type": "facet of",
                             "tail": "Evolution"
-                        },
-                        {
-                            "head": "Natural selection",
-                            "type": "discoverer or inventor",
-                            "tail": "Alfred Russel Wallace"
                         }
                     ]
                 },
@@ -844,14 +844,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Mathematician",
-                            "type": "field of this occupation",
-                            "tail": "Geometry"
-                        },
-                        {
                             "head": "Geometry",
                             "type": "practiced by",
                             "tail": "Mathematician"
+                        },
+                        {
+                            "head": "Mathematician",
+                            "type": "field of this occupation",
+                            "tail": "Geometry"
                         }
                     ]
                 },
@@ -866,13 +866,13 @@
                             "tail": "Geometry"
                         },
                         {
-                            "head": "Archimedes",
-                            "type": "occupation",
+                            "head": "Geometry",
+                            "type": "practiced by",
                             "tail": "Mathematician"
                         },
                         {
-                            "head": "Geometry",
-                            "type": "practiced by",
+                            "head": "Archimedes",
+                            "type": "occupation",
                             "tail": "Mathematician"
                         }
                     ]
@@ -883,14 +883,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Mathematician",
-                            "type": "field of this occupation",
-                            "tail": "Geometry"
-                        },
-                        {
                             "head": "Geometry",
                             "type": "practiced by",
                             "tail": "Mathematician"
+                        },
+                        {
+                            "head": "Mathematician",
+                            "type": "field of this occupation",
+                            "tail": "Geometry"
                         }
                     ]
                 },
@@ -912,13 +912,13 @@
                     "verified_edges": [
                         {
                             "head": "Mongol Empire",
-                            "type": "head of state",
-                            "tail": "Genghis Khan"
+                            "type": "instance of",
+                            "tail": "Contiguous empire"
                         },
                         {
                             "head": "Mongol Empire",
-                            "type": "instance of",
-                            "tail": "Contiguous empire"
+                            "type": "head of state",
+                            "tail": "Genghis Khan"
                         },
                         {
                             "head": "Mongol Empire",
@@ -1048,14 +1048,14 @@
                     "node_score": 0.9236390441656113,
                     "verified_edges": [
                         {
-                            "head": "Ferdinand Magellan",
-                            "type": "participant in",
-                            "tail": "Four voyages"
-                        },
-                        {
                             "head": "Four voyages",
                             "type": "participant",
                             "tail": "Ferdinand Magellan"
+                        },
+                        {
+                            "head": "Ferdinand Magellan",
+                            "type": "participant in",
+                            "tail": "Four voyages"
                         }
                     ]
                 },
@@ -1128,9 +1128,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "President",
-                            "type": "country",
-                            "tail": "Turkey"
+                            "head": "Mustafa Kemal Atat\u00fcrk",
+                            "type": "position held",
+                            "tail": "President"
                         },
                         {
                             "head": "Turkey",
@@ -1138,9 +1138,9 @@
                             "tail": "President"
                         },
                         {
-                            "head": "Mustafa Kemal Atat\u00fcrk",
-                            "type": "position held",
-                            "tail": "President"
+                            "head": "President",
+                            "type": "country",
+                            "tail": "Turkey"
                         }
                     ]
                 },
@@ -1179,14 +1179,14 @@
                     "node_score": 0.9066115468740463,
                     "verified_edges": [
                         {
-                            "head": "Charles Lindbergh",
-                            "type": "occupation",
-                            "tail": "Aircraft pilot"
-                        },
-                        {
                             "head": "American",
                             "type": "located in or next to body of water",
                             "tail": "Atlantic Ocean"
+                        },
+                        {
+                            "head": "Charles Lindbergh",
+                            "type": "occupation",
+                            "tail": "Aircraft pilot"
                         }
                     ]
                 },
@@ -1279,13 +1279,13 @@
                     "verified_edges": [
                         {
                             "head": "Benito Mussolini",
-                            "type": "member of political party",
-                            "tail": "National Fascist Party"
+                            "type": "occupation",
+                            "tail": "Dictator"
                         },
                         {
                             "head": "Benito Mussolini",
-                            "type": "occupation",
-                            "tail": "Dictator"
+                            "type": "member of political party",
+                            "tail": "National Fascist Party"
                         }
                     ]
                 },
@@ -1304,7 +1304,7 @@
                 "3": {
                     "choice": "Francisco Franco",
                     "edge_score": 0.0,
-                    "node_score": 0.9728340029716491,
+                    "node_score": 0.9728340148925781,
                     "verified_edges": []
                 },
                 "answer": 0,
@@ -1342,13 +1342,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Classical",
-                            "type": "followed by",
+                            "head": "Franz Schubert",
+                            "type": "movement",
                             "tail": "Romantic"
                         },
                         {
-                            "head": "Franz Schubert",
-                            "type": "movement",
+                            "head": "Classical",
+                            "type": "followed by",
                             "tail": "Romantic"
                         }
                     ]
@@ -1453,8 +1453,8 @@
                     "verified_edges": [
                         {
                             "head": "Qin Shi Huang",
-                            "type": "position held",
-                            "tail": "Emperor of China"
+                            "type": "family",
+                            "tail": "Qin dynasty"
                         },
                         {
                             "head": "Qin dynasty",
@@ -1463,8 +1463,8 @@
                         },
                         {
                             "head": "Qin Shi Huang",
-                            "type": "family",
-                            "tail": "Qin dynasty"
+                            "type": "position held",
+                            "tail": "Emperor of China"
                         }
                     ]
                 },
@@ -1600,7 +1600,7 @@
                 "1": {
                     "choice": "John D. Rockefeller",
                     "edge_score": 0.0,
-                    "node_score": 0.9543070122599602,
+                    "node_score": 0.9543070197105408,
                     "verified_edges": []
                 },
                 "2": {
@@ -1638,14 +1638,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Thomas Edison",
-                            "type": "notable work",
-                            "tail": "Phonograph"
-                        },
-                        {
                             "head": "Phonograph",
                             "type": "discoverer or inventor",
                             "tail": "Thomas Edison"
+                        },
+                        {
+                            "head": "Thomas Edison",
+                            "type": "notable work",
+                            "tail": "Phonograph"
                         }
                     ]
                 },
@@ -1658,7 +1658,7 @@
                 "2": {
                     "choice": "Nikola Tesla",
                     "edge_score": 0.0,
-                    "node_score": 0.9386557042598724,
+                    "node_score": 0.9386556893587112,
                     "verified_edges": []
                 },
                 "3": {
@@ -1748,14 +1748,14 @@
                     "node_score": 0.9066115617752075,
                     "verified_edges": [
                         {
-                            "head": "American Civil War",
-                            "type": "participant",
-                            "tail": "Confederate States of America"
-                        },
-                        {
                             "head": "American",
                             "type": "significant event",
                             "tail": "American Civil War"
+                        },
+                        {
+                            "head": "American Civil War",
+                            "type": "participant",
+                            "tail": "Confederate States of America"
                         }
                     ]
                 },
@@ -1782,14 +1782,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Microsoft",
-                            "type": "founded by",
-                            "tail": "Bill Gates"
-                        },
-                        {
                             "head": "Bill Gates",
                             "type": "owner of",
                             "tail": "Microsoft"
+                        },
+                        {
+                            "head": "Microsoft",
+                            "type": "founded by",
+                            "tail": "Bill Gates"
                         }
                     ]
                 },
@@ -1828,14 +1828,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Psychoanalysis",
-                            "type": "author",
-                            "tail": "Sigmund Freud"
-                        },
-                        {
                             "head": "Sigmund Freud",
                             "type": "field of work",
                             "tail": "Psychoanalysis"
+                        },
+                        {
+                            "head": "Psychoanalysis",
+                            "type": "author",
+                            "tail": "Sigmund Freud"
                         }
                     ]
                 },
@@ -1895,7 +1895,7 @@
                 "2": {
                     "choice": "John von Neumann",
                     "edge_score": 0.25,
-                    "node_score": 0.8853665590286255,
+                    "node_score": 0.8853665888309479,
                     "verified_edges": [
                         {
                             "head": "John von Neumann",
@@ -1923,29 +1923,24 @@
             "hun-36": {
                 "0": {
                     "choice": "Maximilien Robespierre",
-                    "edge_score": 0.5,
+                    "edge_score": 0.3333333333333333,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Reign of Terror",
-                            "type": "part of",
+                            "head": "Maximilien Robespierre",
+                            "type": "participant in",
                             "tail": "French Revolution"
                         },
                         {
-                            "head": "French Revolution",
-                            "type": "has part",
-                            "tail": "Reign of Terror"
-                        },
-                        {
-                            "head": "Maximilien Robespierre",
-                            "type": "participant in",
+                            "head": "Reign of Terror",
+                            "type": "part of",
                             "tail": "French Revolution"
                         }
                     ]
                 },
                 "1": {
                     "choice": "Georges Danton",
-                    "edge_score": 0.5,
+                    "edge_score": 0.3333333333333333,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
@@ -1957,34 +1952,24 @@
                             "head": "Georges Danton",
                             "type": "participant in",
                             "tail": "French Revolution"
-                        },
-                        {
-                            "head": "French Revolution",
-                            "type": "has part",
-                            "tail": "Reign of Terror"
                         }
                     ]
                 },
                 "2": {
                     "choice": "Jean-Paul Marat",
-                    "edge_score": 0.3333333333333333,
+                    "edge_score": 0.16666666666666666,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Reign of Terror",
                             "type": "part of",
                             "tail": "French Revolution"
-                        },
-                        {
-                            "head": "French Revolution",
-                            "type": "has part",
-                            "tail": "Reign of Terror"
                         }
                     ]
                 },
                 "3": {
                     "choice": "Napoleon Bonaparte",
-                    "edge_score": 0.6666666666666666,
+                    "edge_score": 0.5,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
@@ -2001,11 +1986,6 @@
                             "head": "French Revolution",
                             "type": "participant",
                             "tail": "Napoleon"
-                        },
-                        {
-                            "head": "French Revolution",
-                            "type": "has part",
-                            "tail": "Reign of Terror"
                         }
                     ]
                 },
@@ -2097,25 +2077,25 @@
                 "0": {
                     "choice": "Isaac Newton",
                     "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "node_score": 0.9153980165719986,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Galileo Galilei",
                     "edge_score": 0.0,
-                    "node_score": 0.9396167695522308,
+                    "node_score": 0.8550148010253906,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Albert Einstein",
                     "edge_score": 0.0,
-                    "node_score": 0.9396167695522308,
+                    "node_score": 0.8550147712230682,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Johannes Kepler",
                     "edge_score": 0.0,
-                    "node_score": 0.9396167695522308,
+                    "node_score": 0.8550148010253906,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -2135,19 +2115,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Odysseus",
-                            "type": "present in work",
-                            "tail": "Odyssey"
-                        },
-                        {
                             "head": "Odyssey",
                             "type": "characters",
                             "tail": "Odysseus"
                         },
                         {
                             "head": "Odysseus",
-                            "type": "conflict",
-                            "tail": "Trojan War"
+                            "type": "present in work",
+                            "tail": "Odyssey"
                         },
                         {
                             "head": "Trojan War",
@@ -2158,6 +2133,11 @@
                             "head": "Trojan War",
                             "type": "participant",
                             "tail": "Odysseus"
+                        },
+                        {
+                            "head": "Odysseus",
+                            "type": "conflict",
+                            "tail": "Trojan War"
                         }
                     ]
                 },
@@ -2168,6 +2148,11 @@
                     "verified_edges": [
                         {
                             "head": "Trojan War",
+                            "type": "participant",
+                            "tail": "Achilles"
+                        },
+                        {
+                            "head": "Trojan War",
                             "type": "part of",
                             "tail": "Greek mythology"
                         },
@@ -2175,11 +2160,6 @@
                             "head": "Achilles",
                             "type": "conflict",
                             "tail": "Trojan War"
-                        },
-                        {
-                            "head": "Trojan War",
-                            "type": "participant",
-                            "tail": "Achilles"
                         }
                     ]
                 },
@@ -2206,14 +2186,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Hector",
-                            "type": "conflict",
-                            "tail": "Trojan War"
-                        },
-                        {
                             "head": "Trojan War",
                             "type": "part of",
                             "tail": "Greek mythology"
+                        },
+                        {
+                            "head": "Hector",
+                            "type": "conflict",
+                            "tail": "Trojan War"
                         }
                     ]
                 },
@@ -2234,9 +2214,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Nazi Germany",
-                            "type": "participant in",
-                            "tail": "World War II"
+                            "head": "Adolf Hitler",
+                            "type": "country of citizenship",
+                            "tail": "Nazi Germany"
                         },
                         {
                             "head": "Nazi Germany",
@@ -2249,9 +2229,9 @@
                             "tail": "World War II"
                         },
                         {
-                            "head": "Adolf Hitler",
-                            "type": "country of citizenship",
-                            "tail": "Nazi Germany"
+                            "head": "Nazi Germany",
+                            "type": "participant in",
+                            "tail": "World War II"
                         }
                     ]
                 },
@@ -2261,13 +2241,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Nazi Germany",
-                            "type": "participant in",
+                            "head": "Benito Mussolini",
+                            "type": "conflict",
                             "tail": "World War II"
                         },
                         {
-                            "head": "Benito Mussolini",
-                            "type": "conflict",
+                            "head": "Nazi Germany",
+                            "type": "participant in",
                             "tail": "World War II"
                         }
                     ]
@@ -2314,6 +2294,11 @@
                     "verified_edges": [
                         {
                             "head": "The Raven",
+                            "type": "author",
+                            "tail": "Edgar Allan Poe"
+                        },
+                        {
+                            "head": "The Raven",
                             "type": "genre",
                             "tail": "Narrative poetry"
                         },
@@ -2321,11 +2306,6 @@
                             "head": "Edgar Allan Poe",
                             "type": "notable work",
                             "tail": "The Raven"
-                        },
-                        {
-                            "head": "The Raven",
-                            "type": "author",
-                            "tail": "Edgar Allan Poe"
                         }
                     ]
                 },
@@ -2387,14 +2367,14 @@
                     "node_score": 0.954557329416275,
                     "verified_edges": [
                         {
-                            "head": "Michelangelo",
-                            "type": "notable work",
-                            "tail": "Sistine Chapel ceiling"
-                        },
-                        {
                             "head": "Sistine Chapel ceiling",
                             "type": "creator",
                             "tail": "Michelangelo"
+                        },
+                        {
+                            "head": "Michelangelo",
+                            "type": "notable work",
+                            "tail": "Sistine Chapel ceiling"
                         }
                     ]
                 },
@@ -2578,6 +2558,11 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "French Revolution",
+                            "type": "participant",
+                            "tail": "Napoleon"
+                        },
+                        {
                             "head": "Napoleon",
                             "type": "participant in",
                             "tail": "French Revolution"
@@ -2586,11 +2571,6 @@
                             "head": "Napoleon",
                             "type": "position held",
                             "tail": "Emperor of the French"
-                        },
-                        {
-                            "head": "French Revolution",
-                            "type": "participant",
-                            "tail": "Napoleon"
                         }
                     ]
                 },
@@ -2682,16 +2662,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Jane Austen",
-                            "type": "notable work",
-                            "tail": "Sense and Sensibility"
-                        },
-                        {
-                            "head": "Pride and Prejudice",
-                            "type": "author",
-                            "tail": "Jane Austen"
-                        },
-                        {
                             "head": "Sense and Sensibility",
                             "type": "author",
                             "tail": "Jane Austen"
@@ -2700,6 +2670,16 @@
                             "head": "Jane Austen",
                             "type": "notable work",
                             "tail": "Pride and Prejudice"
+                        },
+                        {
+                            "head": "Jane Austen",
+                            "type": "notable work",
+                            "tail": "Sense and Sensibility"
+                        },
+                        {
+                            "head": "Pride and Prejudice",
+                            "type": "author",
+                            "tail": "Jane Austen"
                         }
                     ]
                 },
@@ -2773,17 +2753,17 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Muhammad",
+                            "type": "religion",
+                            "tail": "Islam"
+                        },
+                        {
                             "head": "Islam",
                             "type": "founded by",
                             "tail": "Muhammad"
                         },
                         {
                             "head": "Muslims",
-                            "type": "religion",
-                            "tail": "Islam"
-                        },
-                        {
-                            "head": "Muhammad",
                             "type": "religion",
                             "tail": "Islam"
                         }
@@ -2795,12 +2775,12 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Muslims",
+                            "head": "Muhammad",
                             "type": "religion",
                             "tail": "Islam"
                         },
                         {
-                            "head": "Muhammad",
+                            "head": "Muslims",
                             "type": "religion",
                             "tail": "Islam"
                         }
@@ -2812,17 +2792,17 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Muhammad",
+                            "type": "religion",
+                            "tail": "Islam"
+                        },
+                        {
                             "head": "Muslims",
                             "type": "religion",
                             "tail": "Islam"
                         },
                         {
                             "head": "Abu Bakr",
-                            "type": "religion",
-                            "tail": "Islam"
-                        },
-                        {
-                            "head": "Muhammad",
                             "type": "religion",
                             "tail": "Islam"
                         }
@@ -2834,12 +2814,12 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Muslims",
+                            "head": "Muhammad",
                             "type": "religion",
                             "tail": "Islam"
                         },
                         {
-                            "head": "Muhammad",
+                            "head": "Muslims",
                             "type": "religion",
                             "tail": "Islam"
                         }
@@ -2858,9 +2838,14 @@
             "hun-51": {
                 "0": {
                     "choice": "Siddhartha Gautama",
-                    "edge_score": 0.25,
+                    "edge_score": 0.5,
                     "node_score": 1.0,
                     "verified_edges": [
+                        {
+                            "head": "Buddhism",
+                            "type": "founded by",
+                            "tail": "The Buddha"
+                        },
                         {
                             "head": "The Buddha",
                             "type": "part of",
@@ -2870,9 +2855,14 @@
                 },
                 "1": {
                     "choice": "Mahavira",
-                    "edge_score": 0.16666666666666666,
+                    "edge_score": 0.3333333333333333,
                     "node_score": 1.0,
                     "verified_edges": [
+                        {
+                            "head": "Buddhism",
+                            "type": "founded by",
+                            "tail": "The Buddha"
+                        },
                         {
                             "head": "The Buddha",
                             "type": "part of",
@@ -2882,6 +2872,28 @@
                 },
                 "2": {
                     "choice": "Ashoka",
+                    "edge_score": 0.5,
+                    "node_score": 1.0,
+                    "verified_edges": [
+                        {
+                            "head": "Buddhism",
+                            "type": "founded by",
+                            "tail": "The Buddha"
+                        },
+                        {
+                            "head": "Ashoka",
+                            "type": "religion",
+                            "tail": "Buddhism"
+                        },
+                        {
+                            "head": "The Buddha",
+                            "type": "part of",
+                            "tail": "Buddhism"
+                        }
+                    ]
+                },
+                "3": {
+                    "choice": "Confucius",
                     "edge_score": 0.3333333333333333,
                     "node_score": 1.0,
                     "verified_edges": [
@@ -2891,33 +2903,21 @@
                             "tail": "Buddhism"
                         },
                         {
-                            "head": "Ashoka",
-                            "type": "religion",
-                            "tail": "Buddhism"
+                            "head": "Buddhism",
+                            "type": "founded by",
+                            "tail": "The Buddha"
                         }
                     ]
                 },
-                "3": {
-                    "choice": "Confucius",
-                    "edge_score": 0.16666666666666666,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "The Buddha",
-                            "type": "part of",
-                            "tail": "Buddhism"
-                        }
-                    ]
-                },
-                "answer": 2,
+                "answer": -1,
                 "probs": [
+                    0.5,
                     0.0,
-                    0.0,
-                    1.0,
+                    0.5,
                     0.0
                 ],
                 "correct": false,
-                "stochastic_score": 0.0
+                "stochastic_score": 0.5
             },
             "hun-52": {
                 "0": {
@@ -2972,14 +2972,14 @@
                             "tail": "Pyotr Ilyich Tchaikovsky"
                         },
                         {
-                            "head": "Swan Lake",
-                            "type": "composer",
-                            "tail": "Pyotr Ilyich Tchaikovsky"
-                        },
-                        {
                             "head": "Pyotr Ilyich Tchaikovsky",
                             "type": "notable work",
                             "tail": "The Nutcracker"
+                        },
+                        {
+                            "head": "Swan Lake",
+                            "type": "composer",
+                            "tail": "Pyotr Ilyich Tchaikovsky"
                         }
                     ]
                 },
@@ -3011,17 +3011,17 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "The Nutcracker",
+                            "type": "composer",
+                            "tail": "Pyotr Ilyich Tchaikovsky"
+                        },
+                        {
                             "head": "Pyotr Ilyich Tchaikovsky",
                             "type": "notable work",
                             "tail": "The Nutcracker"
                         },
                         {
                             "head": "Swan Lake",
-                            "type": "composer",
-                            "tail": "Pyotr Ilyich Tchaikovsky"
-                        },
-                        {
-                            "head": "The Nutcracker",
                             "type": "composer",
                             "tail": "Pyotr Ilyich Tchaikovsky"
                         }
@@ -3033,17 +3033,17 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "The Nutcracker",
+                            "type": "composer",
+                            "tail": "Pyotr Ilyich Tchaikovsky"
+                        },
+                        {
                             "head": "Pyotr Ilyich Tchaikovsky",
                             "type": "notable work",
                             "tail": "The Nutcracker"
                         },
                         {
                             "head": "Swan Lake",
-                            "type": "composer",
-                            "tail": "Pyotr Ilyich Tchaikovsky"
-                        },
-                        {
-                            "head": "The Nutcracker",
                             "type": "composer",
                             "tail": "Pyotr Ilyich Tchaikovsky"
                         }
@@ -3204,11 +3204,6 @@
                     "node_score": 0.9066115617752075,
                     "verified_edges": [
                         {
-                            "head": "Samuel Morse",
-                            "type": "notable work",
-                            "tail": "Morse code"
-                        },
-                        {
                             "head": "Morse code",
                             "type": "use",
                             "tail": "Telegraphy"
@@ -3217,6 +3212,11 @@
                             "head": "Morse code",
                             "type": "named after",
                             "tail": "Samuel Morse"
+                        },
+                        {
+                            "head": "Samuel Morse",
+                            "type": "notable work",
+                            "tail": "Morse code"
                         }
                     ]
                 },
@@ -3281,7 +3281,7 @@
                 "3": {
                     "choice": "Hern\u00e1n Cort\u00e9s",
                     "edge_score": 0.0,
-                    "node_score": 0.9318449139595032,
+                    "node_score": 0.9318448901176453,
                     "verified_edges": []
                 },
                 "answer": 0,
@@ -3406,14 +3406,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "President of South Africa",
-                            "type": "country",
-                            "tail": "South Africa"
-                        },
-                        {
                             "head": "Nelson Mandela",
                             "type": "position held",
                             "tail": "President of South Africa"
+                        },
+                        {
+                            "head": "President of South Africa",
+                            "type": "country",
+                            "tail": "South Africa"
                         }
                     ]
                 },
@@ -3435,14 +3435,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "President of South Africa",
-                            "type": "country",
-                            "tail": "South Africa"
-                        },
-                        {
                             "head": "Thabo Mbeki",
                             "type": "position held",
                             "tail": "President of South Africa"
+                        },
+                        {
+                            "head": "President of South Africa",
+                            "type": "country",
+                            "tail": "South Africa"
                         }
                     ]
                 },
@@ -3512,12 +3512,12 @@
                 "0": {
                     "choice": "Mao Zedong",
                     "edge_score": 0.5,
-                    "node_score": 0.9310921281576157,
+                    "node_score": 0.9249890595674515,
                     "verified_edges": [
                         {
-                            "head": "Mao Zedong",
-                            "type": "member of political party",
-                            "tail": "Chinese Communist Party"
+                            "head": "Chinese Communist Party",
+                            "type": "country",
+                            "tail": "China"
                         },
                         {
                             "head": "Mao Zedong",
@@ -3525,33 +3525,33 @@
                             "tail": "China"
                         },
                         {
-                            "head": "Chinese Communist Party",
-                            "type": "country",
-                            "tail": "China"
+                            "head": "Mao Zedong",
+                            "type": "member of political party",
+                            "tail": "Chinese Communist Party"
                         }
                     ]
                 },
                 "1": {
                     "choice": "Deng Xiaoping",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 0.9310921281576157,
+                    "node_score": 0.926801323890686,
                     "verified_edges": [
-                        {
-                            "head": "Deng Xiaoping",
-                            "type": "member of political party",
-                            "tail": "Chinese Communist Party"
-                        },
                         {
                             "head": "Chinese Communist Party",
                             "type": "country",
                             "tail": "China"
+                        },
+                        {
+                            "head": "Deng Xiaoping",
+                            "type": "member of political party",
+                            "tail": "Chinese Communist Party"
                         }
                     ]
                 },
                 "2": {
                     "choice": "Zhou Enlai",
                     "edge_score": 0.16666666666666666,
-                    "node_score": 0.9310921281576157,
+                    "node_score": 0.926801323890686,
                     "verified_edges": [
                         {
                             "head": "Chinese Communist Party",
@@ -3563,7 +3563,7 @@
                 "3": {
                     "choice": "Sun Yat-sen",
                     "edge_score": 0.16666666666666666,
-                    "node_score": 0.9310921281576157,
+                    "node_score": 0.926801323890686,
                     "verified_edges": [
                         {
                             "head": "Chinese Communist Party",
@@ -3607,12 +3607,12 @@
                     "verified_edges": [
                         {
                             "head": "Chandragupta Maurya",
-                            "type": "family",
+                            "type": "country of citizenship",
                             "tail": "Maurya Empire"
                         },
                         {
                             "head": "Chandragupta Maurya",
-                            "type": "country of citizenship",
+                            "type": "family",
                             "tail": "Maurya Empire"
                         }
                     ]
@@ -3646,14 +3646,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Susan B. Anthony",
-                            "type": "movement",
-                            "tail": "Women's suffrage"
-                        },
-                        {
                             "head": "Women's suffrage",
                             "type": "facet of",
                             "tail": "Women's rights"
+                        },
+                        {
+                            "head": "Susan B. Anthony",
+                            "type": "movement",
+                            "tail": "Women's suffrage"
                         }
                     ]
                 },
@@ -3792,14 +3792,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Samurai",
+                            "type": "country",
+                            "tail": "Japan"
+                        },
+                        {
                             "head": "Oda Nobunaga",
                             "type": "position held",
                             "tail": "Daimyo"
-                        },
-                        {
-                            "head": "Daimyo",
-                            "type": "subclass of",
-                            "tail": "Samurai"
                         }
                     ]
                 },
@@ -3809,14 +3809,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Samurai",
+                            "type": "country",
+                            "tail": "Japan"
+                        },
+                        {
                             "head": "Toyotomi Hideyoshi",
                             "type": "position held",
                             "tail": "Daimyo"
-                        },
-                        {
-                            "head": "Daimyo",
-                            "type": "subclass of",
-                            "tail": "Samurai"
                         }
                     ]
                 },
@@ -3826,9 +3826,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Daimyo",
-                            "type": "subclass of",
-                            "tail": "Samurai"
+                            "head": "Samurai",
+                            "type": "country",
+                            "tail": "Japan"
                         }
                     ]
                 },
@@ -3838,9 +3838,9 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Daimyo",
-                            "type": "subclass of",
-                            "tail": "Samurai"
+                            "head": "Samurai",
+                            "type": "country",
+                            "tail": "Japan"
                         }
                     ]
                 },
@@ -3861,14 +3861,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Guernica",
-                            "type": "creator",
-                            "tail": "Pablo Picasso"
-                        },
-                        {
                             "head": "Pablo Picasso",
                             "type": "notable work",
                             "tail": "Guernica"
+                        },
+                        {
+                            "head": "Guernica",
+                            "type": "creator",
+                            "tail": "Pablo Picasso"
                         }
                     ]
                 },
@@ -3907,11 +3907,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Aeneid",
-                            "type": "author",
-                            "tail": "Virgil"
-                        },
-                        {
                             "head": "Virgil",
                             "type": "time period",
                             "tail": "Roman"
@@ -3920,6 +3915,11 @@
                             "head": "Virgil",
                             "type": "notable work",
                             "tail": "Aeneid"
+                        },
+                        {
+                            "head": "Aeneid",
+                            "type": "author",
+                            "tail": "Virgil"
                         }
                     ]
                 },
@@ -3971,13 +3971,13 @@
                     "verified_edges": [
                         {
                             "head": "Ren\u00e9 Descartes",
-                            "type": "field of work",
-                            "tail": "Philosophy"
+                            "type": "occupation",
+                            "tail": "Mathematician"
                         },
                         {
                             "head": "Ren\u00e9 Descartes",
-                            "type": "occupation",
-                            "tail": "Mathematician"
+                            "type": "field of work",
+                            "tail": "Philosophy"
                         }
                     ]
                 },
@@ -4022,14 +4022,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Steve Jobs",
-                            "type": "employer",
-                            "tail": "Apple Inc."
-                        },
-                        {
                             "head": "Apple Inc.",
                             "type": "founded by",
                             "tail": "Steve Jobs"
+                        },
+                        {
+                            "head": "Steve Jobs",
+                            "type": "employer",
+                            "tail": "Apple Inc."
                         }
                     ]
                 },
@@ -4068,14 +4068,14 @@
                     "node_score": 0.9205920100212097,
                     "verified_edges": [
                         {
-                            "head": "Symphony",
-                            "type": "composer",
-                            "tail": "Ludwig van Beethoven"
-                        },
-                        {
                             "head": "Ludwig van Beethoven",
                             "type": "notable work",
                             "tail": "Symphony"
+                        },
+                        {
+                            "head": "Symphony",
+                            "type": "composer",
+                            "tail": "Ludwig van Beethoven"
                         }
                     ]
                 },
@@ -4103,9 +4103,9 @@
                     "node_score": 0.8966462016105652,
                     "verified_edges": [
                         {
-                            "head": "Wolfgang Amadeus Mozart",
-                            "type": "genre",
-                            "tail": "Symphony"
+                            "head": "Symphony",
+                            "type": "composer",
+                            "tail": "Wolfgang Amadeus Mozart"
                         },
                         {
                             "head": "Wolfgang Amadeus Mozart",
@@ -4113,9 +4113,9 @@
                             "tail": "Symphony"
                         },
                         {
-                            "head": "Symphony",
-                            "type": "composer",
-                            "tail": "Wolfgang Amadeus Mozart"
+                            "head": "Wolfgang Amadeus Mozart",
+                            "type": "genre",
+                            "tail": "Symphony"
                         }
                     ]
                 },
@@ -4223,16 +4223,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Impressionism",
-                            "type": "founded by",
-                            "tail": "Claude Monet"
-                        },
-                        {
-                            "head": "Impression, Sunrise",
-                            "type": "creator",
-                            "tail": "Claude Monet"
-                        },
-                        {
                             "head": "Claude Monet",
                             "type": "movement",
                             "tail": "Impressionism"
@@ -4241,6 +4231,16 @@
                             "head": "Claude Monet",
                             "type": "notable work",
                             "tail": "Impression, Sunrise"
+                        },
+                        {
+                            "head": "Impression, Sunrise",
+                            "type": "creator",
+                            "tail": "Claude Monet"
+                        },
+                        {
+                            "head": "Impressionism",
+                            "type": "founded by",
+                            "tail": "Claude Monet"
                         }
                     ]
                 },
@@ -4332,11 +4332,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Napoleonic Wars",
-                            "type": "participant",
-                            "tail": "Napoleon"
-                        },
-                        {
                             "head": "Napoleon",
                             "type": "conflict",
                             "tail": "Napoleonic Wars"
@@ -4350,6 +4345,11 @@
                             "head": "Napoleon",
                             "type": "position held",
                             "tail": "Emperor of the French"
+                        },
+                        {
+                            "head": "Napoleonic Wars",
+                            "type": "participant",
+                            "tail": "Napoleon"
                         }
                     ]
                 },
@@ -4403,7 +4403,7 @@
                 "2": {
                     "choice": "Francisco Pizarro",
                     "edge_score": 0.0,
-                    "node_score": 0.7840688303112984,
+                    "node_score": 0.7840688228607178,
                     "verified_edges": []
                 },
                 "3": {
@@ -4461,8 +4461,23 @@
                 "0": {
                     "choice": "Archimedes",
                     "edge_score": 0.5555555555555556,
-                    "node_score": 0.9345220598307523,
+                    "node_score": 0.9345220517028462,
                     "verified_edges": [
+                        {
+                            "head": "World Heritage Site",
+                            "type": "maintained by",
+                            "tail": "UNESCO"
+                        },
+                        {
+                            "head": "Harvard Kennedy School",
+                            "type": "part of",
+                            "tail": "Harvard University"
+                        },
+                        {
+                            "head": "World War II",
+                            "type": "has effect",
+                            "tail": "The Holocaust"
+                        },
                         {
                             "head": "Archimedes",
                             "type": "occupation",
@@ -4472,29 +4487,19 @@
                             "head": "Eureka",
                             "type": "named after",
                             "tail": "Archimedes"
-                        },
-                        {
-                            "head": "Harvard Kennedy School",
-                            "type": "part of",
-                            "tail": "Harvard University"
-                        },
-                        {
-                            "head": "World War II",
-                            "type": "has effect",
-                            "tail": "The Holocaust"
-                        },
-                        {
-                            "head": "World Heritage Site",
-                            "type": "maintained by",
-                            "tail": "UNESCO"
                         }
                     ]
                 },
                 "1": {
                     "choice": "Euclid",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 0.9202785031362013,
+                    "node_score": 0.9202785058455034,
                     "verified_edges": [
+                        {
+                            "head": "World Heritage Site",
+                            "type": "maintained by",
+                            "tail": "UNESCO"
+                        },
                         {
                             "head": "Harvard Kennedy School",
                             "type": "part of",
@@ -4504,11 +4509,6 @@
                             "head": "World War II",
                             "type": "has effect",
                             "tail": "The Holocaust"
-                        },
-                        {
-                            "head": "World Heritage Site",
-                            "type": "maintained by",
-                            "tail": "UNESCO"
                         }
                     ]
                 },
@@ -4518,6 +4518,11 @@
                     "node_score": 0.9156180457635359,
                     "verified_edges": [
                         {
+                            "head": "World Heritage Site",
+                            "type": "maintained by",
+                            "tail": "UNESCO"
+                        },
+                        {
                             "head": "Harvard Kennedy School",
                             "type": "part of",
                             "tail": "Harvard University"
@@ -4526,19 +4531,19 @@
                             "head": "World War II",
                             "type": "has effect",
                             "tail": "The Holocaust"
-                        },
-                        {
-                            "head": "World Heritage Site",
-                            "type": "maintained by",
-                            "tail": "UNESCO"
                         }
                     ]
                 },
                 "3": {
                     "choice": "Thales",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 0.9466727538542314,
+                    "node_score": 0.9466727484356273,
                     "verified_edges": [
+                        {
+                            "head": "World Heritage Site",
+                            "type": "maintained by",
+                            "tail": "UNESCO"
+                        },
                         {
                             "head": "Harvard Kennedy School",
                             "type": "part of",
@@ -4548,11 +4553,6 @@
                             "head": "World War II",
                             "type": "has effect",
                             "tail": "The Holocaust"
-                        },
-                        {
-                            "head": "World Heritage Site",
-                            "type": "maintained by",
-                            "tail": "UNESCO"
                         }
                     ]
                 },
@@ -4632,14 +4632,14 @@
                     "node_score": 0.9743595600128174,
                     "verified_edges": [
                         {
-                            "head": "Pasteurization",
-                            "type": "discoverer or inventor",
-                            "tail": "Louis Pasteur"
-                        },
-                        {
                             "head": "Louis Pasteur",
                             "type": "occupation",
                             "tail": "Microbiologist"
+                        },
+                        {
+                            "head": "Pasteurization",
+                            "type": "discoverer or inventor",
+                            "tail": "Louis Pasteur"
                         }
                     ]
                 },
@@ -4690,24 +4690,24 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Tomb of Tutankhamun",
-                            "type": "discoverer or inventor",
-                            "tail": "Howard Carter"
-                        },
-                        {
                             "head": "Howard Carter",
                             "type": "field of work",
                             "tail": "Egyptology"
                         },
                         {
-                            "head": "Tutankhamun",
-                            "type": "place of burial",
-                            "tail": "Tomb"
-                        },
-                        {
                             "head": "Tomb",
                             "type": "occupant",
                             "tail": "Tutankhamun"
+                        },
+                        {
+                            "head": "Tomb of Tutankhamun",
+                            "type": "discoverer or inventor",
+                            "tail": "Howard Carter"
+                        },
+                        {
+                            "head": "Tutankhamun",
+                            "type": "place of burial",
+                            "tail": "Tomb"
                         }
                     ]
                 },
@@ -4717,6 +4717,16 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Egyptology",
+                            "type": "subclass of",
+                            "tail": "Archaeology"
+                        },
+                        {
+                            "head": "Tomb",
+                            "type": "occupant",
+                            "tail": "Tutankhamun"
+                        },
+                        {
                             "head": "Flinders Petrie",
                             "type": "field of work",
                             "tail": "Egyptology"
@@ -4725,16 +4735,6 @@
                             "head": "Tutankhamun",
                             "type": "place of burial",
                             "tail": "Tomb"
-                        },
-                        {
-                            "head": "Tomb",
-                            "type": "occupant",
-                            "tail": "Tutankhamun"
-                        },
-                        {
-                            "head": "Egyptology",
-                            "type": "subclass of",
-                            "tail": "Archaeology"
                         }
                     ]
                 },
@@ -4744,14 +4744,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Tutankhamun",
-                            "type": "place of burial",
-                            "tail": "Tomb"
-                        },
-                        {
                             "head": "Tomb",
                             "type": "occupant",
                             "tail": "Tutankhamun"
+                        },
+                        {
+                            "head": "Tutankhamun",
+                            "type": "place of burial",
+                            "tail": "Tomb"
                         }
                     ]
                 },
@@ -4761,11 +4761,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Tutankhamun",
-                            "type": "place of burial",
-                            "tail": "Tomb"
-                        },
-                        {
                             "head": "Tomb",
                             "type": "occupant",
                             "tail": "Tutankhamun"
@@ -4774,6 +4769,11 @@
                             "head": "Jean-Fran\u00e7ois Champollion",
                             "type": "field of work",
                             "tail": "Egyptology"
+                        },
+                        {
+                            "head": "Tutankhamun",
+                            "type": "place of burial",
+                            "tail": "Tomb"
                         }
                     ]
                 },
@@ -4795,12 +4795,12 @@
                     "verified_edges": [
                         {
                             "head": "Amazon",
-                            "type": "owned by",
+                            "type": "founded by",
                             "tail": "Jeff Bezos"
                         },
                         {
                             "head": "Amazon",
-                            "type": "founded by",
+                            "type": "owned by",
                             "tail": "Jeff Bezos"
                         }
                     ]
@@ -4840,14 +4840,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "F. Scott Fitzgerald",
-                            "type": "notable work",
-                            "tail": "The Great Gatsby"
-                        },
-                        {
                             "head": "The Great Gatsby",
                             "type": "author",
                             "tail": "F. Scott Fitzgerald"
+                        },
+                        {
+                            "head": "F. Scott Fitzgerald",
+                            "type": "notable work",
+                            "tail": "The Great Gatsby"
                         }
                     ]
                 },
@@ -4921,14 +4921,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Guernica",
-                            "type": "creator",
-                            "tail": "Pablo Picasso"
-                        },
-                        {
                             "head": "Pablo Picasso",
                             "type": "notable work",
                             "tail": "Guernica"
+                        },
+                        {
+                            "head": "Guernica",
+                            "type": "creator",
+                            "tail": "Pablo Picasso"
                         }
                     ]
                 },
@@ -4968,23 +4968,18 @@
                     "verified_edges": [
                         {
                             "head": "Wolfgang Amadeus Mozart",
-                            "type": "genre",
-                            "tail": "Symphony"
-                        },
-                        {
-                            "head": "Wolfgang Amadeus Mozart",
                             "type": "notable work",
                             "tail": "The Magic Flute"
                         },
                         {
                             "head": "Wolfgang Amadeus Mozart",
-                            "type": "notable work",
-                            "tail": "Eine kleine Nachtmusik"
-                        },
-                        {
-                            "head": "Wolfgang Amadeus Mozart",
                             "type": "genre",
                             "tail": "Opera"
+                        },
+                        {
+                            "head": "Eine kleine Nachtmusik",
+                            "type": "composer",
+                            "tail": "Wolfgang Amadeus Mozart"
                         },
                         {
                             "head": "Symphony",
@@ -4993,18 +4988,23 @@
                         },
                         {
                             "head": "The Magic Flute",
+                            "type": "composer",
+                            "tail": "Wolfgang Amadeus Mozart"
+                        },
+                        {
+                            "head": "Wolfgang Amadeus Mozart",
+                            "type": "notable work",
+                            "tail": "Eine kleine Nachtmusik"
+                        },
+                        {
+                            "head": "The Magic Flute",
                             "type": "instance of",
                             "tail": "Symphony"
                         },
                         {
-                            "head": "Eine kleine Nachtmusik",
-                            "type": "composer",
-                            "tail": "Wolfgang Amadeus Mozart"
-                        },
-                        {
-                            "head": "The Magic Flute",
-                            "type": "composer",
-                            "tail": "Wolfgang Amadeus Mozart"
+                            "head": "Wolfgang Amadeus Mozart",
+                            "type": "genre",
+                            "tail": "Symphony"
                         }
                     ]
                 },
@@ -5113,14 +5113,14 @@
                             "tail": "Albert Einstein"
                         },
                         {
-                            "head": "Mass\u2013energy equivalence",
-                            "type": "discoverer or inventor",
-                            "tail": "Albert Einstein"
-                        },
-                        {
                             "head": "Albert Einstein",
                             "type": "notable work",
                             "tail": "Theory of relativity"
+                        },
+                        {
+                            "head": "Mass\u2013energy equivalence",
+                            "type": "discoverer or inventor",
+                            "tail": "Albert Einstein"
                         }
                     ]
                 },
@@ -5159,14 +5159,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Francis Crick",
-                            "type": "notable work",
-                            "tail": "DNA"
-                        },
-                        {
                             "head": "DNA",
                             "type": "discoverer or inventor",
                             "tail": "Francis Crick"
+                        },
+                        {
+                            "head": "Francis Crick",
+                            "type": "notable work",
+                            "tail": "DNA"
                         }
                     ]
                 },
@@ -5340,11 +5340,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "The Starry Night",
-                            "type": "creator",
-                            "tail": "Vincent van Gogh"
-                        },
-                        {
                             "head": "Vincent van Gogh",
                             "type": "movement",
                             "tail": "Post-Impressionism"
@@ -5353,6 +5348,11 @@
                             "head": "Vincent van Gogh",
                             "type": "notable work",
                             "tail": "The Starry Night"
+                        },
+                        {
+                            "head": "The Starry Night",
+                            "type": "creator",
+                            "tail": "Vincent van Gogh"
                         }
                     ]
                 },
@@ -5392,11 +5392,6 @@
                     "verified_edges": [
                         {
                             "head": "Albert Einstein",
-                            "type": "country of citizenship",
-                            "tail": "German"
-                        },
-                        {
-                            "head": "Albert Einstein",
                             "type": "field of work",
                             "tail": "Theoretical physics"
                         },
@@ -5404,6 +5399,11 @@
                             "head": "Albert Einstein",
                             "type": "notable work",
                             "tail": "Theory of relativity"
+                        },
+                        {
+                            "head": "Albert Einstein",
+                            "type": "country of citizenship",
+                            "tail": "German"
                         },
                         {
                             "head": "Theory of relativity",
@@ -5471,13 +5471,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Tycho Brahe",
-                            "type": "occupation",
+                            "head": "Telescope",
+                            "type": "use",
                             "tail": "Astronomer"
                         },
                         {
-                            "head": "Telescope",
-                            "type": "use",
+                            "head": "Tycho Brahe",
+                            "type": "occupation",
                             "tail": "Astronomer"
                         },
                         {
@@ -5582,10 +5582,10 @@
         },
         "stats": {
             "correct": 54,
-            "fail": 21,
-            "unselectable": 25,
+            "fail": 20,
+            "unselectable": 26,
             "total": 100,
-            "stochastic_accuracy": 0.6183333333333334
+            "stochastic_accuracy": 0.6233333333333334
         }
     }
 }
