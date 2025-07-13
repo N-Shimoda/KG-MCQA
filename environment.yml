@@ -10,18 +10,19 @@ dependencies:
   - nltk
   - pyvis
   - pip
-  # Neural Networks
+  # Machine Learning
   - pytorch
   - transformers==4.44
   - sentence-transformers
+  - accelerate
   # Development
   - cython # for building kgraph library
   - pytest
   - streamlit
   - pip:
     - ./kgraph
-    # Documentation
     - wikipedia
+    # Documentation
     - sphinx
     - myst-parser
     - sphinx_rtd_theme
