@@ -3,9 +3,10 @@ import os
 import re
 from typing import Any, Dict, Tuple
 
-import tqdm
 from datasets import Dataset
 from transformers import Pipeline, pipeline
+
+from src.utils import plot_bar_chart
 
 
 def load_dataset(file_path: str) -> Dataset:
@@ -76,10 +77,8 @@ def answer_questions(dataset: Dataset, model: Pipeline) -> Tuple[Dict[str, Any],
             prompt = f"Question: {sentence}\nChoices: {choice_str}\nAnswer key: "
             prompts.append(prompt)
             meta.append((category, question_id, sentence, choices, answer))
-    # Batch call with progress bar
-    responses = []
-    for batch in tqdm.tqdm([prompts], desc="Answering questions", total=1):
-        responses.extend(model(batch, max_new_tokens=5))
+    # Batch call
+    responses = model(prompts, max_new_tokens=5)
     for i, response_item in enumerate(responses):
         category, question_id, sentence, choices, answer = meta[i]
         match = re.search(r"\d", response_item["generated_text"])
@@ -111,11 +110,19 @@ def answer_questions(dataset: Dataset, model: Pipeline) -> Tuple[Dict[str, Any],
     # Calculate and print per-category accuracy
     if warnings > 0:
         print(f"Warning: {warnings} out-of-range indices detected.")
-    for category, items in results.items():
+    scores = {}
+    for category, items in sorted(results.items()):
+        scores[category] = {
+            "correct": sum(1 for item in items if item["is_correct"]),
+            "fail": sum(1 for item in items if not item["is_correct"]),
+            "unselectable": 0,  # Placeholder, as unselectable logic is not defined
+            "total": len(items),
+            "stochastic_accuracy": sum(item["is_correct"] for item in items) / len(items) if items else 0.0,
+        }
         correct_count = sum(1 for item in items if item["is_correct"])
         total_count = len(items)
         print(f"- '{category}': {correct_count}/{total_count} correct")
-    return results, accuracy
+    return results, accuracy, scores
 
 
 def main() -> None:
@@ -133,7 +140,8 @@ def main() -> None:
     model = pipeline("text2text-generation", model="google/flan-t5-xl", device_map="auto")
 
     # Answer questions
-    results, accuracy = answer_questions(dataset, model)
+    results, accuracy, scores = answer_questions(dataset, model)
+    print(f"Accuracy: {accuracy * 100:.2f}%")
 
     # Save results
     OUT_DIR = "baseline"
@@ -141,7 +149,10 @@ def main() -> None:
     with open(os.path.join(OUT_DIR, "results.json"), "w") as result_file:
         json.dump(results, result_file, ensure_ascii=False, indent=4)
 
-    print(f"Accuracy: {accuracy * 100:.2f}%")
+    # Plot bar chart
+    categories = list(scores.keys())
+    output_file = os.path.join(OUT_DIR, "accuracy.svg")
+    plot_bar_chart(categories, scores, "Model Performance by Category", output_file)
 
 
 if __name__ == "__main__":
