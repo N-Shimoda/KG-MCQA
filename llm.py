@@ -1,15 +1,27 @@
 import json
 import re
+from typing import Any, Dict, Tuple
 
 from datasets import Dataset
-from transformers import pipeline
+from transformers import Pipeline, pipeline
 
 
-def load_dataset(file_path):
-    """Load dataset from JSON file using Hugging Face Dataset"""
+def load_dataset(file_path: str) -> Dataset:
+    """
+    Load dataset from JSON file using Hugging Face Dataset.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to the JSON file containing the dataset.
+
+    Returns
+    -------
+    Dataset
+        Hugging Face Dataset object containing all questions as records.
+    """
     with open(file_path, "r") as file:
         raw = json.load(file)
-    # Flatten all questions into a list of dicts
     records = []
     for category, data in raw.items():
         for qid, qdata in data["questions"].items():
@@ -24,14 +36,33 @@ def load_dataset(file_path):
     return Dataset.from_list(records)
 
 
-def answer_questions(dataset, model):
-    """Answer questions using LLM, output only index integer."""
+def answer_questions(dataset: Dataset, model: Pipeline) -> Tuple[Dict[str, Any], float]:
+    """
+    Answer questions using LLM, output only index integer.
+
+    Parameters
+    ----------
+    dataset : Dataset
+        Hugging Face Dataset object containing all questions.
+    model : Pipeline
+        Hugging Face text-generation pipeline.
+
+    Returns
+    -------
+    results : dict
+        Dictionary of results grouped by category.
+    accuracy : float
+        Accuracy of model predictions (0.0 - 1.0).
+    """
     results = {}
     total = 0
     correct = 0
+    warnings = 0  # Counter for out-of-range indices
     # Group by category for output compatibility
     for category in set(dataset["category"]):
         results[category] = []
+    prompts = []
+    meta = []
     for item in dataset:
         sentence = item["sentence"]
         choices = item["choices"]
@@ -39,41 +70,63 @@ def answer_questions(dataset, model):
         category = item["category"]
         question_id = item["question_id"]
         if sentence and choices and answer is not None:
-            prompt = (
-                f"{sentence}\nChoices: {', '.join(choices)}\n"
-                "Please answer ONLY the index (0, 1, 2, or 3) of the correct choice."
-            )
-            response = model(prompt, max_new_tokens=2)
-            match = re.search(r"\d", response[0]["generated_text"])
-            if match:
-                model_index = int(match.group())
-            else:
-                model_index = None
-            is_correct = model_index == answer
-            results[category].append(
-                {
-                    "question_id": question_id,
-                    "sentence": sentence,
-                    "choices": choices,
-                    "model_answer": model_index,
-                    "correct_answer": answer,
-                    "is_correct": is_correct,
-                }
-            )
-            total += 1
-            if is_correct:
-                correct += 1
+            choice_str = ", ".join([f"{i}: {choice}" for i, choice in enumerate(choices)])
+            prompt = f"Question: {sentence}\nChoices: {choice_str}\nAnswer: "
+            prompts.append(prompt)
+            meta.append((category, question_id, sentence, choices, answer))
+    # Batch call
+    responses = model(prompts, max_new_tokens=5)
+    for i, response_item in enumerate(responses):
+        category, question_id, sentence, choices, answer = meta[i]
+        match = re.search(r"\d", response_item[0]["generated_text"])
+        if match:
+            model_index = int(match.group())
+            # Check if the index is out of range
+            if model_index < 0 or model_index >= len(choices):
+                warnings += 1
+                model_index = None  # Mark as invalid
+        else:
+            model_index = None
+        is_correct = model_index == answer
+        results[category].append(
+            {
+                "question_id": question_id,
+                "prompt": prompts[i],
+                "sentence": sentence,
+                "choices": choices,
+                "model_answer": model_index,
+                "correct_answer": answer,
+                "is_correct": is_correct,
+            }
+        )
+        total += 1
+        if is_correct:
+            correct += 1
     accuracy = correct / total if total > 0 else 0.0
+
+    # Calculate and print per-category accuracy
+    if warnings > 0:
+        print(f"Warning: {warnings} out-of-range indices detected.")
+    for category, items in results.items():
+        correct_count = sum(1 for item in items if item["is_correct"])
+        total_count = len(items)
+        print(f"- '{category}': {correct_count}/{total_count} correct")
     return results, accuracy
 
 
-def main():
-    """Main function"""
+def main() -> None:
+    """
+    Main function to load dataset, run LLM, and output results.
+
+    Returns
+    -------
+    None
+    """
     dataset_path = "dataset/KR-200m.json"  # Path to dataset
     dataset = load_dataset(dataset_path)
 
     # Initialize open-source LLM
-    model = pipeline("text-generation", model="gpt2", device_map="auto")
+    model = pipeline("text-generation", model="microsoft/phi-2", device_map="auto", pad_token_id=50256)
 
     # Answer questions
     results, accuracy = answer_questions(dataset, model)
