@@ -58,7 +58,7 @@
                 "0": {
                     "choice": "Greta Thunberg",
                     "edge_score": 0.25,
-                    "node_score": 0.9083010852336884,
+                    "node_score": 0.8846823573112488,
                     "verified_edges": [
                         {
                             "head": "Greta Thunberg",
@@ -222,7 +222,7 @@
                 "2": {
                     "choice": "Bernie Sanders",
                     "edge_score": 0.0,
-                    "node_score": 0.9323618156569344,
+                    "node_score": 0.9468324439866203,
                     "verified_edges": []
                 },
                 "3": {
@@ -244,13 +244,18 @@
             "cf-5": {
                 "0": {
                     "choice": "Jack Ma",
-                    "edge_score": 0.6666666666666666,
+                    "edge_score": 1.0,
                     "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Alibaba Group",
                             "type": "founded by",
                             "tail": "Jack Ma"
+                        },
+                        {
+                            "head": "Jack Ma",
+                            "type": "country of citizenship",
+                            "tail": "Chinese"
                         },
                         {
                             "head": "Alibaba Group",
@@ -300,15 +305,15 @@
                         }
                     ]
                 },
-                "answer": -1,
+                "answer": 0,
                 "probs": [
-                    0.5,
+                    1.0,
                     0.0,
                     0.0,
-                    0.5
+                    0.0
                 ],
-                "correct": false,
-                "stochastic_score": 0.5
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-6": {
                 "0": {
@@ -459,7 +464,7 @@
                         {
                             "head": "Kei Nishikori",
                             "type": "sport",
-                            "tail": "tennis"
+                            "tail": "tennis player"
                         },
                         {
                             "head": "Kei Nishikori",
@@ -469,7 +474,7 @@
                         {
                             "head": "Kei Nishikori",
                             "type": "sport",
-                            "tail": "tennis player"
+                            "tail": "tennis"
                         }
                     ]
                 },
@@ -531,11 +536,11 @@
             }
         },
         "stats": {
-            "correct": 3,
+            "correct": 4,
             "fail": 4,
-            "unselectable": 3,
+            "unselectable": 2,
             "total": 10,
-            "stochastic_accuracy": 0.425
+            "stochastic_accuracy": 0.475
         }
     },
     "hf": {
@@ -549,17 +554,12 @@
                 },
                 "1": {
                     "choice": "Rosa Parks",
-                    "edge_score": 0.4,
+                    "edge_score": 0.2,
                     "node_score": 0.9489311873912811,
                     "verified_edges": [
                         {
                             "head": "Rosa Parks",
                             "type": "country of citizenship",
-                            "tail": "American"
-                        },
-                        {
-                            "head": "civil rights movement",
-                            "type": "country",
                             "tail": "American"
                         }
                     ]
@@ -582,15 +582,15 @@
                     "node_score": 1.0,
                     "verified_edges": []
                 },
-                "answer": 1,
+                "answer": 2,
                 "probs": [
                     0.0,
-                    1.0,
                     0.0,
+                    1.0,
                     0.0
                 ],
-                "correct": false,
-                "stochastic_score": 0.0
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "hf-1": {
                 "0": {
@@ -614,7 +614,7 @@
                 "3": {
                     "choice": "Barbara McClintock",
                     "edge_score": 0.0,
-                    "node_score": 0.9206132888793945,
+                    "node_score": 0.9206132739782333,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -634,14 +634,14 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Aristotle",
-                            "type": "country of citizenship",
-                            "tail": "ancient Greek"
-                        },
-                        {
                             "head": "Socrates",
                             "type": "occupation",
                             "tail": "philosopher"
+                        },
+                        {
+                            "head": "Aristotle",
+                            "type": "country of citizenship",
+                            "tail": "ancient Greek"
                         },
                         {
                             "head": "Aristotle",
@@ -656,17 +656,17 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
+                            "head": "Socrates",
+                            "type": "occupation",
+                            "tail": "philosopher"
+                        },
+                        {
                             "head": "Plato",
                             "type": "country of citizenship",
                             "tail": "ancient Greek"
                         },
                         {
                             "head": "Plato",
-                            "type": "occupation",
-                            "tail": "philosopher"
-                        },
-                        {
-                            "head": "Socrates",
                             "type": "occupation",
                             "tail": "philosopher"
                         }
@@ -760,13 +760,13 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Jawaharlal Nehru",
-                            "type": "country of citizenship",
+                            "head": "Indian",
+                            "type": "country",
                             "tail": "India"
                         },
                         {
-                            "head": "Indian",
-                            "type": "country",
+                            "head": "Jawaharlal Nehru",
+                            "type": "country of citizenship",
                             "tail": "India"
                         }
                     ]
@@ -777,13 +777,13 @@
                     "node_score": 0.9676431864500046,
                     "verified_edges": [
                         {
-                            "head": "Mahatma Gandhi",
-                            "type": "country of citizenship",
+                            "head": "Indian",
+                            "type": "country",
                             "tail": "India"
                         },
                         {
-                            "head": "Indian",
-                            "type": "country",
+                            "head": "Mahatma Gandhi",
+                            "type": "country of citizenship",
                             "tail": "India"
                         }
                     ]
@@ -842,12 +842,12 @@
                         {
                             "head": "William Shakespeare",
                             "type": "occupation",
-                            "tail": "playwright"
+                            "tail": "poet"
                         },
                         {
                             "head": "William Shakespeare",
                             "type": "occupation",
-                            "tail": "poet"
+                            "tail": "playwright"
                         }
                     ]
                 },
@@ -975,15 +975,9 @@
                 },
                 "1": {
                     "choice": "Amelia Earhart",
-                    "edge_score": 0.3333333333333333,
+                    "edge_score": 0.0,
                     "node_score": 0.9851008852322897,
-                    "verified_edges": [
-                        {
-                            "head": "Amelia Earhart",
-                            "type": "occupation",
-                            "tail": "aviation"
-                        }
-                    ]
+                    "verified_edges": []
                 },
                 "2": {
                     "choice": "Jacqueline Cochran",
@@ -997,15 +991,15 @@
                     "node_score": 1.0,
                     "verified_edges": []
                 },
-                "answer": 1,
+                "answer": -1,
                 "probs": [
-                    0.0,
-                    1.0,
-                    0.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
-                "correct": true,
-                "stochastic_score": 1.0
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "hf-9": {
                 "0": {
@@ -1031,14 +1025,14 @@
                             "tail": "The Art of War"
                         },
                         {
-                            "head": "The Art of War",
-                            "type": "author",
-                            "tail": "Sun Tzu"
-                        },
-                        {
                             "head": "Sun Tzu",
                             "type": "occupation",
                             "tail": "philosopher"
+                        },
+                        {
+                            "head": "The Art of War",
+                            "type": "author",
+                            "tail": "Sun Tzu"
                         }
                     ]
                 },
@@ -1067,10 +1061,10 @@
         },
         "stats": {
             "correct": 4,
-            "fail": 1,
-            "unselectable": 5,
+            "fail": 0,
+            "unselectable": 6,
             "total": 10,
-            "stochastic_accuracy": 0.55
+            "stochastic_accuracy": 0.575
         }
     }
 }

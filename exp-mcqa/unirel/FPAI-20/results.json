@@ -4,26 +4,26 @@
             "cf-0": {
                 "0": {
                     "choice": "Bill Gates",
-                    "edge_score": 0.0,
-                    "node_score": 0.4929531216621399,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Elon Musk",
-                    "edge_score": 0.0,
-                    "node_score": 1.0,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Jeff Bezos",
-                    "edge_score": 0.0,
-                    "node_score": 0.6283161342144012,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Mark Zuckerberg",
-                    "edge_score": 0.0,
-                    "node_score": 0.6165823340415955,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -74,72 +74,61 @@
             "cf-2": {
                 "0": {
                     "choice": "Warren Buffett",
-                    "edge_score": 0.0,
-                    "node_score": 0.982866644859314,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Larry Page",
-                    "edge_score": 0.0,
-                    "node_score": 0.7718015313148499,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Tim Cook",
-                    "edge_score": 0.0,
-                    "node_score": 0.9280845522880554,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Bill Gates",
-                    "edge_score": 0.6666666666666666,
-                    "node_score": 1.0,
-                    "verified_edges": [
-                        {
-                            "head": "Bill Gates",
-                            "type": "/business/person/company",
-                            "tail": "Microsoft"
-                        },
-                        {
-                            "head": "Microsoft",
-                            "type": "/business/company/founders",
-                            "tail": "Bill Gates"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
-                "answer": 3,
+                "answer": -1,
                 "probs": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
-                "correct": true,
-                "stochastic_score": 1.0
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "cf-3": {
                 "0": {
                     "choice": "Ed Sheeran",
-                    "edge_score": 0.0,
-                    "node_score": 0.667646735906601,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Chris Martin",
-                    "edge_score": 0.0,
-                    "node_score": 0.9220348000526428,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Harry Styles",
-                    "edge_score": 0.0,
-                    "node_score": 0.606190487742424,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Adele",
-                    "edge_score": 0.0,
-                    "node_score": 0.7329424470663071,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -155,40 +144,58 @@
             "cf-4": {
                 "0": {
                     "choice": "Joe Biden",
-                    "edge_score": 0.0,
-                    "node_score": 0.9383456508318583,
-                    "verified_edges": []
-                },
-                "1": {
-                    "choice": "Donald Trump",
-                    "edge_score": 0.0,
-                    "node_score": 0.9443404277165731,
-                    "verified_edges": []
-                },
-                "2": {
-                    "choice": "Bernie Sanders",
-                    "edge_score": 0.0,
-                    "node_score": 0.915939470132192,
-                    "verified_edges": []
-                },
-                "3": {
-                    "choice": "Kamala Harris",
-                    "edge_score": 0.3333333333333333,
-                    "node_score": 0.9521103700002035,
+                    "edge_score": 0.5,
+                    "node_score": 0.9186334411303202,
                     "verified_edges": [
                         {
-                            "head": "Kamala Harris",
-                            "type": "/business/person/company",
-                            "tail": "United States"
+                            "head": "United States",
+                            "type": "leaderName",
+                            "tail": "Barack Obama"
                         }
                     ]
                 },
-                "answer": 3,
+                "1": {
+                    "choice": "Donald Trump",
+                    "edge_score": 0.5,
+                    "node_score": 0.9443403879801432,
+                    "verified_edges": [
+                        {
+                            "head": "United States",
+                            "type": "leaderName",
+                            "tail": "Barack Obama"
+                        }
+                    ]
+                },
+                "2": {
+                    "choice": "Bernie Sanders",
+                    "edge_score": 0.5,
+                    "node_score": 0.8201050162315369,
+                    "verified_edges": [
+                        {
+                            "head": "United States",
+                            "type": "leaderName",
+                            "tail": "Barack Obama"
+                        }
+                    ]
+                },
+                "3": {
+                    "choice": "Kamala Harris",
+                    "edge_score": 0.5,
+                    "node_score": 0.7620980739593506,
+                    "verified_edges": [
+                        {
+                            "head": "United States",
+                            "type": "leaderName",
+                            "tail": "Barack Obama"
+                        }
+                    ]
+                },
+                "answer": 1,
                 "probs": [
                     0.0,
+                    1.0,
                     0.0,
-                    0.0,
-                    1.0
+                    0.0
                 ],
                 "correct": false,
                 "stochastic_score": 0.0
@@ -197,48 +204,36 @@
                 "0": {
                     "choice": "Jack Ma",
                     "edge_score": 0.0,
-                    "node_score": 0.24899661540985107,
+                    "node_score": 0.6309994061787924,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Richard Liu",
                     "edge_score": 0.0,
-                    "node_score": 0.5119112282991409,
+                    "node_score": 0.5266240139802297,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Pony Ma",
-                    "edge_score": 0.5,
-                    "node_score": 0.6968183517456055,
-                    "verified_edges": [
-                        {
-                            "head": "Pony Ma",
-                            "type": "/business/person/company",
-                            "tail": "Alibaba Group"
-                        }
-                    ]
+                    "edge_score": 0.0,
+                    "node_score": 0.4640504817167918,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "Ma Huateng",
-                    "edge_score": 0.5,
-                    "node_score": 0.645389124751091,
-                    "verified_edges": [
-                        {
-                            "head": "Ma Huateng",
-                            "type": "/business/person/company",
-                            "tail": "Alibaba Group"
-                        }
-                    ]
+                    "edge_score": 0.0,
+                    "node_score": 0.4770893156528473,
+                    "verified_edges": []
                 },
-                "answer": 2,
+                "answer": -1,
                 "probs": [
-                    0.0,
-                    0.0,
-                    1.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
                 "correct": false,
-                "stochastic_score": 0.0
+                "stochastic_score": 0.25
             },
             "cf-6": {
                 "0": {
@@ -348,51 +343,45 @@
             "cf-9": {
                 "0": {
                     "choice": "Kei Nishikori",
-                    "edge_score": 0.0,
-                    "node_score": 0.8594210147857666,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Naomi Osaka",
-                    "edge_score": 0.0,
-                    "node_score": 0.687352329492569,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Rafael Nadal",
-                    "edge_score": 1.0,
-                    "node_score": 0.6152746230363846,
-                    "verified_edges": [
-                        {
-                            "head": "Rafael Nadal",
-                            "type": "/people/person/nationality",
-                            "tail": "Japanese"
-                        }
-                    ]
+                    "edge_score": 0,
+                    "node_score": 0.0,
+                    "verified_edges": []
                 },
                 "3": {
                     "choice": "Serena Williams",
-                    "edge_score": 0.0,
-                    "node_score": 0.5624336041510105,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
-                "answer": 2,
+                "answer": -1,
                 "probs": [
-                    0.0,
-                    0.0,
-                    1.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
                 "correct": false,
-                "stochastic_score": 0.0
+                "stochastic_score": 0.25
             }
         },
         "stats": {
-            "correct": 1,
-            "fail": 3,
-            "unselectable": 6,
+            "correct": 0,
+            "fail": 1,
+            "unselectable": 9,
             "total": 10,
-            "stochastic_accuracy": 0.25
+            "stochastic_accuracy": 0.225
         }
     },
     "hf": {
@@ -400,26 +389,26 @@
             "hf-0": {
                 "0": {
                     "choice": "Nelson Mandela",
-                    "edge_score": 0.0,
-                    "node_score": 0.7043107748031616,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Rosa Parks",
-                    "edge_score": 0.0,
-                    "node_score": 0.5937729477882385,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Martin Luther King Jr.",
-                    "edge_score": 0.0,
-                    "node_score": 0.7247838377952576,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Malcolm X",
-                    "edge_score": 0.0,
-                    "node_score": 0.7247838973999023,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -435,26 +424,26 @@
             "hf-1": {
                 "0": {
                     "choice": "Rosalind Franklin",
-                    "edge_score": 0.0,
-                    "node_score": 0.7342081069946289,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Marie Curie",
-                    "edge_score": 0.0,
-                    "node_score": 0.8914788961410522,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Ada Lovelace",
-                    "edge_score": 0.0,
-                    "node_score": 0.5356417000293732,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Barbara McClintock",
-                    "edge_score": 0.0,
-                    "node_score": 0.4983559623360634,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -470,26 +459,26 @@
             "hf-2": {
                 "0": {
                     "choice": "Aristotle",
-                    "edge_score": 0.0,
-                    "node_score": 0.7755427956581116,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Plato",
-                    "edge_score": 0.0,
-                    "node_score": 0.6306745409965515,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Sophocles",
-                    "edge_score": 0.0,
-                    "node_score": 0.7755427956581116,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Herodotus",
-                    "edge_score": 0.0,
-                    "node_score": 0.47868120670318604,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -645,26 +634,26 @@
             "hf-7": {
                 "0": {
                     "choice": "Hatshepsut",
-                    "edge_score": 0.0,
-                    "node_score": 0.9491918087005615,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Nefertiti",
-                    "edge_score": 0.0,
-                    "node_score": 0.9491918087005615,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Cleopatra",
-                    "edge_score": 0.0,
-                    "node_score": 0.9491918087005615,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Ankhesenamun",
-                    "edge_score": 0.0,
-                    "node_score": 0.9491918087005615,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -680,26 +669,26 @@
             "hf-8": {
                 "0": {
                     "choice": "Bessie Coleman",
-                    "edge_score": 0.0,
-                    "node_score": 0.7603907585144043,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Amelia Earhart",
-                    "edge_score": 0.0,
-                    "node_score": 0.7602671086788177,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Jacqueline Cochran",
-                    "edge_score": 0.0,
-                    "node_score": 0.6607998311519623,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "3": {
                     "choice": "Harriet Quimby",
-                    "edge_score": 0.0,
-                    "node_score": 0.5506020858883858,
+                    "edge_score": 0,
+                    "node_score": 0.0,
                     "verified_edges": []
                 },
                 "answer": -1,
@@ -715,45 +704,51 @@
             "hf-9": {
                 "0": {
                     "choice": "Confucius",
-                    "edge_score": 0,
+                    "edge_score": 0.0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
                 "1": {
                     "choice": "Laozi",
-                    "edge_score": 0,
-                    "node_score": 0.0,
+                    "edge_score": 0.0,
+                    "node_score": 0.6246561482548714,
                     "verified_edges": []
                 },
                 "2": {
                     "choice": "Sun Tzu",
-                    "edge_score": 0,
-                    "node_score": 0.0,
-                    "verified_edges": []
+                    "edge_score": 1.0,
+                    "node_score": 1.0,
+                    "verified_edges": [
+                        {
+                            "head": "Art of War",
+                            "type": "author",
+                            "tail": "Sun Tzu"
+                        }
+                    ]
                 },
                 "3": {
                     "choice": "Mencius",
-                    "edge_score": 0,
+                    "edge_score": 0.0,
                     "node_score": 0.0,
                     "verified_edges": []
                 },
-                "answer": -1,
+                "answer": 2,
                 "probs": [
-                    0.25,
-                    0.25,
-                    0.25,
-                    0.25
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0
                 ],
-                "correct": false,
-                "stochastic_score": 0.25
+                "correct": true,
+                "stochastic_score": 1.0
             }
         },
         "stats": {
-            "correct": 0,
+            "correct": 1,
             "fail": 0,
-            "unselectable": 10,
+            "unselectable": 9,
             "total": 10,
-            "stochastic_accuracy": 0.25
+            "stochastic_accuracy": 0.325
         }
     }
 }

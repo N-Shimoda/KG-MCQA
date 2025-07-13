@@ -14,21 +14,21 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "SpaceX",
-                            "type": "founded by",
-                            "tail": "Elon Musk"
-                        },
-                        {
                             "head": "Elon Musk",
                             "type": "employer",
                             "tail": "SpaceX"
+                        },
+                        {
+                            "head": "SpaceX",
+                            "type": "founded by",
+                            "tail": "Elon Musk"
                         }
                     ]
                 },
                 "2": {
                     "choice": "Jeff Bezos",
                     "edge_score": 0.0,
-                    "node_score": 0.8890109658241272,
+                    "node_score": 0.8890109856923422,
                     "verified_edges": []
                 },
                 "3": {
@@ -50,15 +50,9 @@
             "cf-1": {
                 "0": {
                     "choice": "Greta Thunberg",
-                    "edge_score": 0.25,
+                    "edge_score": 0.0,
                     "node_score": 0.9111533164978027,
-                    "verified_edges": [
-                        {
-                            "head": "Greta Thunberg",
-                            "type": "country of citizenship",
-                            "tail": "Swedish"
-                        }
-                    ]
+                    "verified_edges": []
                 },
                 "1": {
                     "choice": "Emma Gonzalez",
@@ -78,15 +72,15 @@
                     "node_score": 0.9170921146869659,
                     "verified_edges": []
                 },
-                "answer": 0,
+                "answer": -1,
                 "probs": [
-                    1.0,
-                    0.0,
-                    0.0,
-                    0.0
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.25
                 ],
-                "correct": true,
-                "stochastic_score": 1.0
+                "correct": false,
+                "stochastic_score": 0.25
             },
             "cf-2": {
                 "0": {
@@ -191,9 +185,15 @@
             "cf-4": {
                 "0": {
                     "choice": "Joe Biden",
-                    "edge_score": 0.0,
-                    "node_score": 0.9999999850988388,
-                    "verified_edges": []
+                    "edge_score": 0.25,
+                    "node_score": 0.9906591027975082,
+                    "verified_edges": [
+                        {
+                            "head": "Barack Obama",
+                            "type": "position held",
+                            "tail": "President of the United States"
+                        }
+                    ]
                 },
                 "1": {
                     "choice": "Donald Trump",
@@ -222,7 +222,7 @@
                 "3": {
                     "choice": "Kamala Harris",
                     "edge_score": 0.25,
-                    "node_score": 0.9695260375738144,
+                    "node_score": 0.969526007771492,
                     "verified_edges": [
                         {
                             "head": "Barack Obama",
@@ -231,21 +231,21 @@
                         }
                     ]
                 },
-                "answer": 1,
+                "answer": 0,
                 "probs": [
-                    0.0,
                     1.0,
+                    0.0,
                     0.0,
                     0.0
                 ],
-                "correct": false,
-                "stochastic_score": 0.0
+                "correct": true,
+                "stochastic_score": 1.0
             },
             "cf-5": {
                 "0": {
                     "choice": "Jack Ma",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 0.9153480927149454,
+                    "node_score": 1.0,
                     "verified_edges": [
                         {
                             "head": "Alibaba Group",
@@ -257,7 +257,7 @@
                 "1": {
                     "choice": "Richard Liu",
                     "edge_score": 0.3333333333333333,
-                    "node_score": 0.9053083260854086,
+                    "node_score": 0.9053083062171936,
                     "verified_edges": [
                         {
                             "head": "Alibaba Group",
@@ -272,11 +272,6 @@
                     "node_score": 0.7978788614273071,
                     "verified_edges": [
                         {
-                            "head": "Alibaba Group",
-                            "type": "industry",
-                            "tail": "e-commerce"
-                        },
-                        {
                             "head": "Pony Ma",
                             "type": "employer",
                             "tail": "Alibaba Group"
@@ -285,6 +280,11 @@
                             "head": "Alibaba Group",
                             "type": "founded by",
                             "tail": "Pony Ma"
+                        },
+                        {
+                            "head": "Alibaba Group",
+                            "type": "industry",
+                            "tail": "e-commerce"
                         }
                     ]
                 },
@@ -355,7 +355,7 @@
                 "0": {
                     "choice": "Emmanuel Macron",
                     "edge_score": 0.0,
-                    "node_score": 0.9226206541061401,
+                    "node_score": 0.9226206690073013,
                     "verified_edges": []
                 },
                 "1": {
@@ -435,13 +435,13 @@
                     "verified_edges": [
                         {
                             "head": "Kei Nishikori",
-                            "type": "sport",
-                            "tail": "tennis"
+                            "type": "country of citizenship",
+                            "tail": "Japan"
                         },
                         {
                             "head": "Kei Nishikori",
-                            "type": "country of citizenship",
-                            "tail": "Japan"
+                            "type": "sport",
+                            "tail": "tennis"
                         }
                     ]
                 },
@@ -451,14 +451,14 @@
                     "node_score": 0.9583741128444672,
                     "verified_edges": [
                         {
-                            "head": "1 in singles",
-                            "type": "event interval",
-                            "tail": "1"
-                        },
-                        {
                             "head": "Naomi Osaka",
                             "type": "sport",
                             "tail": "tennis"
+                        },
+                        {
+                            "head": "1 in singles",
+                            "type": "event interval",
+                            "tail": "1"
                         }
                     ]
                 },
@@ -498,10 +498,10 @@
         },
         "stats": {
             "correct": 5,
-            "fail": 3,
-            "unselectable": 2,
+            "fail": 2,
+            "unselectable": 3,
             "total": 10,
-            "stochastic_accuracy": 0.575
+            "stochastic_accuracy": 0.6
         }
     },
     "hf": {
@@ -595,12 +595,12 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Aristotle",
+                            "head": "Socrates",
                             "type": "occupation",
                             "tail": "philosopher"
                         },
                         {
-                            "head": "Socrates",
+                            "head": "Aristotle",
                             "type": "occupation",
                             "tail": "philosopher"
                         }
@@ -612,11 +612,6 @@
                     "node_score": 1.0,
                     "verified_edges": [
                         {
-                            "head": "Socrates",
-                            "type": "student",
-                            "tail": "Plato"
-                        },
-                        {
                             "head": "Plato",
                             "type": "occupation",
                             "tail": "philosopher"
@@ -625,6 +620,11 @@
                             "head": "Socrates",
                             "type": "occupation",
                             "tail": "philosopher"
+                        },
+                        {
+                            "head": "Socrates",
+                            "type": "student",
+                            "tail": "Plato"
                         }
                     ]
                 },
@@ -728,12 +728,12 @@
                     "verified_edges": [
                         {
                             "head": "Mahatma Gandhi",
-                            "type": "residence",
+                            "type": "country of citizenship",
                             "tail": "India"
                         },
                         {
                             "head": "Mahatma Gandhi",
-                            "type": "country of citizenship",
+                            "type": "residence",
                             "tail": "India"
                         }
                     ]
@@ -764,7 +764,7 @@
                 "0": {
                     "choice": "Charles Dickens",
                     "edge_score": 0.0,
-                    "node_score": 0.953163206577301,
+                    "node_score": 0.9531632214784622,
                     "verified_edges": []
                 },
                 "1": {
@@ -903,7 +903,7 @@
                 "1": {
                     "choice": "Amelia Earhart",
                     "edge_score": 0.0,
-                    "node_score": 0.9776512384414673,
+                    "node_score": 0.9776512980461121,
                     "verified_edges": []
                 },
                 "2": {
