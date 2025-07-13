@@ -3,6 +3,7 @@ import os
 import re
 from typing import Any, Dict, Tuple
 
+import tqdm
 from datasets import Dataset
 from transformers import Pipeline, pipeline
 
@@ -75,29 +76,31 @@ def answer_questions(dataset: Dataset, model: Pipeline) -> Tuple[Dict[str, Any],
             prompt = f"Question: {sentence}\nChoices: {choice_str}\nAnswer key: "
             prompts.append(prompt)
             meta.append((category, question_id, sentence, choices, answer))
-    # Batch call
-    responses = model(prompts, max_new_tokens=5)
+    # Batch call with progress bar
+    responses = []
+    for batch in tqdm.tqdm([prompts], desc="Answering questions", total=1):
+        responses.extend(model(batch, max_new_tokens=5))
     for i, response_item in enumerate(responses):
         category, question_id, sentence, choices, answer = meta[i]
-        match = re.search(r"\d", response_item[0]["generated_text"])
+        match = re.search(r"\d", response_item["generated_text"])
         if match:
             model_index = int(match.group())
-            # Check if the index is out of range
             if model_index < 0 or model_index >= len(choices):
                 warnings += 1
-                model_index = None  # Mark as invalid
+                model_index = None
         else:
             model_index = None
         is_correct = model_index == answer
         results[category].append(
             {
                 "question_id": question_id,
-                "prompt": prompts[i],
                 "sentence": sentence,
                 "choices": choices,
                 "model_answer": model_index,
                 "correct_answer": answer,
                 "is_correct": is_correct,
+                "prompt": prompts[i],
+                "model_output": response_item["generated_text"],
             }
         )
         total += 1
@@ -127,7 +130,7 @@ def main() -> None:
     dataset = load_dataset(dataset_path)
 
     # Initialize open-source LLM
-    model = pipeline("text-generation", model="microsoft/phi-2", device_map="auto", pad_token_id=50256)
+    model = pipeline("text2text-generation", model="google/flan-t5-xl", device_map="auto")
 
     # Answer questions
     results, accuracy = answer_questions(dataset, model)
