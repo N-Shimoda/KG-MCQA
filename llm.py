@@ -1,4 +1,5 @@
 import json
+import os
 import re
 from typing import Any, Dict, Tuple
 
@@ -70,8 +71,8 @@ def answer_questions(dataset: Dataset, model: Pipeline) -> Tuple[Dict[str, Any],
         category = item["category"]
         question_id = item["question_id"]
         if sentence and choices and answer is not None:
-            choice_str = ", ".join([f"{i}: {choice}" for i, choice in enumerate(choices)])
-            prompt = f"Question: {sentence}\nChoices: {choice_str}\nAnswer: "
+            choice_str = ", ".join([f"({i}): {choice}" for i, choice in enumerate(choices)])
+            prompt = f"Question: {sentence}\nChoices: {choice_str}\nAnswer key: "
             prompts.append(prompt)
             meta.append((category, question_id, sentence, choices, answer))
     # Batch call
@@ -132,7 +133,9 @@ def main() -> None:
     results, accuracy = answer_questions(dataset, model)
 
     # Save results
-    with open("results.json", "w") as result_file:
+    OUT_DIR = "baseline"
+    os.makedirs(OUT_DIR, exist_ok=True)
+    with open(os.path.join(OUT_DIR, "results.json"), "w") as result_file:
         json.dump(results, result_file, ensure_ascii=False, indent=4)
 
     print(f"Accuracy: {accuracy * 100:.2f}%")
