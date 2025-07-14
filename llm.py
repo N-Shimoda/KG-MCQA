@@ -4,7 +4,7 @@ import re
 from typing import Any, Dict, Tuple
 
 from datasets import Dataset
-from transformers import Pipeline, pipeline
+from transformers import AutoTokenizer, Pipeline, pipeline
 
 from src.utils import plot_bar_chart
 
@@ -125,7 +125,7 @@ def answer_questions(dataset: Dataset, model: Pipeline) -> Tuple[Dict[str, Any],
     return results, accuracy, scores
 
 
-def main() -> None:
+def main(model: Pipeline, ds_path: str) -> None:
     """
     Main function to load dataset, run LLM, and output results.
 
@@ -133,18 +133,16 @@ def main() -> None:
     -------
     None
     """
-    dataset_path = "dataset/KR-200m.json"  # Path to dataset
-    dataset = load_dataset(dataset_path)
-
-    # Initialize open-source LLM
-    model = pipeline("text2text-generation", model="google/flan-t5-xl", device_map="auto")
+    dataset = load_dataset(ds_path)
+    ds_name = ds_path.split("/")[-1].replace(".json", "")
+    print(f"\nProcessing dataset: {ds_name}")
 
     # Answer questions
     results, accuracy, scores = answer_questions(dataset, model)
     print(f"Accuracy: {accuracy * 100:.2f}%")
 
     # Save results
-    OUT_DIR = "baseline"
+    OUT_DIR = os.path.join("baseline", ds_name)
     os.makedirs(OUT_DIR, exist_ok=True)
     with open(os.path.join(OUT_DIR, "results.json"), "w") as result_file:
         json.dump(results, result_file, ensure_ascii=False, indent=4)
@@ -156,4 +154,8 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    tokenizer = AutoTokenizer.from_pretrained("google/flan-t5-xl", clean_up_tokenization_spaces=True)
+    model = pipeline("text2text-generation", model="google/flan-t5-xl", tokenizer=tokenizer, device_map="auto")
+    ds_paths = ["dataset/KR-200m.json", "dataset/KR-200s.json", "dataset/FPAI-100.json", "dataset/FPAI-20.json"]
+    for ds_path in ds_paths:
+        main(model, ds_path)
