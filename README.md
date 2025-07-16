@@ -14,7 +14,7 @@ This repository contains:
 
 ### Create Environment
 
-Run the following command to create conda environment with required libraries. It automatically installs the original package `kgraph`.
+Run the following command to create a conda environment with the required libraries. It automatically installs the original package `kgraph`.
 
 ```shell
 conda env create -f environment.yml
@@ -24,7 +24,7 @@ conda activate kg-mcqa
 ### Activate Viewer
 
 Activate [Streamlit](https://streamlit.io/) app for viewing datasets and experimental results.
-While running the command, you can open the app in browser via [localhost:8501](http://127.0.0.1:8501).
+While running the command, you can open the app in a browser via [localhost:8501](http://127.0.0.1:8501).
 
 ```shell
 streamlit run viewer/main.py
@@ -34,9 +34,13 @@ streamlit run viewer/main.py
 
 ## Experiment
 
+> [!IMPORTANT]
+> It is highly recommended to use GPUs to execute experiments.  
+> The authors used an NVIDIA RTX 5000 Ada GPU with 32 GB RAM in the article.
+
 ### Run all experiments
 
-Following script runs all MCQA introduced in the article.
+The following script runs all the MCQAs introduced in the study.
 
 ```
 ./scripts/mcqa_main.sh
@@ -44,13 +48,13 @@ Following script runs all MCQA introduced in the article.
 
 ### Single experiment
 
-To run a single MCQA using specified RE method, use the next command.
+To run a single MCQA using the specified RE method, use the next command.
 
 ```shell
 python mcqa.py [dataset_path] [re_method]
 ```
 
-Choice of `re_method` are as follows.
+Choices of `re_method` are as follows.
 | `re_method` | Model name | Dataset | Relation types |
 |-------------|--------------------|---------|------------|
 | `rebel` | REBEL | REBEL | 220 |
@@ -58,7 +62,7 @@ Choice of `re_method` are as follows.
 | `mrebel_32` | mREBEL_32 | SRED^{FM} | 32 |
 | `unirel` | UniRel | NYT | 24 |
 
-### Baseline by LLM
+### Baseline result by LLM
 
 For the baseline experiment using Google's FLAN-T5-xlarge (3B) model, run the following script.
 
@@ -76,11 +80,11 @@ python llm.py
 
 ### Directories
 
-(ignored) shows the files not controled by git.
+(ignored) shows the files not controlled by git.
 
-- `kgraph`: Original package for handling proposed method.
+- `kgraph`: Original package for handling the proposed method.
 - `scripts`
 - `dataset`: Original MCQ dataset.
 - `exp-mcqa`: Result files of MCQA.
 - `KG_cache`: Cache files of KG constructed from Wikipedia articles. (ignored)
-- `wikipedia`: Dowonloaded Wikipedia articles. (ignored)
+- `wikipedia`: Downloaded Wikipedia articles. (ignored)
