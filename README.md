@@ -1,7 +1,6 @@
-# KG-MCQA
+<h1 align="center">KG-MCQA</h1>
 
-Source codes for KR 2025 workshop preprint **"Applying Relation Extraction and Graph Matching to Answering Multiple Choice Questions"**.  
-The paper is submitted to [NeLaMKRR 2025](https://jurisinformaticscenter.github.io/NeLaMKRR2025/).
+<p align="center">Source codes for KR 2025 workshop preprint<br><b>"Applying Relation Extraction and Graph Matching to Answering Multiple Choice Questions"</b><br>which is submitted to <a href="https://jurisinformaticscenter.github.io/NeLaMKRR2025/">NeLaMKRR 2025.</a></p>
 
 This repository contains:
 
@@ -41,7 +40,7 @@ Execute following command to run MCQA on a dataset using one of the RE methods.
 python mcqa.py [dataset_path] [re_method]
 ```
 
-Choice for the `re_method` argument is as follows.
+Choose the `re_method` argument from the following.
 | id | Model name | Dataset | Relation types |
 |-------------|--------------------|---------|------------|
 | `rebel` | REBEL | REBEL | 220 |
