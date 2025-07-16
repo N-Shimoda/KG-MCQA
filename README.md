@@ -10,13 +10,11 @@ This repository contains:
 1. Original MCQ datasets
 1. Streamlit app for visualizing the results
 
-![Appearance of the web application](assets/app-appearance.png)
-
 ## Setup
 
 ### Create Environment
 
-Run the following command to create conda environment with required libraries. It automatically installs the original package `kgraph`, which is defined under `./kgraph`.
+Run the following command to create conda environment with required libraries. It automatically installs the original package `kgraph`.
 
 ```shell
 conda env create -f environment.yml
@@ -25,31 +23,33 @@ conda activate kg-mcqa
 
 ### Activate web application
 
-`./viewer` directory contains [Streamlit](https://streamlit.io/) app for viewing datasets and visualizing experimental results.
-While running the following command, you can access to the app using web browser via [localhost:8501](http://127.0.0.1:8501).
+Activate [Streamlit](https://streamlit.io/) app for viewing datasets and visualizing experimental results.
+While running the command, you can open the app in browser via [localhost:8501](http://127.0.0.1:8501).
 
 ```shell
 streamlit run viewer/main.py
 ```
 
+![Appearance of the web application](assets/app-appearance.png)
+
 ## Experiment
 
 ### Run all experiments
 
-### Single run
+### Single execution
 
-Execute following command to run MCQA on a dataset using one of the RE methods.
+Run following command to execute MCQA on a dataset using one of the RE methods.
 
 ```shell
 python mcqa.py [dataset_path] [re_method]
 ```
 
-Choose the `re_method` argument from the following.
+Choice of `re_method` are listed below:
 | id | Model name | Dataset | Relation types |
 |-------------|--------------------|---------|------------|
 | `rebel` | REBEL | REBEL | 220 |
-| `mrebel` | mREBEL$_400$ | RED$^{FM}$ | 400 |
-| `mrebel_32` | mREBEL$_32$ | SRED$^{FM}$ | 32 |
+| `mrebel` | mREBEL_400 | RED^{FM} | 400 |
+| `mrebel_32` | mREBEL_32 | SRED^{FM} | 32 |
 | `unirel` | UniRel | NYT | 24 |
 
 ## Files & Directories
