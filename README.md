@@ -58,6 +58,14 @@ Choice of `re_method` are as follows.
 | `mrebel_32` | mREBEL_32 | SRED^{FM} | 32 |
 | `unirel` | UniRel | NYT | 24 |
 
+### Baseline by LLM
+
+For the baseline experiment using Google's FLAN-T5-xlarge (3B) model, run the following script.
+
+```shell
+python llm.py
+```
+
 ## Files & Directories
 
 ### Files
@@ -69,6 +77,7 @@ Choice of `re_method` are as follows.
 ### Directories
 
 (ignored) shows the files not controled by git.
+
 - `kgraph`: Original package for handling proposed method.
 - `scripts`
 - `dataset`: Original MCQ dataset.
