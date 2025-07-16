@@ -23,7 +23,7 @@ conda activate kg-mcqa
 
 ### Activate web application
 
-Activate [Streamlit](https://streamlit.io/) app for viewing datasets and visualizing experimental results.
+Activate [Streamlit](https://streamlit.io/) app for viewing datasets and experimental results.
 While running the command, you can open the app in browser via [localhost:8501](http://127.0.0.1:8501).
 
 ```shell
@@ -36,15 +36,21 @@ streamlit run viewer/main.py
 
 ### Run all experiments
 
-### Single execution
+Following script runs all MCQA introduced in the article.
 
-Run following command to execute MCQA on a dataset using one of the RE methods.
+```
+./scripts/mcqa_main.sh
+```
+
+### Single experiment
+
+To run an MCQA on a dataset using specified RE method, use following command.
 
 ```shell
 python mcqa.py [dataset_path] [re_method]
 ```
 
-Choice of `re_method` are listed below:
+Choice of `re_method` are as follows.
 | id | Model name | Dataset | Relation types |
 |-------------|--------------------|---------|------------|
 | `rebel` | REBEL | REBEL | 220 |
