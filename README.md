@@ -1,49 +1,61 @@
 # KG-MCQA
 
-Experimental codes for KR 2025, [_KR in the Wild_ track](https://kr.org/KR2025/call_kr_in_the_wild.html) preprint paper, "Applying Relation Extraction to Graph Matching for Answering Multiple Choice Questions".
-![alt text](image.png)
+Source codes for KR 2025 workshop preprint **"Applying Relation Extraction and Graph Matching to Answering Multiple Choice Questions"**.  
+The paper is submitted to [NeLaMKRR 2025](https://jurisinformaticscenter.github.io/NeLaMKRR2025/).
+
+This repository contains:
+
+1. Python scripts for the answering experiment using the proposed method
+1. Original MCQ datasets
+1. Simple web application for visualizing the results
 
 ## Setup
 
 ### Create Environment
 
-Run the following command to create conda environment with required libraries. It automatically installs the original package `kgraph`, which is defined under `./kgraph` in this repository.
+Run the following command to create conda environment with required libraries. It automatically installs the original package `kgraph`, which is defined under `./kgraph`.
 
 ```shell
 conda env create -f environment.yml
 conda activate kg-mcqa
 ```
 
-You can reinstall `kgraph` as follows:
+### Activate web application
+
+`./viewer` directory contains [Streamlit](https://streamlit.io/) app for viewing datasets and visualizing experimental results.
+While running the following command, you can access to the app using web browser via [localhost:8501](http://127.0.0.1:8501).
 
 ```shell
-pip install --upgrade --no-deps --force-reinstall kgraph/
-```
-
-### Test
-
-You can run a simple test with PyTest.
-
-```shell
-pytest ./kgraph
+streamlit run viewer/main.py
 ```
 
 ## Experiment
+
+### Run all experiments
+
+### Single run
+
+Execute following command to run MCQA on a dataset using one of the RE methods.
 
 ```shell
 python mcqa.py [dataset_path] [re_method]
 ```
 
-## Documentation
+Choice for the `re_method` argument is as follows.
+| id | Model name | Dataset | Relation types |
+|-------------|--------------------|---------|------------|
+| `rebel` | REBEL | REBEL | 220 |
+| `mrebel` | mREBEL$_400$ | RED$^{FM}$ | 400 |
+| `mrebel_32` | mREBEL$_32$ | SRED$^{FM}$ | 32 |
+| `unirel` | UniRel | NYT | 24 |
 
-In order to generate docs for the `kgraph` package, please run the following command in `./docs`.
+## Files & Directories
 
-```shell
-sphinx-apidoc -f -o source/ ../kgraph/
-make html
-```
+### Files
 
-## Contents
+- `mcqa.py`
+- `fever.py`
+- `environment.yml`
 
 ### Directories
 
@@ -52,9 +64,3 @@ make html
 - `dataset`: Original MCQ dataset.
 - `KG_cache`: Cache files of KG constructed from Wikipedia articles.
 - `wikipedia`: Dowonloaded Wikipedia articles.
-
-### Files
-
-- `mcqa.py`
-- `fever.py`
-- `environment.yml`
