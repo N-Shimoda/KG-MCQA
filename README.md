@@ -6,9 +6,9 @@
 
 This repository contains:
 
-1. Python scripts for the answering experiment using the proposed method
+1. Python scripts for the answering experiment
 1. Original MCQ datasets
-1. Simple web application for visualizing the results
+1. Streamlit app for visualizing the results
 
 ![Appearance of the web application](assets/app-appearance.png)
 
