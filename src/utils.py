@@ -116,7 +116,10 @@ def plot_bar_chart(
     # x axis
     plt.xlabel("Categories", fontdict={"fontsize": 16})
     ax.set_xticks(index)
-    ax.set_xticklabels(categories, rotation=20, fontdict={"fontsize": 16})
+    cat_labels = [
+        f'{cat.split(" ")[0]}\n{" ".join(cat.split(" ")[1:])}' for cat in categories
+    ]  # Split long category names
+    ax.set_xticklabels(cat_labels, rotation=20, fontdict={"fontsize": 16})
 
     # y axis
     ax.set_ylabel("Percentile (%)", fontdict={"fontsize": 16})
@@ -130,24 +133,55 @@ def plot_bar_chart(
     # settings
     plt.tight_layout()
     plt.rcParams["svg.fonttype"] = "none"
+    # save in the specified format (ex. PDF)
     plt.savefig(output_file, format=suffix)
+    # always save in SVG
     plt.savefig(output_file.split(".")[0] + ".svg", format="svg")
 
 
 if __name__ == "__main__":
     # Test categories and scores
-    categories = [f"Cat{i}" for i in range(10)]
+    categories = [
+        "Art & Music",
+        "General Knowledge",
+        "Geography",
+        "History",
+        "Literature & Language",
+        "Mathematics",
+        "Philosophy & Logic",
+        "Pop Culture",
+        "Science",
+        "Technology & Computing",
+    ]
     scores = {
-        "Cat0": {"correct": 35, "fail": 10, "unselectable": 5, "total": 50, "stochastic_accuracy": 0.65},
-        "Cat1": {"correct": 28, "fail": 15, "unselectable": 7, "total": 50, "stochastic_accuracy": 0.55},
-        "Cat2": {"correct": 40, "fail": 5, "unselectable": 5, "total": 50, "stochastic_accuracy": 0.75},
-        "Cat3": {"correct": 22, "fail": 20, "unselectable": 8, "total": 50, "stochastic_accuracy": 0.45},
-        "Cat4": {"correct": 15, "fail": 30, "unselectable": 5, "total": 50, "stochastic_accuracy": 0.35},
-        "Cat5": {"correct": 25, "fail": 15, "unselectable": 10, "total": 50, "stochastic_accuracy": 0.50},
-        "Cat6": {"correct": 30, "fail": 10, "unselectable": 10, "total": 50, "stochastic_accuracy": 0.60},
-        "Cat7": {"correct": 18, "fail": 25, "unselectable": 7, "total": 50, "stochastic_accuracy": 0.40},
-        "Cat8": {"correct": 12, "fail": 32, "unselectable": 6, "total": 50, "stochastic_accuracy": 0.30},
-        "Cat9": {"correct": 38, "fail": 8, "unselectable": 4, "total": 50, "stochastic_accuracy": 0.70},
+        "Art & Music": {"correct": 35, "fail": 10, "unselectable": 5, "total": 50, "stochastic_accuracy": 0.65},
+        "General Knowledge": {"correct": 28, "fail": 15, "unselectable": 7, "total": 50, "stochastic_accuracy": 0.55},
+        "Geography": {"correct": 40, "fail": 5, "unselectable": 5, "total": 50, "stochastic_accuracy": 0.75},
+        "History": {"correct": 22, "fail": 20, "unselectable": 8, "total": 50, "stochastic_accuracy": 0.45},
+        "Literature & Language": {
+            "correct": 15,
+            "fail": 30,
+            "unselectable": 5,
+            "total": 50,
+            "stochastic_accuracy": 0.35,
+        },
+        "Mathematics": {"correct": 25, "fail": 15, "unselectable": 10, "total": 50, "stochastic_accuracy": 0.50},
+        "Philosophy & Logic": {
+            "correct": 30,
+            "fail": 10,
+            "unselectable": 10,
+            "total": 50,
+            "stochastic_accuracy": 0.60,
+        },
+        "Pop Culture": {"correct": 18, "fail": 25, "unselectable": 7, "total": 50, "stochastic_accuracy": 0.40},
+        "Science": {"correct": 12, "fail": 32, "unselectable": 6, "total": 50, "stochastic_accuracy": 0.30},
+        "Technology & Computing": {
+            "correct": 38,
+            "fail": 8,
+            "unselectable": 4,
+            "total": 50,
+            "stochastic_accuracy": 0.70,
+        },
     }
     title = "Stacked Bar Chart of Percentages (Test Data)"
     output_file = "chart_sample.pdf"

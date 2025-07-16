@@ -68,6 +68,7 @@ def collect_results(result_file: str, mcq_file: str):
 
     with open(mcq_file, "r") as f:
         mcqs: dict[str, dict] = json.load(f)
+        cat_mapping = {cat: mcqs[cat]["category"] for cat in mcqs.keys()}
 
     # Iterate over each category
     for cat in result.keys():
@@ -113,7 +114,12 @@ def collect_results(result_file: str, mcq_file: str):
     categories = result.keys()
     scores = {cat: result[cat]["stats"] for cat in categories}
     ds_name = os.path.basename(mcq_file).split(".")[0]
-    plot_bar_chart(categories, scores, title=ds_name, output_file=f"{os.path.dirname(result_file)}/accuracy.pdf")
+    plot_bar_chart(
+        [cat_mapping[cat] for cat in categories],
+        {cat_mapping[cat]: score for cat, score in scores.items()},
+        title=ds_name,
+        output_file=f"{os.path.dirname(result_file)}/accuracy.pdf",
+    )
 
 
 if __name__ == "__main__":
