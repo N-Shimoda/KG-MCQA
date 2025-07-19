@@ -77,8 +77,11 @@ def answer_questions(dataset: Dataset, model: Pipeline) -> Tuple[Dict[str, Any],
             prompt = f"Question: {sentence}\nChoices: {choice_str}\nAnswer key: "
             prompts.append(prompt)
             meta.append((category, question_id, sentence, choices, answer))
-    # Batch call
+
+    # Generate responses using the model
     responses = model(prompts, max_new_tokens=5)
+
+    # Process responses
     for i, response_item in enumerate(responses):
         category, question_id, sentence, choices, answer = meta[i]
         match = re.search(r"\d", response_item["generated_text"])
@@ -125,13 +128,18 @@ def answer_questions(dataset: Dataset, model: Pipeline) -> Tuple[Dict[str, Any],
     return results, accuracy, scores
 
 
-def main(model: Pipeline, ds_path: str) -> None:
+def main(model: Pipeline, ds_path: str, model_name: str):
     """
     Main function to load dataset, run LLM, and output results.
 
-    Returns
-    -------
-    None
+    Parameters
+    ----------
+    model : Pipeline
+        Hugging Face text-generation pipeline.
+    ds_path : str
+        Path to the dataset JSON file.
+    model_name : str
+        Name of the model being used for processing.
     """
     dataset = load_dataset(ds_path)
     ds_name = ds_path.split("/")[-1].replace(".json", "")
@@ -142,7 +150,7 @@ def main(model: Pipeline, ds_path: str) -> None:
     print(f"Accuracy: {accuracy * 100:.2f}%")
 
     # Save results
-    OUT_DIR = os.path.join("baseline", ds_name)
+    OUT_DIR = os.path.join("baseline", model_name, ds_name)
     os.makedirs(OUT_DIR, exist_ok=True)
     with open(os.path.join(OUT_DIR, "results.json"), "w") as result_file:
         json.dump(results, result_file, ensure_ascii=False, indent=4)
@@ -154,8 +162,15 @@ def main(model: Pipeline, ds_path: str) -> None:
 
 
 if __name__ == "__main__":
-    tokenizer = AutoTokenizer.from_pretrained("google/flan-t5-xl", clean_up_tokenization_spaces=True)
-    model = pipeline("text2text-generation", model="google/flan-t5-xl", tokenizer=tokenizer, device_map="auto")
+    # Dataset and model path
     ds_paths = ["dataset/KR-200m.json", "dataset/KR-200s.json", "dataset/FPAI-100.json", "dataset/FPAI-20.json"]
+    model_path = "google/flan-t5-xxl"
+
+    model_name = model_path.split("/")[-1]
+
+    # Load model and tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(model_path, clean_up_tokenization_spaces=True)
+    model = pipeline("text2text-generation", model=model_path, tokenizer=tokenizer, device_map="auto", batch_size=32)
+
     for ds_path in ds_paths:
-        main(model, ds_path)
+        main(model, ds_path, model_name)
