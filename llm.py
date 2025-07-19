@@ -164,7 +164,7 @@ def main(model: Pipeline, ds_path: str, model_name: str):
 if __name__ == "__main__":
     # Dataset and model path
     ds_paths = ["dataset/KR-200m.json", "dataset/KR-200s.json", "dataset/FPAI-100.json", "dataset/FPAI-20.json"]
-    model_path = "google/flan-t5-xxl"
+    model_path = "google/flan-t5-xl"
 
     model_name = model_path.split("/")[-1]
 

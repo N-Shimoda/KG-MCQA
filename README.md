@@ -32,7 +32,7 @@ streamlit run viewer/main.py
 
 ![Appearance of the web application](assets/app-appearance.png)
 
-## Experiment
+## Experiments
 
 > [!IMPORTANT]
 > It is highly recommended to use GPUs to execute experiments.  
@@ -41,6 +41,7 @@ streamlit run viewer/main.py
 ### Run all experiments
 
 The following script runs all the MCQAs introduced in the study.
+Namely, MCQA on two crafted datasets (**KR-200m** and **KR-200s**) by using relation extraction (RE) methods, such as REBEL, mREBEL_400, mREBEL_32, and UniRel.
 
 ```
 ./scripts/mcqa_main.sh
@@ -54,6 +55,7 @@ To run a single MCQA using the specified RE method, use the next command.
 python mcqa.py [dataset_path] [re_method]
 ```
 
+`dataset_path` should be specified from any json files under `./dataset` directory.  
 Choices of `re_method` are as follows.
 | `re_method` | Model name | Dataset | Relation types |
 |-------------|--------------------|---------|------------|
