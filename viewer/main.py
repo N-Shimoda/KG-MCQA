@@ -46,6 +46,7 @@ class MCQAGraphViewer:
         # settings for graph display
         self.kg_ratio = 2
         self.height = 720
+        self.kg_all_labels = True
 
     def run(self):
         """
@@ -205,7 +206,7 @@ class MCQAGraphViewer:
         with st.sidebar:
             self.create_sidebar()
 
-        # load DOT files to create HTML.
+        # create HTML of PG and KG from dot files
         root_path = self.base_dir / self.selected_model / self.selected_dataset
         pg_dot_path = (
             root_path / "PGs" / self.selected_cat / self.selected_q_id / f"{self.selected_option}_{self.file_suffix}"
@@ -213,8 +214,8 @@ class MCQAGraphViewer:
         kg_dot_path = (
             root_path / "KGs" / self.selected_cat / self.selected_q_id / f"{self.selected_option}_{self.file_suffix}"
         )
-        pg_html = self.render_dot_to_html(pg_dot_path, graph_type="pg")
-        kg_html = self.render_dot_to_html(kg_dot_path, graph_type="kg")
+        pg_html = self._render_dot_to_html(pg_dot_path, graph_type="pg")
+        kg_html = self._render_dot_to_html(kg_dot_path, graph_type="kg")
 
         # display HTML files
         col1, col2 = st.columns([1, self.kg_ratio])
@@ -239,18 +240,17 @@ class MCQAGraphViewer:
         st.caption(caption, unsafe_allow_html=True)
 
     def create_sidebar(self):
-        st.write("## Display Settings")
-        st.write("### Width Ratio")
+        st.header("Display Settings")
+        st.subheader("Width Ratio")
         self.kg_ratio = st.number_input(
-            "PG : KG = 1.0 : :red[{:.1f}]".format(self.kg_ratio),
+            "PG : KG = 1.0 : **:red[{:.1f}]**".format(self.kg_ratio),
             min_value=0.1,
             max_value=10.0,
             value=2.0,
             step=0.1,
             key="kg_ratio",
         )
-
-        st.write("### Height")
+        st.subheader("Height")
         self.height = st.number_input(
             "Height of the graph display (px)",
             min_value=400,
@@ -258,8 +258,23 @@ class MCQAGraphViewer:
             step=20,
             key="height",
         )
+        st.subheader("Edge Labels")
+        self.kg_all_labels = st.checkbox(
+            "Show all KG edge labels",
+            value=True,
+            key="kg_all_labels",
+            help="Show labels for all KG edges, including those not used in the verification.",
+        )
 
-    def render_dot_to_html(self, dot_path: Path, graph_type: Literal["pg", "kg"]) -> Path:
+        st.divider()
+        st.header("Clear Cache")
+        if st.button(
+            "Clean up HTML files.", key="cleanup_temp_files", help="Clean up temporary HTML files.", icon="🗑️"
+        ):
+            self._cleanup_temp_files()
+            st.success("Temporary files cleaned up successfully.", icon="✅")
+
+    def _render_dot_to_html(self, dot_path: Path, graph_type: Literal["pg", "kg"]) -> Path:
         """
         Converts a DOT file to an HTML file using PyVis.
 
@@ -294,7 +309,10 @@ class MCQAGraphViewer:
                     case "pg":
                         net.add_edge(r["head"], r["tail"], label=r["type"], color="gray", dashes=True)
                     case "kg":
-                        net.add_edge(r["head"], r["tail"], label=r["type"], color="#97c2fc")
+                        if self.kg_all_labels:
+                            net.add_edge(r["head"], r["tail"], label=r["type"], color="#97c2fc")
+                        else:
+                            net.add_edge(r["head"], r["tail"], title=r["type"], color="#97c2fc")
                     case _:
                         raise ValueError(f"Unknown graph type: {graph_type}")
 
@@ -319,7 +337,6 @@ class MCQAGraphViewer:
             try:
                 for file in self.html_output_dir.glob("*.html"):
                     file.unlink()
-                st.write("Temporary files have been cleaned up.")
             except Exception as e:
                 st.error(f"Failed to clean up temporary files: {e}")
 
