@@ -260,10 +260,10 @@ class MCQAGraphViewer:
         )
         st.subheader("Edge Labels")
         self.kg_all_labels = st.checkbox(
-            "All KG edge labels",
+            "Show all KG edge labels",
             value=True,
             key="kg_all_labels",
-            help="Show labels for all KG edges including ones not used in the verification",
+            help="Show labels for all KG edges, including those not used in the verification.",
         )
 
         st.divider()
@@ -312,7 +312,7 @@ class MCQAGraphViewer:
                         if self.kg_all_labels:
                             net.add_edge(r["head"], r["tail"], label=r["type"], color="#97c2fc")
                         else:
-                            net.add_edge(r["head"], r["tail"], color="#97c2fc")
+                            net.add_edge(r["head"], r["tail"], title=r["type"], color="#97c2fc")
                     case _:
                         raise ValueError(f"Unknown graph type: {graph_type}")
 
