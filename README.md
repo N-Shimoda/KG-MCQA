@@ -1,14 +1,19 @@
 <h1 align="center">KG-MCQA</h1>
 
-<p align="center">Source codes for KR 2025 workshop preprint<br>
+<p align="center">Source codes for KR 2025 workshop paper<br>
 <b>"Applying Relation Extraction and Graph Matching to Answering Multiple Choice Questions"</b>
-<br>which is submitted to <a href="https://jurisinformaticscenter.github.io/NeLaMKRR2025/">NeLaMKRR 2025.</a></p>
+<br>which will be presented at <a href="https://jurisinformaticscenter.github.io/NeLaMKRR2025/">NeLaMKRR 2025.</a></p>
 
 This repository contains:
 
 1. Python scripts for the answering experiment
 1. Original MCQ datasets
 1. Streamlit app for visualizing the results
+
+Paper:
+
+- [Submitted Version](paper/NeLaMKRR_2025_paper_3.pdf) (Long Paper)
+- Accepted Version (Short Paper)
 
 ## Setup
 
