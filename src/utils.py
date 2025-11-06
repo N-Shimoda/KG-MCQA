@@ -1,5 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
+from matplotlib.legend_handler import HandlerTuple
 
 
 def plot_bar_chart(
@@ -10,7 +11,7 @@ def plot_bar_chart(
 ):
     """
     Draws a stacked bar chart showing the percentage of Correct, Incorrect, and Unselectable answers for each category,
-    and overlays the stochastic accuracy as an orange bar next to each stacked bar.
+    and overlays the stochastic accuracy as a two-tone bar next to each stacked bar.
     This function automatically saves the chart in SVG in addition to the specified output file format.
 
     Parameters
@@ -43,6 +44,8 @@ def plot_bar_chart(
     incorrect = [scores[cat]["fail"] / scores[cat]["total"] * 100 for cat in categories]
     unselectable = [scores[cat]["unselectable"] / scores[cat]["total"] * 100 for cat in categories]
     stoch_accuracy = [scores[cat]["stochastic_accuracy"] * 100 for cat in categories]
+    stoch_correct_component = list(correct)
+    stoch_bonus_component = [max(0.0, stoch - corr) for stoch, corr in zip(stoch_accuracy, stoch_correct_component)]
 
     n_categories = len(categories)
     index = np.arange(n_categories)
@@ -78,13 +81,20 @@ def plot_bar_chart(
     )
 
     # Stochastic accuracy bars (side-by-side)
-    bars_stoc_accuracy = ax.bar(
+    bars_stoc_correct = ax.bar(
         index + (bar_width + gap) / 2,
-        stoch_accuracy,
+        stoch_correct_component,
         bar_width,
-        label="Stochastic",
+        label="_nolegend_",  # share color with deterministic correct without extra legend entry
         color="orange",
-        # alpha=0.7,
+    )
+    bars_stoc_bonus = ax.bar(
+        index + (bar_width + gap) / 2,
+        stoch_bonus_component,
+        bar_width,
+        bottom=stoch_correct_component,
+        label="Stochastic",
+        color="gold",
     )
 
     # Display values
@@ -101,13 +111,13 @@ def plot_bar_chart(
                     fontsize=14,
                 )
     # For stochastic accuracy bars, display value above the bar
-    for bar in bars_stoc_accuracy:
-        height = bar.get_height()
-        if height > 0:
+    for base_bar, total_height, bonus in zip(bars_stoc_correct, stoch_accuracy, stoch_bonus_component):
+        stacked_height = base_bar.get_height() + bonus
+        if stacked_height > 0:
             ax.text(
-                bar.get_x() + bar.get_width() / 2.0,
-                bar.get_y() + height,  # 2 is a small offset above the bar
-                f"{height:.1f}",
+                base_bar.get_x() + base_bar.get_width() / 2.0,
+                base_bar.get_y() + stacked_height,
+                f"{total_height:.1f}",
                 ha="center",
                 va="bottom",
                 fontsize=14,
@@ -128,7 +138,20 @@ def plot_bar_chart(
     ax.grid(True, axis="y", linestyle="--", alpha=0.5)
 
     # legend
-    ax.legend(fontsize=16, loc="upper right")
+    legend_handles = [
+        (bars_correct[0], bars_stoc_correct[0]),
+        bars_incorrect[0],
+        bars_unselectable[0],
+        bars_stoc_bonus[0],
+    ]
+    legend_labels = ["Correct", "Incorrect", "Unselectable", "Stochastic"]
+    ax.legend(
+        legend_handles,
+        legend_labels,
+        fontsize=16,
+        loc="upper right",
+        handler_map={tuple: HandlerTuple(ndivide=None)},
+    )
 
     # settings
     plt.tight_layout()
