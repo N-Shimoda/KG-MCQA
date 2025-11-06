@@ -1,8 +1,8 @@
 <h1 align="center">KG-MCQA</h1>
 
-<p align="center">Source codes for KR 2025 workshop preprint<br>
+<p align="center">Source codes for KR 2025 workshop paper<br>
 <b>"Applying Relation Extraction and Graph Matching to Answering Multiple Choice Questions"</b>
-<br>which is submitted to <a href="https://jurisinformaticscenter.github.io/NeLaMKRR2025/">NeLaMKRR 2025.</a></p>
+<br>which will be presented at <a href="https://jurisinformaticscenter.github.io/NeLaMKRR2025/">NeLaMKRR 2025</a>, 12th November.</p>
 
 This repository contains:
 
