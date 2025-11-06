@@ -133,7 +133,7 @@ def plot_bar_chart(
 
     # y axis
     ax.set_ylabel("Percentile (%)", fontdict={"fontsize": 16})
-    ax.set_ylim(0, 105)
+    ax.set_ylim(0, 103)
     ax.tick_params(axis="y", labelsize=14)
     ax.grid(True, axis="y", linestyle="--", alpha=0.5)
 
