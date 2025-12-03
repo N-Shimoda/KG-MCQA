@@ -4,6 +4,8 @@
 <b>"Applying Relation Extraction and Graph Matching to Answering Multiple Choice Questions"</b>
 <br>which will be presented at <a href="https://jurisinformaticscenter.github.io/NeLaMKRR2025/">NeLaMKRR 2025</a>, 12th November.</p>
 
+Original paper can be found [here](https://jurisinformaticscenter.github.io/NeLaMKRR2025/proceedings.pdf) (pp. 57-62).
+
 This repository contains:
 
 1. Python scripts for the answering experiment
@@ -90,3 +92,19 @@ python llm.py
 - `exp-mcqa`: Result files of MCQA.
 - `KG_cache`: Cache files of KG constructed from Wikipedia articles. (ignored)
 - `wikipedia`: Downloaded Wikipedia articles. (ignored)
+
+## Citation
+
+Please kindly cite the following paper if you refer to this work.
+
+```bibtex
+@inproceedings{NeLaMKRR-2025-07,
+    title     = {{Applying Relation Extraction and Graph Matching to Answering Multiple Choice Questions}},
+    author    = {Shimoda, Naoki and Yamamoto, Akihiro},
+    booktitle = {{Proceedings of the Second International Workshop on Next-Generation Language Models for Knowledge Representation and Reasoning (NeLaMKRR 2025)}},
+    pages     = {57--62},
+    year      = {2025},
+    month     = {11},
+    url       = {https://jurisinformaticscenter.github.io/NeLaMKRR2025/proceedings.pdf},
+  }
+```
